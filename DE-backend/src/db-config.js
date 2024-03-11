@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
-const db = "mongodb+srv://G13:db1234@de-cluster.qbspofl.mongodb.net/?retryWrites=true&w=majority&appName=DE-Cluster";
+const dotenv = require('dotenv');
+
+dotenv.config()
+const db = process.env.MONGODB_URI;
 
 mongoose.set('strictQuery', true, 'useNewUrlParser', true);
 
