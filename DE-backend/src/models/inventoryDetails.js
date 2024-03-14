@@ -32,5 +32,18 @@ const inventoryDetailsSchema = new schema({
     }
 });
 
+
+inventoryDetailsSchema.methods.updateReorderState = function(){
+    if(this.quantity == 0){
+        this.reorderState = 'Out of Stocks';
+    }
+    else if(this.quantity <= this.reorderLevel){
+        this.reorderState = 'Low Stcoks';
+    }
+    else{
+        this.reorderState = 'In Stocks';
+    }
+}
+
 const inventoryDetails = mongoose.model('inventoryDetails',inventoryDetailsSchema);
 module.exports = inventoryDetails;

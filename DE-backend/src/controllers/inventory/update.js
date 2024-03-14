@@ -28,6 +28,8 @@ const updateInventoryItem = async (req, res) => {
         { new: true }
       );
   
+      updatedItem.updateReorderState();
+
       if (updatedItem) {
         res.status(200).json({ status: "Successfully Updated", updatedItem });
       } else {
