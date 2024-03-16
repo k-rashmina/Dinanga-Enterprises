@@ -6,7 +6,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div>
+     <div>
         <h1>Dinanga Enterprises</h1>
       </div>
     </BrowserRouter>
