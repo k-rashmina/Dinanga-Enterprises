@@ -21,16 +21,18 @@ const updateInventoryItem = async (req, res) => {
         reorderState,
         availability,
       };
+
   
       const updatedItem = await inventoryDetails.findByIdAndUpdate(
         objectid,
         updateStates,
         { new: true }
       );
-  
-      updatedItem.updateReorderState();
 
       if (updatedItem) {
+        updatedItem.updateReorderState();
+        await updatedItem.save();
+        
         res.status(200).json({ status: "Successfully Updated", updatedItem });
       } else {
         res.status(404).json({ message: "Inventory Item not found" });

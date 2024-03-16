@@ -29,6 +29,10 @@ const inventoryDetailsSchema = new schema({
         type:String,
         enum:['Available','Reorder'],
         required:true
+    },
+    creationDate:{
+        type:Date,
+        default:Date.now
     }
 });
 

@@ -19,9 +19,10 @@ const createInventoryItem = async (req, res) => {
         reorderState,
         availability,
       });
-      await newItem.save();
 
       newItem.updateReorderState();
+      
+      await newItem.save();
 
       res.status(201).json(newItem);
     } catch (err) {
