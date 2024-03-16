@@ -1,3 +1,5 @@
+const Employee = require('../../models/employee')
+
 // Controller for retrieving employee details
 const getEmployeeTest = async (req, res) => {
     return res.status(200).json({ msg: 'Test employee' })
