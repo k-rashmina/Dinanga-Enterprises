@@ -30,7 +30,7 @@ const purchTrasactionSchema = new Schema({
     default: () => Date.now()
   },
   transact_no: {
-    type: Number,
+    type: String,
     required: true
   }
 })
@@ -59,5 +59,5 @@ purchTrasactionSchema.query.bystatus = function(st) {
 
 }
 
-const purchTrasaction = mongoose.model('job_transaction', purchTrasactionSchema);
+const purchTrasaction = mongoose.model('purchase_transaction', purchTrasactionSchema);
 module.exports = purchTrasaction;

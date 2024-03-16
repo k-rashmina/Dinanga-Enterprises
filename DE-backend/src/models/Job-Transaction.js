@@ -30,7 +30,7 @@ const jobTrasactionSchema = new Schema({
     default: () => Date.now()
   },
   transact_no: {
-    type: Number,
+    type: String,
     required: true
   }
 })
