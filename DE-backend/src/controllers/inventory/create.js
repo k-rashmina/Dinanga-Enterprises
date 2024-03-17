@@ -8,6 +8,7 @@ const createInventoryItem = async (req, res) => {
         quantity,
         reorderLevel,
         reorderState,
+        itemPrice,
         availability,
       } = req.body;
   
@@ -16,6 +17,7 @@ const createInventoryItem = async (req, res) => {
         itemName,
         quantity,
         reorderLevel,
+        itemPrice,
         reorderState,
         availability,
       });
