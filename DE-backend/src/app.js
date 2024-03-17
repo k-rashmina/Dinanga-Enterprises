@@ -3,7 +3,6 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const dbConnect = require('./db-config');
 const routes = require('./routes');
-const employeeRoutes = require("./routes/employeeRoutes")
 
 //initialization and middleware
 const app = express();
@@ -19,10 +18,6 @@ app.use('/', routes);
 app.get('/', (req, res) => {
   res.send("Hello World!");
 });
-
-//Employee Routes
-app.use('/employee',employeeRoutes);
-
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`)
