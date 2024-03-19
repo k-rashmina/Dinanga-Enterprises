@@ -22,6 +22,7 @@ const jobAppointmentSchema = new schema({
   serviceType: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
+    ref:"services"
   },
   vehicleType: {
     type: mongoose.Schema.Types.ObjectId,
@@ -35,6 +36,26 @@ const jobAppointmentSchema = new schema({
 });
 
 
+const servicesModelSchema = new schema({
+  service_name: {
+    type: String,
+    required: true,
+  },
+  charge: {
+    type: Number,
+    required: true,
+  },
+  item_list: {
+    type: Object,
+    required: true
+ 
+  },
+});
+
+const servicesModel = mongoose.model(
+  "services",
+  servicesModelSchema
+);
 
 const jobAppointment = mongoose.model(
   "jobAppointment",
