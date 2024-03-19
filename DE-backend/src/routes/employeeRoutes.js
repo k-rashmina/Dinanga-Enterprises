@@ -1,5 +1,5 @@
 const express = require('express');
-const {getEmployeeTest, registerEmployee, getEmployeeDetails, deleteEmployee, updateEmployee, getAssignedTasks, getCompletedTasks, getAssignedServices} = require('../controllers/employee/employeeController');
+const {getEmployeeTest, registerEmployee, getEmployeeDetails, deleteEmployee, updateEmployee, getAssignedTasks, getCompletedTasks, getAssignedServices, login} = require('../controllers/employee/employeeController');
 
 const router = express.Router();
 
@@ -20,6 +20,7 @@ router.get('/getCompletedTasks', getCompletedTasks);
 
 router.get('/getAssignedServices', getAssignedServices);
 
+router.post('/login', login);
 
 
 module.exports = router;
