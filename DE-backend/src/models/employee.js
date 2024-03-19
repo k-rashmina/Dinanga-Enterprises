@@ -18,10 +18,6 @@ const employeeSchema = new mongoose.Schema({
       type: String,
       required: true
     },
-    skills: {
-      type: [String],
-      required: true
-    },
     username: {
       type: String,
       required: true,
@@ -39,6 +35,11 @@ const employeeSchema = new mongoose.Schema({
       type: String,
       enum: ['mechanical', 'consultancy'],
       required: true
+    },
+    role: {
+        type: String,
+        enum: ['admin', 'mechanical employee', 'consultancy employee'],
+        required: false
     },
     createdAt: {
       type: Date,
