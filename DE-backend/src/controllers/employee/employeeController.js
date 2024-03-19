@@ -1,36 +1,51 @@
 const Employee = require('../../models/employee')
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
 
 // test controller
-const getEmployeeTest = async (req, res) => {
-    return res.status(200).json({ msg: 'Test employee' })
-  };
+async function getEmployeeTest(req, res) {
+    return res.status(200).json({ msg: 'Test employee' });
+}
 
-// Controller for registering a new employee
+//Register new employee
 const registerEmployee = async (req, res) => {
+    const { name, contactNumber, email, address, username, password, department, role } = req.body;
+  
     try {
-      const { name, contactNumber, email, address, skills, username, password, availability, department } = req.body;
-      // Create new employee instance
+      // Check if the username is already taken
+      let existingEmployee = await Employee.findOne({ username });
+  
+      if (existingEmployee) {
+        return res.status(400).json({ msg: 'Username already exists' });
+      }
+  
+      // Hash the password
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+  
+      // Create a new employee object with the hashed password
       const newEmployee = new Employee({
         name,
         contactNumber,
         email,
         address,
-        skills,
         username,
-        password,
-        availability,
+        password: hashedPassword,
         department,
+        role
       });
-      // Save employee to the database
+  
+      // Save the new employee to the database
       await newEmployee.save();
-      res.status(201).json({ msg: 'Employee registered successfully' });
+  
+      res.json({ msg: 'Employee registered successfully' });
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');
     }
   };
 
-// Controller for retrieving employee details
+// Retrieve employee details 
 const getEmployeeDetails = async (req, res) => {
     try {
       const employee = await Employee.findById(req.params.id);
@@ -45,7 +60,7 @@ const getEmployeeDetails = async (req, res) => {
   };
 
 
-// Controller for deleting an employee account
+// Delete employee account
 const deleteEmployee = async (req, res) => {
     try {
       await Employee.findByIdAndDelete(req.params.id);
@@ -56,7 +71,7 @@ const deleteEmployee = async (req, res) => {
     }
   };
 
-// Controller for updating employee details
+// Update employee details
 const updateEmployee = async (req, res) => {
     try {
       const { name, contactNumber, email, address, username, password } = req.body;
@@ -79,7 +94,7 @@ const updateEmployee = async (req, res) => {
     }
   };
 
-  // Controller to get assigned tasks for mechanical employees
+  // Get assigned tasks for mechanical employees
 const getAssignedTasks = async (req, res) => {
     try {
       const assignedTasks = await Task.find({ assignedTo: req.user.id });
@@ -90,7 +105,7 @@ const getAssignedTasks = async (req, res) => {
     }
   };
 
-  // Controller to get completed tasks for mechanical employees
+  // Get completed tasks for mechanical employees
 const getCompletedTasks = async (req, res) => {
     try {
       const completedTasks = await Task.find({ assignedTo: req.user.id, status: 'completed' });
@@ -101,7 +116,7 @@ const getCompletedTasks = async (req, res) => {
     }
   };
 
-  // Controller to get assigned consultancy services for consultancy employees
+  // Get assigned consultancy services for consultancy employees
 const getAssignedServices = async (req, res) => {
     try {
       const assignedServices = await Service.find({ assignedTo: req.user.id });
@@ -112,7 +127,51 @@ const getAssignedServices = async (req, res) => {
     }
   };
 
+  // Employee login test
+  const login = async (req, res) => {
+    const { username, password } = req.body;
   
+    try {
+      // Check if the employee exists
+      let employee = await Employee.findOne({ username });
+  
+      if (!employee) {
+        return res.status(400).json({ msg: 'Invalid username' });
+      }
+
+      // Validate password
+      const isMatch = await bcrypt.compare(password, employee.password);
+  
+      if (!isMatch) {
+        return res.status(400).json({ msg: 'Invalid password' });
+      }
+  
+      // Create and return JWT token
+      const payload = {
+        user: {
+          id: employee.id,
+          username: employee.username,
+          department: employee.department
+        }
+      };
+  
+      jwt.sign(
+        payload,
+        token = process.env.TOKEN,
+        { expiresIn: 3600 }, // Token expires in 1 hour
+        (err, token) => {
+          if (err) throw err;
+          res.json({ token });
+        }
+      );
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server error');
+    }
+  };
+
+  
+
 
 module.exports = {
     getEmployeeTest,
@@ -123,6 +182,7 @@ module.exports = {
     getAssignedTasks,
     getCompletedTasks,
     getAssignedServices,
+    login,
     // updateServiceIssue,
     // updateProfile,
     // getProfile,
