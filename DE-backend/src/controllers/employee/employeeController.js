@@ -170,7 +170,24 @@ const getAssignedServices = async (req, res) => {
     }
   };
 
+  //Get available consultancy employees
+  const getAvailableConsultancyEmployees = async (req, res) => {
+    try {
+      // Query the database for consultancy employees who are available
+      const consultancyEmployees = await Employee.find({
+        department: 'consultancy',
+        availability: true
+      });
   
+      // Extract and return only the names of available consultancy employees
+      const employeeNames = consultancyEmployees.map(employee => employee.name);
+  
+      res.json(employeeNames);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  };
 
 
 module.exports = {
@@ -183,6 +200,7 @@ module.exports = {
     getCompletedTasks,
     getAssignedServices,
     login,
+    getAvailableConsultancyEmployees,
     // updateServiceIssue,
     // updateProfile,
     // getProfile,
