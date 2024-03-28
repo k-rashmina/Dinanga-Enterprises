@@ -5,6 +5,12 @@ import AdminLayout from './components/common/AdminLayout';
 import AdminPanel from './components/common/AdminPanel';
 
 
+import AddItem from './components/inventory/AddItem';
+import ItemList from './components/inventory/ItemList';
+import DashBoard from './components/inventory/DashBoard';
+import Report from './components/inventory/Report';
+
+
 function App() {
 
   return (
@@ -61,10 +67,10 @@ function App() {
 
         {/* admin inventory routes */}
         <Route element={<AdminLayout page={'Inventory'} menu={["Dashboard", "Item List", "Add Item", "Report"]}/>}>
-          <Route path='/admin/inventory/dashboard' element/>
-          <Route path='/admin/inventory/itemlist' element/>
-          <Route path='/admin/inventory/additem' element/>
-          <Route path='/admin/inventory/report' element/>
+          <Route path='/admin/inventory/dashboard' element ={<DashBoard/>}/>
+          <Route path='/admin/inventory/itemlist' element = {<ItemList/>}/>
+          <Route path='/admin/inventory/additem' element = {<AddItem/>}/>
+          <Route path='/admin/inventory/report' element = {<Report/>}/>
         </Route>
 
         {/* admin order routes */}

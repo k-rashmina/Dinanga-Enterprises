@@ -10,7 +10,7 @@ const inventoryDetailsSchema = new schema({
   itemName: {
     type: String,
     required: true,
-    unique: true,
+    // unique: true,
   },
   quantity: {
     type: Number,
@@ -18,12 +18,11 @@ const inventoryDetailsSchema = new schema({
   },
   reorderLevel: {
     type: Number,
-    enum: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
     required: true,
   },
   reorderState: {
     type: String,
-    enum: ["Out of Stocks", "Low Stcoks", "In Stocks"],
+    enum: ["Out of Stocks", "Low Stocks", "In Stocks"],
     required: true,
   },
   itemPrice:{
@@ -44,7 +43,7 @@ inventoryDetailsSchema.methods.updateReorderState = function () {
   if (this.quantity == 0) {
     this.reorderState = "Out of Stocks";
   } else if (this.quantity <= this.reorderLevel) {
-    this.reorderState = "Low Stcoks";
+    this.reorderState = "Low Stocks";
   } else {
     this.reorderState = "In Stocks";
   }
