@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const jobTrasactionSchema = new Schema({
   status: {
     type: String,
-    required: true,
+    default: 'pending'
   },
   amount: {
     type: Number,
@@ -22,12 +22,12 @@ const jobTrasactionSchema = new Schema({
   },
   create_date: {
     type: Date,
-    default: () => Date.now(),
+    // default: () => Date.now(),
     immutable: true
   },
   update_date: {
     type: Date,
-    default: () => Date.now()
+    // default: () => Date.now()
   },
   transact_no: {
     type: String,

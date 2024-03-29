@@ -43,6 +43,8 @@
 
 #root{
   display: flex;
+  align-items: start;
+  background-color: #EEEEEE;
 }
 
 body{

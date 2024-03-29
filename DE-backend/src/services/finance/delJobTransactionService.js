@@ -1,5 +1,5 @@
 const {deleteJobTransaction} = require('../../data-access/finance/jobTransactiondb');
-const addRefundAndReversal = require('../../data-access/finance/refunAndReversaldb');
+const {addRefundAndReversal} = require('../../data-access/finance/refunAndReversaldb');
 
 module.exports = async function delJobTransactionService(delTransactID) {
 

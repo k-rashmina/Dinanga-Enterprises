@@ -4,21 +4,60 @@ const counter = require('../../models/counter');
 
 
 //Job Transaction database reading function
-const getJobTransactionList = async () => {
+const getJobTransactionList = async (filter) => {
 
+  console.log(new Date(filter.from), new Date(`${filter.from}T00:00:00.000Z`))
 
-  // const filter = {
-  //   from: '2024/03/01',
-  //   to: '2024/03/16',
-  //   job: '65f1c1f7d0bab2e4fa815856',
-  //   status: 'pending'
-  // }
+  const filterTransact = async () => {
 
+    if(filter.status && filter.job){
+
+      return (await jobTransaction.find({
+        'create_date': {
+          $gt: new Date(`${filter.from}T00:00:00.000Z`),
+          $lt: new Date(filter.to)
+        }
+      }).where('status').equals(filter.status).where('job').equals(filter.job))
+
+    }
+    else if(filter.status){
+
+      return (await jobTransaction.find({
+        'create_date': {
+          $gte: new Date(new Date(filter.from).setHours(0o0, 0o0, 0o0)),
+          $lt: new Date(new Date(filter.to).setHours(23, 59, 59))
+        }
+      }).where('status').equals(filter.status))
+
+    }
+    else if(filter.job){
+
+      return (await jobTransaction.find({
+        'create_date': {
+          $gte: new Date(new Date(filter.from).setHours(0o0, 0o0, 0o0)),
+          $lt: new Date(new Date(filter.to).setHours(23, 59, 59))
+        }
+      }).where('job_id').equals(filter.job))
+
+    }
+    else{
+
+      return (await jobTransaction.find({
+        'create_date': {
+          $gte: new Date(new Date(filter.from).setHours(0o0, 0o0, 0o0)),
+          $lt: new Date(new Date(filter.to).setHours(23, 59, 59))
+        }
+      }))
+
+    }
+
+  }
 
 
   try{
 
-    const jobTransactionList =  await jobTransaction.find();
+    const jobTransactionList = filterTransact();
+
       // .fromdate(filter.from)
       // .todate(filter.to)
       // .byjob(filter.job)

@@ -3,7 +3,8 @@ const jobTransactionList = require('../../services/finance/jobTransactionListSer
 
 const getJobTransactionList = async (req, res) => {
 
-  res.json(await jobTransactionList());
+  const filter = req.body;
+  res.json(await jobTransactionList(filter));
 
 
 }
