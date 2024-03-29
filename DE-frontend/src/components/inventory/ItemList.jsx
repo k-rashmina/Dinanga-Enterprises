@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import SearchBar from "./SearchBar";
 
 function ItemList() {
   const [inventory, setInventory] = useState([]);
@@ -99,10 +100,13 @@ function ItemList() {
   const sortedInventory = sortInventory(inventory);
 
   return (
+    // <div>
+    //   
     <div className="container mt-1">
       <div className="card shadow">
         <div className="card-body">
         <h2 className="card-title text-center">Warehouse Inventory List</h2>
+        <SearchBar/>
           <div className="mb-3 form-select">
             <label htmlFor="sortCriteria" className="form-label">
               Sort By:
@@ -270,6 +274,7 @@ function ItemList() {
         </div>
       </div>
     </div>
+    // </div>
   );
 }
 
