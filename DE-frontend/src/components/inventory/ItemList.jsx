@@ -1,21 +1,11 @@
-// import React from 'react'
-
-// function ItemList() {
-//   return (
-//     <div>ItemList</div>
-//   )
-// }
-
-// export default ItemList
-
-
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 function ItemList() {
   const [inventory, setInventory] = useState([]);
   const [editableItemId, setEditableItemId] = useState(null);
+  const [sortCriteria, setSortCriteria] = useState("");
+  const [sortTrigger, setSortTrigger] = useState(false);
 
   useEffect(() => {
     fetchInventoryData();
@@ -26,6 +16,7 @@ function ItemList() {
       .get("http://localhost:5000/inventory/getAllItems")
       .then((response) => {
         setInventory(response.data);
+        setSortTrigger(false); // Reset sorting trigger on data fetch
       })
       .catch((error) => {
         console.error("Error fetching inventory data:", error);
@@ -77,13 +68,67 @@ function ItemList() {
     });
   };
 
+  const sortInventory = (inventory) => {
+    if (!sortTrigger) return inventory; // Return unsorted inventory if sort not triggered
+
+    switch (sortCriteria) {
+      case "lowStock":
+        return [...inventory].sort((a,b) =>
+          a.reorderState === "Low Stocks" && b.reorderState !== "Low Stocks" ? -1 : 1
+        );
+      case "outOfStock":
+        return [...inventory].sort((a,b) =>
+        a.reorderState === "Out of Stocks" && b.reorderState !== "Out of Stocks" ? -1 : 1
+        );
+
+      case "reorder":
+        return [...inventory].sort((a, b) =>
+          a.availability === "Reorder" && b.availability !== "Reorder" ? -1 : 1
+        );
+      default:
+        return inventory; // Return unsorted if no criteria is selected
+    }
+  };
+
+  // Trigger sorting
+  const handleSort = () => {
+    setSortTrigger(true);
+  };
+
+  // Apply sorting if triggered
+  const sortedInventory = sortInventory(inventory);
+
   return (
-    <div className="container mt-5">
+    <div className="container mt-1">
       <div className="card shadow">
         <div className="card-body">
-          <h2 className="card-title">Inventory</h2>
+        <h2 className="card-title text-center">Warehouse Inventory List</h2>
+          <div className="mb-3 form-select">
+            <label htmlFor="sortCriteria" className="form-label">
+              Sort By:
+            </label>
+            <select
+              id="sortCriteria"
+              className="form-select"
+              value={sortCriteria}
+              onChange={(e) => setSortCriteria(e.target.value)}
+            >
+              <option value="">Select Sorting Criteria</option>
+              <option value="lowStock">Low Stock First</option>
+              <option value="outOfStock">Out of Stock</option>
+              <option value="reorder">Reorder Items First</option>
+            </select>
+          </div>
+
+          <div className="mb-3">
+            <button className="btn btn-info" onClick={handleSort}>
+              Sort Inventory
+            </button>
+          </div>
+        
+
           <table className="table table-bordered table-hover">
-            <thead>
+            <thead className = "table-info">
               <tr>
                 <th className="col-1">Item Number</th>
                 <th className="col-2">Item Name</th>
@@ -94,8 +139,8 @@ function ItemList() {
                 <th className="col-3">Actions</th>
               </tr>
             </thead>
-            <tbody>
-              {inventory.map((item) => (
+            <tbody className = "table-info">
+              {sortedInventory.map((item) => (
                 <tr key={item._id}>
                   <td className="col-1">
                     {editableItemId === item._id ? (
