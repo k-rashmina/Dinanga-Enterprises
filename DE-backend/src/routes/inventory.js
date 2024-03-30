@@ -7,6 +7,7 @@ const deleteController = require("../controllers/inventory/delete");
 const consumeController = require("../controllers/inventory/consume");
 const searchController = require("../controllers/inventory/search");
 const jobItemsUpdateController = require("../controllers/inventory/jobItemsUpdate");
+const getStockValueController = require("../controllers/inventory/chats/getStockValue")
 
 router.post("/add", createController.createInventoryItem);
 router.put("/updateItem/:id", updateController.updateInventoryItem);
@@ -14,6 +15,7 @@ router.get("/getAllItems", readController.getAllItems);
 router.delete("/deleteItem/:id", deleteController.deleteInventoryItem);
 router.post("/completeService", consumeController.consumedItems);
 router.get("/searchItem/:name", searchController.searchItems);
-router.get("/updateJobItem", jobItemsUpdateController.jobItemsUpdate)
+router.get("/updateJobItem", jobItemsUpdateController.jobItemsUpdate);
+router.get("/stockValueChart",getStockValueController.getStockValue)
 
 module.exports = router;
