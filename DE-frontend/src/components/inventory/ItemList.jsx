@@ -134,11 +134,12 @@ function ItemList() {
           <table className="table table-bordered table-hover">
             <thead className = "table-info">
               <tr>
-                <th className="col-1">Item Number</th>
+                {/* <th className="col-1">Item Number</th> */}
                 <th className="col-2">Item Name</th>
                 <th className="col-1">Quantity</th>
                 <th className="col-1">Reorder Level</th>
                 <th className="col-2">Reorder State</th>
+                <th className="col-2">Unit Price (LKR)</th>
                 <th className="col-2">Availability</th>
                 <th className="col-3">Actions</th>
               </tr>
@@ -146,7 +147,7 @@ function ItemList() {
             <tbody className = "table-info">
               {sortedInventory.map((item) => (
                 <tr key={item._id}>
-                  <td className="col-1">
+                  {/* <td className="col-1">
                     {editableItemId === item._id ? (
                       <input
                         type="text"
@@ -160,7 +161,7 @@ function ItemList() {
                     ) : (
                       item.itemNumber
                     )}
-                  </td>
+                  </td> */}
                   <td className="col-2">
                     {editableItemId === item._id ? (
                       <input
@@ -217,6 +218,21 @@ function ItemList() {
                       item.reorderState
                     )}
                   </td>
+
+                  <td className="col-1">
+                    {editableItemId === item._id ? (
+                      <input
+                        type="number"
+                        className="form-control"
+                        style={{ width: "100%" }}
+                        value={item.itemPrice}
+                        onChange={(e) => handleChange(e, "itemPrice", item._id)}
+                      />
+                    ) : (
+                      item.itemPrice
+                    )}
+                  </td>
+
                   <td className="col-2">
                     {editableItemId === item._id ? (
                       <select
