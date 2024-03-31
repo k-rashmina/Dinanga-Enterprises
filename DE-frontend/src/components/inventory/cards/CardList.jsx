@@ -29,6 +29,7 @@ const OrderCard = ({
 // OrderCardList component to render list of OrderCard components
 const CardList = () => {
   const [totalStockValue, setTotalStockValue] = useState(0);
+  const [stockStatus, setStockStatus] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,6 +48,19 @@ const CardList = () => {
     };
 
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchStockStatus = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/inventory/stockStatus');
+        setStockStatus(response.data);
+      } catch (error) {
+        console.error('Error fetching stock status:', error);
+      }
+    };
+  
+    fetchStockStatus();
   }, []);
 
   const formattedTotalStockValue = totalStockValue.toLocaleString('en-US', {
@@ -73,14 +87,14 @@ const CardList = () => {
       iconClass: "fa-refresh",
       bgColor: "c-yellow",
       title: "In Stocks",
-      totalOrders: 486,
+      totalOrders: stockStatus['In Stocks'] || 'Loading...', // Display 'Loading...' if data isn't fetched yet,
       completedOrders: 323,
     },
     {
       iconClass: "fa-credit-card",
       bgColor: "c-pink",
       title: "Low Stocks",
-      totalOrders: 486,
+      totalOrders: stockStatus['Low Stocks'] || 'Loading...',
       completedOrders: 324,
     },
   ];
