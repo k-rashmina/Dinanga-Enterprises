@@ -12,9 +12,9 @@ export default function SideBar({page,menu}) {
       const itemUrl = `/admin/${page.toLowerCase()}/${item.toLowerCase().split(' ').join('')}`;
       let selectedStyle;
       if(url == itemUrl){
-        selectedStyle = "nav-link active";
+        selectedStyle = "nav-link active fs-5";
       }else{
-        selectedStyle = "nav-link text-white";
+        selectedStyle = "nav-link text-white fs-5";
       }
       return(
         <li className="nav-item">
