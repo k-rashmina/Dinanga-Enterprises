@@ -89,6 +89,20 @@ body{
   color: #00ADB5;
 }
 
+/* .example::-webkit-scrollbar {
+  display: none;
+} */
+
+
+.example1 {
+  -ms-overflow-style: none;  
+  scrollbar-width: none;  
+}
+
+.clickable{
+  cursor: pointer;
+}
+
 
 /*header*/
 nav {

@@ -15,10 +15,10 @@ export default function AdminHeader({pageName}) {
       <h6 className="mt-4 text-muted flex-grow-2 ps-3" style={{width: '350px'}} >{dateString}</h6>
       <div className="mt-2 d-flex flex-grow-1 justify-content-end pe-4" style={{width: '350px'}} >
         <div>
-          <h6 className="mt-1 pe-3 mb-0">{user}</h6>
-          <p className="pt-0 text-muted" style={{fontSize: '13px'}}>View Profile</p> 
+          <h6 className="mt-1 pe-3 mb-0 clickable">{user}</h6>
+          <p className="pt-0 text-muted clickable" style={{fontSize: '13px'}}>View Profile</p> 
         </div>
-        <img src={ProfilePic} alt="user pic" width="40" height="38" />
+        <img className="clickable" src={ProfilePic} alt="user pic" width="40" height="38" />
       </div>
     </div>
 

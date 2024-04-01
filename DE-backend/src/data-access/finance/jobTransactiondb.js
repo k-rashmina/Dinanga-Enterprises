@@ -6,7 +6,7 @@ const counter = require('../../models/counter');
 //Job Transaction database reading function
 const getJobTransactionList = async (filter) => {
 
-  console.log(new Date(filter.from), new Date(`${filter.from}T00:00:00.000Z`))
+  //console.log(new Date(filter.from), new Date(`${filter.from}T00:00:00.000Z`))
 
   const filterTransact = async () => {
 
@@ -67,7 +67,7 @@ const getJobTransactionList = async (filter) => {
 
   }catch(err){
 
-    console.log(err.message);
+    //console.log(err.message);
 
   }
   

@@ -43,7 +43,7 @@ export default function SideBar({page,menu}) {
         <Link to='/admin'>
           <img className="bi me-5 ms-3" width="20" height="20" src={Arrow} alt="back"></img>
         </Link>
-        <span className="fs-4">{page}</span>
+        <span className="fs-2">{page}</span>
       </a>
 
       <br/>
