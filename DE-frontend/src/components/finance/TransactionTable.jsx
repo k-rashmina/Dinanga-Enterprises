@@ -1,9 +1,9 @@
 import React from "react";
 
 export default function TransactionTable(props) {
-  console.log(props.transactions)
+  // console.log(props.transactions)
   const transactElems = props.transactions.map(transact => {
-    console.log(transact.transact_no)
+    // console.log(transact.transact_no)
     return(
       <tr style={{height: '50px'}}> 
         <td>{transact.transact_no}</td>
