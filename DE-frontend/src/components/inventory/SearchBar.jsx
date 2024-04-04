@@ -1,29 +1,31 @@
-
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import PopUp from "./popup/PopUp";
 
 function SearchBar() {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
+  const [buttonPopup, setButtonPopup] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
-    if (searchTerm.trim() !== '') {
+    if (searchTerm.trim() !== "") {
       axios
         .get(`http://localhost:5000/inventory/searchItem/${searchTerm}`)
         .then((response) => {
-          console.log('Search results:', response.data);
+          console.log("Search results:", response.data);
           setSearchResults(response.data.searchResults);
-          setError('');
+          setError("");
         })
         .catch((error) => {
-          console.error('Error searching inventory:', error);
+          console.error("Error searching inventory:", error);
           setSearchResults([]);
-          setError('An error occurred while searching. Please try again.');
+          setError("An error occurred while searching. Please try again.");
         });
     } else {
       setSearchResults([]); // Clear search results when search term is empty
-      setError('');
+      setError("");
     }
   }, [searchTerm]);
 
@@ -40,7 +42,7 @@ function SearchBar() {
         <button
           className="btn btn-primary"
           type="button"
-          onClick={() => setSearchTerm('')}
+          onClick={() => setSearchTerm("")}
         >
           Clear
         </button>
@@ -70,6 +72,22 @@ function SearchBar() {
                     <td>{item.reorderLevel}</td>
                     <td>{item.reorderState}</td>
                     <td>{item.availability}</td>
+                    <button
+                      className="btn btn-info"
+                      onClick={() => {
+                        setButtonPopup(true);
+                        setSelectedItem(item);
+                      }}
+                    >
+                      view Details
+                    </button>
+                    <PopUp
+                      props={{
+                        trigger: buttonPopup,
+                        setTrigger: setButtonPopup,
+                      }}
+                      selectedItem={selectedItem}
+                    ></PopUp>
                   </tr>
                 ))}
               </tbody>

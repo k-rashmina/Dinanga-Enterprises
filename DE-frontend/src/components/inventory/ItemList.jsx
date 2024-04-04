@@ -134,7 +134,6 @@ function ItemList() {
           <table className="table table-bordered table-hover">
             <thead className = "table-info">
               <tr>
-                {/* <th className="col-1">Item Number</th> */}
                 <th className="col-2">Item Name</th>
                 <th className="col-1">Quantity</th>
                 <th className="col-1">Reorder Level</th>
@@ -147,21 +146,7 @@ function ItemList() {
             <tbody className = "table-info">
               {sortedInventory.map((item) => (
                 <tr key={item._id}>
-                  {/* <td className="col-1">
-                    {editableItemId === item._id ? (
-                      <input
-                        type="text"
-                        className="form-control"
-                        style={{ width: "100%" }}
-                        value={item.itemNumber}
-                        onChange={(e) =>
-                          handleChange(e, "itemNumber", item._id)
-                        }
-                      />
-                    ) : (
-                      item.itemNumber
-                    )}
-                  </td> */}
+                
                   <td className="col-2">
                     {editableItemId === item._id ? (
                       <input

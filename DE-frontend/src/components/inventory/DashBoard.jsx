@@ -2,49 +2,21 @@ import React from "react";
 import CardList from "./cards/CardList";
 import InventoryStockValueChart from "./charts/InventoryStockValueChart";
 import InventoryStockStatus from "./charts/InventoryStockStatus";
+import SearchBar from "./SearchBar";
 function DashBoard() {
   return (
     <div>
-      <CardList/>
-      <InventoryStockValueChart/>
-      <InventoryStockStatus/>
-      <div className="card mb-3" style={{width: "18rem"}}>
-        <div className="card-body">
-          <h5 className="card-title">Special title treatment</h5>
-          <p className="card-text">
-            With supporting text below as a natural lead-in to additional
-            content.
-          </p>
-          <a href="#" class="btn btn-primary">
-            Go somewhere
-          </a>
-        </div>
+      <div className="d-flex justify-content-center">
+        <h1>Dashboard</h1>
+        <SearchBar />
       </div>
+      <CardList />
 
-      <div className="card text-center mb-3"  style={{width: "18rem"}}>
-        <div className="card-body">
-          <h5 className="card-title">Special title treatment</h5>
-          <p className="card-text">
-            With supporting text below as a natural lead-in to additional
-            content.
-          </p>
-          <a href="#" class="btn btn-primary">
-            Go somewhere
-          </a>
-        </div>
+      <div className="d-flex justify-content-center">
+        <InventoryStockValueChart />
       </div>
-
-      <div className="card text-end"  style={{width: "18rem"}}>
-        <div className="card-body">
-          <h5 className="card-title">Special title treatment</h5>
-          <p className="card-text">
-            With supporting text below as a natural lead-in to additional
-            content.
-          </p>
-          <a href="#" className="btn btn-primary">
-            Go somewhere
-          </a>
-        </div>
+      <div ClassName="shadow p-3 mb-5 bg-white rounded">
+        <InventoryStockStatus />
       </div>
     </div>
   );

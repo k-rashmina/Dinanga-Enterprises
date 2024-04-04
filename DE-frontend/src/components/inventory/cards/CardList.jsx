@@ -8,22 +8,20 @@ const OrderCard = ({
   bgColor,
   title,
   totalOrders,
-  completedOrders,
 }) => (
-  <div className={`col-md-4 col-xl-3`}>
-    <div className={`card bg-${bgColor} order-card`}>
+  // <div className="card mb-5" style={{width: "18rem"}}>
+    <div className={`card bg-${bgColor} order-card card mb-5`} style={{width: "17rem", marginLeft: "20px"}}>
       <div className="card-block">
-        <h3 className="m-b-20">{title}</h3>
-        <h2 className="text-right">
-          <i className={`fa ${iconClass} f-left`}></i>
-          <span style={{ fontSize: '20px' }}>{totalOrders}</span>
+        <h2 className="m-b-20 text-center">{title}</h2>
+        <h2 className="text-center">
+          <span style={{ fontSize: '32px' }}>{totalOrders}</span>
         </h2>
-        <p className="m-b-0">
+        {/* <p className="m-b-0">
           Inventory Records<span className="f-right">{completedOrders}</span>
-        </p>
+        </p> */}
       </div>
     </div>
-  </div>
+  // </div>
 );
 
 // OrderCardList component to render list of OrderCard components
@@ -73,7 +71,7 @@ const CardList = () => {
       iconClass: "fa-cart-plus",
       bgColor: "c-blue",
       title: "Stock Value",
-      totalOrders: formattedTotalStockValue,
+      totalOrders: formattedTotalStockValue || 'Loading...',
       completedOrders: 321,
     },
     {
