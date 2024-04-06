@@ -49,11 +49,11 @@ function SearchBar() {
       </div>
       {error && <div className="alert alert-danger">{error}</div>}
       {searchResults.length > 0 && ( // Render search results only when there are results
-        <div className="card shadow">
-          <div className="card-body">
-            <h2 className="card-title">Search Results</h2>
-            <table className="table table-bordered table-hover">
-              <thead>
+        // <div className="card shadow">
+        //   <div className="card-body">
+        //     <h2 className="card-title">Search Results</h2>
+        <table>
+          {/* <thead>
                 <tr>
                   <th>Item Number</th>
                   <th>Item Name</th>
@@ -62,17 +62,17 @@ function SearchBar() {
                   <th>Reorder State</th>
                   <th>Availability</th>
                 </tr>
-              </thead>
-              <tbody>
-                {searchResults.map((item) => (
-                  <tr key={item._id}>
-                    <td>{item.itemNumber}</td>
-                    <td>{item.itemName}</td>
-                    <td>{item.quantity}</td>
+              </thead> */}
+          <tbody>
+            {searchResults.map((item) => (
+              <tr key={item._id}>
+                {/* <td>{item.itemNumber}</td> */}
+                <td>{item.itemName}</td>
+                {/* <td>{item.quantity}</td>
                     <td>{item.reorderLevel}</td>
                     <td>{item.reorderState}</td>
-                    <td>{item.availability}</td>
-                    <button
+                    <td>{item.availability}</td> */}
+                {/* <button
                       className="btn btn-info"
                       onClick={() => {
                         setButtonPopup(true);
@@ -80,20 +80,32 @@ function SearchBar() {
                       }}
                     >
                       view Details
-                    </button>
-                    <PopUp
-                      props={{
-                        trigger: buttonPopup,
-                        setTrigger: setButtonPopup,
-                      }}
-                      selectedItem={selectedItem}
-                    ></PopUp>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+                    </button> */}
+                <a
+                  href="#!"
+                  onClick={(e) => {
+                    e.preventDefault(); // Prevent default link behavior
+                    setButtonPopup(true);
+                    setSelectedItem(item);
+                  }}
+                  style={{ cursor: "pointer", textDecoration: "none" }} // Additional styling to mimic a button, if needed
+                >
+                  View Details
+                </a>
+
+                <PopUp
+                  props={{
+                    trigger: buttonPopup,
+                    setTrigger: setButtonPopup,
+                  }}
+                  selectedItem={selectedItem}
+                ></PopUp>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        //   </div>
+        // </div>
       )}
     </div>
   );
