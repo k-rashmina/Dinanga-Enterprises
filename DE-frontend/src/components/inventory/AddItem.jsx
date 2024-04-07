@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import "./AddItems.css";
+import SearchBar from "./SearchBar";
 
 function AddItem() {
   const [itemNumber, setItemNumber] = useState("");
@@ -13,7 +14,10 @@ function AddItem() {
 
   const validateItemName = () => {
     const errorsCopy = { ...errors };
+    const validNameRegex = /^[a-zA-Z0-9 ]+$/;
     if (!itemName) errorsCopy.itemName = "Item name is required";
+    else if (!validNameRegex.test(itemName))
+      errorsCopy.itemName = "Item name must be alphanumeric";
     else delete errorsCopy.itemName;
     setErrors(errorsCopy);
   };
@@ -21,7 +25,9 @@ function AddItem() {
   const validateItemNumber = () => {
     const errorsCopy = { ...errors };
     if (!itemNumber) errorsCopy.itemNumber = "Item number is required";
-    else if(!/^DE\d{3}$/i.test(itemNumber)) errorsCopy.itemNumber = "Item number must start with DE followed by 3 digits";
+    else if (!/^DE\d{3}$/i.test(itemNumber))
+      errorsCopy.itemNumber =
+        "Item number must start with DE followed by 3 digits";
     else delete errorsCopy.itemNumber;
     setErrors(errorsCopy);
   };
@@ -91,7 +97,8 @@ function AddItem() {
   }
 
   return (
-    <div class = "con">
+    <div class="con">
+      <SearchBar/>
       <div class="container-fluid px-1 py-5 mx-auto">
         <div class="row d-flex justify-content-center">
           <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
@@ -123,7 +130,10 @@ function AddItem() {
                         }`}
                         placeholder="Item Name"
                         value={itemName}
-                        onChange={(e) => setItemName(e.target.value)}
+                        onChange={(e) =>{
+                          setItemName(e.target.value)
+                          validateItemName(); // Validate in real-time  
+                        }}
                         onBlur={validateItemName}
                       />
                       {errors.itemName && (
@@ -149,7 +159,10 @@ function AddItem() {
                         }`}
                         placeholder="Enter item number"
                         value={itemNumber}
-                        onChange={(e) => setItemNumber(e.target.value)}
+                        onChange={(e) => {
+                          setItemNumber(e.target.value);
+                          validateItemNumber(); // Validate in real-time
+                        }}
                         onBlur={validateItemNumber}
                       />
                       {errors.itemNumber && (
@@ -173,7 +186,10 @@ function AddItem() {
                         }`}
                         placeholder="Enter quantity"
                         value={quantity}
-                        onChange={(e) => setQuantity(e.target.value)}
+                        onChange={(e) => {
+                          setQuantity(e.target.value);
+                          validateQuantity(); // Validate in real-time
+                        }}
                         onBlur={validateQuantity}
                       />
                       {errors.quantity && (
@@ -191,13 +207,15 @@ function AddItem() {
                         type="text"
                         id="email"
                         name="email"
-                        // class="form-control"
                         className={`form-control ${
                           errors.reorderLevel ? "is-invalid" : ""
                         }`}
                         placeholder=""
                         value={reorderLevel}
-                        onChange={(e) => setReorderLevel(e.target.value)}
+                        onChange={(e) => {
+                          setReorderLevel(e.target.value);
+                          validateReorderLevel(); // Validate in real-time
+                        }}
                         onBlur={validateReorderLevel}
                       />
                       {errors.reorderLevel && (
@@ -220,7 +238,9 @@ function AddItem() {
                         }`}
                         placeholder=""
                         value={itemPrice}
-                        onChange={(e) => setItemPrice(e.target.value)}
+                        onChange={(e) => {setItemPrice(e.target.value)
+                        validateItemPrice(); // Validate in real-time
+                        }}
                         onBlur={validateItemPrice}
                       />
                       {errors.itemPrice && (
@@ -237,7 +257,6 @@ function AddItem() {
                         Availability<span class="text-danger"> *</span>
                       </label>
                       <select
-                        // class="form-select"
                         className={`form-control ${
                           errors.availability ? "is-invalid" : ""
                         }`}

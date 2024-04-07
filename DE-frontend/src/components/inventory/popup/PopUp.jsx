@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Popup.css";
+import list_image from "./../../../assets/inventory_list.png";
+import close_image from "./../../../assets/cross.png";
 
 function PopUp({ props, selectedItem }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -47,9 +49,14 @@ function PopUp({ props, selectedItem }) {
   return props.trigger ? (
     <div className="popup">
       <div className="popup-inner">
-        <button className="close-btn" onClick={() => props.setTrigger(false)}>
-          close
-        </button>
+        <img className="list-img" src={list_image} alt="popuplist" />
+        <img
+          className="close-img"
+          src={close_image}
+          alt="close"
+          onClick={() => props.setTrigger(false)}
+        />
+
         <h5 className="d-flex justify-content-center">Item Details</h5>
         {isEditing ? (
           <>
@@ -110,7 +117,7 @@ function PopUp({ props, selectedItem }) {
               <dt className="col-sm-3">Availability</dt>
               <dd className="col-sm-8">
                 <select
-                  value = {item.availability}
+                  value={item.availability}
                   onChange={(e) =>
                     setItem({ ...item, availability: e.target.value })
                   }
@@ -157,22 +164,22 @@ function PopUp({ props, selectedItem }) {
               <dd className="col-sm-8">{item.availability}</dd>
             </dl>
 
-            <button
-              type="button"
-              class="btn btn-primary float-left mr-2"
-              onClick={handleEdit}
-             
-            >
-              Edit
-            </button>
-            <button
-              type="button"
-              class="btn btn-danger float-left mr-2"
-              onClick={handleDelete}
-              
-            >
-              Delete
-            </button>
+            <div className="d-flex justify-content-end">
+              <button
+                type="button"
+                class="btn btn-primary float-left mr-2"
+                onClick={handleEdit}
+              >
+                Edit
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger float-left mr-2"
+                onClick={handleDelete}
+              >
+                Delete
+              </button>
+            </div>
           </>
         )}
       </div>

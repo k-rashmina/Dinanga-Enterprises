@@ -16,11 +16,29 @@
     padding:32px;
     width:100%;
     max-width: 640px;
-    background-color: #d6e0de;
+    background-color: #ffffff;
     border-radius: 20px;
+    box-shadow: 10px 10px 20px rgba(0,0,0,0.3);
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    flex-direction: column; 
+    
+   
+   
 }
-.popup-inner .close-btn{
+.popup-inner .list-img{
+    width: 80px;
+    margin-top: -70px;
+    /* border-radius: 70%; */
+}
+
+
+
+.popup-inner .close-img{
     position:absolute;
     top:16px;
     right:16px;
+    width: 20px;
+    cursor: pointer;
 }
