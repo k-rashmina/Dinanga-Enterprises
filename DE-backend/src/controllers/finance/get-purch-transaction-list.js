@@ -2,7 +2,14 @@ const purchTransactionListService = require('../../services/finance/purchTransac
 
 const getPurchTransactionList = async (req, res) => {
 
-    res.json(await purchTransactionListService());
+    const filter = {
+        from: req.query.from,
+        to: req.query.to,
+        status: req.query.status,
+        order: req.query.email
+      }
+
+    res.json(await purchTransactionListService(filter));
 
 }
 

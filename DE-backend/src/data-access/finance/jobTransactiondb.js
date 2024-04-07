@@ -8,13 +8,13 @@ const getJobTransactionList = async (filter) => {
 
   //console.log(new Date(filter.from), new Date(`${filter.from}T00:00:00.000Z`))
 
-  const filterTransact = async () => {
+  try{
 
     if(filter.status && filter.job){
 
       return (await jobTransaction.find({
         'create_date': {
-          $gt: new Date(`${filter.from}T00:00:00.000Z`),
+          $gte: new Date(`${filter.from}T00:00:00.000Z`),
           $lt: new Date(filter.to)
         }
       }).where('status').equals(filter.status).where('job').equals(filter.job))
@@ -50,20 +50,6 @@ const getJobTransactionList = async (filter) => {
       }))
 
     }
-
-  }
-
-
-  try{
-
-    const jobTransactionList = filterTransact();
-
-      // .fromdate(filter.from)
-      // .todate(filter.to)
-      // .byjob(filter.job)
-      // .bystatus(filter.status)
-
-    return(jobTransactionList);
 
   }catch(err){
 

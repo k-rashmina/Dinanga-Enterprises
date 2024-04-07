@@ -6,14 +6,14 @@ export default function FilterForm(props) {
 
   //Generating the current date to set the max date in date pickers
   const date = new Date().toJSON();
-  const maxDate = date.substring(0, 10)
+  const today = date.substring(0, 10)
 
 
 
   //filter field states
   const [filterFields, setFilterFields] = useState({
-    from: '2024-03-15',
-    to: '2024-03-22',
+    from: today,
+    to: today,
     status: '',
     email: ''
   });
@@ -47,48 +47,18 @@ export default function FilterForm(props) {
     setSearch(prevState => !prevState);
   }
   // console.log(search);
-  let [transactionList, setTransactionList] = useState({});
 
   useEffect(() =>{
 
-    if(props.type == 'job'){
+    //API call for getting the job transaction list
+    axios({
+      method: 'get',
+      url: `http://localhost:5000/transaction/${props.type}?from=${filterFields.from}&to=${filterFields.to}&status=${filterFields.status}&email=${filterFields.email}`,
+    }).then(res => props.handleSubmit(res.data));
 
-      //API call for getting the job transaction list
-      axios({
-        method: 'get',
-        url: `http://localhost:5000/transaction/jobtransactionlist?from=${filterFields.from}&to=${filterFields.to}&status=${filterFields.status}&email=${filterFields.email}`,
-      }).then(res => props.handleSubmit(res.data));
-
-    }else{
-
-      //API call for getting the purchase transaction list
-
-    }
 
   }, [search])
 
-  console.log(transactionList);
-
-  // const getTransactions = async () => {
-    
-  //   let transactionList;
-
-  //   if(props.type == 'job'){
-
-  //     //API call for getting the job transaction list
-  //     await axios({
-  //       method: 'get',
-  //       url: `http://localhost:5000/transaction/jobtransactionlist?from=${from}&to=${to}&status=${status}&email=${email}`,
-  //     }).then(res => transactionList = res.data);
-
-  //   }else{
-
-  //     //API call for getting the purchase transaction list
-
-  //   }
-
-  //   return transactionList;
-  // }
 
 
   return(
@@ -97,18 +67,18 @@ export default function FilterForm(props) {
         
         <div className="d-flex align-items-center justify-content-end pe-4" style={{width: '333px'}}>
           <label style={{fontSize: '18px'}} htmlFor="from">From</label>
-          <input className="ms-3 me-0 filter-input rounded-2" type="date" name="from" required="true" max={maxDate} onChange={handleFilterFields} value={filterFields.from}/>
+          <input className="ms-3 me-0 filter-input rounded-2" type="date" name="from" required="true" max={today} onChange={handleFilterFields} value={filterFields.from}/>
         </div>
 
         <div className="d-flex align-items-center justify-content-end pe-4" style={{width: '333px'}}>
           <label style={{fontSize: '18px'}} htmlFor="to">To</label>
-          <input className="ms-3 me-0 filter-input rounded-2" type="date" name="to" required="true" max={maxDate} onChange={handleFilterFields} value={filterFields.to}/>
+          <input className="ms-3 me-0 filter-input rounded-2" type="date" name="to" required="true" max={today} onChange={handleFilterFields} value={filterFields.to}/>
         </div>
 
         <div className="d-flex align-items-center justify-content-end pe-4" style={{width: '333px'}}>
           <label style={{fontSize: '18px'}} htmlFor="status">Status</label>
           <select className="ms-3 me-0 filter-input rounded-2"  name="status" onChange={handleFilterFields} value={filterFields.status}>
-            <option value={null}></option>
+            <option value={null}>All</option>
             <option value={'pending'}>Pending</option>
             <option value={'success'}>Success</option>
             <option value={'fail'}>Fail</option>

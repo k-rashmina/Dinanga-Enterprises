@@ -4,10 +4,12 @@ export default function TransactionTable(props) {
   // console.log(props.transactions)
   const transactElems = props.transactions.map(transact => {
     // console.log(transact.transact_no)
+    let transactRef = transact.job_id || transact.order_id;
+    props.name == 'Customer' ? transact.job_id : transact.order_id 
     return(
       <tr style={{height: '50px'}}> 
         <td>{transact.transact_no}</td>
-        <td>{transact.job_id}</td>
+        <td>{transactRef}</td>
         <td>Maneesha@gmail.com</td>
         <td>{transact.create_date}</td>
         <td>{transact.status}</td>

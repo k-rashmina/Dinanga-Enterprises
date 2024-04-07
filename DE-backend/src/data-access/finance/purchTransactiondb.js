@@ -4,17 +4,56 @@ const counter = require('../../models/counter');
 
 
 //Purchase Transaction database reading function
-const getPurchTransactionList = async () => {
+const getPurchTransactionList = async (filter) => {
 
-    try{
+  try{
 
-        const purchTransactionList = await purchTransaction.find();
+    if(filter.status && filter.order){
 
-        return(purchTransactionList);
+      return (await purchTransaction.find({
+      'create_date': {
+          $gte: new Date(`${filter.from}T00:00:00.000Z`),
+          $lt: new Date(filter.to)
+      }
+      }).where('status').equals(filter.status).where('order_id').equals(filter.order))
 
-    }catch(err){
-        console.log(err.message);
     }
+    else if(filter.status){
+
+      return (await purchTransaction.find({
+      'create_date': {
+          $gte: new Date(new Date(filter.from).setHours(0o0, 0o0, 0o0)),
+          $lt: new Date(new Date(filter.to).setHours(23, 59, 59))
+      }
+      }).where('status').equals(filter.status))
+
+    }
+    else if(filter.order){
+
+      return (await purchTransaction.find({
+      'create_date': {
+          $gte: new Date(new Date(filter.from).setHours(0o0, 0o0, 0o0)),
+          $lt: new Date(new Date(filter.to).setHours(23, 59, 59))
+      }
+      }).where('order_id').equals(filter.order))
+
+    }
+    else{
+
+      return (await purchTransaction.find({
+      'create_date': {
+          $gte: new Date(new Date(filter.from).setHours(0o0, 0o0, 0o0)),
+          $lt: new Date(new Date(filter.to).setHours(23, 59, 59))
+      }
+      }))
+
+    }
+
+  }catch(err){
+
+  //console.log(err.message);
+
+  }
 
 }
 
