@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./CardList.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoneyCheck , faCheckSquare , faStar , faRocket, faStarOfDavid} from "@fortawesome/free-solid-svg-icons";
 
 // OrderCard component representing each card
 const OrderCard = ({
@@ -12,6 +14,7 @@ const OrderCard = ({
   // <div className="card mb-5" style={{width: "18rem"}}>
     <div className={`card bg-${bgColor} order-card card mb-5`} style={{width: "17rem", marginLeft: "20px"}}>
       <div className="card-block">
+        <FontAwesomeIcon icon={iconClass} size="3x" className="f-right" />
         <h2 className="m-b-20 text-center">{title}</h2>
         <h2 className="text-center">
           <span style={{ fontSize: '32px' }}>{totalOrders}</span>
@@ -68,28 +71,28 @@ const CardList = () => {
 
   const orderCards = [
     {
-      iconClass: "fa-cart-plus",
+      iconClass: faMoneyCheck,
       bgColor: "c-blue",
       title: "Stock Value",
       totalOrders: formattedTotalStockValue || 'Loading...',
       completedOrders: 321,
     },
     {
-      iconClass: "fa-rocket",
+      iconClass: faRocket,
       bgColor: "c-green",
       title: "Variations",
       totalOrders: 486,
       completedOrders: 322,
     },
     {
-      iconClass: "fa-refresh",
+      iconClass: faCheckSquare,
       bgColor: "c-yellow",
       title: "In Stocks",
       totalOrders: stockStatus['In Stocks'] || 'Loading...', // Display 'Loading...' if data isn't fetched yet,
       completedOrders: 323,
     },
     {
-      iconClass: "fa-credit-card",
+      iconClass: faStar,
       bgColor: "c-pink",
       title: "Low Stocks",
       totalOrders: stockStatus['Low Stocks'] || 'Loading...',
@@ -98,7 +101,7 @@ const CardList = () => {
   ];
 
   return (
-    <div className="flex-wrapper">
+    <div className="flex-wrapper" style={{ position :'relative',zIndex: 1 }}>
     <div className="container">
       <div className="row">
         {orderCards.map((card, index) => (

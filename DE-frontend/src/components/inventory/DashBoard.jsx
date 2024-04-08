@@ -6,11 +6,11 @@ import SearchBar from "./SearchBar";
 function DashBoard() {
   return (
     <div>
-      <div className="d-flex justify-content-center">
-        <h1>Dashboard</h1>
+      {/* <div className="d-flex justify-content-center"> */}
+        
         <SearchBar />
-      </div>
-      <CardList />
+      {/* </div> */}
+      <CardList/>
 
       <div className="d-flex justify-content-center">
         <InventoryStockValueChart />

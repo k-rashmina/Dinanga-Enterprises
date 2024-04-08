@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import SearchBar from "./SearchBar";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash ,faEdit} from '@fortawesome/free-solid-svg-icons'
+
+
 
 function ItemList() {
   const [inventory, setInventory] = useState([]);
@@ -100,38 +104,29 @@ function ItemList() {
   const sortedInventory = sortInventory(inventory);
 
   return (
-    // <div>
-    //   
+      
     <div className="container mt-1">
-      <div className="card shadow">
-        <div className="card-body">
-        <h2 className="card-title text-center">Warehouse Inventory List</h2>
+     
+       
         <SearchBar/>
-          <div className="mb-3 form-select">
-            <label htmlFor="sortCriteria" className="form-label">
-              Sort By:
-            </label>
-            <select
-              id="sortCriteria"
-              className="form-select"
-              value={sortCriteria}
-              onChange={(e) => setSortCriteria(e.target.value)}
-            >
-              <option value="">Select Sorting Criteria</option>
-              <option value="lowStock">Low Stock First</option>
-              <option value="outOfStock">Out of Stock</option>
-              <option value="reorder">Reorder Items First</option>
-            </select>
-          </div>
-
-          <div className="mb-3">
-            <button className="btn btn-info" onClick={handleSort}>
-              Sort Inventory
-            </button>
-          </div>
         
+          
 
-          <table className="table table-bordered table-hover">
+<div className="d-flex align-items-center justify-content-end pe-4" style={{width: '333px', marginLeft: '60px'}}>
+  <label style={{fontSize: '18px', whiteSpace: 'nowrap'}} htmlFor="sort">Sort Table</label>
+  <select className="ms-3 me-0 filter-input rounded-2"  name="sort" value={sortCriteria}
+      onChange={(e) => setSortCriteria(e.target.value)} style={{width: '200px'}}>
+   <option value="">Select Sorting Criteria</option>
+      <option value="lowStock">Low Stock First</option>
+      <option value="outOfStock">Out of Stock</option>
+      <option value="reorder">Reorder Items First</option>
+  </select>
+
+  <button className="form-button rounded-5 ms-9 fw-semibold" type="button" name="submit" onClick={handleSort} >Sort</button>
+</div>
+
+  
+          <table className="table table-borderless table-hover" style={{fontSize:'18px'}}>
             <thead className = "table-info">
               <tr>
                 <th className="col-2">Item Name</th>
@@ -239,13 +234,13 @@ function ItemList() {
                     {editableItemId === item._id ? (
                       <>
                         <button
-                          className="btn btn-success"
+                          className="form-button rounded-5 fw-semibold"
                           onClick={() => handleUpdate(item._id)}
                         >
                           Save
                         </button>
                         <button
-                          className="btn btn-secondary"
+                          className="form-button rounded-5 fw-semibold"
                           onClick={() => setEditableItemId(null)}
                         >
                           Cancel
@@ -253,17 +248,17 @@ function ItemList() {
                       </>
                     ) : (
                       <>
-                        <button
-                          className="btn btn-primary"
+                        <button style={{width:'90px'}}
+                          className="form-button rounded-5 fw-semibold"
                           onClick={() => handleEdit(item._id)}
                         >
-                          Edit
+                          <FontAwesomeIcon icon={faEdit} size="lg" />
                         </button>
-                        <button
-                          className="btn btn-danger"
+                        <button style={{width:'90px'}}
+                          className="form-button rounded-5 fw-semibold"
                           onClick={() => handleDelete(item._id)}
-                        >
-                          Delete
+                        ><FontAwesomeIcon icon={faTrash} size="lg" />
+                          
                         </button>
                       </>
                     )}
@@ -273,8 +268,8 @@ function ItemList() {
             </tbody>
           </table>
         </div>
-      </div>
-    </div>
+    //   </div>
+    // </div>
     // </div>
   );
 }
