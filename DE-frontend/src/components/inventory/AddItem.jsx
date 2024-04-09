@@ -103,10 +103,7 @@ function AddItem() {
         <div class="row d-flex justify-content-center">
           <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
             <h3>List a New Item</h3>
-            <p class="blue-text">
-              Just answer a few questions
-              <br /> so that we can personalize the right experience for you.
-            </p>
+           
             <div class="card">
               <h5 class="text-center mb-4">
                 Add Details for warehouse records
@@ -124,7 +121,6 @@ function AddItem() {
                         type="text"
                         id="ans"
                         name="ans"
-                        // class="form-control"
                         className={`form-control ${
                           errors.itemName ? "is-invalid" : ""
                         }`}

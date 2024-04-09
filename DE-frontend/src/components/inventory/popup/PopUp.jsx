@@ -61,12 +61,13 @@ function PopUp({ props, selectedItem }) {
         {isEditing ? (
           <>
             <dl className="row d-flex justify-content-center">
-              <dt className="col-sm-3">Item Number</dt>
-              <dd className="col-sm-8">{item.itemNumber}</dd>
+              <dt className="col-sm-4">Item Number</dt>
+              <dd className="col-sm-7">{item.itemNumber}</dd>
 
-              <dt className="col-sm-3">Item Name</dt>
-              <dd className="col-sm-8">
+              <dt className="col-sm-4">Item Name</dt>
+              <dd className="col-sm-7">
                 <input
+                 style={{border: '2px solid #00ADB5'}}
                   value={item.itemName}
                   onChange={(e) =>
                     setItem({ ...item, itemName: e.target.value })
@@ -74,9 +75,10 @@ function PopUp({ props, selectedItem }) {
                 />
               </dd>
 
-              <dt className="col-sm-3">Quantity</dt>
-              <dd className="col-sm-8">
+              <dt className="col-sm-4">Quantity</dt>
+              <dd className="col-sm-7">
                 <input
+                   style={{border: '2px solid #00ADB5'}}
                   value={item.quantity}
                   onChange={(e) =>
                     setItem({ ...item, quantity: e.target.value })
@@ -84,9 +86,10 @@ function PopUp({ props, selectedItem }) {
                 />
               </dd>
 
-              <dt className="col-sm-3">Re-Order Level</dt>
-              <dd className="col-sm-8">
+              <dt className="col-sm-4">Re-Order Level</dt>
+              <dd className="col-sm-7">
                 <input
+                   style={{border: '2px solid #00ADB5'}}
                   value={item.reorderLevel}
                   onChange={(e) =>
                     setItem({ ...item, reorderLevel: e.target.value })
@@ -94,9 +97,10 @@ function PopUp({ props, selectedItem }) {
                 />
               </dd>
 
-              <dt className="col-sm-3">Unit Price</dt>
-              <dd className="col-sm-8">
+              <dt className="col-sm-4">Unit Price</dt>
+              <dd className="col-sm-7">
                 <input
+                   style={{border: '2px solid #00ADB5'}}
                   value={item.itemPrice}
                   onChange={(e) =>
                     setItem({ ...item, itemPrice: e.target.value })
@@ -104,19 +108,23 @@ function PopUp({ props, selectedItem }) {
                 />
               </dd>
 
-              <dt className="col-sm-3">Reorder State</dt>
-              <dd className="col-sm-8">
+              <dt className="col-sm-4">Reorder State</dt>
+              <dd className="col-sm-7">
                 <input
+                   style={{border: '2px solid #00ADB5'}}
                   value={item.reorderState}
                   onChange={(e) =>
                     setItem({ ...item, reorderState: e.target.value })
                   }
+                  readOnly
                 />
               </dd>
 
-              <dt className="col-sm-3">Availability</dt>
-              <dd className="col-sm-8">
+              <dt className="col-sm-4">Availability</dt>
+              <dd className="col-sm-7">
                 <select
+                   style={{border: '2px solid #00ADB5'}}
+                  className = "form-control"
                   value={item.availability}
                   onChange={(e) =>
                     setItem({ ...item, availability: e.target.value })
@@ -128,53 +136,58 @@ function PopUp({ props, selectedItem }) {
               </dd>
             </dl>
 
-            <button type="button" class="btn btn-success" onClick={handleSave}>
+            <div className="d-flex justify-content-end">
+            <button type="button" class="form-button rounded-5 fw-semibold" onClick={handleSave}>
               Save
             </button>
             <button
               type="button"
-              class="btn btn-secondary"
+              class="form-button rounded-5 fw-semibold"
               onClick={() => setIsEditing(false)}
             >
               Cancel
             </button>
+            </div>
           </>
         ) : (
           <>
             <dl className="row d-flex justify-content-center">
-              <dt className="col-sm-3">Item Number</dt>
-              <dd className="col-sm-8">{item.itemNumber}</dd>
+              <dt className="col-sm-4">Item Number</dt>
+              <dd className="col-sm-7">{item.itemNumber}</dd>
 
-              <dt className="col-sm-3">Item Name</dt>
-              <dd className="col-sm-8">{item.itemName}</dd>
+              <dt className="col-sm-4">Item Name</dt>
+              <dd className="col-sm-7">{item.itemName}</dd>
 
-              <dt className="col-sm-3">Quantity</dt>
-              <dd className="col-sm-8">{item.quantity}</dd>
+              <dt className="col-sm-4">Quantity</dt>
+              <dd className="col-sm-7">{item.quantity}</dd>
 
-              <dt className="col-sm-3">Re-Order Level</dt>
-              <dd className="col-sm-8">{item.reorderLevel}</dd>
+              <dt className="col-sm-4">Re-Order Level</dt>
+              <dd className="col-sm-7">{item.reorderLevel}</dd>
 
-              <dt className="col-sm-3">Unit Price</dt>
-              <dd className="col-sm-8">{item.itemPrice}</dd>
+              <dt className="col-sm-4">Unit Price</dt>
+              <dd className="col-sm-7">{new Intl.NumberFormat('en-LK',{style:'currency',currency:'LKR'}).format(item.itemPrice)}</dd>
 
-              <dt className="col-sm-3">Reorder State</dt>
-              <dd className="col-sm-8">{item.reorderState}</dd>
+              <dt className="col-sm-4">Stock Value</dt>
+              <dd className="col-sm-7">{new Intl.NumberFormat('en-LK', { style: 'currency', currency: 'LKR' }).format(item.itemPrice * item.quantity)}</dd>
 
-              <dt className="col-sm-3">Availability</dt>
-              <dd className="col-sm-8">{item.availability}</dd>
+              <dt className="col-sm-4">Reorder State</dt>
+              <dd className="col-sm-7">{item.reorderState}</dd>
+
+              <dt className="col-sm-4">Availability</dt>
+              <dd className="col-sm-7">{item.availability}</dd>
             </dl>
 
             <div className="d-flex justify-content-end">
               <button
                 type="button"
-                class="btn btn-primary float-left mr-2"
+                class="form-button rounded-5 fw-semibold"
                 onClick={handleEdit}
               >
                 Edit
               </button>
               <button
                 type="button"
-                class="btn btn-danger float-left mr-2"
+                class="form-button rounded-5 fw-semibold"
                 onClick={handleDelete}
               >
                 Delete
