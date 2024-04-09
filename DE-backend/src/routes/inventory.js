@@ -9,6 +9,7 @@ const searchController = require("../controllers/inventory/search");
 const jobItemsUpdateController = require("../controllers/inventory/jobItemsUpdate");
 const getStockValueController = require("../controllers/inventory/chats/getStockValue")
 const getStockStatusController = require("../controllers/inventory/chats/getStockStatus");
+const InventoryReportController = require("../controllers/inventory/inventoryReport");
 
 router.post("/add", createController.createInventoryItem);
 router.put("/updateItem/:id", updateController.updateInventoryItem);
@@ -19,5 +20,6 @@ router.get("/searchItem/:name", searchController.searchItems);
 router.get("/updateJobItem", jobItemsUpdateController.jobItemsUpdate);
 router.get("/stockValueChart",getStockValueController.getStockValue);
 router.get("/stockStatus",getStockStatusController.getStockStatus);
+router.get("/inventoryReport", InventoryReportController.inventoryReport);
 
 module.exports = router;

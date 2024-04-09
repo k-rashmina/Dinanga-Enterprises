@@ -41,6 +41,29 @@
   color: #888;
 } */
 
+.form-button{
+  background-color: #00ADB5;
+  border-width: 2px;
+  padding: 10px 20px 10px 20px;
+  border-color: #00ADB5;
+  color: #fff;
+  border-style: solid;
+  transition: 0.4s;
+}
+.form-button:hover{
+  background-color: #EEEEEE;
+  color: #00ADB5;
+}
+
+.filter-input{
+  width: 180px;
+  padding: 5px 10px 5px 10px;
+  border-color: #00ADB5;
+  border-width: 3px;
+  border-style: solid;
+  background-color: #EEEEEE;
+}
+
 #root{
   display: flex;
 }

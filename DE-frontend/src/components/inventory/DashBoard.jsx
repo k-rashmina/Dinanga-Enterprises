@@ -6,10 +6,10 @@ import SearchBar from "./SearchBar";
 function DashBoard() {
   return (
     <div>
-      {/* <div className="d-flex justify-content-center"> */}
+      
         
         <SearchBar />
-      {/* </div> */}
+     
       <CardList/>
 
       <div className="d-flex justify-content-center">
