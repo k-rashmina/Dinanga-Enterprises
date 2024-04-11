@@ -13,7 +13,7 @@ const consultantAppointmentSchema = new schema({
         unique:true
     },
     location:{
-        type:mongoose.SchemaTypes.ObjectId,
+        type:String,
         required:true
     },
     Date:{
@@ -30,8 +30,23 @@ const consultantAppointmentSchema = new schema({
         required:true
     },
 
-    status:{  
+    jobService:{
+        type:String,
+
+    },
+
+    assignedEmployee:{
         type:String
+
+    },
+
+    respond:{
+        type:String
+    },
+
+    status:{  
+        type:String,
+        default: "pending"
     },
     
 });
