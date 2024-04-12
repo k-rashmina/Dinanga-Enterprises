@@ -47,17 +47,8 @@ const customerDetailsSchema = new schema({
         unique: true,
     },
 
-    vModel:{
-        type: String,
-        required: true,
-        unique: true,
-
-    },
-    mYear:{
-        type: Number,
-        required: true,
-        unique: true,
-    },
+    
+    
 
 });
 

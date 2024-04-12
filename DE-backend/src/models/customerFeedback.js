@@ -17,7 +17,7 @@ const customerFeedbackSchema = new schema({
 });
 
 const customerFeedback = mongoose.model(
-    "customerDetails",
+    "customerFeedback",
     customerFeedbackSchema
 );
 

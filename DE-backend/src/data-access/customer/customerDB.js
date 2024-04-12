@@ -5,7 +5,7 @@ const cusDetails = require('../../models/customerDetails');
 const getCusDetails = async(cusid) =>{
 
     try{
-        const getCusDetails = await cusDetails.find({'_id': cusid});
+        const getCusDetails = await cusDetails.findOne({'_id': cusid});
         return(getCusDetails);
     }
 
