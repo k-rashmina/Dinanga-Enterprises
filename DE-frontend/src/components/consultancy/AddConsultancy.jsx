@@ -247,7 +247,6 @@ export default function AddConsultancy() {
                               "";
                             // Json Encoding
                             var JDirect = {
-                              consultantNumber: "3",
                               Email: email,
                               location: location,
                               Date: date,
