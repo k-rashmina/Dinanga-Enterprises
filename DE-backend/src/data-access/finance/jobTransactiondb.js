@@ -59,21 +59,7 @@ const getJobTransactionList = async (filter) => {
   
 }
 
-// const getJTCount = async () => {
 
-//   return new Promise((resolve, reject) => {
-
-//     try{
-
-//       const count = 
-
-//     }catch(err){
-//       reject(err);
-//     }
-
-//   })
-
-// }
 
 
 

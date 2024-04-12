@@ -104,6 +104,20 @@ body{
 }
 
 
+/* Add Transaction */
+
+.add-form-input{
+  padding: 8px 12px 8px 12px;
+  border-color: #00ADB5;
+  border-width: 3px;
+  border-style: solid;
+  background-color: #EEEEEE;
+}
+
+.font-s-18{
+  font-size: 18px;
+}
+
 /*header*/
 nav {
   display: flex;

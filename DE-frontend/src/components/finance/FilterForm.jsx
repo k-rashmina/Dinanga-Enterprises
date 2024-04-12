@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useState } from "react";
 
 export default function FilterForm(props) {
 
@@ -19,7 +18,7 @@ export default function FilterForm(props) {
   });
 
   //saving filter form values
-  const handleFilterFields = (event) => {
+  const handleFilterFields = event => {
     
     const {name, value} = event.target;
 
@@ -43,14 +42,15 @@ export default function FilterForm(props) {
 
   const [search, setSearch] = useState(false);
 
-  const handleSearchState = () =>{
+  const handleSearchState = (event) =>{
+    event.preventDefault()
     setSearch(prevState => !prevState);
   }
   // console.log(search);
 
   useEffect(() =>{
 
-    //API call for getting the job transaction list
+    //API call for getting the job / purchase transaction list
     axios({
       method: 'get',
       url: `http://localhost:5000/transaction/${props.type}?from=${filterFields.from}&to=${filterFields.to}&status=${filterFields.status}&email=${filterFields.email}`,
@@ -63,7 +63,7 @@ export default function FilterForm(props) {
 
   return(
 
-    <form  className="div-shadow rounded-5 align-self-center mt-4 d-flex flex-wrap pt-3 pb-3" style={{width: '1040px', height: '140px'}}>
+    <form onSubmit={handleSearchState} className="div-shadow rounded-5 align-self-center mt-4 d-flex flex-wrap pt-3 pb-3" style={{width: '1040px', height: '140px'}}>
         
         <div className="d-flex align-items-center justify-content-end pe-4" style={{width: '333px'}}>
           <label style={{fontSize: '18px'}} htmlFor="from">From</label>
@@ -101,7 +101,7 @@ export default function FilterForm(props) {
 
         <div className="d-flex align-items-center justify-content-end pe-4" style={{width: '333px'}}>
           <button className="form-button rounded-5 fw-semibold" type="reset" name="reset" onClick={clearFilterFields} >Clear</button>
-          <button className="form-button rounded-5 ms-4 fw-semibold" type="button" name="submit" onClick={handleSearchState} >Search</button>
+          <button className="form-button rounded-5 ms-4 fw-semibold" name="submit" >Search</button>
         </div>
 
     </form>
