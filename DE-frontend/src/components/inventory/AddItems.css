@@ -76,6 +76,6 @@
   }
   
 
-  input{
+  #fname, #ans , #itemnumber , #quantity , #reorderlevel , #unitprice  ,#availability{
     border:2px solid #00BCD4;
   }

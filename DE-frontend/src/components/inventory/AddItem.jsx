@@ -147,8 +147,8 @@ function AddItem() {
                       </label>
                       <input
                         type="text"
-                        id="fname"
-                        name="fname"
+                        id="itemnumber"
+                        name="itemnumber"
                         // class="form-control"
                         className={`form-control ${
                           errors.itemNumber ? "is-invalid" : ""
@@ -174,8 +174,8 @@ function AddItem() {
                       </label>
                       <input
                         type="text"
-                        id="lname"
-                        name="lname"
+                        id="quantity"
+                        name="quantity"
                         // class="form-control"
                         className={`form-control ${
                           errors.quantity ? "is-invalid" : ""
@@ -201,8 +201,8 @@ function AddItem() {
                       </label>
                       <input
                         type="text"
-                        id="email"
-                        name="email"
+                        id="reorderlevel"
+                        name="reorderlevel"
                         className={`form-control ${
                           errors.reorderLevel ? "is-invalid" : ""
                         }`}
@@ -226,8 +226,8 @@ function AddItem() {
                       </label>
                       <input
                         type="text"
-                        id="mob"
-                        name="mob"
+                        id="unitprice"
+                        name="unitprice"
                         // class="form-control"
                         className={`form-control ${
                           errors.itemPrice ? "is-invalid" : ""

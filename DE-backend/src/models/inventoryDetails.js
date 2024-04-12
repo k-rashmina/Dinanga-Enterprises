@@ -37,7 +37,7 @@ const inventoryDetailsSchema = new schema({
     type: Date,
     default: Date.now,
   },
-});
+},{timestamps: true});
 
 inventoryDetailsSchema.methods.updateReorderState = function () {
   if (this.quantity == 0) {
