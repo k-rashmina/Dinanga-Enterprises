@@ -1,39 +1,61 @@
 const mongoose = require("mongoose");
 const schema = mongoose.Schema;
 
+
 const jobAppointmentSchema = new schema({
-    jobNumber: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-  Date: {
-    type: Date,
-    required: true,
-  },
-  Time: {
+
+
+  jobNumber:{
     type: String,
-    required: true,
+    unique: true,
+    null:false,
+    
   },
+
+  date: {
+    type: Date,
+    //required: true,
+  },
+
+  time: {
+    type: String,
+    //required: true,
+  },
+
+  email:{
+  type:String,
+  },
+
+
   location: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
+    type: String,
+    //required: true,
+    ref: "Location"
   },
+
   serviceType: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref:"services"
+    type: String,
+    //required: true,
+    ref: "services"
   },
+
   vehicleType: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
+    type: String,
+    //required: true,
+    ref:"Vehicle_type"
   },
-  status:{
+
+  status: {
     type: String
+  },
+
+  employeeName: {
+    type: String,
   }
 
-  
+
 });
+
 
 
 const servicesModelSchema = new schema({
@@ -48,9 +70,13 @@ const servicesModelSchema = new schema({
   item_list: {
     type: Object,
     required: true
- 
+
   },
 });
+
+
+
+
 
 const servicesModel = mongoose.model(
   "services",
@@ -62,3 +88,31 @@ const jobAppointment = mongoose.model(
   jobAppointmentSchema
 );
 module.exports = jobAppointment;
+
+
+
+
+
+// jobAppointmentSchema.index({ jobNumber: 1 }, { unique: true }); // Maintain unique index
+// jobAppointmentSchema.pre('save', function(next) {
+//   if (this.jobNumber === null) {
+//     throw new Error("jobNumber cannot be null");
+//   }
+//   next();
+// });
+
+// Usage
+// const newJobAppointment = new jobAppointment({
+//   jobNumber: "2",
+  // Date: ,
+  // Time:'',
+  // location: '',
+  // serviceType: '',
+  // vehicleType: '',
+  
+
+// });
+
+// newJobAppointment.save()
+//   .then(() => console.log("Job appointment created successfully!"))
+//   .catch((error) => console.error("Error creating job appointment:", error));

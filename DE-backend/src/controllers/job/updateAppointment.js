@@ -6,22 +6,25 @@ const updateAppointment= async (req, res) => {
       let objectid = req.params.id;
   
       const {
-        Date,
-        Time,
+        date,
+        time,
         location,
         serviceType,
         vehicleType,
         status,
+        employeeName,
       } = req.body;
 
+      
   
       const updateStates = {
-        Date,
-        Time,
+        date,
+        time,
         location,
         serviceType,
         vehicleType,
         status,
+        employeeName,
       };
   
       const updatedjobAppointment= await jobAppointment.findByIdAndUpdate(

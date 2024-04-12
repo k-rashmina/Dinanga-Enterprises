@@ -1,8 +1,20 @@
 import {BrowserRouter, Routes, Route, Link} from 'react-router-dom';
+import "bootstrap/dist/css/bootstrap.min.css";
+
 // import { useState } from 'react'
 import Layout from './components/common/Layout';
 import AdminLayout from './components/common/AdminLayout';
 import AdminPanel from './components/common/AdminPanel';
+
+
+import Services from '../src/components/job/Services';
+import JobAppointment from '../src/components/job/jobAppointment';
+import JobCustomer from '../src/components/job/jobCustomer';
+
+import JobAdmin from '../src/components/job/jobAdmin';
+import UpdateAppointment from '../src/components/job/updateAppointment';
+
+
 
 
 function App() {
@@ -19,7 +31,13 @@ function App() {
           <Route path='/cusprofile' element/>
           <Route path='/cusfeedback' element/>
           <Route path='/job' element/>
-          <Route path='/services' element/>
+
+          <Route path="/services" element={<Services />} />
+          <Route path="/jobAppointment" element={<JobAppointment />} />
+          <Route path="/jobCustomer" element={<JobCustomer />} />
+          <Route path="/updateAppointment" element={<UpdateAppointment/>} />
+
+          
           <Route path='/job/reqjob' element/>
           <Route path='/consultancy' element/>
           <Route path='/consultancy/req' element/>
@@ -52,11 +70,14 @@ function App() {
         </Route>
 
         {/* admin job routes */}
-        <Route element={<AdminLayout page={'Job'} menu={["Job List", "Add Job"]}/>}>
-          <Route path='/admin/job/joblist' element/>
+        <Route element={<AdminLayout page={'Job'} menu={["Job List", "report"]}/>}>
+          <Route path='/admin/job/joblist' element={<JobAdmin />}/>
           <Route path='/admin/job/addjob' element/>
           <Route path='/admin/job/updatejob' element/>
           <Route path='/admin/job/deletejob' element/>
+          <Route path='/admin/job/report' element/>
+          {/* <Route path="/jobAdmin" element={<JobAdmin />} /> */}
+
         </Route>
 
         {/* admin inventory routes */}
