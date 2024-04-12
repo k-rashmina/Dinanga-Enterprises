@@ -5,20 +5,20 @@ const customerDetailsSchema = new schema({
     cusFname:{
         type: String,
         required: true,
-        unique: true,
+        
     },
 
     cusLname:{
 
         type: String,
         required: true,
-        unique: true,
+        
     },
 
     bDate:{
         type: Date,
         required: true,
-        unique:true,
+        
     },
 
     cusMail:{
@@ -31,20 +31,20 @@ const customerDetailsSchema = new schema({
     cusPassword:{
         type: String,
         required: true,
-        unique: true,
+        
     },
 
 
     pNum:{
         type: Number,
         required: true,
-        unique: true,
+        
     },
 
     cusAddr:{
         type: String,
         required: true,
-        unique: true,
+        
     },
 
     
@@ -53,7 +53,7 @@ const customerDetailsSchema = new schema({
 });
 
 const customerDetails = mongoose.model(
-    "customerDetails",
+    "customer",
     customerDetailsSchema
 );
 
