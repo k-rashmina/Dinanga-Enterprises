@@ -16,6 +16,9 @@ const inventoryDetailsSchema = new schema({
     type: Number,
     required: true,
   },
+  previousQuantity:{
+    type:Number,
+  },
   reorderLevel: {
     type: Number,
     required: true,

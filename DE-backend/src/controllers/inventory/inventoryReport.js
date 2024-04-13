@@ -5,6 +5,8 @@ const { fetchStockStatus } = require("../inventory/chats/getStockStatus");
 const inventoryReport = async (req, res) => {
   let report;
   let stockStatuses;
+  let increasedItems;
+  let decreasedItems;
 
   // Get the date for one week ago
   const oneWeekAgo = new Date();
@@ -21,6 +23,14 @@ const inventoryReport = async (req, res) => {
         { updatedAt: { $gte: oneWeekAgo } },
       ],
     });
+
+    // Separate increased and decreased items
+    increasedItems = report.filter(
+      (item) => item.quantity > item.previousQuantity
+    );
+    decreasedItems = report.filter(
+      (item) => item.quantity < item.previousQuantity
+    );
   } catch (err) {
     return res
       .status(500)
@@ -40,7 +50,7 @@ const inventoryReport = async (req, res) => {
 
   html +=
     '<h1 style="font-size: 18px; text-align: center; font-family:Calibri">Inventory Report</h1>' +
-    '<h2 style="font-size:18px; font:family:Calibri">From ' +
+    '<h2 style="font-size:18px; font-family:Calibri">From ' +
     oneWeekAgoStr +
     " To " +
     todayStr +
@@ -58,8 +68,7 @@ const inventoryReport = async (req, res) => {
     "<th>Reorder State</th>" +
     "<th>Item Price</th>" +
     "<th>Availability</th>";
-  // "<th>Created At</th>"+
-  // "<th>Updated At</th>"+
+
   ("</tr>");
   report.forEach((item) => {
     html += `<tr>
@@ -72,13 +81,102 @@ const inventoryReport = async (req, res) => {
        
         </tr>`;
   });
+
   html += "</table>";
-  // Add stock statuses to the HTML
-  html += '<h2  style="font-size: 18px;font-family:Calibri">Stock Stats</h2>';
-  Object.keys(stockStatuses).forEach((status) => {
-    html += `<p style =\"font-size:12px;font-family:Calibri
-      \" >${status}: ${stockStatuses[status]}</p>`;
+
+  // Add New Stocks items to the HTML
+  html +=
+    '<h2  style="font-size: 18px;font-family:Calibri">Recived Stocks</h2>' +
+    '<table style="width: 100%">' +
+    "<tr>" +
+    '<th style="font-size: 12px;font-family:Calibri">' +
+    "Item Name</th>" +
+    '<th style="font-size: 12px;font-family:Calibri">Received New Stocks (qty)</th>' +
+    '<th style="font-size: 12px;font-family:Calibri">Unit Selling Price</th>' +
+    '<th style=="font-size: 12px;font-family:Calibri">Increased Stock Value</th>';
+  ("</tr>");
+  increasedItems.forEach((item) => {
+    html += `<tr>
+              <td style="font-size:12px;font-family:Calibri">${
+                item.itemName
+              }  </td>
+              <td style="font-size:12px;font-family:Calibri">${
+                item.quantity - item.previousQuantity
+              }</td>
+              <td style="font-size:12px;font-family:Calibri">${new Intl.NumberFormat(
+                "en-LK",
+                { style: "currency", currency: "LKR" }
+              ).format(
+                item.itemPrice
+              )}</td>
+              <td style="font-size:12px;font-family:Calibri">${new Intl.NumberFormat(
+                "en-LK",
+                { style: "currency", currency: "LKR" }
+              ).format(
+                (item.quantity - item.previousQuantity) * item.itemPrice
+              )}</td>
+              </tr>`;
   });
+  html += "</table>";
+
+  // Add Sold items to the HTML
+  html +=
+    '<h2  style="font-size: 18px;font-family:Calibri">Sold(consumed) Items</h2>' +
+    '<table style="width: 100%">' +
+    "<tr>" +
+    '<th style="font-size: 12px;font-family:Calibri">Item Name</th>' +
+    '<th style="font-size: 12px;font-family:Calibri">Number of Sold Items</th>' +
+    '<th style="font-size: 12px;font-family:Calibri">Unit Sold Price</th>' +
+    '<th style=="font-size: 12px;font-family:Calibri">Decreased Stock Value</th>';
+  ("</tr>");
+  decreasedItems.forEach((item) => {
+    html += `<tr>
+              <td style="font-size:12px;font-family:Calibri">${
+                item.itemName
+              }</td>
+              <td style="font-size:12px;font-family:Calibri">${
+                item.previousQuantity - item.quantity
+              }</td>
+              <td style="font-size:12px;font-family:Calibri">${new Intl.NumberFormat(
+                "en-LK",
+                { style: "currency", currency: "LKR" }
+              ).format(
+                item.itemPrice
+              )}</td>
+              <td style="font-size:12px;font-family:Calibri">${new Intl.NumberFormat(
+                "en-LK",
+                { style: "currency", currency: "LKR" }
+              ).format(
+                (item.previousQuantity - item.quantity) * item.itemPrice
+              )}</td>
+            </tr>`;
+  });
+  html += "</table>";
+
+// Add stock statuses to the HTML
+html += "</table><br>";
+html += '<div style="margin-top: 20px;">';
+html += '<h2  style="font-size: 18px;font-family:Calibri">Stock Stats</h2>';
+html += '<table style="width: 100%; font-size:12px;font-family:Calibri">';
+html += '<tr>';
+Object.keys(stockStatuses).forEach((status) => {
+  html += `<th>${status}</th>`;
+});
+html += '</tr><tr>';
+Object.keys(stockStatuses).forEach((status) => {
+  html += `<td>${stockStatuses[status]}</td>`;
+});
+html += '</tr></table>';
+
+// Calculate total inventory value
+let totalInventoryValue = 0;
+Object.keys(stockStatuses).forEach((status) => {
+  totalInventoryValue += stockStatuses[status];
+});
+
+// Add total inventory value to the HTML
+html += `<h2 style="font-size: 18px;font-family:Calibri">Total Inventory Value: ${new Intl.NumberFormat('en-LK', { style: 'currency', currency: 'LKR' }).format(totalInventoryValue)}</h2>`;
+html += '</div>';
 
   try {
     const browser = await puppeteer.launch();
