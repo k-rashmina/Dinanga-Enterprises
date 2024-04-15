@@ -11,6 +11,7 @@ const getStockValueController = require("../controllers/inventory/chats/getStock
 const getStockStatusController = require("../controllers/inventory/chats/getStockStatus");
 const InventoryReportController = require("../controllers/inventory/inventoryReport");
 
+
 router.post("/add", createController.createInventoryItem);
 router.put("/updateItem/:id", updateController.updateInventoryItem);
 router.get("/getAllItems", readController.getAllItems);
@@ -21,5 +22,6 @@ router.get("/updateJobItem", jobItemsUpdateController.jobItemsUpdate);
 router.get("/stockValueChart",getStockValueController.getStockValue);
 router.get("/stockStatus",getStockStatusController.getStockStatus);
 router.get("/inventoryReport", InventoryReportController.inventoryReport);
+
 
 module.exports = router;
