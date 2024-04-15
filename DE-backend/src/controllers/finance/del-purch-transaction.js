@@ -3,7 +3,7 @@ const delPurchTransactionService = require('../../services/finance/delPurchTrans
 
 const delPurchTransaction = async (req, res) => {
 
-    const delTransactId = req.body._id;
+    const delTransactId = req.body.id;
 
     res.json(await delPurchTransactionService(delTransactId));
 

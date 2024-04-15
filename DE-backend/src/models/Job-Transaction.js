@@ -5,19 +5,35 @@ const Schema = mongoose.Schema;
 const jobTrasactionSchema = new Schema({
   status: {
     type: String,
+    enum: ['pending', 'success', 'fail'],
     required: true,
   },
   amount: {
-    type: Number,
-    required: true
+    job_amt: {
+      type: Number,
+      required: true
+    },
+    tax_amt: {
+      type: Number,
+      required: true
+    },
+    tot_amount: {
+      type: Number,
+      
+    }
   },
-  job_id: {
+  ref_id: {
     type: mongoose.SchemaTypes.ObjectId,
-    ref: 'job'
+    refPath: 'model_type',
+    required: true
   },
   desc: {
     type: String,
     default: 'Sales Transaction',
+  },
+  transact_type: {
+    type: String,
+    enum: ['online', 'offline']
   },
   create_date: {
     type: Date,
@@ -30,6 +46,22 @@ const jobTrasactionSchema = new Schema({
   },
   transact_no: {
     type: String,
+    required: true
+  },
+  pay_date: {
+    type: Date,
+  },
+  pay_type: {
+    type: String,
+    enum: ['transfer', 'cash'],
+    default: 'cash'
+  },
+  pay_rcpt: {
+    type: String
+  },
+  model_type: {
+    type: String,
+    enum: ['jobappointments', 'services'],
     required: true
   }
 })
