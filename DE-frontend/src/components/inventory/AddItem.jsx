@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import "./AddItems.css";
 import SearchBar from "./SearchBar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWarehouse } from '@fortawesome/free-solid-svg-icons';
 
 function AddItem() {
   const [itemNumber, setItemNumber] = useState("");
@@ -102,11 +104,12 @@ function AddItem() {
       <div class="container-fluid px-1 py-5 mx-auto">
         <div class="row d-flex justify-content-center">
           <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
-            <h3>List a New Item</h3>
+            
            
-            <div class="card">
+            <div class="card"style = {{borderRadius:"10px",boxShadow:"0px 0px 10px 2px rgba(0,0,0,0.4)"}}>
               <h5 class="text-center mb-4">
                 Add Details for warehouse records
+                <FontAwesomeIcon icon={faWarehouse} style={{ marginLeft: "10px" }} />
               </h5>
               <form className="form-card" onSubmit={sendData}>
                 <div class="row justify-content-between text-left">

@@ -64,6 +64,16 @@
   background-color: #EEEEEE;
 }
 
+/* Item List in Inventory */
+#form-control{
+  width:"100%";
+  border-color: #00ADB5;
+  border-width: 3px;
+  border-style: solid;
+  background-color: #EEEEEE;
+  border-radius: 5px;
+}
+
 #root{
   display: flex;
 }
