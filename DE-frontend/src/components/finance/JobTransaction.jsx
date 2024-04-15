@@ -15,8 +15,8 @@ export default function JobTransaction() {
   }
 
 
-  console.log(jobtransactList)
-  console.log('jobtransactList')
+  console.log('jobtransactList', jobtransactList)
+
   return(
 
     <div className="d-flex flex-column" style={{height: '100vh'}}>

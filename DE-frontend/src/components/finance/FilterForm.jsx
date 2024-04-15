@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 
 export default function FilterForm(props) {
@@ -14,7 +14,8 @@ export default function FilterForm(props) {
     from: today,
     to: today,
     status: '',
-    email: ''
+    email: '',
+    t_type: ''
   });
 
   //saving filter form values
@@ -37,33 +38,41 @@ export default function FilterForm(props) {
     from: '',
     to: '',
     status: '',
-    email: ''
+    email: '',
+    t_type: ''
   })}
 
+  const hasPageLoaded = useRef(false);
   const [search, setSearch] = useState(false);
 
   const handleSearchState = (event) =>{
-    event.preventDefault()
+    event.preventDefault();
     setSearch(prevState => !prevState);
+    hasPageLoaded.current = true;
   }
   // console.log(search);
 
+//API call for getting the job / purchase transaction list
   useEffect(() =>{
 
-    //API call for getting the job / purchase transaction list
-    axios({
-      method: 'get',
-      url: `http://localhost:5000/transaction/${props.type}?from=${filterFields.from}&to=${filterFields.to}&status=${filterFields.status}&email=${filterFields.email}`,
-    }).then(res => props.handleSubmit(res.data));
+    if(hasPageLoaded.current == true){
+      axios({
+        method: 'get',
+        url: `http://localhost:5000/transaction/${props.type}?from=${filterFields.from}&to=${filterFields.to}&status=${filterFields.status}&email=${filterFields.email}&t_type=${filterFields.t_type}`,
+      }).then(res => {
+        console.log(res.data);
+        props.handleSubmit(res.data)
+      });
+    }
 
 
   }, [search])
 
-
+  console.log(hasPageLoaded.current);
 
   return(
 
-    <form onSubmit={handleSearchState} className="div-shadow rounded-5 align-self-center mt-4 d-flex flex-wrap pt-3 pb-3" style={{width: '1040px', height: '140px'}}>
+    <form onSubmit={handleSearchState} className="div-shadow rounded-5 align-self-center mt-4 d-flex flex-wrap pt-3 pb-3" style={{width: '1040px', height: '170px'}}>
         
         <div className="d-flex align-items-center justify-content-end pe-4" style={{width: '333px'}}>
           <label style={{fontSize: '18px'}} htmlFor="from">From</label>
@@ -78,7 +87,7 @@ export default function FilterForm(props) {
         <div className="d-flex align-items-center justify-content-end pe-4" style={{width: '333px'}}>
           <label style={{fontSize: '18px'}} htmlFor="status">Status</label>
           <select className="ms-3 me-0 filter-input rounded-2"  name="status" onChange={handleFilterFields} value={filterFields.status}>
-            <option value={null}>All</option>
+            <option value={''}>All</option>
             <option value={'pending'}>Pending</option>
             <option value={'success'}>Success</option>
             <option value={'fail'}>Fail</option>
@@ -86,17 +95,17 @@ export default function FilterForm(props) {
         </div>
 
         <div className="d-flex align-items-center justify-content-end pe-4" style={{width: '333px'}}>
-          <label style={{fontSize: '18px'}} htmlFor="email">{props.emailField}</label>
-          <input className="ms-3 me-0 filter-input rounded-2" type="email" name="email" onChange={handleFilterFields} value={filterFields.email}/>
+          <label style={{fontSize: '18px'}} htmlFor="t_type">Type</label>
+          <select className="ms-3 me-0 filter-input rounded-2"  name="t_type" onChange={handleFilterFields}>
+            <option value={''}>All</option>
+            <option value={'online'}>Online</option>
+            <option value={'offline'}>Offline</option>
+          </select>
         </div>
 
         <div className="d-flex align-items-center justify-content-end pe-4" style={{width: '333px'}}>
-          <label style={{fontSize: '18px'}} htmlFor="sort">Sort</label>
-          <select className="ms-3 me-0 filter-input rounded-2"  name="sort" onChange={handleFilterFields}>
-            <option value={null}></option>
-            <option value={'highest'}>Highest Amount</option>
-            <option value={'lowest'}>Lowest Amount</option>
-          </select>
+          <label style={{fontSize: '18px'}} htmlFor="email">{props.emailField}</label>
+          <input className="ms-3 me-0 filter-input rounded-2" type="email" name="email" onChange={handleFilterFields} value={filterFields.email}/>
         </div>
 
         <div className="d-flex align-items-center justify-content-end pe-4" style={{width: '333px'}}>

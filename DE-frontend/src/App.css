@@ -89,9 +89,9 @@ body{
   color: #00ADB5;
 }
 
-/* .example::-webkit-scrollbar {
+.example::-webkit-scrollbar {
   display: none;
-} */
+}
 
 
 .example1 {
