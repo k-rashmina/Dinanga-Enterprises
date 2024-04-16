@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import SearchBar from "./SearchBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faEdit  } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 
 function ItemList() {
   const [inventory, setInventory] = useState([]);
@@ -143,10 +143,7 @@ function ItemList() {
         </button>
       </div>
 
-      <table
-        className=""
-        style={{ fontSize: "18px" }}
-      >
+      <table className="" style={{ fontSize: "18px" }}>
         <thead className="table-info">
           <tr>
             <th className="col-2">Item Name</th>
@@ -156,10 +153,15 @@ function ItemList() {
             <th className="col-2">Unit Price (LKR)</th>
             <th className="col-2">Availability</th>
             <th className="col-3">Actions</th>
-         
           </tr>
         </thead>
-        <tbody className="table-info"style = {{boxShadow:"0px 0px 10px 2px rgba(0,0,0,0.4)",borderRadius: "10px"}}>
+        <tbody
+          className="table-info"
+          style={{
+            boxShadow: "0px 0px 10px 2px rgba(0,0,0,0.4)",
+            borderRadius: "10px",
+          }}
+        >
           {sortedInventory.map((item) => (
             <tr key={item._id}>
               <td className="col-2" style={{ padding: "10px" }}>
@@ -167,7 +169,7 @@ function ItemList() {
                   <input
                     type="text"
                     className="form-control"
-                    id = "form-control"
+                    id="form-control"
                     value={item.itemName}
                     onChange={(e) => handleChange(e, "itemName", item._id)}
                   />
@@ -180,7 +182,7 @@ function ItemList() {
                   <input
                     type="number"
                     className="form-control"
-                    id = "form-control"
+                    id="form-control"
                     value={item.quantity}
                     onChange={(e) => handleChange(e, "quantity", item._id)}
                   />
@@ -193,7 +195,7 @@ function ItemList() {
                   <input
                     type="number"
                     className="form-control"
-                    id = "form-control"
+                    id="form-control"
                     value={item.reorderLevel}
                     onChange={(e) => handleChange(e, "reorderLevel", item._id)}
                   />
@@ -206,7 +208,7 @@ function ItemList() {
                   <input
                     type="text"
                     className="form-control"
-                    id = "form-control"
+                    id="form-control"
                     value={item.reorderState}
                     onChange={(e) => handleChange(e, "reorderState", item._id)}
                   />
@@ -220,12 +222,15 @@ function ItemList() {
                   <input
                     type="number"
                     className="form-control"
-                    id = "form-control"
+                    id="form-control"
                     value={item.itemPrice}
                     onChange={(e) => handleChange(e, "itemPrice", item._id)}
                   />
                 ) : (
-                  new Intl.NumberFormat('en-US', { style: 'currency', currency: 'LKR' }).format(item.itemPrice)
+                  new Intl.NumberFormat("en-US", {
+                    style: "currency",
+                    currency: "LKR",
+                  }).format(item.itemPrice)
                 )}
               </td>
 
@@ -233,7 +238,7 @@ function ItemList() {
                 {editableItemId === item._id ? (
                   <select
                     className="form-select"
-                    id = "form-control"
+                    id="form-control"
                     value={item.availability}
                     onChange={(e) => handleChange(e, "availability", item._id)}
                   >
