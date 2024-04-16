@@ -4,8 +4,8 @@ const schema = mongoose.Schema;
 const supplierDetailsSchema = new schema ({
     Supplier_bname:{
         type: String,
-        required: true,
-        unique: true,
+        //required: true,
+
     },
 
     Supplier_email:{
@@ -33,7 +33,7 @@ const supplierDetailsSchema = new schema ({
 });
 
 const supplierDetails = mongoose.model(
-    "supplierDetails",
+    "suppliers",
     supplierDetailsSchema
 );
 module.exports = supplierDetails;
