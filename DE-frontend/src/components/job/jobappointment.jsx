@@ -8,16 +8,15 @@ const JobServicesAppointmentFormBootstrap = () => {
   const [formData, setFormData] = useState({
     date: '',
     time: '',
-    email:'',
+    email: '',
     location: '',
     serviceType: '',
     vehicleType: '',
-    jobNumber:'5',
-    status:'pending',
-    
+    status: 'pending',
+
   });
 
-  const [formComplete , setFormComplete] = useState(false);
+  const [formComplete, setFormComplete] = useState(false);
   const [dateErr, setDateErr] = useState('');
   const [timeErr, setTimeErr] = useState('');
 
@@ -54,20 +53,20 @@ const JobServicesAppointmentFormBootstrap = () => {
           setDateErr('');
         }
         break;
-        case 'time':
-          if (formData.time === '') {
-            setTimeErr('Time is required.');
-          } else {
-            setTimeErr('');
-          }
-          break;
-          case 'email':
-            if (formData.email === '') {
-              setEmailErr('Email is required.');
-            } else {
-              setEmailErr('');
-            }
-            break;
+      case 'time':
+        if (formData.time === '') {
+          setTimeErr('Time is required.');
+        } else {
+          setTimeErr('');
+        }
+        break;
+      case 'email':
+        if (formData.email === '') {
+          setEmailErr('Email is required.');
+        } else {
+          setEmailErr('');
+        }
+        break;
       case 'location':
         if (formData.location === '') {
           setLocationErr('Location is required.');
@@ -95,16 +94,16 @@ const JobServicesAppointmentFormBootstrap = () => {
   };
 
   const [emailErr, setEmailErr] = useState('');
- 
 
-  const emailValidation =(e) =>{
+
+  const emailValidation = (e) => {
     console.log(e)
     const emailVal = e.target.value;
     const regEx = /^[^\.\s][\w\-]+(\.[\w\-]+)*@([\w-]+\.)+[\w-]{2,}$/gm
-    if(regEx.test(emailVal)){
+    if (regEx.test(emailVal)) {
       setEmailErr('');
       console.log('correct')
-    }else{
+    } else {
       setEmailErr('Email is invalid');
       console.log('incorrect')
     }
@@ -135,43 +134,43 @@ const JobServicesAppointmentFormBootstrap = () => {
   return (
     <Container fluid style={{ minHeight: '100vh', backgroundColor: '#191B1A', alignItems: 'center', display: 'flex', justifyContent: 'center' }}>
       <Row className="justify-content-md-center align-items-center" style={{ minHeight: '100vh' }}>
-        <Col lg={18}>
+        <Col lg={11}>
           <Form action="POST" onSubmit={handleSubmit} style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '15px', boxShadow: '0 3px 10px rgba(0,0,0,.2)' }}>
             <Row>
               <Col md={6} className="d-flex flex-column">
                 <h5 style={{ marginBottom: '0px', fontWeight: 'bold' }}>Job Services Appointment</h5>
                 <Form.Group className="mb-3">
                   <Form.Label>Date</Form.Label>
-                  <Form.Control type="date" name="date" value={formData.date} onChange={(e)=>{
+                  <Form.Control type="date" name="date" value={formData.date} onChange={(e) => {
                     handleChange(e);
                     validateForm(e);
 
                   }} required min={today} onBlur={() => handleBlur('date')} />
-                   <p style={{color: 'red'}}>{dateErr}</p>
+                  <p style={{ color: 'red' }}>{dateErr}</p>
 
                 </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Label>Time</Form.Label>
-                  <Form.Control type="time" name="time" value={formData.time} onChange={(e)=>{
+                  <Form.Control type="time" name="time" value={formData.time} onChange={(e) => {
                     handleChange(e);
                     validateForm(e);
 
                   }} required onBlur={() => handleBlur('time')} />
-                   <p style={{color: 'red'}}>{timeErr}</p>
+                  <p style={{ color: 'red' }}>{timeErr}</p>
                 </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Label>Email</Form.Label>
                   <Form.Control type="email" name="email" placeholder='Enter valid email' value={formData.email} onChange={(e) => {
-                      handleChange(e);
-                      validateForm(e);
+                    handleChange(e);
+                    validateForm(e);
 
-                      emailValidation(e);
+                    emailValidation(e);
                   }} required onBlur={() => handleBlur('email')} />
-                  <p style={{color: 'red'}}>{emailErr}</p>
+                  <p style={{ color: 'red' }}>{emailErr}</p>
                 </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Label>Location</Form.Label>
-                  <Form.Select name="location" value={formData.location} onChange={(e)=>{
+                  <Form.Select name="location" value={formData.location} onChange={(e) => {
                     handleChange(e);
                     validateForm(e);
 
@@ -186,15 +185,15 @@ const JobServicesAppointmentFormBootstrap = () => {
                     <option>Rathnapura</option>
                     <option>Badulla</option>
                   </Form.Select>
-                  <p style={{color: 'red'}}>{locationErr}</p>
+                  <p style={{ color: 'red' }}>{locationErr}</p>
                 </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Label>Service Type</Form.Label>
-                  <Form.Select name="serviceType" value={formData.serviceType} onChange={(e)=>{
+                  <Form.Select name="serviceType" value={formData.serviceType} onChange={(e) => {
                     handleChange(e);
                     validateForm(e);
 
-                  }}required onBlur={() => handleBlur('serviceType')}>
+                  }} required onBlur={() => handleBlur('serviceType')}>
                     <option value="">Select Service Type</option>
                     <option>battery replacement</option>
                     <option>abs replacement</option>
@@ -210,7 +209,7 @@ const JobServicesAppointmentFormBootstrap = () => {
                 </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Label>Vehicle Type</Form.Label>
-                  <Form.Select name="vehicleType" value={formData.vehicleType}  onChange={(e)=>{
+                  <Form.Select name="vehicleType" value={formData.vehicleType} onChange={(e) => {
                     handleChange(e);
                     validateForm(e);
 
@@ -219,11 +218,13 @@ const JobServicesAppointmentFormBootstrap = () => {
                     <option>Toyota</option>
                     <option>Honda</option>
                     <option>Nissan</option>
+                    <option>Mitsubishi</option>
+
 
                   </Form.Select>
                   <p style={{ color: 'red' }}>{vehicleTypeErr}</p>
 
-                </Form.Group> 
+                </Form.Group>
                 <Button variant="primary" type="submit" style={{ marginTop: '10px', backgroundColor: '#00adb4', borderRadius: '20px', border: 'none' }}>
                   Submit
                 </Button>

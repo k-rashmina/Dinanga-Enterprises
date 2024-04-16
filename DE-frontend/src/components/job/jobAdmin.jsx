@@ -8,7 +8,7 @@ const AssignJobs = () => {
   const [employee, setEmployee] = useState({});
 
   useEffect(() => {
-    axios.get("http://localhost:5000/jobAppointment/getappointmentdetails")
+    axios.get("http://localhost:5000/jobAppointment/getpendingdetails")
       .then(res => {
         const initialEmployeeState = res.data.reduce((acc, job) => {
           acc[job._id] = job.employeeName || ''; // Initialize with existing employee name if present
@@ -50,7 +50,9 @@ const AssignJobs = () => {
       <Container className="mt-4" style={{ width: 'fullwidth' }}>
         <h5 className="mb-3 fw-bold">Job lists</h5>
         <Table bordered hover size="sm">
-          <thead>
+
+          <thead style={{ backgroundColor: '#d9d9d9'}}>
+
             <tr>
               <th>Job Number</th>
               <th>Service type</th>
@@ -78,8 +80,10 @@ const AssignJobs = () => {
             ))}
           </tbody>
         </Table>
+        {/* <button variant='primary' style={{backgroundColor: '#00adb4', position: 'fixed', bottom: '200px', right: '20px'}}>Download PDF</button> */}
       </Container>
     </div>
+
   );
 };
 

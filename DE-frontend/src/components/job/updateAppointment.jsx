@@ -48,7 +48,7 @@ const CreatedJobsTableBootstrap = () => {
   return (
     <Container fluid style={{ padding: '16px', backgroundColor: '#fff', minHeight: '100vh' }}>
       <Row className="justify-content-center">
-        <Col xs={12} md={10}>
+        <Col xs={12} md={12}>
           <h4 style={{ color: 'black', textAlign: 'center', fontWeight: 'bold', marginBottom: '20px' }}>Update Jobs</h4>
           <div style={{ borderRadius: '10px', overflow: 'hidden' }}>
             <Table bordered hover responsive style={{ marginBottom: '0' }} >
