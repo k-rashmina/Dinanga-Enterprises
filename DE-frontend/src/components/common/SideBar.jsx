@@ -12,9 +12,15 @@ export default function SideBar({page,menu}) {
       const itemUrl = `/admin/${page.toLowerCase()}/${item.toLowerCase().split(' ').join('')}`;
       let selectedStyle;
       if(url == itemUrl){
+
         selectedStyle = "nav-link active fs-5";
       }else{
         selectedStyle = "nav-link text-white fs-5";
+
+        selectedStyle = "nav-link active";
+      }else{
+        selectedStyle = "nav-link text-white";
+
       }
       return(
         <li className="nav-item">
@@ -43,7 +49,11 @@ export default function SideBar({page,menu}) {
         <Link to='/admin'>
           <img className="bi me-5 ms-3" width="20" height="20" src={Arrow} alt="back"></img>
         </Link>
+
         <span className="fs-2">{page}</span>
+
+        <span className="fs-4">{page}</span>
+
       </a>
 
       <br/>

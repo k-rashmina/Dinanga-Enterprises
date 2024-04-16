@@ -43,8 +43,11 @@
 
 #root{
   display: flex;
+
   align-items: start;
   background-color: #EEEEEE;
+
+
 }
 
 body{
@@ -58,6 +61,7 @@ body{
   background-color: #00ADB5;
   border-color: #00ADB5;
 }
+
 
 
 .div-shadow{
@@ -117,6 +121,7 @@ body{
 .font-s-18{
   font-size: 18px;
 }
+
 
 /*header*/
 nav {
