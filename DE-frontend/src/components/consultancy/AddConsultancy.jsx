@@ -21,7 +21,30 @@ export default function AddConsultancy() {
                       <span class="fw-bold fs-5 text-black">Email</span>
                     </div>
                     <div className="col-8 d-grid">
-                      <input type="email" name="email" id="email" />
+                      <input
+                        type="email"
+                        name="email"
+                        id="email"
+                        onBlur={function () {
+                          var EmailTempry =
+                            document.getElementById("email").value;
+
+                          var emailRegexTempory = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                          var regexEmailTempry = emailRegexTempory.test(EmailTempry);
+
+                          if (EmailTempry == "") {
+                            document.getElementById("EmailError").innerHTML =
+                              "Please Enter Your Email Address";
+                          } else if (EmailTempry != "") {
+                            document.getElementById("EmailError").innerHTML =
+                              "";
+                            if (!regexEmailTempry) {
+                              document.getElementById("EmailError").innerHTML =
+                                "Please Enter Valid Email";
+                            }
+                          }
+                        }}
+                      />
                       <span id="EmailError" class="text-danger"></span>
                     </div>
                   </div>
@@ -35,10 +58,17 @@ export default function AddConsultancy() {
                     <div className="col-8 d-grid ">
                       <select name="location" id="location">
                         <option value="">Select Location</option>
-                        <option value="panadura">panadura</option>
-                        <option value="galle">galle</option>
-                        <option value="ampara">ampara</option>
-                        <option value="moratuwa">moratuwa</option>
+                        <option value="Panadura">Panadura</option>
+                        <option value="Kurunagala">Kurunagala</option>
+                        <option value="Nittabuwa">Nittabuwa</option>
+                        <option value="Moratuwa">Moratuwa</option>
+                        <option value="Ampara">Ampara</option>
+                        <option value="Cillaw">Cillaw</option>
+                        <option value="Anuradhapura">Anuradhapura</option>
+                        <option value="Galle">Galle</option>
+                        <option value="Rathnapura">Rathnapura</option>
+                        <option value="Mathara">Mathara</option>
+                        <option value="Badulla">Badulla</option>
                       </select>
                       <span id="LocationError" class="text-danger"></span>
                     </div>
@@ -119,6 +149,15 @@ export default function AddConsultancy() {
                         id="issue"
                         cols="30"
                         rows="5"
+                        onBlur={function () {
+                          var IssueTempory =
+                            document.getElementById("issue").value;
+
+                          if (IssueTempory == "") {
+                            document.getElementById("IssueError").innerText =
+                              "Please Type Your Issue";
+                          }
+                        }}
                       ></textarea>
                       <span id="IssueError" class="text-danger"></span>
                     </div>
@@ -262,14 +301,12 @@ export default function AddConsultancy() {
                                 "http://localhost:5000/consultantAppointment/addconsultantappointment",
                                 JDirect
                               )
-                              
-                              
+
                               .then(
-                                (res) => 
-                                console.log("Worked: " + JSON.stringify(res)),
+                                (res) =>
+                                  console.log("Worked: " + JSON.stringify(res)),
                                 alert("appoinment added successfully"),
-                                window.location = "/consultancy/:consid"
-    
+                                (window.location = "/consultancy/:consid")
                               )
                               .catch((err) =>
                                 console.log("Failed: " + JSON.stringify(err))

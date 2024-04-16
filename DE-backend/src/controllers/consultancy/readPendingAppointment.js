@@ -5,7 +5,7 @@ const getAppointmentsWithPendingStatus = async (req, res) => {
         // Find appointments where the status is "pending"
         const appointments = await consultantAppointment.find({ status: "pending" })
             // Select only the consultantNumber, Date, and location fields
-            .select('consultantNumber Email Date location');
+            .select('consultantNumber Email Date Time location');
 
         res.status(200).json(appointments);
     } catch (error) {

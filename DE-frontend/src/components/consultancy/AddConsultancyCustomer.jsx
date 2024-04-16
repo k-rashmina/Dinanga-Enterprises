@@ -103,10 +103,17 @@ export default function AddConsultancyCustomer() {
                     <option value={user && user.location}>
                       {user && user.location}
                     </option>
-                    <option value="panadura">Panadura</option>
-                    <option value="Galle">Panadura</option>
-                    <option value="">Panadura</option>
-                    <option value="">Panadura</option>
+                    <option value="Panadura">Panadura</option>
+                        <option value="Kurunagala">Kurunagala</option>
+                        <option value="Nittabuwa">Nittabuwa</option>
+                        <option value="Moratuwa">Moratuwa</option>
+                        <option value="Ampara">Ampara</option>
+                        <option value="Cillaw">Cillaw</option>
+                        <option value="Anuradhapura">Anuradhapura</option>
+                        <option value="Galle">Galle</option>
+                        <option value="Rathnapura">Rathnapura</option>
+                        <option value="Mathara">Mathara</option>
+                        <option value="Badulla">Badulla</option>
                   </select>
                 </div>
               </div>

@@ -57,7 +57,7 @@ export default function ConsultantAdmin() {
               <div className="row">
                 <div className="col-12 border border-1 border-black rounded rounded-3 mt-4">
                   <div className="row">
-                    <div className="col-12">
+                    <div className="col-12" style={{backgroundColor:'#d9d9d9'}}>
                       <div className="row">
                         <div className="col-1 text-center border border-bottom border-0 border-dark">
                           <span className="fw-bold">Appointment Number</span>
@@ -100,7 +100,7 @@ export default function ConsultantAdmin() {
                           <div className="col-2 ">
                             <div className="row">
                               <div className="col-12 text-center">
-                                <span>{appointment.Date}</span>
+                                <span>{appointment.Date.substring(0,10)}</span>
                               </div>
                               <div className="col-12 text-center">
                                 <span>{appointment.Time}</span>

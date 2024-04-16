@@ -35,7 +35,7 @@ export default function ConsultancyTable() {
               <div className="row">
                 <div className="col-12 border border-1 border-black rounded rounded-3 mt-5">
                   <div className="row">
-                    <div className="col-12">
+                    <div className="col-12" style={{backgroundColor:'#d9d9d9'}}>
                       <div className="row">
                         <div className="col-1 text-center border border-bottom border-0 border-dark">
                           <span className="fw-bold">Appointment Number</span>
@@ -49,11 +49,11 @@ export default function ConsultancyTable() {
                           <span className="fw-bold">Customer Name</span>
                         </div>
 
-                        <div className="col-1 text-center border border-bottom border-0 border-dark">
-                          <span className="fw-bold">Date</span>
+                        <div className="col-2 text-center border border-bottom border-0 border-dark">
+                          <span className="fw-bold">Date & TIme</span>
                         </div>
 
-                        <div className="col-2 text-center border border-bottom border-0 border-dark">
+                        <div className="col-1 text-center border border-bottom border-0 border-dark">
                           <span className="fw-bold">Location</span>
                         </div>
 
@@ -76,17 +76,17 @@ export default function ConsultancyTable() {
                           <div className="col-2  text-center">
                             <span>Amasha Hewagama</span>
                           </div>
-                          <div className="col-1 ">
+                          <div className="col-2 ">
                             <div className="row">
                               <div className="col-12 text-center">
-                                <span>{appointment.Date}</span>
+                                <small>{appointment.Date.substring(0,10)}</small>
                               </div>
                               <div className="col-12 text-center">
                                 <span>{appointment.Time}</span>
                               </div>
                             </div>
                           </div>
-                          <div className="col-2 text-center">
+                          <div className="col-1 text-center">
                             <span>{appointment.location}</span>
                           </div>
                           <div className="col-1 text-center ">
