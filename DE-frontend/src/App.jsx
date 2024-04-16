@@ -5,6 +5,8 @@ import AdminLayout from './components/common/AdminLayout';
 import AdminPanel from './components/common/AdminPanel';
 import CustomerRegForm from './components/customer/CustomerRegForm';
 import RegLayout from './components/common/RegLayout';
+import CustomerProfile from './components/customer/CustomerProfile';
+import FeedbackUpDel from './components/customer/FeedbackUpDel';
 
 function App() {
 
@@ -17,8 +19,8 @@ function App() {
           
           <Route path='/about' element/>
           <Route path='/contact' element/>
-          <Route path='/cusprofile' element/>
-          <Route path='/cusfeedback' element/>
+          <Route path='/cusprofile' element={<CustomerProfile />}/>
+          <Route path='/cusfeedback' element={<FeedbackUpDel/>}/>
           <Route path='/job' element/>
           <Route path='/services' element/>
           <Route path='/job/reqjob' element/>

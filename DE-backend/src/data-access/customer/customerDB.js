@@ -5,7 +5,7 @@ const cusDetails = require('../../models/customerDetails');
 const getCusDetails = async(cusid) =>{
 
     try{
-        const getCusDetails = await cusDetails.findOne({'_id': cusid});
+        const getCusDetails = await cusDetails.findOne({'cusMail': cusid});
         return(getCusDetails);
     }
 
@@ -14,6 +14,12 @@ const getCusDetails = async(cusid) =>{
     }
 }
 
+
+// const cusLogin = async (loginDetails) => {
+
+//     const user = await cusDetails.findOne()
+
+// }
 
 
 const addCusDetails = async(newCustomer) =>{

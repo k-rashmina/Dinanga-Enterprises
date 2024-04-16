@@ -90,8 +90,8 @@ function CustomerRegForm() {
       <form className='ps-3 pe-3 ' onSubmit={handleSubmit}>
         <label className=''>Name</label><br />
         <div className='d-flex justify-content-between flex-wrap'>
-          <input type="text" name='cusFname' value={formData.cusFname} onChange={handleChange} style={{ width: '300px', backgroundColor: 'white' }} className='border-color rounded-2' placeholder='First Name' required />
-          <input type="text" name='cusLname' value={formData.cusLname} onChange={handleChange} style={{ width: '300px', backgroundColor: 'white' }} className='border-color rounded-2' placeholder='Last Name' required />
+          <input type="text" name='cusFname' value={formData.cusFname} onChange={handleChange} onBlur={handleChange} style={{ width: '300px', backgroundColor: 'white' }} className='border-color rounded-2' placeholder='First Name' required />
+          <input type="text" name='cusLname' value={formData.cusLname} onChange={handleChange} onBlur={handleChange} style={{ width: '300px', backgroundColor: 'white' }} className='border-color rounded-2' placeholder='Last Name' required />
           <div className="text-danger" style={{ width: '300px', height: '20px'}} >{errors.cusFname}</div>
           <div className="text-danger" style={{ width: '300px', height: '20px'}} >{errors.cusLname}</div>
         </div>
@@ -99,31 +99,31 @@ function CustomerRegForm() {
         <div className='d-flex justify-content-between  flex-wrap'>
           <label style={{ width: '300px' }}>Date Of Birth</label>
           <label style={{ width: '300px' }}>Phone</label>
-          <input type="date" name='bDate' value={formData.bDate} onChange={handleChange} style={{ width: '300px', backgroundColor: 'white' }} className='border-color rounded-2' placeholder='' required />
-          <input type="text" name='pNum' value={formData.pNum} onChange={handleChange} style={{ width: '300px', backgroundColor: 'white' }} className='border-color rounded-2' placeholder='' required />
+          <input type="date" name='bDate' value={formData.bDate} onChange={handleChange} onBlur={handleChange} style={{ width: '300px', backgroundColor: 'white' }} className='border-color rounded-2' placeholder='' required />
+          <input type="text" name='pNum' value={formData.pNum} onChange={handleChange} style={{ width: '300px', backgroundColor: 'white' }} className='border-color rounded-2' placeholder=' 07XXXXXXXX' required />
           <div className="text-danger" style={{ width: '300px', height: '20px'}}>{errors.bDate}</div>
           <div className="text-danger" style={{ width: '300px', height: '20px'}}>{errors.pNum}</div>
         </div>
         <div>
           <label>Address</label><br />
-          <input type="text" value={formData.cusAddr} onChange={handleChange} className='border-color rounded-2' style={{ width: '618px', backgroundColor: 'white' }} name="cusAddr" required />
+          <input type="text" value={formData.cusAddr} onChange={handleChange} onBlur={handleChange} className='border-color rounded-2' style={{ width: '618px', backgroundColor: 'white' }} name="cusAddr" required />
           <div className="text-danger" style={{ width: '300px', height: '20px'}}>{errors.cusAddr}</div>
         </div>
         <div>
           <label>Email</label><br />
-          <input type="email" value={formData.cusMail} onChange={handleChange} className='border-color rounded-2' style={{ width: '618px', backgroundColor: 'white' }} name="cusMail" required />
+          <input type="email" value={formData.cusMail} onChange={handleChange}  className='border-color rounded-2' style={{ width: '618px', backgroundColor: 'white' }} name="cusMail" placeholder=' Jhon@mail.com' required />
           <div className="text-danger" style={{ width: '300px', height: '20px'}}>{errors.cusMail}</div>
         </div>
         <div className='d-flex justify-content-between  flex-wrap'>
           <label style={{ width: '300px' }}>Password</label>
           <label style={{ width: '300px' }}>Confirm Password</label>
-          <input type="password" name='cusPassword' value={formData.cusPassword} onChange={handleChange} style={{ width: '300px', backgroundColor: 'white' }} className='border-color rounded-2' placeholder='' required />
+          <input type="password" name='cusPassword' value={formData.cusPassword} onChange={handleChange} onBlur={handleChange} style={{ width: '300px', backgroundColor: 'white' }} className='border-color rounded-2'  required />
           
-          <input type="password" name='pw' value={formData.pw} onChange={handleChange} style={{ width: '300px', backgroundColor: 'white' }} className='border-color rounded-2' placeholder='' required />
+          <input type="password" name='pw' value={formData.pw} onChange={handleChange} onBlur={handleChange} style={{ width: '300px', backgroundColor: 'white' }} className='border-color rounded-2'  required />
           <div className="text-danger" style={{ width: '300px', height: '20px'}}>{errors.cusPassword}</div>
           <div className="text-danger" style={{ width: '300px', height: '20px'}}>{errors.pw}</div>
         </div>
-        <div className='d-flex justify-content-center mt-5 position-absolute' style={{top: '480px', left: '275px'}}>
+        <div className='d-flex justify-content-center mt-5 position-absolute' style={{top: '450px', left: '275px'}}>
           <button className='reg-form-button rounded-5'>Sign up</button>
         </div>
       </form>
