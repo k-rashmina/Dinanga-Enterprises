@@ -36,26 +36,26 @@ const jobAppointmentSchema = new schema({
 });
 
 
-const servicesModelSchema = new schema({
-  service_name: {
-    type: String,
-    required: true,
-  },
-  charge: {
-    type: Number,
-    required: true,
-  },
-  item_list: {
-    type: Object,
-    required: true
+// const servicesModelSchema = new schema({
+//   service_name: {
+//     type: String,
+//     required: true,
+//   },
+//   charge: {
+//     type: Number,
+//     required: true,
+//   },
+//   item_list: {
+//     type: Object,
+//     required: true
  
-  },
-});
+//   },
+// });
 
-const servicesModel = mongoose.model(
-  "services",
-  servicesModelSchema
-);
+// const servicesModel = mongoose.model(
+//   "services",
+//   servicesModelSchema
+// );
 
 const jobAppointment = mongoose.model(
   "jobAppointment",

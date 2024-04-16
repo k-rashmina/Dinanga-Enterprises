@@ -1,18 +1,15 @@
 
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 const inventoryRoutes = require("./inventory");
 const jobAppointmentRoute = require("./jobAppointmentRoute");
+const transaction = require('./transactions-route');
 
 router.use('/inventory', inventoryRoutes);         //inventory routes moddleware
 
-const express = require('express');
 
-const transaction = require('./transactions-route');
 const getJobService = require('../controllers/job/get-job-service');
 
-
-const router = express.Router();
 const consultantAppointmentRoute =require("./consultantAppointmentRoute")
 
 
