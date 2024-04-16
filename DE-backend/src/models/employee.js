@@ -33,12 +33,12 @@ const employeeSchema = new mongoose.Schema({
     },
     department: {
       type: String,
-      enum: ['mechanical', 'consultancy'],
+      enum: ['Mechanical', 'Consultancy'],
       required: true
     },
     role: {
         type: String,
-        enum: ['admin', 'mechanical employee', 'consultancy employee'],
+        enum: ['admin', 'Mechanical', 'Consultancy'],
         required: false
     },
     createdAt: {

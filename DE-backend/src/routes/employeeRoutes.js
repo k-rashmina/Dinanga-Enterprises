@@ -1,5 +1,5 @@
 const express = require('express');
-const {getEmployeeTest, registerEmployee, getEmployeeDetails, deleteEmployee, updateEmployee, getAssignedTasks, getCompletedTasks, getAssignedServices, login, getAvailableConsultancyEmployees} = require('../controllers/employee/employeeController');
+const {getEmployeeTest, registerEmployee, getEmployeeDetails, deleteEmployee, updateEmployee, getAssignedTasks, getCompletedTasks, getAssignedServices, login, getAvailableConsultancyEmployees, getAllEmployeeDetails, /*passwordsMatch*/} = require('../controllers/employee/employeeController');
 
 const router = express.Router();
 
@@ -23,6 +23,10 @@ router.get('/getAssignedServices', getAssignedServices);
 router.post('/login', login);
 
 router.get('/getAvailableConsultancyEmployees', getAvailableConsultancyEmployees);
+
+router.get('/getAllEmployeeDetails', getAllEmployeeDetails);
+
+// router.post('/passwordsMatch', passwordsMatch);
 
 
 module.exports = router;
