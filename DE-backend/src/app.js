@@ -4,13 +4,15 @@ const dotenv = require('dotenv');
 const dbConnect = require('./db-config');
 const routes = require('./routes');
 
+
 //initialization and middleware
 const app = express();
 dotenv.config();
 const port = process.env.PORT || 5000;
-app.use(cors());
+app.use(cors(['http://localhost:5173/*']));
 app.use(express.json({limit: '15mb'}));
 app.use('/', routes);
+
 
 //db connection
 
