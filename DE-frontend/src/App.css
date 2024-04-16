@@ -41,8 +41,24 @@
   color: #888;
 } */
 
+
+/* Item List in Inventory */
+#form-control{
+  width:"100%";
+  border-color: #00ADB5;
+  border-width: 3px;
+  border-style: solid;
+  background-color: #EEEEEE;
+  border-radius: 5px;
+}
+
 #root{
   display: flex;
+
+  align-items: start;
+  background-color: #EEEEEE;
+
+
 }
 
 body{
@@ -59,6 +75,65 @@ body{
 
 .div-shadow{
   box-shadow: 0px 16px 40px 2px rgba(0, 0, 0, 0.20);
+}
+
+
+.div-shadow{
+  box-shadow: 0px 16px 40px 2px rgba(0, 0, 0, 0.20);
+}
+
+
+.filter-input{
+  width: 180px;
+  padding: 5px 10px 5px 10px;
+  border-color: #00ADB5;
+  border-width: 3px;
+  border-style: solid;
+  background-color: #EEEEEE;
+}
+
+.form-button{
+  background-color: #00ADB5;
+  border-width: 2px;
+  padding: 10px 20px 10px 20px;
+  border-color: #00ADB5;
+  color: #fff;
+  border-style: solid;
+  transition: 0.4s;
+}
+
+.form-button:hover{
+  background-color: #EEEEEE;
+  color: #00ADB5;
+}
+
+.example::-webkit-scrollbar {
+  display: none;
+}
+
+
+.example1 {
+  -ms-overflow-style: none;  
+  scrollbar-width: none;  
+}
+
+.clickable{
+  cursor: pointer;
+}
+
+
+/* Add Transaction */
+
+.add-form-input{
+  padding: 8px 12px 8px 12px;
+  border-color: #00ADB5;
+  border-width: 3px;
+  border-style: solid;
+  background-color: #EEEEEE;
+}
+
+.font-s-18{
+  font-size: 18px;
 }
 
 
