@@ -3,6 +3,13 @@ import {BrowserRouter, Routes, Route, Link} from 'react-router-dom';
 import Layout from './components/common/Layout';
 import AdminLayout from './components/common/AdminLayout';
 import AdminPanel from './components/common/AdminPanel';
+// Import employee pages
+import EmployeeJobsDashboard from './components/employee/EmployeeJobsDashboard';
+import EmployeeLayout from './components/employee/EmployeeLayout';
+import ConsultancyEmployeeDashboard from './components/employee/ConsultancyEmployeeDashboard';
+import EmployeeLogin from './components/employee/EmployeeLogin'
+import EmployeeDashboard from './components/employee/EmployeeDashboard';
+import RegisterNewEmployee from './components/employee/RegisterNewEmployee';
 
 
 function App() {
@@ -32,12 +39,13 @@ function App() {
         </Route>
 
         {/* employee routes */}
-        {/* <Route element={EmpLayout}>
-          <Route path='/emplogin' element/>
+        {/* <Route element={EmpLayout}> */}
+        <Route element={<Layout/>}>
+          <Route path='/emplogin' element={<EmployeeLogin/>}/>
           <Route path='/empprofile' element/>
-          <Route path='/empjobs' element/>
-          <Route path='/empconsultancy' element/>
-        </Route> */}
+          <Route path='/empjobs' element={<EmployeeJobsDashboard/>}/>
+          <Route path='/empconsultancy' element={<ConsultancyEmployeeDashboard/>}/>
+        </Route>
         
         <Route path='/admin' element={<AdminPanel/>}/>
 
@@ -79,7 +87,7 @@ function App() {
 
         {/* admin consultancy routes */}
         <Route element={<AdminLayout page={'Consultancy'} menu={["Dashboard", "Consultancy List", "Report"]}/>}>
-          <Route path='/admin/consultancy/dashboard' element/>
+          <Route path='/admin/consultancy/dashboard' element={<ConsultancyEmployeeDashboard/>}/>
           <Route path='/admin/consultancy/consultancylist' element/>
           <Route path='/admin/consultancy/:consid' element/>
           <Route path='/admin/consultancy/report' element/>
@@ -87,8 +95,8 @@ function App() {
 
         {/* admin employee routes */}
         <Route element={<AdminLayout page={'Employee'} menu={["Dashboard", "Add Employee", "Reports"]}/>}>
-          <Route path='/admin/employee/dashboard' element/>
-          <Route path='/admin/employee/addemployee' element/>
+          <Route path='/admin/employee/dashboard' element={<EmployeeDashboard/>}/>
+          <Route path='/admin/employee/addemployee' element={<RegisterNewEmployee/>}/>
           <Route path='/admin/employee/:empid' element/>
           <Route path='/admin/employee/report' element/>
         </Route>
