@@ -11,7 +11,7 @@ const FeedbackUpDel = () => {
   return (
     <Container fluid style={{ padding: '16px', backgroundColor: '#fff', minHeight: '100vh' }}>
       <Row className="justify-content-center">
-        <Col xs={12} md={8}>
+        <Col xs={12} md={12}>
           <h4 style={{ color: 'black', textAlign: 'center', fontWeight: 'bold', marginBottom: '20px' }}>Previous Feedback</h4>
           <div style={{ borderRadius: '20px', overflow: 'hidden' }}>
             <Table bordered hover responsive style={{ marginBottom: '0' }} >
