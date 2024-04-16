@@ -4,6 +4,12 @@ import {BrowserRouter, Routes, Route, Link} from 'react-router-dom';
 import Layout from './components/common/Layout';
 import AdminLayout from './components/common/AdminLayout';
 import AdminPanel from './components/common/AdminPanel';
+
+import CustomerRegForm from './components/customer/CustomerRegForm';
+import RegLayout from './components/common/RegLayout';
+import CustomerProfile from './components/customer/CustomerProfile';
+import FeedbackUpDel from './components/customer/FeedbackUpDel';
+
 import AddConsultancy from './components/consultancy/AddConsultancy';
 import ConsultantCustomer from './components/consultancy/AddConsultancyCustomer';
 import ConsultancyHome from'./components/consultancy/ConsultancyHome'
@@ -31,14 +37,17 @@ function App() {
         {/* main routes */}
         <Route element={<Layout/>}>
           <Route path='/' element={<h2>this is the home page</h2>}/>
-          <Route path='/cusreg' element/>
+          
           <Route path='/about' element/>
           <Route path='/contact' element/>
-          <Route path='/cusprofile' element/>
-          <Route path='/cusfeedback' element/>
+          <Route path='/cusprofile' element={<CustomerProfile />}/>
+          <Route path='/cusfeedback' element={<FeedbackUpDel/>}/>
           <Route path='/job' element/>
           <Route path='/services' element/>
           <Route path='/job/reqjob' element/>
+          <Route path='/consultancy' element/>
+          <Route path='/consultancy/req' element/>
+          <Route path='/consultancy/:consid' element/>
           <Route path='/consultancy' element={<AddConsultancy/>}/>
           <Route path='/consultancy/req' element={<ConsultancyHome/>}/>
           <Route path='/consultancy/:consid' element={<ConsultancyTable/>}/>
@@ -48,6 +57,11 @@ function App() {
           <Route path='/supalerts' element/>
           <Route path='/supservices' element/>
           <Route path='/supfeedback' element/>
+        </Route>
+        
+        <Route element = {<RegLayout/>} >
+          <Route path='/cusreg' element={<CustomerRegForm />} />
+          <Route path='/supreg' element/>
         </Route>
 
         {/* employee routes */}
