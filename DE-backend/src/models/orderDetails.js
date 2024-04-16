@@ -13,7 +13,7 @@ const orderDetailsSchema = new schema({
     },
     quantity:{
         type:Number,
-        required:true
+        // required:true
     },
     dateofOrder:{
         type:Date,
