@@ -14,8 +14,6 @@ export default function AdminLayout(props) {
         <Outlet/>  
       </div>
 
-      <Outlet/>
-
     </>
   )
 }

@@ -16,11 +16,6 @@ export default function SideBar({page,menu}) {
         selectedStyle = "nav-link active fs-5";
       }else{
         selectedStyle = "nav-link text-white fs-5";
-
-        selectedStyle = "nav-link active";
-      }else{
-        selectedStyle = "nav-link text-white";
-
       }
       return(
         <li className="nav-item">
@@ -51,8 +46,6 @@ export default function SideBar({page,menu}) {
         </Link>
 
         <span className="fs-2">{page}</span>
-
-        <span className="fs-4">{page}</span>
 
       </a>
 
