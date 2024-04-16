@@ -8,6 +8,10 @@ router.use('/inventory', inventoryRoutes);         //inventory routes moddleware
 
 const express = require('express');
 
+
+const customerRoute = require('./customer-route');
+const feedbackRoute = require('./feedback-route');
+
 const transaction = require('./transactions-route');
 const getJobService = require('../controllers/job/get-job-service');
 
@@ -20,6 +24,11 @@ router.use('/consultantAppointment',consultantAppointmentRoute)//consultant rout
 
 router.use('/transaction', transaction);
 router.get('/getjobservices', (req, res) => getJobService(req, res));
+
+
+
+router.use('/customer', customerRoute );
+router.use('/cusfeedback', feedbackRoute );
 
 
 router.use('/jobAppointment', jobAppointmentRoute); //job appointment routes moddleware
