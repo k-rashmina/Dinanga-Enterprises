@@ -10,6 +10,12 @@ import ConsultancyHome from'./components/consultancy/ConsultancyHome'
 import ConsultantAdmin from './components/consultancy/ConsultantAdmin';
 import ConsultancyTable from './components/consultancy/ConsultancyTable'
 
+import FinDashboard from './components/finance/DashBoard';
+import JobTransaction from './components/finance/JobTransaction';
+import PurchaseTransaction from './components/finance/PurchaseTransaction';
+import AddTransaction from './components/finance/AddTransaction';
+
+
 
 function App() {
 
@@ -50,10 +56,17 @@ function App() {
 
         {/* admin finance routes */}
         <Route element={<AdminLayout page={'Finance'} menu={["Dashboard", "Job Transactions", "Purchase Transactions", "Add Transaction", "Refunds", "Reports"]}/>}>
+
+          <Route path='/admin/finance/dashboard' element={<FinDashboard />}/>
+          <Route path='/admin/finance/jobtransactions' element={<JobTransaction />}/>
+          <Route path='/admin/finance/purchasetransactions' element={<PurchaseTransaction />}/>
+          <Route path='/admin/finance/addtransaction' element={<AddTransaction />}/>
+
           <Route path='/admin/finance/dashboard' element={<div>Dashboard</div>}/>
           <Route path='/admin/finance/jobtransactions' element/>
           <Route path='/admin/finance/purchasetransactions' element/>
           <Route path='/admin/finance/addtransaction' element/>
+
           <Route path='/admin/finance/refunds' element/>
           <Route path='/admin/finance/reports' element/>
         </Route>
