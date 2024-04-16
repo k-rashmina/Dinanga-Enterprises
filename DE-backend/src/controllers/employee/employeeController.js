@@ -73,26 +73,43 @@ const deleteEmployee = async (req, res) => {
 
 // Update employee details
 const updateEmployee = async (req, res) => {
-    try {
-      const { name, contactNumber, email, address, username, password } = req.body;
-      const updatedFields = {
-        name,
-        contactNumber,
-        email,
-        address,
-        username,
-        password,
-      };
-      const employee = await Employee.findByIdAndUpdate(req.params.id, updatedFields, { new: true });
-      if (!employee) {
-        return res.status(404).json({ msg: 'Employee not found' });
-      }
-      res.json({ msg: 'Employee updated successfully', employee });
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
+  try {
+    const { name, contactNumber, email, address, username, password } = req.body;
+    const employeeId = req.params.id;
+
+    // Check if a new password is provided
+    let updatedFields = {
+      name,
+      contactNumber,
+      email,
+      address,
+      username,
+    };
+
+    if (password) {
+      // Hash the new password
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+      
+      // Update with hashed password
+      updatedFields.password = hashedPassword;
     }
-  };
+
+    // Find and update employee
+    const employee = await Employee.findByIdAndUpdate(employeeId, updatedFields, { new: true });
+
+    // Check if employee exists
+    if (!employee) {
+      return res.status(404).json({ msg: 'Employee not found' });
+    }
+
+    // Respond with success message and updated employee
+    res.json({ msg: 'Employee updated successfully', employee });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+};
 
   // Get assigned tasks for mechanical employees
 const getAssignedTasks = async (req, res) => {
@@ -180,7 +197,7 @@ const getAssignedServices = async (req, res) => {
       });
   
       // Extract and return only the names of available consultancy employees
-      const employeeNames = consultancyEmployees.map(employee => employee.name);
+      const employeeNames = consultancyEmployees.map(employee => {employee.name, employee._id});
   
       res.json(employeeNames);
     } catch (err) {
@@ -189,6 +206,23 @@ const getAssignedServices = async (req, res) => {
     }
   };
 
+  const getAllEmployeeDetails = async (req, res) => {
+    try {
+      const employees = await Employee.find();
+      if (!employees || employees.length === 0) {
+        return res.status(404).json({ msg: 'No employees found' });
+      }
+      res.json(employees);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  };
+  
+  // const passwordsMatch = (password, confirmPassword) => {
+  //   return password === confirmPassword;
+  // };
+  
 
 module.exports = {
     getEmployeeTest,
@@ -201,6 +235,8 @@ module.exports = {
     getAssignedServices,
     login,
     getAvailableConsultancyEmployees,
+    getAllEmployeeDetails,
+    // passwordsMatch,
     // updateServiceIssue,
     // updateProfile,
     // getProfile,
