@@ -1,3 +1,11 @@
+
+const express = require("express");
+const router = express.Router();
+const inventoryRoutes = require("./inventory");
+const jobAppointmentRoute = require("./jobAppointmentRoute");
+
+router.use('/inventory', inventoryRoutes);         //inventory routes moddleware
+
 const express = require('express');
 
 const transaction = require('./transactions-route');
@@ -13,5 +21,7 @@ router.use('/consultantAppointment',consultantAppointmentRoute)//consultant rout
 router.use('/transaction', transaction);
 router.get('/getjobservices', (req, res) => getJobService(req, res));
 
+
+router.use('/jobAppointment', jobAppointmentRoute); //job appointment routes moddleware
 
 module.exports = router;
