@@ -5,6 +5,14 @@ import Layout from './components/common/Layout';
 import AdminLayout from './components/common/AdminLayout';
 import AdminPanel from './components/common/AdminPanel';
 
+
+import OrderDashboard from'./components/order/Dashboard';
+import OnGoingOrders from './components/order/OnGoingOrders';
+import OrderHistory from './components/order/OrderHistory';
+import OrderPlacement from './components/order/OrderPlacement';
+import OrderReport from './components/order/Report';
+import ToBeOrdered from './components/order/ToBeOrdered';
+
 import CustomerRegForm from './components/customer/CustomerRegForm';
 import RegLayout from './components/common/RegLayout';
 import CustomerProfile from './components/customer/CustomerProfile';
@@ -29,7 +37,9 @@ import DashBoard from './components/inventory/DashBoard';
 import Report from './components/inventory/Report';
 
 
+
 function App() {
+
 
   return (
     <BrowserRouter>
@@ -108,13 +118,13 @@ function App() {
         </Route>
 
         {/* admin order routes */}
-        <Route element={<AdminLayout page={'Order'} menu={["Dashboard", "To Be Ordered", "Add Order", "Current Orders", "Order History", "Report"]}/>}>
-          <Route path='/admin/order/dashboard' element/>
-          <Route path='/admin/order/tobeordered' element/>
-          <Route path='/admin/order/addorder' element/>
-          <Route path='/admin/order/currentorders' element/>
-          <Route path='/admin/order/orderhistory' element/>
-          <Route path='/admin/order/report' element/>
+        <Route element={<AdminLayout page={'Order'} menu={["Dashboard", "To Be Ordered", "Current Orders", "Order History", "Report"]}/>}>
+          <Route path='/admin/order/dashboard' element = {<OrderDashboard/>}/>
+          <Route path='/admin/order/tobeordered' element = {<ToBeOrdered/>}/>
+          <Route path='/admin/order/addorder' element = {<OrderPlacement/>}/>
+          <Route path='/admin/order/currentorders' element = {<OnGoingOrders/>}/>
+          <Route path='/admin/order/orderhistory' element = {<OrderHistory/>}/>
+          <Route path='/admin/order/report' element = {<OrderReport/>}/>
         </Route>
 
         {/* admin consultancy routes */}
@@ -145,6 +155,7 @@ function App() {
     //   </Routes>
     // </BrowserRouter>
   )
+ 
 }
 
 export default App

@@ -27,6 +27,12 @@ router.use('/customer', customerRoute );
 router.use('/cusfeedback', feedbackRoute );
 
 
+
+const orderRoutes = require("./order");
+
+router.use('/order',orderRoutes)
+
 router.use('/jobAppointment', jobAppointmentRoute); //job appointment routes moddleware
+
 
 module.exports = router;
