@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Container, Table, Button, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -10,14 +10,42 @@ import axios from "axios";
 const FeedbackUpDel = () => {
 
   const [records, setRecords] = useState([])
-
+  const [getterValue, setGetterValue] = useState(false);
   useEffect(()=>{
     axios.get("http://localhost:5000/cusfeedback/readcustomerfeedbacks")
   .then(res => {
     setRecords(res.data);
   })
   .catch(err=> console.log(err));
-  }, [])
+  }, [getterValue])
+
+
+//Handling delete of feedbacks
+  let deleteId = useRef();
+  const [delVal, setDelVal] = useState(false);
+  const handleDelete = (e) => {
+    const confirmVal = confirm('Are you sure?');
+    deleteId.current = e.target.id;
+    console.log(confirmVal)
+    if(confirmVal == true) {setDelVal(prev => !prev)}
+
+  }
+  console.log('del Val', delVal)
+  console.log('delID', deleteId.current)
+  //API call for delete
+  useEffect(() => {
+
+    if(deleteId.current){
+      axios.delete(`http://localhost:5000/cusfeedback/delcustomerfeedbacks?id=${deleteId.current}`)
+      .then((res) => {
+        console.log(res.data)
+        setGetterValue(prev => !prev);
+      })
+    }
+
+  }, [delVal])
+
+
   return (
     <Container fluid style={{ padding: '16px', backgroundColor: '#fff', minHeight: '100vh' }}>
       <Row className="justify-content-center">
@@ -40,10 +68,10 @@ const FeedbackUpDel = () => {
                   <td style={{maxWidth: '200px', wordWrap: 'break-word'}} align="center" >{row.feedbackSub}</td>
                   <td style={{maxWidth: '200px', wordWrap: 'break-word'}} align="center">{row.feedbackMsg}</td>
                   <td align="center">
-                    <Button variant="primary" size="sm" style={{ margin: '2px', backgroundColor: '#00adb4' }}>
+                    <Button key={index} variant="primary" size="sm" style={{ margin: '2px', backgroundColor: '#00adb4' }}>
                       <i className="bi bi-pencil-square"></i>Edit
                     </Button>
-                    <Button variant="danger" size="sm" style={{ margin: '2px' }}>
+                    <Button id={row._id} variant="danger" size="sm" style={{ margin: '2px' }} onClick={handleDelete}>
                       <i className="bi bi-trash"></i>Delete
                     </Button>
                   </td>
