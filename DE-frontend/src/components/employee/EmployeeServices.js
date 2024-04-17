@@ -7,10 +7,10 @@ const EmployeeApiService = {
     getEmployees: async () => {
     try {
       const response = await axios.get(`${BASE_URL}getAllEmployeeDetails`);
-      return response.data; // Assuming the response contains data
+      return response.data; 
     } catch (error) {
       console.error('Error fetching employees:', error);
-      throw error; // Rethrow the error to be handled by the caller
+      throw error; 
     }
   },
 
@@ -18,20 +18,20 @@ const EmployeeApiService = {
   registerEmployee: async (employeeData) => {
     try {
       const response = await axios.post(`${BASE_URL}registerEmployee`, employeeData);
-      return response.data; // Assuming the response contains data
+      return response.data; 
     } catch (error) {
       console.error('Error creating employee:', error);
-      throw error; // Rethrow the error to be handled by the caller
+      throw error; 
     }
   },
 
   deleteEmployee: async (employeeId) => {
     try {
       const response = await axios.delete(`${BASE_URL}deleteEmployee/${employeeId}`);
-      return response.data; // Assuming the response contains data
+      return response.data; 
     } catch (error) {
       console.error('Error deleting employee:', error);
-      throw error; // Rethrow the error to be handled by the caller
+      throw error; 
     }
   },
 
