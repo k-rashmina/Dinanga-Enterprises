@@ -69,13 +69,13 @@ const Services = () => {
   };
 
   return (
-    <div style={{ backgroundColor: '#191b1a'}}>
-    <div className="container" style={{ color: '#fff',maxWidth: '150vh', minHeight: '100vh', WebkitAlignContent: 'center' }}>
+    <div className='bg-dark'>
+    <div className="container bg-dark" style={{ color: '#fff',maxWidth: '150vh', minHeight: '100vh', WebkitAlignContent: 'center' }}>
       <h4 className="mb-4" style={{ textAlign: 'left', fontSize: '3rem', fontStyle: 'Bold', marginTop: 50 }}>Services</h4>
       <div className="row">
         {servicesData.map((service, index) => (
           <div className="col-xs-12 col-sm-6 col-md-4" key={index}>
-            <div className="card text-white bg-secondary mb-3" style={{ margin: 20 }}>
+            <div className="card text-white bg-secondary mb-3" style={{ margin: 20, height: '368px' }}>
               <img src={service.imageUrl} className="card-img-top" alt={service.title} style={{ objectFit: 'cover', height: '160px' }}/>
               <div className="card-body">
                 <h5 className="card-title">{service.title}</h5>
