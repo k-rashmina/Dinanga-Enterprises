@@ -75,7 +75,7 @@ function App() {
         </Route>
 
         {/* admin order routes */}
-        <Route element={<AdminLayout page={'Order'} menu={["Dashboard", "To Be Ordered", "Add Order", "Current Orders", "Order History", "Report"]}/>}>
+        <Route element={<AdminLayout page={'Order'} menu={["Dashboard", "To Be Ordered", "Current Orders", "Order History", "Report"]}/>}>
           <Route path='/admin/order/dashboard' element = {<OrderDashboard/>}/>
           <Route path='/admin/order/tobeordered' element = {<ToBeOrdered/>}/>
           <Route path='/admin/order/addorder' element = {<OrderPlacement/>}/>

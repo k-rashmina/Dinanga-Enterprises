@@ -231,7 +231,7 @@ useEffect(() => {
                     alt="Car Service"
                     fluid
                     rounded
-                    style={{ borderRadius: "-100px", minHeight: "-100px" }}
+                    style={{ borderRadius: "100px", minHeight: "800px",minWidth: "400px" }}
                   />
                 </Col>
               </Row>
