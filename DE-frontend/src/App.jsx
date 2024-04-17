@@ -1,5 +1,15 @@
 import {BrowserRouter, Routes, Route, Link} from 'react-router-dom';
 
+// import { useState } from 'react'
+// Import employee pages
+import EmployeeJobsDashboard from './components/employee/EmployeeJobsDashboard';
+import EmployeeLayout from './components/employee/EmployeeLayout';
+import ConsultancyEmployeeDashboard from './components/employee/ConsultancyEmployeeDashboard';
+import EmployeeLogin from './components/employee/EmployeeLogin'
+import EmployeeDashboard from './components/employee/EmployeeDashboard';
+import RegisterNewEmployee from './components/employee/RegisterNewEmployee';
+import EmployeeProfile from './components/employee/EmployeeProfile';
+
 import "bootstrap/dist/css/bootstrap.min.css";
 
 // import { useState } from 'react'
@@ -57,6 +67,7 @@ import Report from './components/inventory/Report';
 
 
 
+
 function App() {
 
 
@@ -66,6 +77,18 @@ function App() {
         {/* main routes */}
         <Route element={<Layout/>}>
           <Route path='/' element={<h2>this is the home page</h2>}/>
+
+
+
+        {/* employee routes */}
+        {/* <Route element={EmpLayout}> */}
+
+          <Route path='/emplogin' element={<EmployeeLogin/>}/>
+          <Route path='/empprofile' element={<EmployeeProfile/>}/>
+          <Route path='/empjobs' element={<EmployeeJobsDashboard/>}/>
+          {/* <Route path='/empconsultancy' element={<ConsultancyEmployeeDashboard/>}/> */}
+
+
           
 
 
@@ -109,21 +132,25 @@ function App() {
           <Route path='/empjobs' element/>
           <Route path='/empconsultancy' element/>
         </Route> */}
+
         
         <Route path='/admin' element={<AdminPanel/>}/>
 
         {/* admin finance routes */}
         <Route element={<AdminLayout page={'Finance'} menu={["Dashboard", "Job Transactions", "Purchase Transactions", "Add Transaction", "Refunds", "Reports"]}/>}>
 
+
           <Route path='/admin/finance/dashboard' element={<FinDashboard />}/>
           <Route path='/admin/finance/jobtransactions' element={<JobTransaction />}/>
           <Route path='/admin/finance/purchasetransactions' element={<PurchaseTransaction />}/>
           <Route path='/admin/finance/addtransaction' element={<AddTransaction />}/>
+
           <Route path='/admin/finance/refunds' element/>
           <Route path='/admin/finance/reports' element/>
         </Route>
 
         {/* admin job routes */}
+
 
         <Route element={<AdminLayout page={'Job'} menu={["Job List", "report"]}/>}>
           <Route path='/admin/job/joblist' element={<JobAdmin />}/>
@@ -132,10 +159,12 @@ function App() {
           <Route path='/admin/job/deletejob' element/>
           <Route path='/admin/job/report' element/>
           {/* <Route path="/jobAdmin" element={<JobAdmin />} /> */}
+
         </Route>
 
         {/* admin inventory routes */}
         <Route element={<AdminLayout page={'Inventory'} menu={["Dashboard", "Item List", "Add Item", "Report"]}/>}>
+
           <Route path='/admin/inventory/dashboard' element ={<DashBoard/>}/>
           <Route path='/admin/inventory/itemlist' element = {<ItemList/>}/>
           <Route path='/admin/inventory/additem' element = {<AddItem/>}/>
@@ -155,13 +184,16 @@ function App() {
         {/* admin consultancy routes */}
         <Route element={<AdminLayout page={'Consultancy'} menu={[ "Consultancy List", "Report"]}/>}>     
           <Route path='/admin/consultancy/consultancylist' element={<ConsultantAdmin/>}/>
+
           <Route path='/admin/consultancy/report' element/>
         </Route>
 
         {/* admin employee routes */}
         <Route element={<AdminLayout page={'Employee'} menu={["Dashboard", "Add Employee", "Reports"]}/>}>
-          <Route path='/admin/employee/dashboard' element/>
-          <Route path='/admin/employee/addemployee' element/>
+
+          <Route path='/admin/employee/dashboard' element={<EmployeeDashboard/>}/>
+          <Route path='/admin/employee/addemployee' element={<RegisterNewEmployee/>}/>
+          {/* <Route path='/empjobs' element={<EmployeeJobsDashboard/>}/> */}
           <Route path='/admin/employee/:empid' element/>
           <Route path='/admin/employee/report' element/>
         </Route>

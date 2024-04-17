@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 
-
 export default function SideBar({menu}) {
 
   const login = false;
@@ -10,7 +9,9 @@ export default function SideBar({menu}) {
   return(
     <nav>
        <div className="logo">
+
            {/* <img src="images/hlogo1.png" alt="Company Logo"/>     */}
+
        </div>
        
            
