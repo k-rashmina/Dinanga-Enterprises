@@ -1,0 +1,59 @@
+.order-alerts-container {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #ffffff, #ffffff);
+}
+
+.order-alerts-header {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #1E5375; /* Change heading color */
+}
+
+.order-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.order-item {
+  padding: 20px;
+  border-radius: 50px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  width: calc(33.333% - 20px);
+  background: linear-gradient(135deg, #00adb5, #ffffff);
+}
+
+.order-info {
+  margin-bottom: 20px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.accept-button, .reject-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.accept-button:hover, .reject-button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.accept-button {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.reject-button {
+  background-color: #f44336;
+  color: #fff;
+}

@@ -10,6 +10,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Layout from './components/common/Layout';
 import AdminLayout from './components/common/AdminLayout';
 import AdminPanel from './components/common/AdminPanel';
+import RegLayout from './components/common/RegLayout';
+import SupplierRegForm from './components/supplier/SupplierRegForm';
+import SupplierProfile from './components/supplier/SupplierProfile';
+import ServicesProvided from './components/supplier/ServicesProvided';
+import OrderAlerts from './components/supplier/Alerts';
+import FeedbackTable from './components/supplier/FeedbackTable';
 
 
 import Services from '../src/components/job/Services';
@@ -27,7 +33,6 @@ import OrderReport from './components/order/Report';
 import ToBeOrdered from './components/order/ToBeOrdered';
 
 import CustomerRegForm from './components/customer/CustomerRegForm';
-import RegLayout from './components/common/RegLayout';
 import CustomerProfile from './components/customer/CustomerProfile';
 import FeedbackUpDel from './components/customer/FeedbackUpDel';
 
@@ -61,6 +66,7 @@ function App() {
         {/* main routes */}
         <Route element={<Layout/>}>
           <Route path='/' element={<h2>this is the home page</h2>}/>
+          
 
 
 
@@ -79,23 +85,21 @@ function App() {
           <Route path='/job' element/>
 
           <Route path='/job/reqjob' element/>
-          <Route path='/consultancy' element/>
-          <Route path='/consultancy/req' element/>
-          <Route path='/consultancy/:consid' element/>
+          <Route path='/supprofile' element = {<SupplierProfile/>}/>
+          <Route path='/supalerts' element = {<OrderAlerts/>}/>
+          <Route path='/supservices' element= {<ServicesProvided/>}/>
+          <Route path='/supfeedback' element= {<FeedbackTable/>}/>
+
+      
           <Route path='/consultancy' element={<AddConsultancy/>}/>
           <Route path='/consultancy/req' element={<ConsultancyHome/>}/>
           <Route path='/consultancy/:consid' element={<ConsultancyTable/>}/>
           <Route path='/consultancy/customer/:id' element={<ConsultantCustomer/>}/>
-          <Route path='/supreg' element/>
-          <Route path='/supprofile' element/>
-          <Route path='/supalerts' element/>
-          <Route path='/supservices' element/>
-          <Route path='/supfeedback' element/>
         </Route>
         
         <Route element = {<RegLayout/>} >
           <Route path='/cusreg' element={<CustomerRegForm />} />
-          <Route path='/supreg' element/>
+          <Route path='/supreg' element={<SupplierRegForm />}/>
         </Route>
 
         {/* employee routes */}
@@ -178,4 +182,4 @@ function App() {
  
 }
 
-export default App
+export default App

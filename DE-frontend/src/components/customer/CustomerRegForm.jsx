@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import "./CustomerRegForm.css";
-import regbg from "../../assets/regbg.png";
+import regbg from "../../assets/regbg1.png";
 import axios from "axios";
 
 function CustomerRegForm() {
