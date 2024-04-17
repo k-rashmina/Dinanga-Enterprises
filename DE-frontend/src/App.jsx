@@ -1,8 +1,20 @@
 import {BrowserRouter, Routes, Route, Link} from 'react-router-dom';
 // import { useState } from 'react'
+//import { useParams } from 'react-router-dom';
 import Layout from './components/common/Layout';
 import AdminLayout from './components/common/AdminLayout';
 import AdminPanel from './components/common/AdminPanel';
+import AddConsultancy from './components/consultancy/AddConsultancy';
+import ConsultantCustomer from './components/consultancy/AddConsultancyCustomer';
+import ConsultancyHome from'./components/consultancy/ConsultancyHome'
+import ConsultantAdmin from './components/consultancy/ConsultantAdmin';
+import ConsultancyTable from './components/consultancy/ConsultancyTable'
+
+import FinDashboard from './components/finance/DashBoard';
+import JobTransaction from './components/finance/JobTransaction';
+import PurchaseTransaction from './components/finance/PurchaseTransaction';
+import AddTransaction from './components/finance/AddTransaction';
+
 
 
 import AddItem from './components/inventory/AddItem';
@@ -27,9 +39,10 @@ function App() {
           <Route path='/job' element/>
           <Route path='/services' element/>
           <Route path='/job/reqjob' element/>
-          <Route path='/consultancy' element/>
-          <Route path='/consultancy/req' element/>
-          <Route path='/consultancy/:consid' element/>
+          <Route path='/consultancy' element={<AddConsultancy/>}/>
+          <Route path='/consultancy/req' element={<ConsultancyHome/>}/>
+          <Route path='/consultancy/:consid' element={<ConsultancyTable/>}/>
+          <Route path='/consultancy/customer/:id' element={<ConsultantCustomer/>}/>
           <Route path='/supreg' element/>
           <Route path='/supprofile' element/>
           <Route path='/supalerts' element/>
@@ -49,10 +62,17 @@ function App() {
 
         {/* admin finance routes */}
         <Route element={<AdminLayout page={'Finance'} menu={["Dashboard", "Job Transactions", "Purchase Transactions", "Add Transaction", "Refunds", "Reports"]}/>}>
+
+          <Route path='/admin/finance/dashboard' element={<FinDashboard />}/>
+          <Route path='/admin/finance/jobtransactions' element={<JobTransaction />}/>
+          <Route path='/admin/finance/purchasetransactions' element={<PurchaseTransaction />}/>
+          <Route path='/admin/finance/addtransaction' element={<AddTransaction />}/>
+
           <Route path='/admin/finance/dashboard' element={<div>Dashboard</div>}/>
           <Route path='/admin/finance/jobtransactions' element/>
           <Route path='/admin/finance/purchasetransactions' element/>
           <Route path='/admin/finance/addtransaction' element/>
+
           <Route path='/admin/finance/refunds' element/>
           <Route path='/admin/finance/reports' element/>
         </Route>
@@ -84,10 +104,9 @@ function App() {
         </Route>
 
         {/* admin consultancy routes */}
-        <Route element={<AdminLayout page={'Consultancy'} menu={["Dashboard", "Consultancy List", "Report"]}/>}>
-          <Route path='/admin/consultancy/dashboard' element/>
-          <Route path='/admin/consultancy/consultancylist' element/>
-          <Route path='/admin/consultancy/:consid' element/>
+        <Route element={<AdminLayout page={'Consultancy'} menu={[ "Consultancy List", "Report"]}/>}>
+          
+          <Route path='/admin/consultancy/consultancylist' element={<ConsultantAdmin/>}/>
           <Route path='/admin/consultancy/report' element/>
         </Route>
 
