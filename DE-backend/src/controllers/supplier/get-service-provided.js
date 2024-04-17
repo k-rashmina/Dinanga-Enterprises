@@ -2,7 +2,8 @@ const ProvidedServices = require('../../services/supplier/getServicesProvided');
 
 const getServicesProvided = async (req, res) => {
 
-    res.json(await ProvidedServices());
+    const sup = req.query.email
+    res.json(await ProvidedServices(sup));
 
 }
 

@@ -1,10 +1,10 @@
 const mongoose = require ('mongoose');
 const ProvidedServices = require('../../models/services_provided');
 
-const getServicesProvided = async () => {
+const getServicesProvided = async (sup) => {
     
     try{
-        const Services = await ProvidedServices.find ();
+        const Services = await ProvidedServices.findone({'Supplier_ID': sup});
 
         return (Services);
     

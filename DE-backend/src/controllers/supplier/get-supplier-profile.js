@@ -2,7 +2,7 @@ const supplierDetailsService = require('../../services/supplier/getSupplierDetai
 
 const getSupplierDetails = async (req, res) => {
 
-    const supplier_id = req.body._id;
+    const supplier_id = req.query.email;
     res.json(await supplierDetailsService(supplier_id));
 
 }

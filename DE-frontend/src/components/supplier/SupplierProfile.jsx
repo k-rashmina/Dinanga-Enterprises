@@ -1,12 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Form, Button, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa';
 import './SupplierProfile.css';
+import axios from 'axios';
 
 function SupplierProfile() {
   const [showSidebar, setShowSidebar] = useState(false);
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+  const [supDetails, setSupDetails] = useState({
+    Supplier_bname: '',
+    Supplier_email: '',
+    Supplier_contact: '',
+    Supplier_aos: ''
+  })
+
+  const handleInputEvents = (e) => {
+
+    const {name, value} = e.target;
+
+    setSupDetails(prevState => {
+
+      return{
+        ...prevState,
+        [name]: value
+      }
+
+    })
+
+  }
 
   const toggleSidebar = () => setShowSidebar(!showSidebar);
   const handleCloseFeedbackModal = () => setShowFeedbackModal(false);
@@ -23,6 +45,13 @@ function SupplierProfile() {
     console.log("Showing feedback history...");
     // You can add further actions here, like displaying a modal or navigating to a different page
   };
+
+
+  useEffect(() => {
+
+    axios.get(`http://localhost:5000/supplier/readsupplierdetails?email=${'sakitha@gmail.com'}`).then(res => setSupDetails(res.data))
+
+  }, [])
 
   return (
     <Container fluid style={{ minHeight: '100vh', backgroundColor: '#', display: 'flex', flexDirection: 'row', position: 'relative' }}>
@@ -47,24 +76,28 @@ function SupplierProfile() {
             <Form>
               <Form.Group controlId="formBusinessName">
                 <Form.Label className="form-label">Business Name</Form.Label>
-                <Form.Control type="text" placeholder="Enter business name" className="form-control" />
+                <Form.Control type="text" onChange={handleInputEvents} placeholder="Enter business name" name='Supplier_bname' className="form-control" value={supDetails.Supplier_bname} />
               </Form.Group>
               <Form.Group controlId="formAreaOfSpecialization">
                 <Form.Label className="form-label">Area of Specialization</Form.Label>
-                <Form.Control type="text" placeholder="Enter area of specialization" className="form-control" />
+                <Form.Control type="text" onChange={handleInputEvents} placeholder="Enter area of specialization" name='Supplier_aos' className="form-control" value={supDetails.Supplier_aos} />
               </Form.Group>
               <Form.Group controlId="formEmail">
                 <Form.Label className="form-label">Email</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" className="form-control" />
+                <Form.Control type="email" onChange={handleInputEvents} placeholder="Enter email" name='Supplier_email' className="form-control" value={supDetails.Supplier_email} />
               </Form.Group>
-              <Form.Group controlId="formServicesProvided">
+              {/* <Form.Group controlId="formServicesProvided">
                 <Form.Label className="form-label">Services Provided</Form.Label>
-                <Form.Control type="text" placeholder="Enter services provided" className="form-control" />
+                <Form.Control type="text" placeholder="Enter services provided" className="form-control" value={} />
+              </Form.Group> */}
+              <Form.Group controlId="formServicesProvided">
+                <Form.Label className="form-label">Contact</Form.Label>
+                <Form.Control type="text" onChange={handleInputEvents} placeholder="Enter services provided" name='Supplier_contact' className="form-control" value={supDetails.Supplier_contact} />
               </Form.Group>
-              <Form.Group controlId="formPassword">
+              {/* <Form.Group controlId="formPassword">
                 <Form.Label className="form-label">Password</Form.Label>
                 <Form.Control type="password" placeholder="Enter password" className="form-control" />
-              </Form.Group>
+              </Form.Group> */}
               <br />
               <Button variant="primary" className="custom-button">Update Profile</Button>{' '}
               <Button variant="danger" className="custom-button">Delete Profile</Button>{' '}
@@ -90,7 +123,7 @@ function SupplierProfile() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Link to={'/supfeedback'}><Button variant="secondary" onClick={handleFeedbackHistory}>Feedback History</Button></Link> {/* New button */}
+          <Link to ={'/supfeedback'}><Button variant="secondary" onClick={handleFeedbackHistory}>Feedback History</Button></Link> {/* New button */}
           <Button variant="success" onClick={handleCloseFeedbackModal}>Submit</Button>
         </Modal.Footer>
       </Modal>
