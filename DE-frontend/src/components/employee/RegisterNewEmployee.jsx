@@ -15,8 +15,6 @@ const RegisterNewEmployee = () => {
     department: ""
   });
 
-  const [passwordMatchError, setPasswordMatchError] = useState(false);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -24,23 +22,20 @@ const RegisterNewEmployee = () => {
       [name]: value
     });
 
-    if (name === "confirmPassword") {
-      validatePasswordMatch(formData.password, value);
-    }
-
-    const validatePasswordMatch = (password, confirmPassword) => {
-      setPasswordMatchError(password !== confirmPassword);
-    };
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (passwordMatchError) {
-      alert("Passwords do not match!");
+    if (formData.password !== formData.confirmPassword){
+      alert("Passwords do not match");
       return;
     }
 
+    if (formData.password.length < 8) {
+      alert("Password must be at least 8 characters long.");
+      return;
+    }
     // Perform form validation here
     console.log(formData);
     const response = await EmployeeApiService.registerEmployee({
@@ -132,10 +127,6 @@ const RegisterNewEmployee = () => {
             required
           />
         </Form.Group>
-
-        {passwordMatchError && (
-          <Alert variant="danger">Passwords do not match!</Alert>
-        )}
 
         <Form.Group controlId="department" style={{ marginBottom: "20px" }}>
           <Form.Label>Department</Form.Label>
