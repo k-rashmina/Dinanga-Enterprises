@@ -5,14 +5,14 @@ const customerFeedbackSchema = new schema({
     feedbackSub:{
         type: String,
         required: true,
-        unique: true,
+       
     },
 
     feedbackMsg:{
 
         type: String,
         required: true,
-        unique: true,
+       
     },
 });
 

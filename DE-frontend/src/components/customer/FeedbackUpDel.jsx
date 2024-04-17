@@ -2,16 +2,26 @@ import React from 'react';
 import { Container, Table, Button, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { useNavigate } from 'react-router-dom';
+import {useState} from 'react';
 import { useEffect } from 'react';
 import axios from "axios";
 
 
 const FeedbackUpDel = () => {
+
+  const [records, setRecords] = useState([])
+
+  useEffect(()=>{
+    axios.get("http://localhost:5000/cusfeedback/readcustomerfeedbacks")
+  .then(res => {
+    setRecords(res.data);
+  })
+  .catch(err=> console.log(err));
+  }, [])
   return (
     <Container fluid style={{ padding: '16px', backgroundColor: '#fff', minHeight: '100vh' }}>
       <Row className="justify-content-center">
-        <Col xs={12} md={8}>
+        <Col xs={12} md={12}>
           <h4 style={{ color: 'black', textAlign: 'center', fontWeight: 'bold', marginBottom: '20px' }}>Previous Feedback</h4>
           <div style={{ borderRadius: '20px', overflow: 'hidden' }}>
             <Table bordered hover responsive style={{ marginBottom: '0' }} >
@@ -24,10 +34,11 @@ const FeedbackUpDel = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td align="center">{'cus'}</td>
-                  <td align="center">{'cus'}</td>
-                  <td align="center">{'cus'}</td>
+                {records.map((row, index)=>(
+                <tr key={index}>
+                  <td  align="center">{new Date().toLocaleDateString()}</td>
+                  <td style={{maxWidth: '200px', wordWrap: 'break-word'}} align="center" >{row.feedbackSub}</td>
+                  <td style={{maxWidth: '200px', wordWrap: 'break-word'}} align="center">{row.feedbackMsg}</td>
                   <td align="center">
                     <Button variant="primary" size="sm" style={{ margin: '2px', backgroundColor: '#00adb4' }}>
                       <i className="bi bi-pencil-square"></i>Edit
@@ -37,6 +48,7 @@ const FeedbackUpDel = () => {
                     </Button>
                   </td>
                 </tr>
+                 ))}
               </tbody>
             </Table>
           </div>
