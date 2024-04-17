@@ -1,0 +1,40 @@
+.supplier-feedback-container {
+    padding: 16px;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+  }
+  
+  .feedback-header {
+    color: #17a2b8;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .feedback-table-container {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .feedback-table {
+    margin-bottom: 0;
+  }
+  
+  .table-header-row {
+    background-color: #17a2b8;
+    color: white;
+  }
+  
+  .action-button {
+    margin: 2px;
+  }
+  
+  .edit-button {
+    background-color: #007bff;
+  }
+  
+  .delete-button {
+    background-color: #dc3545;
+  }
+  
