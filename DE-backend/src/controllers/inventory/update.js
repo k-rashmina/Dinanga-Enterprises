@@ -10,19 +10,33 @@ const updateInventoryItem = async (req, res) => {
         quantity,
         reorderLevel,
         reorderState,
+        itemPrice,
         availability,
       } = req.body;
   
+
+      // Fetch the current item
+    const currentItem = await inventoryDetails.findById(objectid);
+    if (!currentItem) {
+      return res.status(404).json({ message: "Inventory Item not found" });
+    }
+  
+
+        // Set the previousQuantity field to the current quantity
+    const previousQuantity = currentItem.quantity;
+
       const updateStates = {
         itemNumber,
         itemName,
         quantity,
+        previousQuantity,
         reorderLevel,
         reorderState,
+        itemPrice,
         availability,
       };
+      
 
-  
       const updatedItem = await inventoryDetails.findByIdAndUpdate(
         objectid,
         updateStates,
