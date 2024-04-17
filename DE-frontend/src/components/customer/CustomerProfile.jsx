@@ -8,7 +8,7 @@ const CustomerProfile = () => {
   const imageUrl = 'https://source.unsplash.com/600x300/?student';
 
   return (
-    <div className="container mt-5">
+    
       <div className="row">
         <div className="col-md-4" style={{ backgroundColor: '#393E46' }}>
           <div className="profile-container">
@@ -26,7 +26,7 @@ const CustomerProfile = () => {
           </div>
         </div>
       </div>
-    </div>
+    
   );
 }
 
