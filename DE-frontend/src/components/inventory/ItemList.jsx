@@ -108,39 +108,41 @@ function ItemList() {
 
   return (
     <div className="container mt-1">
-      <SearchBar />
+      <div className="d-flex justify-content-between mb-5">
+        <div
+          className="d-flex align-items-center justify-content-end pe-4"
+          style={{ width: "333px", marginLeft: "60px" }}
+        >
+          <label
+            style={{ fontSize: "18px", whiteSpace: "nowrap" }}
+            htmlFor="sort"
+          >
+            Sort Table
+          </label>
+          <select
+            className="ms-3 me-0 filter-input rounded-2"
+            name="sort"
+            value={sortCriteria}
+            onChange={(e) => setSortCriteria(e.target.value)}
+            style={{ width: "200px" }}
+          >
+            <option value="">Select Sorting Criteria</option>
+            <option value="lowStock">Low Stock First</option>
+            <option value="outOfStock">Out of Stock</option>
+            <option value="reorder">Reorder Items First</option>
+          </select>
 
-      <div
-        className="d-flex align-items-center justify-content-end pe-4"
-        style={{ width: "333px", marginLeft: "60px" }}
-      >
-        <label
-          style={{ fontSize: "18px", whiteSpace: "nowrap" }}
-          htmlFor="sort"
-        >
-          Sort Table
-        </label>
-        <select
-          className="ms-3 me-0 filter-input rounded-2"
-          name="sort"
-          value={sortCriteria}
-          onChange={(e) => setSortCriteria(e.target.value)}
-          style={{ width: "200px" }}
-        >
-          <option value="">Select Sorting Criteria</option>
-          <option value="lowStock">Low Stock First</option>
-          <option value="outOfStock">Out of Stock</option>
-          <option value="reorder">Reorder Items First</option>
-        </select>
+          <button
+            className="form-button rounded-5 ms-9 fw-semibold"
+            type="button"
+            name="submit"
+            onClick={handleSort}
+          >
+            Sort
+          </button>
+        </div>
 
-        <button
-          className="form-button rounded-5 ms-9 fw-semibold"
-          type="button"
-          name="submit"
-          onClick={handleSort}
-        >
-          Sort
-        </button>
+        <SearchBar />
       </div>
 
       <table className="" style={{ fontSize: "18px" }}>
