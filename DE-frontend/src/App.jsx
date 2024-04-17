@@ -8,6 +8,7 @@ import SupplierRegForm from './components/supplier/SupplierRegForm';
 import SupplierProfile from './components/supplier/SupplierProfile';
 import ServicesProvided from './components/supplier/ServicesProvided';
 import OrderAlerts from './components/supplier/Alerts';
+import FeedbackTable from './components/supplier/FeedbackTable';
 
 
 function App() {
@@ -32,7 +33,7 @@ function App() {
           <Route path='/supprofile' element = {<SupplierProfile/>}/>
           <Route path='/supalerts' element = {<OrderAlerts/>}/>
           <Route path='/supservices' element= {<ServicesProvided/>}/>
-          <Route path='/supfeedback' element/>
+          <Route path='/supfeedback' element= {<FeedbackTable/>}/>
         </Route>
         
         <Route element = {<RegLayout/>} >

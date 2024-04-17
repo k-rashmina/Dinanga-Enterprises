@@ -72,9 +72,9 @@ function SupplierRegForm() {
         if (!formData.Supplier_Pw) {
             formIsValid = false;
             errors["Supplier_Pw"] = "Please enter your password.";
-        } else if (formData.Supplier_Pw.length < 6) {
+        } else if (formData.Supplier_Pw.length < 8) {
             formIsValid = false;
-            errors["Supplier_Pw"] = "Password must be at least 6 characters long.";
+            errors["Supplier_Pw"] = "Password must be at least 8 characters long.";
         }
 
         // Validate Confirm Password
@@ -115,7 +115,7 @@ function SupplierRegForm() {
                 {/* Add similar spans for other fields if needed */}
                 
                 <label>Email</label><br/>
-                <input type="email" value={formData.Supplier_email} onChange={handleChange} className='border-color rounded-2' style={{width: '618px', backgroundColor: 'white', }} name="Supplier_email" />
+                <input type="email" value={formData.Supplier_email} onChange={handleChange} className='border-color rounded-2' style={{width: '618px', backgroundColor: 'white', }} name="Supplier_email" placeholder='Jason@example.com' />
                 <span className="fs-6 text-danger">{errors["Supplier_email"]}</span>
                 <br/>
                 
