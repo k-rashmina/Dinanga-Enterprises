@@ -175,7 +175,7 @@ function App() {
         <Route element={<AdminLayout page={'Order'} menu={["Dashboard", "To Be Ordered", "Current Orders", "Order History", "Report"]}/>}>
           <Route path='/admin/order/dashboard' element = {<OrderDashboard/>}/>
           <Route path='/admin/order/tobeordered' element = {<ToBeOrdered/>}/>
-          <Route path='/admin/order/addorder' element = {<OrderPlacement/>}/>
+          <Route path='/admin/order/addorder/:itemName/:itemNumber' element = {<OrderPlacement/>}/>
           <Route path='/admin/order/currentorders' element = {<OnGoingOrders/>}/>
           <Route path='/admin/order/orderhistory' element = {<OrderHistory/>}/>
           <Route path='/admin/order/report' element = {<OrderReport/>}/>

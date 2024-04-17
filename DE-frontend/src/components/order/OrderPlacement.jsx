@@ -2,15 +2,17 @@ import React, { useEffect, useRef, useState } from "react";
 import { Container, Row, Col, Form, Button, Image } from "react-bootstrap";
 import formImg from "../../assets/Orderplace.jpg";
 import axios from "axios";
+import { useParams } from 'react-router-dom';
 
 
 function OrderPlacement() {
-   
+  const { itemName, itemNumber } = useParams();
+  
 
     const [formData, setFormData] = useState({
       
-        itemName:'',
-        itemNumber:'',
+      itemName: itemName || '',
+      itemNumber: itemNumber || '',
         quantity:'',
         dateofOrder:'',
         companyAddress:'',
@@ -19,8 +21,8 @@ function OrderPlacement() {
     
     });
     const [formErrors, setFormErrors] = useState({
-      itemName:'',
-      itemNumber:'',
+      // itemName:'',
+      // itemNumber:'',
       quantity:'',
       dateofOrder:'',
       companyAddress:'',
@@ -51,13 +53,13 @@ useEffect(() => {
   hasPageLoaded.current = true
 }, [submitValue])
 
-    const validateItemName = (value) => {
-      return value.length < 3 ? 'Item Name must be at least 3 characters long!' : '';
-    }
+    // const validateItemName = (value) => {
+    //   return value.length < 3 ? 'Item Name must be at least 3 characters long!' : '';
+    // }
     
-    const validateItemNumber = (value) => {
-      return isNaN(value) ? 'Item Number must be a number!' : '';
-    }
+    // const validateItemNumber = (value) => {
+    //   return isNaN(value) ? 'Item Number must be a number!' : '';
+    // }
     
     const validateQuantity = (value) => {
       return isNaN(value) ? 'Quantity must be a number!' : '';
@@ -84,8 +86,8 @@ useEffect(() => {
       const {name, value} = event.target;
       let errors = {...formErrors};
     
-      errors.itemName = name === 'itemName' ? validateItemName(value) : errors.itemName;
-      errors.itemNumber = name === 'itemNumber' ? validateItemNumber(value) : errors.itemNumber;
+      // errors.itemName = name === 'itemName' ? validateItemName(value) : errors.itemName;
+      // errors.itemNumber = name === 'itemNumber' ? validateItemNumber(value) : errors.itemNumber;
       errors.quantity = name === 'quantity' ? validateQuantity(value) : errors.quantity;
       errors.dateofOrder = name === 'dateofOrder' ? validateDateofOrder(value) : errors.dateofOrder;
       errors.companyAddress = name === 'companyAddress' ? validateCompanyAddress(value) : errors.companyAddress;
@@ -150,13 +152,18 @@ useEffect(() => {
                   </h5>
                   <Form.Group className="mb-3">
                     <Form.Label>Item Name</Form.Label>
-                    <Form.Control type="text" name="itemName" value={formData.itemName} onChange={handleChange}  required />
+                    <Form.Control type="text" name="itemName" value={formData.itemName} onChange={handleChange}  
+                    readOnly  // This will make the field read-only
+                     />
+                    
                     <p style={{color: 'red'}}>{formErrors.itemName}</p>
                     </Form.Group>
 
                   <Form.Group className="mb-3">
                     <Form.Label>Item Number</Form.Label>
-                    <Form.Control type="text" name="itemNumber" value={formData.itemNumber} onChange={handleChange}  required />
+                    <Form.Control type="text" name="itemNumber" value={formData.itemNumber} onChange={handleChange}  
+                    readOnly  // This will make the field read-only
+                    />
                     <p style={{color: 'red'}}>{formErrors.itemNumber}</p>
                   </Form.Group>
 
@@ -244,3 +251,6 @@ useEffect(() => {
 }
 
 export default OrderPlacement;
+
+
+
