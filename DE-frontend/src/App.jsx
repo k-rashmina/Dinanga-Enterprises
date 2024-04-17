@@ -1,10 +1,23 @@
 import {BrowserRouter, Routes, Route, Link} from 'react-router-dom';
+
+import "bootstrap/dist/css/bootstrap.min.css";
+
+// import { useState } from 'react'
+
 // import { useState } from 'react'
 //import { useParams } from 'react-router-dom';
+
 import Layout from './components/common/Layout';
 import AdminLayout from './components/common/AdminLayout';
 import AdminPanel from './components/common/AdminPanel';
 
+
+import Services from '../src/components/job/Services';
+import JobAppointment from '../src/components/job/jobAppointment';
+import JobCustomer from '../src/components/job/jobCustomer';
+
+import JobAdmin from '../src/components/job/jobAdmin';
+import UpdateAppointment from '../src/components/job/updateAppointment';
 
 import OrderDashboard from'./components/order/Dashboard';
 import OnGoingOrders from './components/order/OnGoingOrders';
@@ -38,6 +51,7 @@ import Report from './components/inventory/Report';
 
 
 
+
 function App() {
 
 
@@ -47,13 +61,23 @@ function App() {
         {/* main routes */}
         <Route element={<Layout/>}>
           <Route path='/' element={<h2>this is the home page</h2>}/>
+
+
+
+          <Route path="/services" element={<Services />} />
+          <Route path="/jobAppointment" element={<JobAppointment />} />
+          <Route path="/jobCustomer" element={<JobCustomer />} />
+          <Route path="/updateAppointment" element={<UpdateAppointment/>} />
+
+          
+
           
           <Route path='/about' element/>
           <Route path='/contact' element/>
           <Route path='/cusprofile' element={<CustomerProfile />}/>
           <Route path='/cusfeedback' element={<FeedbackUpDel/>}/>
           <Route path='/job' element/>
-          <Route path='/services' element/>
+
           <Route path='/job/reqjob' element/>
           <Route path='/consultancy' element/>
           <Route path='/consultancy/req' element/>
@@ -91,22 +115,19 @@ function App() {
           <Route path='/admin/finance/jobtransactions' element={<JobTransaction />}/>
           <Route path='/admin/finance/purchasetransactions' element={<PurchaseTransaction />}/>
           <Route path='/admin/finance/addtransaction' element={<AddTransaction />}/>
-
-          <Route path='/admin/finance/dashboard' element={<div>Dashboard</div>}/>
-          <Route path='/admin/finance/jobtransactions' element/>
-          <Route path='/admin/finance/purchasetransactions' element/>
-          <Route path='/admin/finance/addtransaction' element/>
-
           <Route path='/admin/finance/refunds' element/>
           <Route path='/admin/finance/reports' element/>
         </Route>
 
         {/* admin job routes */}
-        <Route element={<AdminLayout page={'Job'} menu={["Job List", "Add Job"]}/>}>
-          <Route path='/admin/job/joblist' element/>
+
+        <Route element={<AdminLayout page={'Job'} menu={["Job List", "report"]}/>}>
+          <Route path='/admin/job/joblist' element={<JobAdmin />}/>
           <Route path='/admin/job/addjob' element/>
           <Route path='/admin/job/updatejob' element/>
           <Route path='/admin/job/deletejob' element/>
+          <Route path='/admin/job/report' element/>
+          {/* <Route path="/jobAdmin" element={<JobAdmin />} /> */}
         </Route>
 
         {/* admin inventory routes */}
@@ -128,8 +149,7 @@ function App() {
         </Route>
 
         {/* admin consultancy routes */}
-        <Route element={<AdminLayout page={'Consultancy'} menu={[ "Consultancy List", "Report"]}/>}>
-          
+        <Route element={<AdminLayout page={'Consultancy'} menu={[ "Consultancy List", "Report"]}/>}>     
           <Route path='/admin/consultancy/consultancylist' element={<ConsultantAdmin/>}/>
           <Route path='/admin/consultancy/report' element/>
         </Route>
