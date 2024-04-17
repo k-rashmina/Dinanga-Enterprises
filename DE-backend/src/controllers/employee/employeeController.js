@@ -19,11 +19,10 @@ const registerEmployee = async (req, res) => {
         return res.status(400).json({ msg: 'Username already exists' });
       }
   
-      // Hash the password
+      //Hash the password
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
   
-      // Create a new employee object with the hashed password
       const newEmployee = new Employee({
         name,
         contactNumber,
@@ -35,7 +34,6 @@ const registerEmployee = async (req, res) => {
         role
       });
   
-      // Save the new employee to the database
       await newEmployee.save();
   
       res.json({ msg: 'Employee registered successfully' });
@@ -76,8 +74,7 @@ const updateEmployee = async (req, res) => {
   try {
     const { name, contactNumber, email, address, username, password } = req.body;
     const employeeId = req.params.id;
-
-    // Check if a new password is provided
+    
     let updatedFields = {
       name,
       contactNumber,
