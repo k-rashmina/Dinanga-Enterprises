@@ -1,0 +1,57 @@
+.styled-table{
+     border-collapse:collapse ;
+     margin: auto;
+     font-size: 0.9em;
+     font-family: sans-serif;
+     max-width: 880px;
+     box-shadow: 0 0 20px rgba(0,0,0,0.15);
+}
+
+.styled-table thead tr{
+    background-color: #327f87;
+    color: white;
+    text-align: left;
+}
+.styled-table th,
+.styled-table td{
+    padding: 12px 15px;
+}
+
+.styled-table tbody tr{
+    border-bottom: 1px solid #dddddd;
+    
+}
+.styled-table tbody tr:last-of-type{
+    border-bottom: 2px solid ;
+}
+.btn{
+    border: none;
+    color: #dddddd;
+    padding: 5px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 5px;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.btn-edit{
+   background-color:#00ADB5;
+   border-radius: 10px;
+   color:white;
+}
+.btn-delete{
+    background-color: #FF0000;
+    border-radius: 10px;
+    color: white;
+}
+.btn-view{
+    background-color: #dddddd;
+    color: black;
+    border-radius: 10px;
+}
+.button-cell button {
+    margin-right: 5px;
+  }
+  
