@@ -8,6 +8,7 @@ const deleteSupplierProfile = require('../controllers/supplier/del-supplier-prof
 const router = express.Router();
 
 router.get('/readsupplierdetails', (req, res) => getSupplierDetails(req, res));
+router.get('/getSupList', (req,res) => getSupListCtrl(req, res));
 router.post('/addsupplierdetails', (req, res) => postSupplierDetails(req, res));
 router.put('/upsupplierdetails', (req, res) => putSupplierProfile(req, res));
 router.delete('/delsupplierdetails', (req, res) => deleteSupplierProfile(req, res));
