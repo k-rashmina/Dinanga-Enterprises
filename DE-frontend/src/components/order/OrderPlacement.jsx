@@ -2,25 +2,31 @@ import React, { useEffect, useRef, useState } from "react";
 import { Container, Row, Col, Form, Button, Image } from "react-bootstrap";
 import formImg from "../../assets/Orderplace.jpg";
 import axios from "axios";
+import { useParams } from 'react-router-dom';
 
 
 function OrderPlacement() {
-   
+  const date = new Date().toJSON();
+  const todaydate = date.substring(0, 10)
+
+  const { itemName, itemNumber, unitprice } = useParams();
+  
 
     const [formData, setFormData] = useState({
       
-        itemName:'',
-        itemNumber:'',
+      itemName: itemName || '',
+      itemNumber: itemNumber || '',
         quantity:'',
         dateofOrder:'',
         companyAddress:'',
         supplierName:'',
         comments:'',
+        orderstatus: 'pending'
     
     });
     const [formErrors, setFormErrors] = useState({
-      itemName:'',
-      itemNumber:'',
+      // itemName:'',
+      // itemNumber:'',
       quantity:'',
       dateofOrder:'',
       companyAddress:'',
@@ -38,26 +44,57 @@ const handleSubmit = (e) => {
         return;
     }
     setSubmitValue(prev => !prev);
-    }
+    hasPageLoaded.current = true;
+}
+
+let [savedOrder, setSavedOrder] = useState({});
+
+console.log(savedOrder._id)
 
 useEffect(() => {
   if(hasPageLoaded.current){
-      axios.post("http://localhost:5000/order/add", formData).then(()=>{
-          alert("order added")
+      axios.post("http://localhost:5000/order/add", formData).then((res)=>{
+          setSavedOrder(res.data);
+          alert("order added");
       }).catch((err)=>{
-          
+          console.log('failed')
       })
   }
-  hasPageLoaded.current = true
 }, [submitValue])
 
-    const validateItemName = (value) => {
-      return value.length < 3 ? 'Item Name must be at least 3 characters long!' : '';
+
+//Creating new purchase transaction
+  useEffect(() => {
+
+    if(savedOrder){
+
+      axios({
+        method: 'post',
+        url: `http://localhost:5000/transaction/addpurchtransaction`,
+        data: {
+          status: 'pending',
+          amount: unitprice * savedOrder.quantity,
+          order_id: savedOrder._id,
+          desc: `${savedOrder} Purchase Transaction`,
+          create_date: todaydate,
+          update_date: todaydate
+        }
+      })
+      .then(res => console.log(res.data))
+      .catch(console.log('failed'))
+
     }
+
+  }, [savedOrder])
+
+
+    // const validateItemName = (value) => {
+    //   return value.length < 3 ? 'Item Name must be at least 3 characters long!' : '';
+    // }
     
-    const validateItemNumber = (value) => {
-      return isNaN(value) ? 'Item Number must be a number!' : '';
-    }
+    // const validateItemNumber = (value) => {
+    //   return isNaN(value) ? 'Item Number must be a number!' : '';
+    // }
     
     const validateQuantity = (value) => {
       return isNaN(value) ? 'Quantity must be a number!' : '';
@@ -84,8 +121,8 @@ useEffect(() => {
       const {name, value} = event.target;
       let errors = {...formErrors};
     
-      errors.itemName = name === 'itemName' ? validateItemName(value) : errors.itemName;
-      errors.itemNumber = name === 'itemNumber' ? validateItemNumber(value) : errors.itemNumber;
+      // errors.itemName = name === 'itemName' ? validateItemName(value) : errors.itemName;
+      // errors.itemNumber = name === 'itemNumber' ? validateItemNumber(value) : errors.itemNumber;
       errors.quantity = name === 'quantity' ? validateQuantity(value) : errors.quantity;
       errors.dateofOrder = name === 'dateofOrder' ? validateDateofOrder(value) : errors.dateofOrder;
       errors.companyAddress = name === 'companyAddress' ? validateCompanyAddress(value) : errors.companyAddress;
@@ -101,20 +138,31 @@ useEffect(() => {
 
 
 
+    const [supList, setSupList] = useState([]);
 
 
+    useEffect(() => {
 
+      axios.get('http://localhost:5000/supplier/readsuplist')
+      .then(res => setSupList(res.data))
+      .catch(console.log('error'));
 
+    }, [])
 
-        
+    const supOptionElems = supList.map(sup => {
+
+      return(
+        <option value={sup._id}>{sup.Supplier_bname}</option>
+      )
+
+    })
 
 
 
     const today = new Date().toISOString().split('T')[0];
 
 
-
-        <p></p>
+    
 
 
   return (
@@ -145,18 +193,23 @@ useEffect(() => {
             >
               <Row>
                 <Col md={6} className="d-flex flex-column">
-                  <h5 style={{ marginBottom: "20px", fontWeight: "bold" }}>
+                  <h3 style={{ marginBottom: "20px", fontWeight: "bold" }}>
                    Order Placement
-                  </h5>
+                  </h3>
                   <Form.Group className="mb-3">
                     <Form.Label>Item Name</Form.Label>
-                    <Form.Control type="text" name="itemName" value={formData.itemName} onChange={handleChange}  required />
+                    <Form.Control type="text" name="itemName" value={formData.itemName} onChange={handleChange}  
+                    readOnly  // This will make the field read-only
+                     />
+                    
                     <p style={{color: 'red'}}>{formErrors.itemName}</p>
                     </Form.Group>
 
                   <Form.Group className="mb-3">
                     <Form.Label>Item Number</Form.Label>
-                    <Form.Control type="text" name="itemNumber" value={formData.itemNumber} onChange={handleChange}  required />
+                    <Form.Control type="text" name="itemNumber" value={formData.itemNumber} onChange={handleChange}  
+                    readOnly  // This will make the field read-only
+                    />
                     <p style={{color: 'red'}}>{formErrors.itemNumber}</p>
                   </Form.Group>
 
@@ -193,11 +246,13 @@ useEffect(() => {
 
                   <Form.Group className="mb-3">
                     <Form.Label>Supplier Name</Form.Label>
-                    <Form.Control type="text" name="supplierName" 
+                    <select name="supplierName" 
                     value={formData.supplierName} 
                     onChange={handleChange}
                     required>
-                    </Form.Control>
+                      <option value={''} >--Select </option>
+                      {supOptionElems}
+                    </select>
                     <p style={{color: 'red'}}>{formErrors.supplierName}</p>
                   </Form.Group>
 
@@ -244,3 +299,6 @@ useEffect(() => {
 }
 
 export default OrderPlacement;
+
+
+

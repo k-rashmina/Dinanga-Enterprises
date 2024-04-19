@@ -4,13 +4,29 @@ const supplierDetails = require('../../models/supplier_details');
 const getSupplierDetails = async (supplier_id) => {
     
     try{
-        const details = await supplierDetails.findOne ({'_id' : supplier_id});
+        const details = await supplierDetails.findOne ({'Supplier_email' : supplier_id});
 
         return (details);
     
     }catch(err){
         console.log(err.message);
     }
+}
+
+const getSupplierList = async () => {
+
+    try{
+
+        const supList = await supplierDetails.find();
+
+        return supList;
+
+    }catch(err) {
+
+        console.log(err.message);
+
+    }
+
 }
 
 const addSupplierDetails = async (addSupplier) => {
@@ -46,5 +62,5 @@ const deleteSupplierDetails = async (delSupplier) => {
     }
 }
 
-module.exports = {getSupplierDetails, addSupplierDetails, putSupplierDetails, deleteSupplierDetails};
+module.exports = {getSupplierDetails, getSupplierList, addSupplierDetails, putSupplierDetails, deleteSupplierDetails};
 
