@@ -7,3 +7,5 @@ const getSupListService = async () => {
     return supList;
 
 }
+
+module.exports = getSupListService;

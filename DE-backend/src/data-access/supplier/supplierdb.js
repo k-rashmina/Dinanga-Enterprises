@@ -17,7 +17,7 @@ const getSupplierList = async () => {
 
     try{
 
-        const supList = await supplierDetails.find('_id Supplier_bname');
+        const supList = await supplierDetails.find();
 
         return supList;
 
