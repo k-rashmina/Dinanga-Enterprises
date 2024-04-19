@@ -45,15 +45,59 @@ const EmployeeApiService = {
     }
   },
 
-  login: async (email, password) => {
+//   login: async (email, password) => {
+//     try {
+//       const response = await axios.post(`${BASE_URL}/login`, { username, password });
+//       return response.data;
+//     } catch (error) {
+//       console.error('Error logging in:', error);
+//       throw error;
+//     }
+//   },
+  
+  loginEmployee: async (username, password) => {
     try {
-      const response = await axios.post(`${BASE_URL}/login`, { username, password });
-      return response.data;
+      // Define the API endpoint
+      const apiUrl = '/login';  // Adjust the URL as per your backend API endpoint
+
+      // Define the data to be sent in the request body
+      const data = {
+        username,
+        password
+      };
+
+      // Send a POST request to the login API endpoint
+      const response = await axios.post(apiUrl, data);
+
+      // Handle the response from the server
+      if (response.status === 200) {
+        // Successful login
+        console.log('Login successful:', response.data);
+        // You can handle the response data as needed, e.g., storing a token, redirecting, etc.
+        return response.data;
+      } else {
+        // Handle other response statuses
+        console.log('Login failed:', response.data);
+        throw new Error('Login failed');
+      }
     } catch (error) {
-      console.error('Error logging in:', error);
+      // Handle errors
+      if (error.response) {
+        // Server responded with a status other than 2xx
+        console.error('Server error:', error.response.data);
+      } else if (error.request) {
+        // No response was received
+        console.error('Network error:', error.request);
+      } else {
+        // Other errors (e.g., request setup)
+        console.error('Error:', error.message);
+      }
+
+      // Rethrow the error to handle it in the calling function
       throw error;
     }
   },
+
 
 };
 
