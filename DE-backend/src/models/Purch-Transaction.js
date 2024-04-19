@@ -14,7 +14,7 @@ const purchTrasactionSchema = new Schema({
   order_id: {
     type: mongoose.SchemaTypes.ObjectId,
     required: true,
-    ref: 'order'
+    ref: 'orders'
   },
   desc: {
     type: String,

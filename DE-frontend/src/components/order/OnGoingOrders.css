@@ -19,6 +19,7 @@
 
 .styled-table tbody tr{
     border-bottom: 1px solid #dddddd;
+    
 }
 .styled-table tbody tr:last-of-type{
     border-bottom: 2px solid ;

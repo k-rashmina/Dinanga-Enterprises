@@ -13,22 +13,16 @@ function SupplierProfile() {
     Supplier_email: '',
     Supplier_contact: '',
     Supplier_aos: ''
-  })
+  });
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const handleInputEvents = (e) => {
-
-    const {name, value} = e.target;
-
-    setSupDetails(prevState => {
-
-      return{
-        ...prevState,
-        [name]: value
-      }
-
-    })
-
-  }
+    const { name, value } = e.target;
+    setSupDetails(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
 
   const toggleSidebar = () => setShowSidebar(!showSidebar);
   const handleCloseFeedbackModal = () => setShowFeedbackModal(false);
@@ -46,12 +40,20 @@ function SupplierProfile() {
     // You can add further actions here, like displaying a modal or navigating to a different page
   };
 
-
   useEffect(() => {
+    axios.get(`http://localhost:5000/supplier/readsupplierdetails?email=${'sakitha@gmail.com'}`).then(res => setSupDetails(res.data));
+  }, []);
 
-    axios.get(`http://localhost:5000/supplier/readsupplierdetails?email=${'sakitha@gmail.com'}`).then(res => setSupDetails(res.data))
+  const handleUpdateProfile = () => {
+    setIsEditMode (prevState => !prevState)
+  };
 
-  }, [])
+  const handleDeleteProfile = () => {
+    // Delete profile logic here
+    console.log("Deleting profile...");
+    // Make API call to delete the supplier profile
+    // After successful deletion, perform any necessary actions like redirecting to another page
+  };
 
   return (
     <Container fluid style={{ minHeight: '100vh', backgroundColor: '#', display: 'flex', flexDirection: 'row', position: 'relative' }}>
@@ -76,31 +78,33 @@ function SupplierProfile() {
             <Form>
               <Form.Group controlId="formBusinessName">
                 <Form.Label className="form-label">Business Name</Form.Label>
-                <Form.Control type="text" onChange={handleInputEvents} placeholder="Enter business name" name='Supplier_bname' className="form-control" value={supDetails.Supplier_bname} />
+                <Form.Control type="text" readOnly={!isEditMode} onChange={handleInputEvents} placeholder="" name='Supplier_bname' className="form-control" value={supDetails.Supplier_bname} />
               </Form.Group>
               <Form.Group controlId="formAreaOfSpecialization">
                 <Form.Label className="form-label">Area of Specialization</Form.Label>
-                <Form.Control type="text" onChange={handleInputEvents} placeholder="Enter area of specialization" name='Supplier_aos' className="form-control" value={supDetails.Supplier_aos} />
+                <Form.Control type="text" readOnly={!isEditMode} onChange={handleInputEvents} placeholder="" name='Supplier_aos' className="form-control" value={supDetails.Supplier_aos} />
               </Form.Group>
               <Form.Group controlId="formEmail">
                 <Form.Label className="form-label">Email</Form.Label>
-                <Form.Control type="email" onChange={handleInputEvents} placeholder="Enter email" name='Supplier_email' className="form-control" value={supDetails.Supplier_email} />
+                <Form.Control type="email" readOnly={!isEditMode} onChange={handleInputEvents} placeholder="Enter email" name='Supplier_email' className="form-control" value={supDetails.Supplier_email} />
               </Form.Group>
-              {/* <Form.Group controlId="formServicesProvided">
-                <Form.Label className="form-label">Services Provided</Form.Label>
-                <Form.Control type="text" placeholder="Enter services provided" className="form-control" value={} />
-              </Form.Group> */}
               <Form.Group controlId="formServicesProvided">
                 <Form.Label className="form-label">Contact</Form.Label>
-                <Form.Control type="text" onChange={handleInputEvents} placeholder="Enter services provided" name='Supplier_contact' className="form-control" value={supDetails.Supplier_contact} />
+                <Form.Control type="text" readOnly={!isEditMode} onChange={handleInputEvents} placeholder="Enter services provided" name='Supplier_contact' className="form-control" value={supDetails.Supplier_contact} />
               </Form.Group>
-              {/* <Form.Group controlId="formPassword">
-                <Form.Label className="form-label">Password</Form.Label>
-                <Form.Control type="password" placeholder="Enter password" className="form-control" />
-              </Form.Group> */}
               <br />
-              <Button variant="primary" className="custom-button">Update Profile</Button>{' '}
-              <Button variant="danger" className="custom-button">Delete Profile</Button>{' '}
+              {!isEditMode && (
+                <>
+                  <Button variant="primary" className="custom-button" onClick={() => setIsEditMode(true)}>Update Profile</Button>{' '}
+                  <Button variant="danger" className="custom-button" onClick={handleDeleteProfile}>Delete Profile</Button>{' '}
+                </>
+              )}
+              {isEditMode && (
+                <>
+                  <Button variant="success" className="custom-button" onClick={handleUpdateProfile}>Save Changes</Button>{' '}
+                  <Button variant="secondary" className="custom-button" onClick={() => setIsEditMode(false)}>Cancel</Button>{' '}
+                </>
+              )}
             </Form>
           </div>
         </div>
