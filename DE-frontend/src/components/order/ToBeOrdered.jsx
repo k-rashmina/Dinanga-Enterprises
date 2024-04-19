@@ -51,7 +51,7 @@ console.log(items)
                   //   pathname: '/admin/order/addorder',
                   //   state: { itemName: item.itemName, itemNumber: item.itemNumber }
                   // }}
-                  to={`/admin/order/addorder/${item.itemName}/${item.itemNumber}`}
+                  to={`/admin/order/addorder/${item.itemName}/${item.itemNumber}/${item.itemPrice}`}
                   
                     style={{ textDecoration: 'none', color: 'white' }}
                   >

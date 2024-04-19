@@ -4,11 +4,14 @@ const createNewOrder = async (req, res) => {
     try {
       const order = req.body;
 
-      console.log(order)
   
       const newOrder= new orderDetails(order);
       await newOrder.save();
-      res.status(200).json(newOrder);
+      const savedOrder = newOrder.toObject({getters: true})
+
+
+
+      res.status(200).json(savedOrder);
     } catch (err) {
       res
         .status(500)

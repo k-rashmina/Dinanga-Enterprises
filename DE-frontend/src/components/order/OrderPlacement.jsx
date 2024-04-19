@@ -6,7 +6,10 @@ import { useParams } from 'react-router-dom';
 
 
 function OrderPlacement() {
-  const { itemName, itemNumber } = useParams();
+  const date = new Date().toJSON();
+  const todaydate = date.substring(0, 10)
+
+  const { itemName, itemNumber, unitprice } = useParams();
   
 
     const [formData, setFormData] = useState({
@@ -44,15 +47,46 @@ const handleSubmit = (e) => {
     hasPageLoaded.current = true;
 }
 
+let [savedOrder, setSavedOrder] = useState({});
+
+console.log(savedOrder._id)
+
 useEffect(() => {
   if(hasPageLoaded.current){
       axios.post("http://localhost:5000/order/add", formData).then((res)=>{
-          alert("order added")
+          setSavedOrder(res.data);
+          alert("order added");
       }).catch((err)=>{
           console.log('failed')
       })
   }
 }, [submitValue])
+
+
+//Creating new purchase transaction
+  useEffect(() => {
+
+    if(savedOrder){
+
+      axios({
+        method: 'post',
+        url: `http://localhost:5000/transaction/addpurchtransaction`,
+        data: {
+          status: 'pending',
+          amount: unitprice * savedOrder.quantity,
+          order_id: savedOrder._id,
+          desc: `${savedOrder} Purchase Transaction`,
+          create_date: todaydate,
+          update_date: todaydate
+        }
+      })
+      .then(res => console.log(res.data))
+      .catch(console.log('failed'))
+
+    }
+
+  }, [savedOrder])
+
 
     // const validateItemName = (value) => {
     //   return value.length < 3 ? 'Item Name must be at least 3 characters long!' : '';
@@ -129,7 +163,7 @@ useEffect(() => {
 
 
     
-    console.log(formData);
+
 
   return (
     <div>
