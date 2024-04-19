@@ -2,27 +2,13 @@ const orderDetails = require("../../models/orderDetails");
 
 const createNewOrder = async (req, res) => {
     try {
-      const {
-       itemName,
-       itemNumber,
-       quantity,
-       dateOfOrder,
-       companyAddress,
-       supplierName,
-       comments,
-      } = req.body;
+      const order = req.body;
+
+      console.log(order)
   
-      const newOrder= new orderDetails({
-        itemName,
-        itemNumber,
-        quantity,
-        dateOfOrder,
-        companyAddress,
-        supplierName,
-        comments,
-      });
+      const newOrder= new orderDetails(order);
       await newOrder.save();
-      res.status(201).json(newOrder);
+      res.status(200).json(newOrder);
     } catch (err) {
       res
         .status(500)

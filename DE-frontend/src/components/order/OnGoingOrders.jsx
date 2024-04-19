@@ -119,7 +119,7 @@ const OnGoingOrders = () => {
       <h3 style={{ marginBottom: "15px", marginLeft: "20px", fontWeight: "bold" }}>
         OnGoing Orders
       </h3>
-      <table className="styled-table" style={{ width: "100%", marginLeft: "20px", marginRight: "20px" }}>
+      <table className="styled-table" style={{ width: "200%", marginLeft: "20px", marginRight: "20px" }}>
         <thead>
           <tr>
             <th>itemName</th>
@@ -129,7 +129,7 @@ const OnGoingOrders = () => {
             <th>CompanyAddress</th>
             <th>SupplierName</th>
             <th>Comments</th>
-            <th>Action</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>

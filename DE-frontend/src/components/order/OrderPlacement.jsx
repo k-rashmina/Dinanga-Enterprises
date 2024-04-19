@@ -18,6 +18,7 @@ function OrderPlacement() {
         companyAddress:'',
         supplierName:'',
         comments:'',
+        orderstatus: 'pending'
     
     });
     const [formErrors, setFormErrors] = useState({
@@ -40,17 +41,17 @@ const handleSubmit = (e) => {
         return;
     }
     setSubmitValue(prev => !prev);
-    }
+    hasPageLoaded.current = true;
+}
 
 useEffect(() => {
   if(hasPageLoaded.current){
-      axios.post("http://localhost:5000/order/add", formData).then(()=>{
+      axios.post("http://localhost:5000/order/add", formData).then((res)=>{
           alert("order added")
       }).catch((err)=>{
-          
+          console.log('failed')
       })
   }
-  hasPageLoaded.current = true
 }, [submitValue])
 
     // const validateItemName = (value) => {
@@ -103,21 +104,32 @@ useEffect(() => {
 
 
 
+    const [supList, setSupList] = useState([]);
 
 
+    useEffect(() => {
 
+      axios.get('http://localhost:5000/supplier/readsuplist')
+      .then(res => setSupList(res.data))
+      .catch(console.log('error'));
 
+    }, [])
 
-        
+    const supOptionElems = supList.map(sup => {
+
+      return(
+        <option value={sup._id}>{sup.Supplier_bname}</option>
+      )
+
+    })
 
 
 
     const today = new Date().toISOString().split('T')[0];
 
 
-
-        <p></p>
-
+    
+    console.log(formData);
 
   return (
     <div>
@@ -200,11 +212,13 @@ useEffect(() => {
 
                   <Form.Group className="mb-3">
                     <Form.Label>Supplier Name</Form.Label>
-                    <Form.Control type="text" name="supplierName" 
+                    <select name="supplierName" 
                     value={formData.supplierName} 
                     onChange={handleChange}
                     required>
-                    </Form.Control>
+                      <option value={''} >--Select </option>
+                      {supOptionElems}
+                    </select>
                     <p style={{color: 'red'}}>{formErrors.supplierName}</p>
                   </Form.Group>
 
