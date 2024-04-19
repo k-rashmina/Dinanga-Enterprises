@@ -147,9 +147,9 @@ useEffect(() => {
             >
               <Row>
                 <Col md={6} className="d-flex flex-column">
-                  <h5 style={{ marginBottom: "20px", fontWeight: "bold" }}>
+                  <h3 style={{ marginBottom: "20px", fontWeight: "bold" }}>
                    Order Placement
-                  </h5>
+                  </h3>
                   <Form.Group className="mb-3">
                     <Form.Label>Item Name</Form.Label>
                     <Form.Control type="text" name="itemName" value={formData.itemName} onChange={handleChange}  

@@ -15,8 +15,8 @@ function ToBeOrdered() {
 console.log(items)
   return (
     <div style={{ marginTop: "90px" }}>
-      <h5 style={{ marginBottom: "5px", marginLeft: "10px", fontWeight: "bold" }}>To Be Ordered</h5><br />
-      <table className="styled-table" style={{ marginLeft: "20px", width: "900%" }}>
+      <h3 style={{ marginBottom: "10px", marginLeft: "20px", fontWeight: "bold" }}>To Be Ordered</h3><br />
+      <table className="styled-table" style={{ marginLeft: "20px", width: "3500px",marginright:"90px"}}>
         <thead>
           <tr>
             <th style={{ textAlign: "center" }}>itemName</th>
