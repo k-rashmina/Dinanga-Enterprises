@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal, Button, Form, Alert } from "react-bootstrap";
 import EmployeeApiService from "./EmployeeServices";
 
 const EmployeeDashboard = () => {
   const [employeeData, setEmployeeData] = useState([]);
-  const [newPassword, setNewPassword] = useState('');
   const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [newPassword, setNewPassword] = useState('');
   const [showEditModal, setShowEditModal] = useState(false);
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     handleGetEmployeeDetails();
@@ -27,8 +28,99 @@ const EmployeeDashboard = () => {
     setShowEditModal(true);
   };
 
+  const validateField = (name, value) => {
+    let fieldErrors = { ...errors };
+
+    // Validation logic
+    switch (name) {
+      case "name":
+        // Name validation (only letters)
+        const namePattern = /^[a-zA-Z\s]+$/;
+        if (!value.match(namePattern)) {
+          fieldErrors.name = "Name can only contain letters.";
+        } else {
+          delete fieldErrors.name;
+        }
+        break;
+      case "contactNumber":
+        // Contact number validation
+        const contactNumberPattern = /^0\d{9}$/;
+        if (!value.match(contactNumberPattern)) {
+          fieldErrors.contactNumber = "Contact number must start with 0 and be exactly 10 digits long.";
+        } else {
+          delete fieldErrors.contactNumber;
+        }
+        break;
+      case "email":
+        // Email validation
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!value.match(emailPattern)) {
+          fieldErrors.email = "Invalid email address.";
+        } else {
+          delete fieldErrors.email;
+        }
+        break;
+      case "address":
+        // Add address validation if needed (e.g., non-empty)
+        if (!value) {
+          fieldErrors.address = "Address is required.";
+        } else {
+          delete fieldErrors.address;
+        }
+        break;
+      case "username":
+        // Add username validation if needed
+        if (!value) {
+          fieldErrors.username = "Username is required.";
+        } else {
+          delete fieldErrors.username;
+        }
+        break;
+      case "password":
+        // Password validation (length)
+        if (value.length < 8) {
+          fieldErrors.password = "Password must be at least 8 characters long.";
+        } else {
+          delete fieldErrors.password;
+        }
+        break;
+      default:
+        break;
+    }
+
+    setErrors(fieldErrors);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    // Update the selected employee with the changed value
+    setSelectedEmployee((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    // Validate the changed field
+    validateField(name, value);
+  };
+
   const handleSaveChanges = async () => {
     try {
+      // Validate before saving
+      let isValid = true;
+      for (let key in selectedEmployee) {
+        validateField(key, selectedEmployee[key]);
+        if (errors[key]) {
+          isValid = false;
+        }
+      }
+
+      if (!isValid) {
+        alert("Please fix the validation errors before saving.");
+        return;
+      }
+
+      // Save changes
       await EmployeeApiService.updateEmployee(selectedEmployee);
       const updatedData = employeeData.map((employee) => {
         if (employee._id === selectedEmployee._id) {
@@ -101,80 +193,93 @@ const EmployeeDashboard = () => {
               <Form.Label>Full Name</Form.Label>
               <Form.Control
                 type="text"
+                name="name"
                 value={selectedEmployee?.name}
-                onChange={(e) =>
-                  setSelectedEmployee({
-                    ...selectedEmployee,
-                    name: e.target.value
-                  })
-                }
+                onChange={handleChange}
+                isInvalid={!!errors.name}
+                required
               />
+              <Form.Control.Feedback type="invalid">
+                {errors.name}
+              </Form.Control.Feedback>
             </Form.Group>
-            
+
             <Form.Group controlId="formContactNumber">
               <Form.Label>Contact Number</Form.Label>
               <Form.Control
                 type="text"
+                name="contactNumber"
                 value={selectedEmployee?.contactNumber}
-                onChange={(e) =>
-                  setSelectedEmployee({
-                    ...selectedEmployee,
-                    contactNumber: e.target.value
-                  })
-                }
+                onChange={handleChange}
+                isInvalid={!!errors.contactNumber}
+                required
               />
+              <Form.Control.Feedback type="invalid">
+                {errors.contactNumber}
+              </Form.Control.Feedback>
             </Form.Group>
+            
             <Form.Group controlId="formEmail">
               <Form.Label>Email</Form.Label>
               <Form.Control
                 type="email"
+                name="email"
                 value={selectedEmployee?.email}
-                onChange={(e) =>
-                  setSelectedEmployee({
-                    ...selectedEmployee,
-                    email: e.target.value
-                  })
-                }
+                onChange={handleChange}
+                isInvalid={!!errors.email}
+                required
               />
+              <Form.Control.Feedback type="invalid">
+                {errors.email}
+              </Form.Control.Feedback>
             </Form.Group>
+
             <Form.Group controlId="formAddress">
               <Form.Label>Address</Form.Label>
               <Form.Control
                 type="text"
+                name="address"
                 value={selectedEmployee?.address}
-                onChange={(e) =>
-                  setSelectedEmployee({
-                    ...selectedEmployee,
-                    address: e.target.value
-                  })
-                }
+                onChange={handleChange}
+                isInvalid={!!errors.address}
+                required
               />
+              <Form.Control.Feedback type="invalid">
+                {errors.address}
+              </Form.Control.Feedback>
             </Form.Group>
+
             <Form.Group controlId="formUsername">
               <Form.Label>Username</Form.Label>
               <Form.Control
                 type="text"
+                name="username"
                 value={selectedEmployee?.username}
-                onChange={(e) =>
-                  setSelectedEmployee({
-                    ...selectedEmployee,
-                    username: e.target.value
-                  })
-                }
+                onChange={handleChange}
+                isInvalid={!!errors.username}
+                required
               />
+              <Form.Control.Feedback type="invalid">
+                {errors.username}
+              </Form.Control.Feedback>
             </Form.Group>
+
             <Form.Group controlId="formPassword">
               <Form.Label>New Password</Form.Label>
               <Form.Control
-                type="text" 
+                type="password"
+                name="password"
                 value={newPassword}
-                onChange={(e) =>
-                  setSelectedEmployee({
-                    ...selectedEmployee,
-                    password: e.target.value ? e.target.value : selectedEmployee.newPassword
-                  })
-                }
+                onChange={(e) => {
+                  setNewPassword(e.target.value);
+                  handleChange(e);
+                }}
+                isInvalid={!!errors.password}
+                required
               />
+              <Form.Control.Feedback type="invalid">
+                {errors.password}
+              </Form.Control.Feedback>
             </Form.Group>
           </Form>
         </Modal.Body>
