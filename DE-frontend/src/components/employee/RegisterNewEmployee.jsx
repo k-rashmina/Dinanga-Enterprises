@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Form, Button } from "react-bootstrap";
+import { Container, Form, Button, Alert } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import EmployeeApiService from "./EmployeeServices";
 
@@ -15,29 +15,112 @@ const RegisterNewEmployee = () => {
     department: ""
   });
 
+  const [errors, setErrors] = useState({});
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
 
+    // Validation logic for the name field
+    if (name === "name") {
+      // Remove non-alphabetic characters
+      const newValue = value.replace(/[^a-zA-Z\s]/g, "");
+      setFormData({
+        ...formData,
+        [name]: newValue
+      });
+    } else {
+      // Set form data
+      setFormData({
+        ...formData,
+        [name]: value
+      });
+    }
+
+    // Perform validation for the field
+    validateField(name, value);
+  };
+
+  const validateField = (name, value) => {
+    let fieldErrors = { ...errors };
+
+    // Validation logic
+    switch (name) {
+      case "name":
+        if (!value) {
+          fieldErrors.name = "Name is required.";
+        } else {
+          delete fieldErrors.name;
+        }
+        break;
+      case "contactNumber":
+        // Allow only numbers, and check length and starting digit
+        const contactNumberPattern = /^0\d{9}$/;
+        if (!value.match(contactNumberPattern)) {
+          fieldErrors.contactNumber = "Contact number must start with 0 and be exactly 10 digits long.";
+        } else {
+          delete fieldErrors.contactNumber;
+        }
+        break;
+      case "email":
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!value.match(emailPattern)) {
+          fieldErrors.email = "Invalid email address.";
+        } else {
+          delete fieldErrors.email;
+        }
+        break;
+      case "password":
+        if (value.length < 8) {
+          fieldErrors.password = "Password must be at least 8 characters long.";
+        } else {
+          delete fieldErrors.password;
+        }
+        // Validate password match with confirmPassword
+        if (formData.confirmPassword && formData.confirmPassword !== value) {
+          fieldErrors.confirmPassword = "Passwords do not match.";
+        } else {
+          delete fieldErrors.confirmPassword;
+        }
+        break;
+      case "confirmPassword":
+        if (value !== formData.password) {
+          fieldErrors.confirmPassword = "Passwords do not match.";
+        } else {
+          delete fieldErrors.confirmPassword;
+        }
+        break;
+      case "department":
+        if (!value) {
+          fieldErrors.department = "Department is required.";
+        } else {
+          delete fieldErrors.department;
+        }
+        break;
+      default:
+        break;
+    }
+
+    // Update errors state
+    setErrors(fieldErrors);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formData.password !== formData.confirmPassword){
-      alert("Passwords do not match");
+    // Validate all fields before submitting
+    let isValid = true;
+    for (let key in formData) {
+      validateField(key, formData[key]);
+      if (errors[key]) {
+        isValid = false;
+      }
+    }
+
+    if (!isValid) {
+      alert("Please fix the validation errors before submitting.");
       return;
     }
 
-    if (formData.password.length < 8) {
-      alert("Password must be at least 8 characters long.");
-      return;
-    }
-    // Perform form validation here
-    console.log(formData);
     const response = await EmployeeApiService.registerEmployee({
       ...formData,
       name: formData.name,
@@ -58,8 +141,10 @@ const RegisterNewEmployee = () => {
             name="name"
             value={formData.name}
             onChange={handleChange}
+            placeholder="Enter your full name (Ex: Saman Kumara)"
             required
           />
+          {errors.name && <Alert variant="danger">{errors.name}</Alert>}
         </Form.Group>
 
         <Form.Group controlId="contactNumber">
@@ -69,8 +154,10 @@ const RegisterNewEmployee = () => {
             name="contactNumber"
             value={formData.contactNumber}
             onChange={handleChange}
+            placeholder="0XXXXXXXXX"
             required
           />
+          {errors.contactNumber && <Alert variant="danger">{errors.contactNumber}</Alert>}
         </Form.Group>
 
         <Form.Group controlId="email">
@@ -80,8 +167,10 @@ const RegisterNewEmployee = () => {
             name="email"
             value={formData.email}
             onChange={handleChange}
+            placeholder="example@gmail.com"
             required
           />
+          {errors.email && <Alert variant="danger">{errors.email}</Alert>}
         </Form.Group>
 
         <Form.Group controlId="address">
@@ -91,6 +180,7 @@ const RegisterNewEmployee = () => {
             name="address"
             value={formData.address}
             onChange={handleChange}
+            placeholder="Enter your address"
             required
           />
         </Form.Group>
@@ -102,6 +192,7 @@ const RegisterNewEmployee = () => {
             name="username"
             value={formData.username}
             onChange={handleChange}
+            placeholder="Enter your username"
             required
           />
         </Form.Group>
@@ -113,8 +204,10 @@ const RegisterNewEmployee = () => {
             name="password"
             value={formData.password}
             onChange={handleChange}
+            placeholder="Enter your password (at least 8 characters)"
             required
           />
+          {errors.password && <Alert variant="danger">{errors.password}</Alert>}
         </Form.Group>
 
         <Form.Group controlId="confirmPassword">
@@ -124,8 +217,10 @@ const RegisterNewEmployee = () => {
             name="confirmPassword"
             value={formData.confirmPassword}
             onChange={handleChange}
+            placeholder="Confirm your password"
             required
           />
+          {errors.confirmPassword && <Alert variant="danger">{errors.confirmPassword}</Alert>}
         </Form.Group>
 
         <Form.Group controlId="department" style={{ marginBottom: "20px" }}>
@@ -135,12 +230,14 @@ const RegisterNewEmployee = () => {
             name="department"
             value={formData.department}
             onChange={handleChange}
+            placeholder="Select your department"
             required
           >
             <option value="">Select Department</option>
             <option value="Mechanical">Mechanical</option>
             <option value="Consultancy">Consultancy</option>
           </Form.Control>
+          {errors.department && <Alert variant="danger">{errors.department}</Alert>}
         </Form.Group>
 
         <Button variant="primary" type="submit" className="w-100">

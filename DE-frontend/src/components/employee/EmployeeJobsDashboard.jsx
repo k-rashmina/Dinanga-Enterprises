@@ -49,6 +49,7 @@ const EmployeeJobsDashboard = () => {
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                       <Dropdown.Item onClick={() => handleStatusChange('Pending')}>Pending</Dropdown.Item>
+                      <Dropdown.Item onClick={() => handleStatusChange('In Progress')}>In Progress</Dropdown.Item>
                       <Dropdown.Item onClick={() => handleStatusChange('Completed')}>Completed</Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>

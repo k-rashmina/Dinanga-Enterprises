@@ -74,7 +74,7 @@ const updateEmployee = async (req, res) => {
   try {
     const { name, contactNumber, email, address, username, password } = req.body;
     const employeeId = req.params.id;
-    
+
     let updatedFields = {
       name,
       contactNumber,
@@ -146,41 +146,22 @@ const getAssignedServices = async (req, res) => {
     const { username, password } = req.body;
   
     try {
-      // Check if the employee exists
-      let employee = await Employee.findOne({ username });
-  
+      const employee = await Employee.findOne({ username });
+
       if (!employee) {
-        return res.status(400).json({ msg: 'Invalid username' });
+        return res.status(401).json({ message: "Invalid username or password." });
       }
 
-      // Validate password
-      const isMatch = await bcrypt.compare(password, employee.password);
-  
-      if (!isMatch) {
-        return res.status(400).json({ msg: 'Invalid password' });
+      const passwordMatch = await bcrypt.compare(password, employee.password);
+
+      if (passwordMatch) {
+        res.json({ message: "Login successful!" });
+      } else {
+        res.status(401).json({ message: "Invalid username or password." });
       }
-  
-      // Create and return JWT token
-      const payload = {
-        user: {
-          id: employee.id,
-          username: employee.username,
-          department: employee.department
-        }
-      };
-  
-      jwt.sign(
-        payload,
-        token = process.env.TOKEN,
-        { expiresIn: 3600 }, // Token expires in 1 hour
-        (err, token) => {
-          if (err) throw err;
-          res.json({ token });
-        }
-      );
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server error');
+    } catch (error) {
+      console.error("Error during login:", error);
+      res.status(500).json({ message: "Internal server error." });
     }
   };
 
@@ -189,13 +170,19 @@ const getAssignedServices = async (req, res) => {
     try {
       // Query the database for consultancy employees who are available
       const consultancyEmployees = await Employee.find({
-        department: 'consultancy',
+        department: 'Consultancy',
         availability: true
       });
-  
+      
       // Extract and return only the names of available consultancy employees
-      const employeeNames = consultancyEmployees.map(employee => {employee.name, employee._id});
-  
+      // const employeeNames = consultancyEmployees.map(employee => {employee.name, employee._id});
+      const employeeNames = consultancyEmployees.map(employee => {
+        return {
+          name:employee.name,
+          _id:employee._id
+        }
+      });
+      console.log(employeeNames)
       res.json(employeeNames);
     } catch (err) {
       console.error(err.message);
@@ -203,6 +190,30 @@ const getAssignedServices = async (req, res) => {
     }
   };
 
+  //Get available mechanical employees
+  const getAvailableMechanicalEmployees = async (req, res) => {
+    try {
+      const mechanicalEmployees = await Employee.find({
+        department: 'Mechanical',
+        availability: true
+      });
+      
+      const employeeNames = mechanicalEmployees.map(employee => {
+        return {
+          name:employee.name,
+          _id:employee._id
+        }
+      });
+      console.log(employeeNames)
+      res.json(employeeNames);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  };
+
+
+  //Get all employee details
   const getAllEmployeeDetails = async (req, res) => {
     try {
       const employees = await Employee.find();
@@ -232,6 +243,7 @@ module.exports = {
     getAssignedServices,
     login,
     getAvailableConsultancyEmployees,
+    getAvailableMechanicalEmployees,
     getAllEmployeeDetails,
     // passwordsMatch,
     // updateServiceIssue,

@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Container, Table, Dropdown, Modal, Button } from "react-bootstrap";
+import {
+  Container,
+  Table,
+  Dropdown,
+  Modal,
+  Form,
+  Button
+} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
@@ -20,6 +27,7 @@ const ConsultancyEmployeeDashboard = () => {
   const [issueInfo, setIssueInfo] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [selectedService, setSelectedService] = useState("");
+  const [comment, setComment] = useState(""); // State for managing comment
 
   const handleStatusChange = (selectedStatus) => {
     setStatus(selectedStatus);
@@ -36,6 +44,18 @@ const ConsultancyEmployeeDashboard = () => {
 
   const handleServiceSelection = (service) => {
     setSelectedService(service);
+  };
+
+  const handleCommentChange = (e) => {
+    setComment(e.target.value); // Update comment value
+  };
+
+  const handleAddComment = () => {
+    // Function to handle adding the comment
+    console.log("Adding comment:", comment);
+    // You can integrate this with your API service to submit the comment
+    // For now, we'll just log the comment to the console and reset the comment state
+    setComment(""); // Clear the comment after submission
   };
 
   return (
@@ -114,6 +134,11 @@ const ConsultancyEmployeeDashboard = () => {
                         Pending
                       </Dropdown.Item>
                       <Dropdown.Item
+                        onClick={() => handleStatusChange("In Progress")}
+                      >
+                        In Progress
+                      </Dropdown.Item>
+                      <Dropdown.Item
                         onClick={() => handleStatusChange("Completed")}
                       >
                         Completed
@@ -132,8 +157,23 @@ const ConsultancyEmployeeDashboard = () => {
         <Modal.Header closeButton>
           <Modal.Title>Issue Information</Modal.Title>
         </Modal.Header>
-        <Modal.Body>{issueInfo}</Modal.Body>
+        <Modal.Body>
+          <p>{issueInfo}</p>
+          {/* Text box for adding comments */}
+          <Form.Group controlId="comment">
+            <Form.Label>Comment:</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              value={comment}
+              onChange={handleCommentChange}
+            />
+          </Form.Group>
+        </Modal.Body>
         <Modal.Footer>
+          <Button variant="primary" onClick={handleAddComment}>
+            Add Comment
+          </Button>
           <Button variant="secondary" onClick={handleCloseModal}>
             Close
           </Button>
