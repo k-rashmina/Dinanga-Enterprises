@@ -12,9 +12,9 @@ import EmployeeProfile from './components/employee/EmployeeProfile';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-// import { useState } from 'react'
+//import { useState } from 'react'
 
-// import { useState } from 'react'
+//import { useState } from 'react'
 //import { useParams } from 'react-router-dom';
 
 import Layout from './components/common/Layout';
@@ -24,6 +24,7 @@ import RegLayout from './components/common/RegLayout';
 import SupplierRegForm from './components/supplier/SupplierRegForm';
 import SupplierProfile from './components/supplier/SupplierProfile';
 import ServicesProvided from './components/supplier/ServicesProvided';
+import LoginForm from './components/supplier/LoginForm';
 import OrderAlerts from './components/supplier/Alerts';
 import FeedbackTable from './components/supplier/FeedbackTable';
 
@@ -112,6 +113,9 @@ function App() {
           <Route path='/supalerts' element = {<OrderAlerts/>}/>
           <Route path='/supservices' element= {<ServicesProvided/>}/>
           <Route path='/supfeedback' element= {<FeedbackTable/>}/>
+          <Route path='/suplogin' element = {<LoginForm/>}/>
+          <Route path="/login" component={LoginForm} />
+          <Route path="/" component={SupplierRegForm} />
 
       
           <Route path='/consultancy' element={<AddConsultancy/>}/>
