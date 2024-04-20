@@ -14,7 +14,7 @@ const customerFeedbackSchema = new schema({
         required: true,
        
     },
-});
+},{timestamps: true});
 
 const customerFeedback = mongoose.model(
     "customerFeedback",

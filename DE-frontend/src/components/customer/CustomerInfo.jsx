@@ -83,6 +83,7 @@ const CustomerInfo = () => {
 
   }, [deleteValue])
 
+ 
   return (
     <div>
       <h2>Your Details</h2>
