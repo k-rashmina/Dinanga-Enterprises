@@ -3,7 +3,6 @@ import {BrowserRouter, Routes, Route, Link} from 'react-router-dom';
 // import { useState } from 'react'
 // Import employee pages
 import EmployeeJobsDashboard from './components/employee/EmployeeJobsDashboard';
-import EmployeeLayout from './components/employee/EmployeeLayout';
 import ConsultancyEmployeeDashboard from './components/employee/ConsultancyEmployeeDashboard';
 import EmployeeLogin from './components/employee/EmployeeLogin'
 import EmployeeDashboard from './components/employee/EmployeeDashboard';
@@ -87,7 +86,7 @@ function App() {
           <Route path='/emplogin' element={<EmployeeLogin/>}/>
           <Route path='/empprofile' element={<EmployeeProfile/>}/>
           <Route path='/empjobs' element={<EmployeeJobsDashboard/>}/>
-          {/* <Route path='/empconsultancy' element={<ConsultancyEmployeeDashboard/>}/> */}
+          <Route path='/empconsultancy' element={<ConsultancyEmployeeDashboard/>}/>
 
 
           
