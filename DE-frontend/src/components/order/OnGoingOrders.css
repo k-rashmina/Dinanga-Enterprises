@@ -19,9 +19,11 @@
 
 .styled-table tbody tr{
     border-bottom: 1px solid #dddddd;
+    
 }
 .styled-table tbody tr:last-of-type{
-    border-bottom: 2px solid ;
+    border-bottom: 2px solid 
+    ;
 }
 .btn{
     border: none;
@@ -53,4 +55,13 @@
 .button-cell button {
     margin-right: 5px;
   }
-  
+  .btn-save{
+    background-color:#00ADB5;
+    border-radius: 10px;
+    color:white;
+ }
+ .btn-cancel{
+     background-color: #FF0000;
+     border-radius: 100px;
+     color: white;
+ }

@@ -10,7 +10,7 @@
   left: 0;
   overflow-x: hidden;
   transition: width 0.5s ease-in-out; /* Add transition for width */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px #b655551a;
 }
 
 .sidebar.open {
@@ -37,12 +37,12 @@
   padding: 15px 20px;
   font-size: 1.2rem;
   color: #fff;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid #ffffff1a;
   transition: background-color 0.3s ease; /* Add transition for background-color */
 }
 
 .sidebar ul li:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: #ffffff1a;
 }
 
 .sidebar-toggle {
@@ -68,6 +68,8 @@
   color: #fff;
   margin-left: 250px;
   margin-right: 120px;
+  box-shadow: 20px 40px 40px 20px rgba(0, 0.2, 0.2, 0);
+
 }
 
 .profile-heading {

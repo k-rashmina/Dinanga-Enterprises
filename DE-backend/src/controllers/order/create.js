@@ -1,28 +1,23 @@
 const orderDetails = require("../../models/orderDetails");
+const counter = require('../../models/counter');
 
 const createNewOrder = async (req, res) => {
     try {
-      const {
-       itemName,
-       itemNumber,
-       quantity,
-       dateOfOrder,
-       companyAddress,
-       supplierName,
-       comments,
-      } = req.body;
-  
-      const newOrder= new orderDetails({
-        itemName,
-        itemNumber,
-        quantity,
-        dateOfOrder,
-        companyAddress,
-        supplierName,
-        comments,
-      });
+      const order = req.body;
+
+      let ORCounter = await counter.findOneAndUpdate({'table': 'orders'}, {$inc: {'count': 1}}, {new: true})
+      
+      console.log(ORCounter)
+
+      const newOrder= new orderDetails(order);
+      newOrder.order_number = `OR${ORCounter.count}`
+
       await newOrder.save();
-      res.status(201).json(newOrder);
+      const savedOrder = newOrder.toObject({getters: true})
+
+
+
+      res.status(200).json(savedOrder);
     } catch (err) {
       res
         .status(500)

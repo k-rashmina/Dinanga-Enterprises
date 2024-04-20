@@ -7,6 +7,13 @@ const AssignJobs = () => {
   const [data, setJobs] = useState([]);
   const [employee, setEmployee] = useState({});
 
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toISOString().split('T')[0]; // Formats as "yyyy-mm-dd"
+  };
+
+
   useEffect(() => {
     axios.get("http://localhost:5000/jobAppointment/getpendingdetails")
       .then(res => {
@@ -38,15 +45,17 @@ const AssignJobs = () => {
   };
 
   return (
-    <div style={{ flexGrow: 1, overflowY: 'auto', width: 'calc(100% - 240px)' }}>
-      <Navbar bg="light" className="shadow-sm" style={{ paddingLeft: 20, paddingRight: 20 }} >
+
+    <div style={{ flexGrow: 1, overflowY: 'auto', width: 'calc(100% - 20px)' }}>
+
+      {/* <Navbar bg="light" className="shadow-sm" style={{ paddingLeft: 20, paddingRight: 20 }} >
         <Navbar.Collapse className="justify-content-end">
           <Navbar.Text>
             <PersonCircle className="me-2" />
             Kalindu Rashmina
           </Navbar.Text>
         </Navbar.Collapse>
-      </Navbar>
+      </Navbar> */}
       <Container className="mt-4" style={{ width: 'fullwidth' }}>
         <h5 className="mb-3 fw-bold">Job lists</h5>
         <Table bordered hover size="sm">
@@ -56,7 +65,7 @@ const AssignJobs = () => {
             <tr>
               <th>Job Number</th>
               <th>Service type</th>
-              <th>Date</th>
+              <th>Date time</th>
               <th>Location</th>
               <th>Employee</th>
             </tr>
@@ -66,7 +75,7 @@ const AssignJobs = () => {
               <tr key={job._id}>
                 <td>{job.jobNumber}</td>
                 <td>{job.serviceType}</td>
-                <td>{job.date}</td>
+                <td>{formatDate(job.date)} , {job.time}</td>
                 <td>{job.location}</td>
                 <td>
                   <Form.Select value={employee[job._id]} onChange={(e) => handleChange(e, job._id)}>

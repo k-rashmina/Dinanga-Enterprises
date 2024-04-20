@@ -3,7 +3,6 @@ import {BrowserRouter, Routes, Route, Link} from 'react-router-dom';
 // import { useState } from 'react'
 // Import employee pages
 import EmployeeJobsDashboard from './components/employee/EmployeeJobsDashboard';
-import EmployeeLayout from './components/employee/EmployeeLayout';
 import ConsultancyEmployeeDashboard from './components/employee/ConsultancyEmployeeDashboard';
 import EmployeeLogin from './components/employee/EmployeeLogin'
 import EmployeeDashboard from './components/employee/EmployeeDashboard';
@@ -12,9 +11,9 @@ import EmployeeProfile from './components/employee/EmployeeProfile';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-// import { useState } from 'react'
+//import { useState } from 'react'
 
-// import { useState } from 'react'
+//import { useState } from 'react'
 //import { useParams } from 'react-router-dom';
 
 import Layout from './components/common/Layout';
@@ -24,6 +23,7 @@ import RegLayout from './components/common/RegLayout';
 import SupplierRegForm from './components/supplier/SupplierRegForm';
 import SupplierProfile from './components/supplier/SupplierProfile';
 import ServicesProvided from './components/supplier/ServicesProvided';
+import LoginForm from './components/supplier/LoginForm';
 import OrderAlerts from './components/supplier/Alerts';
 import FeedbackTable from './components/supplier/FeedbackTable';
 
@@ -109,9 +109,12 @@ function App() {
 
           <Route path='/job/reqjob' element/>
           <Route path='/supprofile' element = {<SupplierProfile/>}/>
-          <Route path='/supalerts' element = {<OrderAlerts/>}/>
+          <Route path='/supalerts/:supid' element = {<OrderAlerts/>}/>
           <Route path='/supservices' element= {<ServicesProvided/>}/>
           <Route path='/supfeedback' element= {<FeedbackTable/>}/>
+          <Route path='/suplogin' element = {<LoginForm/>}/>
+          <Route path="/login" component={LoginForm} />
+          <Route path="/" component={SupplierRegForm} />
 
       
           <Route path='/consultancy' element={<AddConsultancy/>}/>
@@ -175,7 +178,7 @@ function App() {
         <Route element={<AdminLayout page={'Order'} menu={["Dashboard", "To Be Ordered", "Current Orders", "Order History", "Report"]}/>}>
           <Route path='/admin/order/dashboard' element = {<OrderDashboard/>}/>
           <Route path='/admin/order/tobeordered' element = {<ToBeOrdered/>}/>
-          <Route path='/admin/order/addorder' element = {<OrderPlacement/>}/>
+          <Route path='/admin/order/addorder/:itemName/:itemNumber/:unitprice' element = {<OrderPlacement/>}/>
           <Route path='/admin/order/currentorders' element = {<OnGoingOrders/>}/>
           <Route path='/admin/order/orderhistory' element = {<OrderHistory/>}/>
           <Route path='/admin/order/report' element = {<OrderReport/>}/>

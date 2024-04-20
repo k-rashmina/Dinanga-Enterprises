@@ -2,28 +2,29 @@ const mongoose = require("mongoose");
 const schema = mongoose.Schema;
 
 const supplierfeedbackSchema = new schema ({
-    Supplier_ID:{
-        type: mongoose.SchemaTypes.ObjectId,
+    Supplier_Email:{
+        type: String,
         required: true,
-        unique: true,
     },
 
     Supplier_Subject:{
         type: String,
         required: true,
-        unique: true,
     },
 
     Supplier_Message:{
         type: String,
         required: true,
-        unique: true,
     },
+    fed_date:{
+        type: Date,
+        required: true
+    }
 
 });
 
 const supplierFeedback = mongoose.model(
-    "supplier_Feedback",
+    "supp_Feedback",
     supplierfeedbackSchema
 );
 module.exports = supplierFeedback;
