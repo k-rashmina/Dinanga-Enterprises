@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:4000/employee/';
+const BASE_URL = 'http://localhost:5000/employee/';
 
 const EmployeeApiService = {
 
@@ -13,6 +13,28 @@ const EmployeeApiService = {
       throw error; 
     }
   },
+
+  getAvailableMechEmployees: async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}getAvailableMechanicalEmployees`);
+      return response.data; 
+    } catch (error) {
+      console.error('Error fetching employees:', error);
+      throw error; 
+    }
+  },
+
+
+  getAvailableConsultEmployees: async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}getAvailableConsultancyEmployees`);
+      return response.data; 
+    } catch (error) {
+      console.error('Error fetching employees:', error);
+      throw error; 
+    }
+  },
+
 
   // Example POST request
   registerEmployee: async (employeeData) => {
@@ -44,22 +66,9 @@ const EmployeeApiService = {
       throw error;
     }
   },
-
-//   login: async (email, password) => {
-//     try {
-//       const response = await axios.post(`${BASE_URL}/login`, { username, password });
-//       return response.data;
-//     } catch (error) {
-//       console.error('Error logging in:', error);
-//       throw error;
-//     }
-//   },
   
   loginEmployee: async (username, password) => {
     try {
-      // Define the API endpoint
-      const apiUrl = '/login';  // Adjust the URL as per your backend API endpoint
-
       // Define the data to be sent in the request body
       const data = {
         username,
@@ -67,7 +76,7 @@ const EmployeeApiService = {
       };
 
       // Send a POST request to the login API endpoint
-      const response = await axios.post(apiUrl, data);
+      const response = await axios.post(`${BASE_URL}login`, data);
 
       // Handle the response from the server
       if (response.status === 200) {

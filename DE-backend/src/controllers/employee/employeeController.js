@@ -190,6 +190,30 @@ const getAssignedServices = async (req, res) => {
     }
   };
 
+  //Get available mechanical employees
+  const getAvailableMechanicalEmployees = async (req, res) => {
+    try {
+      const mechanicalEmployees = await Employee.find({
+        department: 'Mechanical',
+        availability: true
+      });
+      
+      const employeeNames = mechanicalEmployees.map(employee => {
+        return {
+          name:employee.name,
+          _id:employee._id
+        }
+      });
+      console.log(employeeNames)
+      res.json(employeeNames);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  };
+
+
+  //Get all employee details
   const getAllEmployeeDetails = async (req, res) => {
     try {
       const employees = await Employee.find();
@@ -219,6 +243,7 @@ module.exports = {
     getAssignedServices,
     login,
     getAvailableConsultancyEmployees,
+    getAvailableMechanicalEmployees,
     getAllEmployeeDetails,
     // passwordsMatch,
     // updateServiceIssue,
