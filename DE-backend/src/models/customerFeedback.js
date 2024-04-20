@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 const schema = mongoose.Schema;
 
 const customerFeedbackSchema = new schema({
+    cusEmail: {
+        type: String,
+        required: true
+    },
+
     feedbackSub:{
         type: String,
         required: true,

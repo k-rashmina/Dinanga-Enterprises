@@ -5,6 +5,8 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import axios from "axios";
 
 const FeedbackUpDel = () => {
+  const loggedUser = 'kalindur@gmail.c';
+
   const [records, setRecords] = useState([]);
   const [editedSubject, setEditedSubject] = useState('');
   const [editedMessage, setEditedMessage] = useState('');
@@ -12,11 +14,11 @@ const FeedbackUpDel = () => {
   const [getterValue, setGetterValue] = useState(false);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/cusfeedback/readcustomerfeedbacks")
+    axios.get(`http://localhost:5000/cusfeedback/readcustomerfeedbacks?cusemail=${loggedUser}`)
       .then(res => {
         setRecords(res.data);
       })
-      .catch(err => console.log(err));
+      .catch(err => alert('No Feedbacks'));
   }, [getterValue]);
 
   const handleDelete = (e) => {
@@ -55,6 +57,7 @@ const FeedbackUpDel = () => {
   const handleSubmit = (id) => {
     axios.put(`http://localhost:5000/cusfeedback/upcustomerfeedbacks`, {
       _id: id,
+      cusEmail: loggedUser,
       feedbackSub: editedSubject,
       feedbackMsg: editedMessage
     })
