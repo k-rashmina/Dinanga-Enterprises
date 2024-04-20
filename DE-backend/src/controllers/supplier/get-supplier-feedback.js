@@ -2,7 +2,7 @@ const feedbackSupplierService = require('../../services/supplier/getSupplierFeed
 
 const getSupplierFeedbacks = async (req, res) => {
 
-    const Sup_ID = req.body;
+    const Sup_ID = req.query.supemail;
     res.json(await feedbackSupplierService(Sup_ID));
 
 }

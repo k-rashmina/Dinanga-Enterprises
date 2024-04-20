@@ -4,8 +4,9 @@ const feedbacksupplier = require('../../models/supplier_feedback');
 const getFeedbackSupplier = async (Sup_ID) => {
     
     try{
-        const feedback = await feedbacksupplier.find ({"Supplier_ID": Sup_ID});
-
+        console.log(Sup_ID)
+        const feedback = await feedbacksupplier.find ({'Supplier_Email': Sup_ID});
+        console.log(feedback)
         return (feedback);
     
     }catch(err){
@@ -14,6 +15,7 @@ const getFeedbackSupplier = async (Sup_ID) => {
 }
 
 const addFeedbackSupplier = async (addFeedback) => {
+    console.log(addFeedback);
     try {
         const newfeedback = feedbacksupplier (addFeedback);
 
