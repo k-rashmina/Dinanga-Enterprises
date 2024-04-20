@@ -9,8 +9,8 @@ const consultantAppointmentSchema = new schema({
     },
     Email:{
         type:String,
-        required:true,  
-        unique:true
+        required:true
+        
     },
     location:{
         type:String,

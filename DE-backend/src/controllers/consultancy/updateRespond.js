@@ -7,12 +7,19 @@ const updateRespond = async (req, res) => {
   
       const {
        
+        jobService,
+        assignedEmployee,
         respond,
+        status,
         
       } = req.body;
   
       const updateStates = {
+        jobService,
+        assignedEmployee,
         respond,
+        status,
+
       };
   
       const updatedRespond= await consultantAppointment.findByIdAndUpdate(
