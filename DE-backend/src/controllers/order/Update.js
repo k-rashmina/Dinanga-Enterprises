@@ -12,6 +12,7 @@ const updateNewOrder = async (req, res) => {
         companyAddress,
         supplierName,
         comments,
+        orderstatus
       } = req.body;
   
       const updateStates = {
@@ -22,6 +23,7 @@ const updateNewOrder = async (req, res) => {
        companyAddress,
        supplierName,
        comments,
+       orderstatus
       };
   
       const updatedOrder= await orderDetails.findByIdAndUpdate(

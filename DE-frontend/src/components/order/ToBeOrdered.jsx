@@ -13,17 +13,19 @@ function ToBeOrdered() {
   }, []);
 
   return (
-    <div style={{ marginTop: "90px",marginLeft:"20px",marginRight:"20px", width: "97%", display: "flex", justifyContent: "center" }}>
+    <div style={{ marginTop: "90px", marginLeft: "10px", width: "97%", display: "flex", justifyContent: "flex-start" }}>
       <div style={{ width: "100%", maxWidth: "1200px" }}>
-        <h3 style={{ marginBottom: "20px", fontWeight: "bold" }}>To Be Ordered</h3>
-        <table className="styled-table" style={{ width: "100%", minWidth: "100%" }}>
+      <h3 style={{ marginBottom: "30px", marginLeft: "10px", fontWeight: "bold" }}>
+        To Be Ordered
+      </h3>
+        <table className="styled-table" style={{ width: "50%", minWidth: "100%" ,fontSize:"20px"}}>
           <thead>
             <tr>
               <th style={{ textAlign: "center" }}>itemName</th>
               <th style={{ textAlign: "center" }}>itemNumber</th>
               <th style={{ textAlign: "center" }}>Available Quantity</th>
               <th style={{ textAlign: "center" }}>Reorder Level</th>
-              <th style={{ textAlign: "center" }}>itemPrice</th>
+              <th style={{ textAlign: "center" }}>itemPrice(RS)</th>
               <th style={{ textAlign: "center" }}>Status</th>
             </tr>
           </thead>

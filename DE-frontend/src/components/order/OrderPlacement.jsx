@@ -165,11 +165,12 @@ function OrderPlacement() {
       <Container
         fluid
         style={{
-          minHeight: "120vh",
+          minHeight: "100vh",
           backgroundColor: "#191B1A",
           alignItems: "center",
           display: "flex",
           justifyContent: "center",
+          fontSize:"20px",
         }}
       >
         <Row
@@ -188,7 +189,7 @@ function OrderPlacement() {
             >
               <Row>
                 <Col md={6} className="d-flex flex-column">
-                  <h3 style={{ marginBottom: "20px", fontWeight: "bold" }}>
+                  <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>
                     Order Placement
                   </h3>
                   <Form.Group className="mb-3">
