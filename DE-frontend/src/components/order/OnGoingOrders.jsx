@@ -103,12 +103,7 @@ const OnGoingOrders = () => {
           >
             Delete
           </button>
-          <button 
-            className="btn-view"
-            style={{ borderRadius: "20px" }}
-          >
-            View
-          </button>
+          
         </>
       );
     }
@@ -116,8 +111,8 @@ const OnGoingOrders = () => {
 
   return (
     <div style={{ marginTop: "90px" }}>
-      <h3 style={{ marginBottom: "15px", marginLeft: "20px", fontWeight: "bold" }}>
-        OnGoing Orders
+      <h3 style={{ marginBottom: "30px", marginLeft: "20px", fontWeight: "bold" }}>
+        Current Orders
       </h3>
       <table className="styled-table" style={{ width: "200%", marginLeft: "20px", marginRight: "20px" }}>
         <thead>
