@@ -28,6 +28,11 @@ export default function ConsultantAdmin() {
     }
     GetLocation();
   }, []);
+
+
+  useEffect
+
+
   return (
     <>
       <AdminHeader pageName={'Consultancy List'} />
@@ -47,8 +52,8 @@ export default function ConsultantAdmin() {
                   marginTop: "0px",
                 }}
               >
-                <div className="row">
-                  <div className="col-12 border border-1 border-black rounded rounded-3 mt-4">
+                <div className="row ">
+                  <div className="col-12 border border-1 border-black rounded rounded-3 ">
                     <div className="row">
                       <div className="col-12" style={{backgroundColor:'#d9d9d9'}}>
                         <div className="row">

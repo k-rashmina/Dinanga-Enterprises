@@ -18,9 +18,13 @@ export default function ConsultancyTable() {
   }, []);
   return (
     <div className="container-fluid">
+      <h1 class="text-black text-center mt-0">
+               Consultancy Service History
+         </h1>
       <div className="row">
         <div className="col-10 offset-1">
-          <div className="row">
+        <div className="row mt-0">
+         
             <div
               className="col-12 "
               style={{
@@ -32,8 +36,9 @@ export default function ConsultancyTable() {
                 // alignItems: "center",
               }}
             >
-              <div className="row">
-                <div className="col-12 border border-1 border-black rounded rounded-3 mt-5">
+              
+              <div className="row ">
+                <div className="col-12 border border-1 border-black rounded rounded-3 mt-0">
                   <div className="row">
                     <div className="col-12" style={{backgroundColor:'#d9d9d9'}}>
                       <div className="row">
