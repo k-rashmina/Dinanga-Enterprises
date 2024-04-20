@@ -47,17 +47,17 @@ function NewStocks() {
               <tr key={index} style={{ height: "50px" }}>
                 <td style={{ width: "171px" }}>{stocks.itemName}</td>
                 <td style={{ width: "258px" }}>
-                  {new Intl.NumberFormat("en-LK", {
+                  {stocks.previousQuantity - stocks.quantity}
+                </td>
+                <td style={{ width: "206px" }}> {new Intl.NumberFormat("en-LK", {
                     style: "currency",
                     currency: "LKR",
-                  }).format(stocks.itemPrice)}
-                </td>
-                <td style={{ width: "206px" }}>{stocks.itemPrice}</td>
+                  }).format(stocks.itemPrice)}</td>
                 <td style={{ width: "140px" }}>
                   {new Intl.NumberFormat("en-LK", {
                     style: "currency",
                     currency: "LKR",
-                  }).format((stocks.quantity - stocks.previousQuantity) *
+                  }).format((stocks.previousQuantity - stocks.quantity) *
                     stocks.itemPrice)}
                 </td>
                 
