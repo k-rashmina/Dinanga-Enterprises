@@ -34,7 +34,7 @@ const jobAppointmentSchema = new schema({
   },
 
   serviceType: {
-    type: String,
+    type: mongoose.SchemaTypes.ObjectId,
     //required: true,
     ref: "services"
   },
@@ -50,7 +50,8 @@ const jobAppointmentSchema = new schema({
   },
 
   employeeName: {
-    type: String,
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: 'Employee'
   },
 
   paymentStatus:{

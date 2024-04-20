@@ -14,6 +14,7 @@ const JobServicesAppointmentFormBootstrap = () => {
     vehicleType: '',
     status: 'pending',
     paymentStatus:'pending',
+
   });
 
   const [formComplete, setFormComplete] = useState(false);

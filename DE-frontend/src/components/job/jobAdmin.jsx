@@ -44,6 +44,26 @@ const AssignJobs = () => {
       });
   };
 
+  const [availableConsEmp, setAvailableConsEmp] = useState([]);
+
+  useEffect(() => {
+
+    axios.get('http://localhost:5000/employee/getAvailableMechanicalEmployees')
+    .then(res => setAvailableConsEmp(res.data))
+    .catch(err => console.log(err))
+    
+  }, [])
+
+  const availableEmpElems = availableConsEmp.map(emp => {
+
+    return(
+
+      <option value={emp._id}>{emp.name}</option>
+
+    )
+
+  })
+
   return (
 
     <div style={{ flexGrow: 1, overflowY: 'auto', width: 'calc(100% - 20px)' }}>
@@ -80,9 +100,7 @@ const AssignJobs = () => {
                 <td>
                   <Form.Select value={employee[job._id]} onChange={(e) => handleChange(e, job._id)}>
                     <option value="">Select Employee</option>
-                    <option>Saman</option>
-                    <option>Agith</option>
-                    <option>Nuwan</option>
+                    {availableEmpElems}
                   </Form.Select>
                 </td>
               </tr>

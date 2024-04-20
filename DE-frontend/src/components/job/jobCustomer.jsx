@@ -4,16 +4,20 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import { useRef } from 'react';
 
 const CreatedJobsTableBootstrap = () => {
 
   const [data , setRows] = useState([]);
   const [records, setRecords] = useState([]);
 
+  const hasPageLoaded = useRef(false);
+
   useEffect(() => {
     axios.get("http://localhost:5000/jobAppointment/getappointmentdetails")
     .then(res => {
-      setRows(res.data)
+      hasPageLoaded.current = true;
+      // setRows(res.data)
       setRecords(res.data);
     })
     .catch(err => console.log(err));
@@ -44,6 +48,8 @@ const CreatedJobsTableBootstrap = () => {
     setRecords(data.filter(f => f.serviceType.toLowerCase().includes(event.target.value)))
   }
 
+  console.log('records: ', records)
+
   return (
     <Container fluid style={{ padding: '16px', backgroundColor: '#fff', minHeight: '100vh' }}>
       <Row className="justify-content-center">
@@ -64,10 +70,10 @@ const CreatedJobsTableBootstrap = () => {
                 </tr>
               </thead>
               <tbody>
-                {records.map((row, index) => (
-                  <tr key={index}>
+                {records.map((row) => {
+                  return(<tr key={row._id}>
                     <td>
-                      {row.serviceType}
+                      {row.serviceType.service_name}
                       {row.paymentStatus === "pending" &&
                         <Button variant="outline-dark" size="sm" style={{ marginLeft: '8px', borderRadius: '4px', fontSize: '0.8rem' }}>
                           <i className="bi bi-credit-card-2-back"></i> Pay
@@ -75,7 +81,7 @@ const CreatedJobsTableBootstrap = () => {
                       }
                     </td>
                     <td align="center">{row.jobNumber}</td>
-                    <td align="center">{row.employeeName}</td>
+                    <td align="center">{hasPageLoaded.current && (row.employeeName && row.employeeName.name)}</td>
                     <td align="center">{formatDate(row.date)} , {row.time}</td>
                     <td align="center">{row.status}</td>
                     <td align="center">{row.paymentStatus}</td>
@@ -87,8 +93,8 @@ const CreatedJobsTableBootstrap = () => {
                         <i className="bi bi-trash"></i>
                       </Button>
                     </td>
-                  </tr>
-                ))}
+                  </tr>)
+                })}
               </tbody>
             </Table>
           </div>
