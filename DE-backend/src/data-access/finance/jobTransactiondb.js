@@ -3,7 +3,7 @@ const jobTransaction = require('../../models/Job-Transaction');
 const counter = require('../../models/counter');
 
 
-//Job Transaction database reading function
+//Job Transaction reading function
 const getJobTransactionList = async (filter) => {
 
   //console.log(new Date(filter.from), new Date(`${filter.from}T00:00:00.000Z`))
@@ -106,9 +106,25 @@ const getJobTransactionList = async (filter) => {
 
 
 
+//Single Job Trnasction Reading Function
+const getJobTransaction = async (tid) => {
+
+  try{
+
+    return (await jobTransaction.findById(tid).populate('ref_id').exec())
+
+  }catch(err){
+
+    return('failed')
+
+  }
+
+}
 
 
-//Job Transaction database creating function
+
+
+//Job Transaction creating function
 const addJobTransaction = async (newTransact) => {
 
   try{
@@ -133,7 +149,7 @@ const addJobTransaction = async (newTransact) => {
 
 
 
-//Job Transaction database updating function
+//Job Transaction updating function
 const putJobTransaction = async (upTransact) => {
 
   try{
@@ -151,7 +167,7 @@ const putJobTransaction = async (upTransact) => {
 
 
 
-//Job Transaction database deleting function
+//Job Transaction deleting function
 const deleteJobTransaction = async (delTransactID) => {
   console.log(delTransactID);
 
@@ -170,4 +186,4 @@ const deleteJobTransaction = async (delTransactID) => {
 
 
 
-module.exports = {getJobTransactionList, addJobTransaction, putJobTransaction, deleteJobTransaction}
+module.exports = {getJobTransactionList, getJobTransaction, addJobTransaction, putJobTransaction, deleteJobTransaction}

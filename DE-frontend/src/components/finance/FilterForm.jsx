@@ -94,20 +94,24 @@ export default function FilterForm(props) {
           </select>
         </div>
 
-        <div className="d-flex align-items-center justify-content-end pe-4" style={{width: '333px'}}>
+        {props.emailField == 'Customer' && <div className="d-flex align-items-center justify-content-end pe-4" style={{width: '333px'}}>
           <label style={{fontSize: '18px'}} htmlFor="t_type">Type</label>
           <select className="ms-3 me-0 filter-input rounded-2"  name="t_type" onChange={handleFilterFields}>
             <option value={''}>All</option>
             <option value={'online'}>Online</option>
             <option value={'offline'}>Offline</option>
           </select>
-        </div>
+        </div>}
 
         <div className="d-flex align-items-center justify-content-end pe-4" style={{width: '333px'}}>
           <label style={{fontSize: '18px'}} htmlFor="email">{props.emailField}</label>
           <input className="ms-3 me-0 filter-input rounded-2" type="email" name="email" onChange={handleFilterFields} value={filterFields.email}/>
         </div>
 
+        {props.emailField == 'Supplier' && 
+          <div  style={{width: '333px'}}>
+          </div>
+        }
         <div className="d-flex align-items-center justify-content-end pe-4" style={{width: '333px'}}>
           <button className="form-button rounded-5 fw-semibold" type="reset" name="reset" onClick={clearFilterFields} >Clear</button>
           <button className="form-button rounded-5 ms-4 fw-semibold" name="submit" >Search</button>

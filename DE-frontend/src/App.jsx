@@ -63,6 +63,7 @@ import AddItem from './components/inventory/AddItem';
 import ItemList from './components/inventory/ItemList';
 import DashBoard from './components/inventory/DashBoard';
 import Report from './components/inventory/Report';
+import TransactionInfo from './components/finance/TransactionInfo';
 
 
 
@@ -142,6 +143,7 @@ function App() {
 
           <Route path='/admin/finance/dashboard' element={<FinDashboard />}/>
           <Route path='/admin/finance/jobtransactions' element={<JobTransaction />}/>
+          <Route path='/admin/finance/jobtransactions/:ttype/:tid' element={<TransactionInfo />} />
           <Route path='/admin/finance/purchasetransactions' element={<PurchaseTransaction />}/>
           <Route path='/admin/finance/addtransaction' element={<AddTransaction />}/>
 
