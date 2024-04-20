@@ -10,6 +10,12 @@ const CreatedJobsTableBootstrap = () => {
   const [editId, setEditID] = useState(-1);
   const [updatedData, setUpdatedData] = useState({});
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toISOString().split('T')[0]; // Formats as "yyyy-mm-dd"
+  };
+
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -72,7 +78,7 @@ const CreatedJobsTableBootstrap = () => {
                         <option>battery replacement</option>
                         <option>abs replacement</option>
                         <option>hybrid battery service</option>
-                        <option>brake service</option>
+                        <option>break service</option>
                         <option>engine oil change</option>
                         <option>engine overall repair</option>
                         <option>dual clutch change</option>
@@ -92,7 +98,7 @@ const CreatedJobsTableBootstrap = () => {
                     </td>
                     <td>{editId === row._id ?
                       <input type="date" value={updatedData.date} onChange={e => handleChange('date', e.target.value)} required min={today} />
-                      : row.date}
+                      : formatDate(row.date)}
                     </td>
                     <td>{editId === row._id ?
                       <input type="time" value={updatedData.time} onChange={e => handleChange('time', e.target.value)} />
