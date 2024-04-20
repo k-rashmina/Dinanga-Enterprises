@@ -3,6 +3,7 @@ import axios from "axios";
 import SearchBar from "./SearchBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
+import AdminHeader from "../common/AdminHeader";
 
 function ItemList() {
   const [inventory, setInventory] = useState([]);
@@ -107,190 +108,199 @@ function ItemList() {
   const sortedInventory = sortInventory(inventory);
 
   return (
-    <div className="container mt-1">
-      <div className="d-flex justify-content-between mb-5">
-        <div
-          className="d-flex align-items-center justify-content-end pe-4"
-          style={{ width: "333px", marginLeft: "60px" }}
-        >
-          <label
-            style={{ fontSize: "18px", whiteSpace: "nowrap" }}
-            htmlFor="sort"
+    <>
+      <AdminHeader pageName={'Item List'} />
+      <div className="container mt-5" style={{width: '1200px', backgroundColor: '#EEEEEE'}}>
+        <div className="d-flex rounded-5 justify-content-between mb-5 div-shadow" style={{backgroundColor: '#EEEEEE'}}>
+          <div
+            className="d-flex align-items-center justify-content-end pe-4"
+            style={{ width: "333px", marginLeft: "60px" }}
           >
-            Sort Table
-          </label>
-          <select
-            className="ms-3 me-0 filter-input rounded-2"
-            name="sort"
-            value={sortCriteria}
-            onChange={(e) => setSortCriteria(e.target.value)}
-            style={{ width: "200px" }}
-          >
-            <option value="">Select Sorting Criteria</option>
-            <option value="lowStock">Low Stock First</option>
-            <option value="outOfStock">Out of Stock</option>
-            <option value="reorder">Reorder Items First</option>
-          </select>
+            <label
+              style={{ fontSize: "18px", whiteSpace: "nowrap" }}
+              htmlFor="sort"
+            >
+              Sort Table
+            </label>
+            <select
+              className="ms-3 me-0 filter-input rounded-2"
+              name="sort"
+              value={sortCriteria}
+              onChange={(e) => setSortCriteria(e.target.value)}
+              style={{ width: "200px" }}
+            >
+              <option value="">Select Sorting Criteria</option>
+              <option value="lowStock">Low Stock First</option>
+              <option value="outOfStock">Out of Stock</option>
+              <option value="reorder">Reorder Items First</option>
+            </select>
 
-          <button
-            className="form-button rounded-5 ms-9 fw-semibold"
-            type="button"
-            name="submit"
-            onClick={handleSort}
-          >
-            Sort
-          </button>
+            <button
+              className="form-button rounded-5 ms-9 fw-semibold"
+              type="button"
+              name="submit"
+              onClick={handleSort}
+            >
+              Sort
+            </button>
+          </div>
+
+          <SearchBar />
         </div>
 
-        <SearchBar />
+        <center>
+          <div className=" rounded-5 div-shadow mt-5 pb-4 example example1" style={{width: '1180px', height: '394px', overflow: 'scroll', backgroundColor: '#EEEEEE'}}>
+
+          <table className="table-hover example1" style={{width: '1090px', backgroundColor: '#EEEEEE'}}>
+            <thead  style={{fontSize: '18px', height: '90px', marginBottom: '10px'}}>
+              <tr className="border-bottom border-dark border-3 pt-3" style={{position: 'fixed', height: '82px', backgroundColor: '#EEEEEE', width: '1105px'}}>
+                <th style={{width: '244px'}}>Item Name</th>
+                <th style={{width: '107px'}}>Quantity</th>
+                <th style={{width: '117px'}}>Reorder Level</th>
+                <th style={{width: '141px'}}>Reorder State</th>
+                <th style={{width: '173px'}}>Unit Price</th>
+                <th style={{width: '163px'}}>Availability</th>
+                <th style={{width: '172px'}} >Actions</th>
+              </tr>
+            </thead>
+            <tbody
+              className=""
+              // style={{
+              //   boxShadow: "0px 0px 10px 2px rgba(0,0,0,0.4)",
+              //   borderRadius: "10px",
+              // }}
+            >
+              {sortedInventory.map((item) => (
+                <tr key={item._id} style = {{height:'50px'}}>
+                  <td style = {{width:'374px'}}>
+                    {editableItemId === item._id ? (
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="form-control"
+                        value={item.itemName}
+                        onChange={(e) => handleChange(e, "itemName", item._id)}
+                      />
+                    ) : (
+                      item.itemName
+                    )}
+                  </td>
+                  <td style = {{width:'168px' }}>
+                    {editableItemId === item._id ? (
+                      <input
+                        type="number"
+                        className="form-control"
+                        id="form-control"
+                        value={item.quantity}
+                        onChange={(e) => handleChange(e, "quantity", item._id)}
+                      />
+                    ) : (
+                      item.quantity
+                    )}
+                  </td>
+                  <td style = {{width:'196px'}}>
+                    {editableItemId === item._id ? (
+                      <input
+                        type="number"
+                        className="form-control"
+                        id="form-control"
+                        value={item.reorderLevel}
+                        onChange={(e) => handleChange(e, "reorderLevel", item._id)}
+                      />
+                    ) : (
+                      item.reorderLevel
+                    )}
+                  </td>
+                  <td style = {{width:'196px'}}>
+                    {editableItemId === item._id ? (
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="form-control"
+                        value={item.reorderState}
+                        onChange={(e) => handleChange(e, "reorderState", item._id)}
+                      />
+                    ) : (
+                      item.reorderState
+                    )}
+                  </td>
+
+                  <td style = {{width:'252px'}}>
+                    {editableItemId === item._id ? (
+                      <input
+                        type="number"
+                        className="form-control"
+                        id="form-control"
+                        value={item.itemPrice}
+                        onChange={(e) => handleChange(e, "itemPrice", item._id)}
+                      />
+                    ) : (
+                      new Intl.NumberFormat("en-US", {
+                        style: "currency",
+                        currency: "LKR",
+                      }).format(item.itemPrice)
+                    )}
+                  </td>
+
+                  <td style = {{width:'163px'}}>
+                    {editableItemId === item._id ? (
+                      <select
+                        className="form-select"
+                        id="form-control"
+                        value={item.availability}
+                        onChange={(e) => handleChange(e, "availability", item._id)}
+                      >
+                        <option value="Available">Available</option>
+                        <option value="Reorder">Reorder</option>
+                      </select>
+                    ) : (
+                      item.availability
+                    )}
+                  </td>
+                  <td style = {{width:'258px'}}>
+                    {editableItemId === item._id ? (
+                      <>
+                        <button
+                          className="form-button rounded-5 fw-semibold"
+                          onClick={() => handleUpdate(item._id)}
+                        >
+                          Save
+                        </button>
+                        <button
+                          className="form-button rounded-5 fw-semibold"
+                          onClick={() => setEditableItemId(null)}
+                        >
+                          Cancel
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <button
+                          style={{ width: "90px" }}
+                          className="form-button rounded-5 fw-semibold"
+                          onClick={() => handleEdit(item._id)}
+                        >
+                          <FontAwesomeIcon icon={faEdit} size="lg" />
+                        </button>
+                        <button
+                          style={{ width: "90px" }}
+                          className="form-button rounded-5 fw-semibold"
+                          onClick={() => handleDelete(item._id)}
+                        >
+                          <FontAwesomeIcon icon={faTrash} size="lg" />
+                        </button>
+                      </>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+            </div>
+            </center>
+        
       </div>
-
-      <table className="" style={{ fontSize: "18px" }}>
-        <thead className="table-info">
-          <tr>
-            <th className="col-2">Item Name</th>
-            <th className="col-1">Quantity</th>
-            <th className="col-1">Reorder Level</th>
-            <th className="col-2">Reorder State</th>
-            <th className="col-2">Unit Price (LKR)</th>
-            <th className="col-2">Availability</th>
-            <th className="col-3">Actions</th>
-          </tr>
-        </thead>
-        <tbody
-          className="table-info"
-          style={{
-            boxShadow: "0px 0px 10px 2px rgba(0,0,0,0.4)",
-            borderRadius: "10px",
-          }}
-        >
-          {sortedInventory.map((item) => (
-            <tr key={item._id}>
-              <td className="col-2" style={{ padding: "10px" }}>
-                {editableItemId === item._id ? (
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="form-control"
-                    value={item.itemName}
-                    onChange={(e) => handleChange(e, "itemName", item._id)}
-                  />
-                ) : (
-                  item.itemName
-                )}
-              </td>
-              <td className="col-1">
-                {editableItemId === item._id ? (
-                  <input
-                    type="number"
-                    className="form-control"
-                    id="form-control"
-                    value={item.quantity}
-                    onChange={(e) => handleChange(e, "quantity", item._id)}
-                  />
-                ) : (
-                  item.quantity
-                )}
-              </td>
-              <td className="col-1">
-                {editableItemId === item._id ? (
-                  <input
-                    type="number"
-                    className="form-control"
-                    id="form-control"
-                    value={item.reorderLevel}
-                    onChange={(e) => handleChange(e, "reorderLevel", item._id)}
-                  />
-                ) : (
-                  item.reorderLevel
-                )}
-              </td>
-              <td className="col-2">
-                {editableItemId === item._id ? (
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="form-control"
-                    value={item.reorderState}
-                    onChange={(e) => handleChange(e, "reorderState", item._id)}
-                  />
-                ) : (
-                  item.reorderState
-                )}
-              </td>
-
-              <td className="col-1">
-                {editableItemId === item._id ? (
-                  <input
-                    type="number"
-                    className="form-control"
-                    id="form-control"
-                    value={item.itemPrice}
-                    onChange={(e) => handleChange(e, "itemPrice", item._id)}
-                  />
-                ) : (
-                  new Intl.NumberFormat("en-US", {
-                    style: "currency",
-                    currency: "LKR",
-                  }).format(item.itemPrice)
-                )}
-              </td>
-
-              <td className="col-2">
-                {editableItemId === item._id ? (
-                  <select
-                    className="form-select"
-                    id="form-control"
-                    value={item.availability}
-                    onChange={(e) => handleChange(e, "availability", item._id)}
-                  >
-                    <option value="Available">Available</option>
-                    <option value="Reorder">Reorder</option>
-                  </select>
-                ) : (
-                  item.availability
-                )}
-              </td>
-              <td className="col-3">
-                {editableItemId === item._id ? (
-                  <>
-                    <button
-                      className="form-button rounded-5 fw-semibold"
-                      onClick={() => handleUpdate(item._id)}
-                    >
-                      Save
-                    </button>
-                    <button
-                      className="form-button rounded-5 fw-semibold"
-                      onClick={() => setEditableItemId(null)}
-                    >
-                      Cancel
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <button
-                      style={{ width: "90px" }}
-                      className="form-button rounded-5 fw-semibold"
-                      onClick={() => handleEdit(item._id)}
-                    >
-                      <FontAwesomeIcon icon={faEdit} size="lg" />
-                    </button>
-                    <button
-                      style={{ width: "90px" }}
-                      className="form-button rounded-5 fw-semibold"
-                      onClick={() => handleDelete(item._id)}
-                    >
-                      <FontAwesomeIcon icon={faTrash} size="lg" />
-                    </button>
-                  </>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    </>
     //   </div>
     // </div>
     // </div>
