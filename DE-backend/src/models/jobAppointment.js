@@ -51,6 +51,10 @@ const jobAppointmentSchema = new schema({
 
   employeeName: {
     type: String,
+  },
+
+  paymentStatus:{
+    type: String
   }
 
 
@@ -90,26 +94,3 @@ module.exports = jobAppointment;
 
 
 
-// jobAppointmentSchema.index({ jobNumber: 1 }, { unique: true }); // Maintain unique index
-// jobAppointmentSchema.pre('save', function(next) {
-//   if (this.jobNumber === null) {
-//     throw new Error("jobNumber cannot be null");
-//   }
-//   next();
-// });
-
-// Usage
-// const newJobAppointment = new jobAppointment({
-//   jobNumber: "2",
-  // Date: ,
-  // Time:'',
-  // location: '',
-  // serviceType: '',
-  // vehicleType: '',
-  
-
-// });
-
-// newJobAppointment.save()
-//   .then(() => console.log("Job appointment created successfully!"))
-//   .catch((error) => console.error("Error creating job appointment:", error));

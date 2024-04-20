@@ -1,4 +1,28 @@
-.reg-form-button{
+.login-container {
+  width: 350px;
+  height: 400px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-header {
+  color: #00ADB5;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.login-input {
+  width: 100%;
+  background-color: white;
+}
+
+.login-btn {
   background-color: #00ADB5;
   border-width: 2px;
   padding: 10px 20px 10px 20px;
@@ -8,14 +32,14 @@
   transition: 0.4s;
 }
 
-.reg-form-button:hover{
+.login-btn:hover {
   background-color: #EEEEEE;
   color: #00ADB5;
 }
 
-.border-color{
+.border-color {
   border-style: solid;
-  border-color: #00adb5;
+  border-color: #00adb5;
 }
 
 .success-message {
@@ -28,7 +52,7 @@
   color: white;
   border-radius: 8px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  animation: fadeInOut 2s forwards;
+  animation: fadeInOut 3s forwards;
 }
 
 @keyframes fadeInOut {

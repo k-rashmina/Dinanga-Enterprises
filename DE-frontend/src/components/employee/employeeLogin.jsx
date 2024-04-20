@@ -1,19 +1,25 @@
 import React, { useState } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import EmployeeApiService from "./EmployeeServices";
 
 const EmployeeLogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Perform login authentication logic here
-    console.log("Username:", username);
-    console.log("Password:", password);
-    // Reset form fields after submission
-    setUsername("");
-    setPassword("");
+    
+    try {
+      const response = await EmployeeApiService.loginEmployee(username, password);
+
+      console.log("Login successful:", response);
+
+      setUsername("");
+      setPassword("");
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
   };
 
   return (

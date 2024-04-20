@@ -58,7 +58,7 @@ export default function AddConsultancyCustomer() {
 
             <div className="col-12 text-center">
               <span className="fs-6">Full Name : </span>
-              <span>Janaka Wijesekara</span>
+              <span>{user && user.assignedEmployee}</span>
             </div>
 
             <div className="col-12 mb-5 text-center">
@@ -67,7 +67,7 @@ export default function AddConsultancyCustomer() {
             </div>
 
             <div className="col-12 text-center">
-              <span className="fs-2 fw-bold">Curunt Status</span>
+              <span className="fs-2 fw-bold">Current Status</span>
             </div>
 
             <div className="col-12 text-center mb-5">
@@ -75,11 +75,11 @@ export default function AddConsultancyCustomer() {
             </div>
 
             <div className="col-12 text-center">
-              <span className="fs-3 fw-bold">Assinged job Services</span>
+              <span className="fs-3 fw-bold">Assigned Job Services</span>
             </div>
 
             <div className="col-12 mb-4 text-center">
-              <span className="fs-5 fw-bold">Engine Oil Replacement</span>
+              <span className="fs-5 fw-bold">{user && user.jobService}</span>
             </div>
           </div>
         </div>
@@ -257,6 +257,13 @@ export default function AddConsultancyCustomer() {
                   <span>Response : </span>
                 </div>
                 <div className="col-8 d-grid">
+                <div className="row">
+                    <div className="col-12">
+                      <span id="respond" className="fw-bold">
+                        {user && user.respond}
+                      </span>
+                    </div>
+                  </div>
                   <textarea
                     className="fw-bold"
                     id=""

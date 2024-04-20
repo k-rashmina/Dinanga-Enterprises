@@ -2,19 +2,31 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/js/dist/dropdown.js";
 import axios from "axios";
+import invBackImage from "../../assets/conform4.jpg"; // Import the image
 
 export default function AddConsultancy() {
   return (
-    <div className="pt-5" style={{ backgroundColor: "#F0F0F0" }}>
+    <div
+      className="pt-5"
+      style={{
+        // background: `url('https://media.giphy.com/media/PX1KtZ0NxxMZi/giphy.gif')`,
+        // backgroundColor:"white",
+        backgroundImage: `url(${invBackImage})`, // Use backgroundImage for the div
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        backgroundSize: "100%",
+        // fillOpacity: "10px",
+      }}
+    >
       <h1 class="text-black text-center mt-0">
         Consultancy Service Appointment
       </h1>
       <div>
         <div className="container-fluid">
           <div className="row ">
-            <div className="col-10 offset-1 border border-3 border-info mt-3">
+            <div className="col-8 border border-3 border-info mt-3">
               <div className="row">
-                <div className="col-8 offset-2 mt-5 ">
+                <div className="col-9  mt-5 ">
                   <div className="row">
                     {/* Email Input */}
                     <div className="col-2">
@@ -30,7 +42,8 @@ export default function AddConsultancy() {
                             document.getElementById("email").value;
 
                           var emailRegexTempory = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                          var regexEmailTempry = emailRegexTempory.test(EmailTempry);
+                          var regexEmailTempry =
+                            emailRegexTempory.test(EmailTempry);
 
                           if (EmailTempry == "") {
                             document.getElementById("EmailError").innerHTML =
@@ -45,11 +58,11 @@ export default function AddConsultancy() {
                           }
                         }}
                       />
-                      <span id="EmailError" class="text-danger"></span>
+                      <span id="EmailError" class="text-danger"  style={{ fontWeight: 'bold' }}></span>
                     </div>
                   </div>
                 </div>
-                <div className="col-8 offset-2 mt-4">
+                <div className="col-9  mt-4">
                   <div className="row">
                     {/* Location */}
                     <div className="col-2">
@@ -70,12 +83,12 @@ export default function AddConsultancy() {
                         <option value="Mathara">Mathara</option>
                         <option value="Badulla">Badulla</option>
                       </select>
-                      <span id="LocationError" class="text-danger"></span>
+                      <span id="LocationError" class="text-danger"  style={{ fontWeight: 'bold' }}></span>
                     </div>
                   </div>
                 </div>
 
-                <div className="col-8 offset-2 mt-4">
+                <div className="col-9  mt-4">
                   <div className="row">
                     {/* Date */}
                     <div className="col-2">
@@ -121,24 +134,24 @@ export default function AddConsultancy() {
                           }
                         }}
                       />
-                      <span id="DateError" class="text-danger"></span>
+                      <span id="DateError" class="text-danger"  style={{ fontWeight: 'bold' }}></span>
                     </div>
                   </div>
                 </div>
                 {/* TIme */}
-                <div className="col-8 offset-2 mt-4">
+                <div className="col-9 mt-4">
                   <div className="row">
                     <div className="col-2">
                       <span class="fw-bold fs-5 text-black">Time</span>
                     </div>
                     <div className="col-8 d-grid ">
                       <input type="time" id="time" name="time" />
-                      <span id="timeError" class="text-danger"></span>
+                      <span id="timeError" class="text-danger"  style={{ fontWeight: 'bold' }}></span>
                     </div>
                   </div>
                 </div>
                 {/* Issue */}
-                <div className="col-8 offset-2 mt-4">
+                <div className="col-9  mt-4">
                   <div className="row">
                     <div className="col-2">
                       <span class="fw-bold fs-5 text-black">Issue</span>
@@ -159,12 +172,12 @@ export default function AddConsultancy() {
                           }
                         }}
                       ></textarea>
-                      <span id="IssueError" class="text-danger"></span>
+                      <span id="IssueError" class="text-danger"  style={{ fontWeight: 'bold' }}></span>
                     </div>
                   </div>
                 </div>
                 {/* Button */}
-                <div className="col-6 offset-3 mt-4 ">
+                <div className="col-9 offset-1 mt-4 ">
                   <div className="row d-flex justify-content-center">
                     <div className="col-3 mb-5">
                       <button
@@ -311,7 +324,6 @@ export default function AddConsultancy() {
                               .catch((err) =>
                                 console.log("Failed: " + JSON.stringify(err))
                               );
-                            // window.location = "/consultancy/customer";Meka check karala balanna wada karanawada Kiyala
                           }
                         }}
                         style={{
