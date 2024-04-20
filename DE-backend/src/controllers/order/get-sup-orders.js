@@ -5,7 +5,7 @@ const getSupOrders = async (req, res) => {
     try{
 
         const supid = req.query.supid;
-
+        
         res.json(await orderDetails.find({'supplierName': supid}))
 
     }catch(err){
@@ -16,3 +16,5 @@ const getSupOrders = async (req, res) => {
     }
 
 }
+
+module.exports = getSupOrders;

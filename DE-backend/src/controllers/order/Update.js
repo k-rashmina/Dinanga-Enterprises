@@ -3,7 +3,7 @@ const orderDetails = require("../../models/orderDetails");
 const updateNewOrder = async (req, res) => {
     try {
       let objectid = req.params.id;
-  
+
       const {
         itemName,
         itemNumber,
@@ -14,6 +14,8 @@ const updateNewOrder = async (req, res) => {
         comments,
         orderstatus
       } = req.body;
+
+      
   
       const updateStates = {
        itemName,
@@ -25,6 +27,8 @@ const updateNewOrder = async (req, res) => {
        comments,
        orderstatus
       };
+
+      console.log(updateStates)
   
       const updatedOrder= await orderDetails.findByIdAndUpdate(
         objectid,

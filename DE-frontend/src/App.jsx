@@ -110,7 +110,7 @@ function App() {
 
           <Route path='/job/reqjob' element/>
           <Route path='/supprofile' element = {<SupplierProfile/>}/>
-          <Route path='/supalerts' element = {<OrderAlerts/>}/>
+          <Route path='/supalerts/:supid' element = {<OrderAlerts/>}/>
           <Route path='/supservices' element= {<ServicesProvided/>}/>
           <Route path='/supfeedback' element= {<FeedbackTable/>}/>
           <Route path='/suplogin' element = {<LoginForm/>}/>
