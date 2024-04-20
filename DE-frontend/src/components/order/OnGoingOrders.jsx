@@ -70,10 +70,18 @@ const OnGoingOrders = () => {
     if (editableItemId === itemId) {
       return (
         <>
-          <button className="btn-save" onClick={() => handleUpdate(itemId)}>
+          <button 
+            className="btn-save" 
+            onClick={() => handleUpdate(itemId)}
+            style={{ borderRadius: "20px" }}
+          >
             Save
           </button>
-          <button className="btn-cancel" onClick={() => setEditableItemId(null)}>
+          <button 
+            className="btn-cancel" 
+            onClick={() => setEditableItemId(null)}
+            style={{ borderRadius: "20px" }}
+          >
             Cancel
           </button>
         </>
@@ -81,13 +89,26 @@ const OnGoingOrders = () => {
     } else {
       return (
         <>
-          <button className="btn-edit" onClick={() => handleEdit(itemId)}>
+          <button 
+            className="btn-edit" 
+            onClick={() => handleEdit(itemId)}
+            style={{ borderRadius: "20px" }}
+          >
             Update
           </button>
-          <button className="btn-delete" onClick={() => handleDelete(itemId)}>
+          <button 
+            className="btn-delete" 
+            onClick={() => handleDelete(itemId)}
+            style={{ borderRadius: "20px" }}
+          >
             Delete
           </button>
-          <button className="btn-view">View</button>
+          <button 
+            className="btn-view"
+            style={{ borderRadius: "20px" }}
+          >
+            View
+          </button>
         </>
       );
     }
@@ -95,10 +116,10 @@ const OnGoingOrders = () => {
 
   return (
     <div style={{ marginTop: "90px" }}>
-      <h5 style={{ marginBottom: "5px", marginLeft: "10px", fontWeight: "bold" }}>
+      <h3 style={{ marginBottom: "15px", marginLeft: "20px", fontWeight: "bold" }}>
         OnGoing Orders
-      </h5>
-      <table className="styled-table" style={{ marginLeft: "1px" }}>
+      </h3>
+      <table className="styled-table" style={{ width: "200%", marginLeft: "20px", marginRight: "20px" }}>
         <thead>
           <tr>
             <th>itemName</th>
@@ -108,7 +129,7 @@ const OnGoingOrders = () => {
             <th>CompanyAddress</th>
             <th>SupplierName</th>
             <th>Comments</th>
-            <th>Action</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>

@@ -3,7 +3,7 @@ const deleteCustomerDetails = require('../../services/customer/delCustomerDetail
 
 const delCusDetails = async (req, res) => {
 
-    const delCusId = req.body._id;
+    const delCusId = req.query.id;
 
     res.json(await deleteCustomerDetails(delCusId));
 
