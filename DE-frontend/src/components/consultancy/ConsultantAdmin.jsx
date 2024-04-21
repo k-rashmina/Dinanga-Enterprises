@@ -6,31 +6,80 @@ import AdminHeader from "../common/AdminHeader";
 
 export default function ConsultantAdmin() {
   const [data, setData] = useState([]);
-  useEffect(() => {
-    // Get uSer Details
-    function GetRecord() {
-      axios
-        .get(
-          "http://localhost:5000/consultantAppointment/getpendingappointments"
-        )
-        .then((res) => setData(res.data))
-        .catch((err) => console.log(err));
-    }
-    GetRecord();
-    // Get Location Details
-    function GetLocation() {
-      axios
-        .get(
-          // ""Location APi Link
-        )
-        .then((res) => setData(res.data))
-        .catch((err) => console.log(err));
-    }
-    GetLocation();
-  }, []);
+  const[employee, setEmployee]=useState({});
+  // useEffect(() => {
+  //   // Get uSer Details
+  //   function GetRecord() {
+  //     axios
+  //       .get(
+  //         "http://localhost:5000/consultantAppointment/getpendingappointments"
+  //       )
+  //       .then((res) => setData(res.data))
+  //       .catch((err) => console.log(err));
+  //   }
+  //   GetRecord();
+  //   // Get Location Details
+  //   function GetLocation() {
+  //     axios
+  //       .get(
+  //         // ""Location APi Link
+  //       )
+  //       .then((res) => setData(res.data))
+  //       .catch((err) => console.log(err));
+  //   }
+  //   GetLocation();
+  // }, []);
+const[availableEmployees, setAvailableEmployees] = useState([]);
+
+  useEffect(()=>{
+    axios.get("http://localhost:5000/employee/getAvailableConsultancyEmployees")
+    .then(res=>setAvailableEmployees(res.data))
+    .catch((err)=>console.log(err));
+  },[]
+)
+
+const availableEmpsElems = availableEmployees.map(emp => {
+  return (
+    <option value= {emp._id}>{emp.name}</option>
+  )
+});
+
+useEffect(() => {
+  axios.get("http://localhost:5000/consultantAppointment/getpendingappointments")
+    .then(res => {
+      const initialEmployeeState = res.data.reduce((acc, consul) => {
+        acc[consul._id] = consul.assignedEmployee || ''; // Initialize with existing employee name if present
+        return acc;
+      }, {});
+      setEmployee(initialEmployeeState);
+      setData(res.data);
+    })
+    .catch(err => console.log(err));
+}, []);
+
+const handleChange = (event, appointment) => {
+  const { value } = event.target;
+  setEmployee(prevState => ({
+    ...prevState,
+    [appointment._id]: value,
+  }));
 
 
-  useEffect
+  axios.put(`http://localhost:5000/consultantAppointment/updaterespond/${appointment._id}`, {
+    jobService: appointment.jobService,
+    assignedEmployee: value ,
+    respond: appointment.respond,
+    status: appointment.status
+    })
+  .then(() => {
+    alert("Employee added");
+  })
+  .catch((err) => {
+    console.log(err); // Log error to console for debugging
+    alert("Error occurred while adding employee");
+  });
+
+}
 
 
   return (
@@ -109,13 +158,9 @@ export default function ConsultantAdmin() {
                               <span>{appointment.location}</span>
                             </div>
                             <div className="col-2 text-center ">
-                              <select>
-                                <option value="">Amasha Dewduni</option>
-                                <option value="">Amasha Dewduni</option>
-                                <option value="">Amasha Dewduni</option>
-                                <option value="">Amasha Dewduni</option>
-                                <option value="">Amasha Dewduni</option>
-                                <option value="">Amasha Dewduni</option>
+                              <select onChange={e => handleChange(e, appointment)}>
+                                <option value=''> Select Employee</option>
+                               {availableEmpsElems}
                               </select>
                             </div>
                           </div>
