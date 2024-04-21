@@ -2,7 +2,7 @@ const delJobTransactionService = require('../../services/finance/delJobTransacti
 
 const delJobTransaction = async (req, res) => {
 
-  const delTransactID = req.body.id;
+  const delTransactID = req.query.tid;
 
   res.json(await delJobTransactionService(delTransactID));
 

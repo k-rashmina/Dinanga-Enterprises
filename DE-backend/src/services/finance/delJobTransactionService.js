@@ -4,7 +4,7 @@ const {addRefundAndReversal} = require('../../data-access/finance/refunAndRevers
 module.exports = async function delJobTransactionService(delTransactID) {
 
   const deleted = await deleteJobTransaction(delTransactID);
-
+  console.log(deleted)
   refRev = {
     transact_type: 'Job Transaction',
     reason: 'refund',

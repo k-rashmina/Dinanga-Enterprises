@@ -48,7 +48,7 @@ export default function FilterForm(props) {
   const handleSearchState = (event) =>{
     event.preventDefault();
     setSearch(prevState => !prevState);
-    hasPageLoaded.current = true;
+
   }
   // console.log(search);
 
@@ -64,7 +64,7 @@ export default function FilterForm(props) {
         props.handleSubmit(res.data)
       });
     }
-
+    hasPageLoaded.current = true;
 
   }, [search])
 

@@ -69,8 +69,12 @@ export default function AddTransaction() {
   const taxRate = 18
   let serviceCharge;
   serviceOptions.forEach(service => {
-    if(service._id == transactionFields.ref_id) 
+    if(transactionFields.ref_id == service._id) {
       serviceCharge = service.charge
+    }
+    if(transactionFields.ref_id == ''){
+      serviceCharge = ''
+    }
   });
   let taxAmount = serviceCharge * taxRate / 100.0;
 
@@ -110,7 +114,10 @@ export default function AddTransaction() {
           pay_date: transactionFields.create_date,
           model_type: 'services'
         }
-      }).then(res => alert(res.data))
+      }).then(res => {
+        alert(res.data);
+        clearFields();
+      })
     }
 
 
@@ -179,7 +186,7 @@ export default function AddTransaction() {
 
           <div className="d-flex flex-column mt-4" style={{paddingLeft: '42px', paddingRight: '42px'}}>
             <label className="font-s-18" htmlFor="desc" >Transaction Description:</label>
-            <textarea className="add-form-input rounded-2" type="text" id="desc" value={transactionFields.desc} onChange={handleInput} rows={4} ></textarea>
+            <textarea className="add-form-input rounded-2" type="text" id="desc" value={transactionFields.desc} onChange={handleInput} rows={3} ></textarea>
           </div>
 
           <div style={{position: 'absolute', left: '690px', bottom: '30px'}}>
