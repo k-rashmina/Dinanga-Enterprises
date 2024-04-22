@@ -151,7 +151,7 @@ console.log(loggedSupplier)
           <br />
           <br />
           <br />
-          <Link style={{ textDecoration: 'none', color: 'black' }} to={''}><li>Order Alerts</li></Link>
+          <Link style={{ textDecoration: 'none', color: 'black' }} to={`/supalerts/${supDetails._id}`}><li>Order Alerts</li></Link>
           <li onClick={handleShowFeedbackModal}>Send Feedback</li>
           <Link style={{ textDecoration: 'none', color: 'black' }} to={'/supservices'}><li>Services</li></Link>
         </ul>

@@ -1,20 +1,18 @@
-/* SupplierProfile.css */
-
-/* Sidebar Styles */
 .sidebar {
   width: 0;
   height: 100%;
-  background-color: #00ADB5;
+  background-color: rgba(0, 173, 181, 0.8); /* Adjust opacity for better blur effect */
   position: fixed;
   top: 0;
   left: 0;
   overflow-x: hidden;
   transition: width 0.5s ease-in-out; /* Add transition for width */
-  box-shadow: 0 4px 6px #b655551a;
+  box-shadow: 0 4px 6px rgba(182, 85, 85, 0.1);
 }
 
 .sidebar.open {
   width: 250px;
+  backdrop-filter: blur(50px); /* Apply blur effect */
 }
 
 .sidebar h3 {
@@ -37,13 +35,29 @@
   padding: 15px 20px;
   font-size: 1.2rem;
   color: #fff;
-  border-bottom: 1px solid #ffffff1a;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   transition: background-color 0.3s ease; /* Add transition for background-color */
 }
 
 .sidebar ul li:hover {
-  background-color: #ffffff1a;
+  background-color: rgba(255, 255, 255, 0.1);
 }
+
+.sidebar-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  cursor: pointer;
+  color: #52dce3;
+  z-index: 999;
+  font-size: 1.5rem;
+  transition: transform 0.3s ease; /* Add transition for transform */
+}
+
+.sidebar-toggle:hover {
+  transform: scale(1.1); /* Add hover effect */
+}
+
 
 .sidebar-toggle {
   position: fixed;
