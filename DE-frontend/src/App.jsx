@@ -8,6 +8,7 @@ import EmployeeLogin from './components/employee/EmployeeLogin'
 import EmployeeDashboard from './components/employee/EmployeeDashboard';
 import RegisterNewEmployee from './components/employee/RegisterNewEmployee';
 import EmployeeProfile from './components/employee/EmployeeProfile';
+// import ProtectedRoute from './components/employee/ProtectedRoute';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -86,6 +87,12 @@ function App() {
           <Route path='/empprofile' element={<EmployeeProfile/>}/>
           <Route path='/empjobs' element={<EmployeeJobsDashboard/>}/>
           <Route path='/empconsultancy' element={<ConsultancyEmployeeDashboard/>}/>
+          
+          {/* Employee login route */}
+        {/* <Route path='/emplogin' element={<EmployeeLogin />} /> */}
+        
+        {/* Protected employee profile route */}
+        {/* <ProtectedRoute path='/empprofile' element={<EmployeeProfile />} /> */}
 
 
           
