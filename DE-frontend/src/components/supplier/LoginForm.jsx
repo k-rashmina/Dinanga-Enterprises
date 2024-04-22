@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import './LoginForm.css'; // Importing CSS file
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
+
+  const nav = useNavigate();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
@@ -11,8 +16,8 @@ const LoginForm = () => {
     e.preventDefault();
     if (validateForm()) {
       // Here you can add your login logic
-      console.log('Email:', email);
-      console.log('Password:', password);
+      hasPageLoaded.current = true;
+      setLogVal(prev => !prev);
     }
   };
 
@@ -38,6 +43,40 @@ const LoginForm = () => {
     setErrors(errors);
     return formIsValid;
   };
+
+  const useridentify = (user) => {
+
+    if(user){
+
+        localStorage.setItem('loggedSup', user.Supplier_email);
+        return true;
+
+    }
+    return false;
+  }
+
+  const [logVal, setLogVal] = useState(false);
+  const hasPageLoaded = useRef(false);
+
+
+  useEffect(() => {
+
+    if(hasPageLoaded.current){
+      axios.post(`http://localhost:5000/supplier/getloggedsup`, {mail: email, pass: password})
+      .then(res => {
+        
+        if(useridentify(res.data)) {
+
+          nav('/');
+
+        }else{
+          alert('Invalid Credentials')
+        }
+
+      })
+    }
+
+  }, [logVal])
 
   return (
     <center>

@@ -29,6 +29,19 @@ const getSupplierList = async () => {
 
 }
 
+
+const getLoggedUser = async(user) => {
+
+    try{
+
+        const loggedUser = await supplierDetails.findOne().where('Supplier_email').equals(user.mail).where('Supplier_Pw').equals(user.pass);
+        return loggedUser;
+    }catch(err){
+        return 'error';
+    }
+
+}
+
 const addSupplierDetails = async (addSupplier) => {
     try {
         const newSupplier = new supplierDetails(addSupplier);
@@ -62,5 +75,5 @@ const deleteSupplierDetails = async (delSupplier) => {
     }
 }
 
-module.exports = {getSupplierDetails, getSupplierList, addSupplierDetails, putSupplierDetails, deleteSupplierDetails};
+module.exports = {getSupplierDetails, getSupplierList, getLoggedUser, addSupplierDetails, putSupplierDetails, deleteSupplierDetails};
 
