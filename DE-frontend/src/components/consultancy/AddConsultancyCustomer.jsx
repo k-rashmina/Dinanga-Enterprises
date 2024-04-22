@@ -63,12 +63,12 @@ export default function AddConsultancyCustomer() {
 
             <div className="col-12 text-center">
               <span className="fs-6">Full Name : </span>
-              <span>{hasPageLoaded.current && user.assignedEmployee.name}</span>
+              <span>{hasPageLoaded.current && (user.assignedEmployee ? user.assignedEmployee.name : '')}</span>
             </div>
 
             <div className="col-12 mb-5 text-center">
               <span className="fs-6">Phone Number : </span>
-              <span>{hasPageLoaded.current && user.assignedEmployee.contactNumber}</span>
+              <span>{hasPageLoaded.current && (user.assignedEmployee ? user.assignedEmployee.contactNumber : '')}</span>
             </div>
 
             <div className="col-12 text-center">
