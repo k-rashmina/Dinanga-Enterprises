@@ -161,12 +161,12 @@ function App() {
         {/* admin job routes */}
 
 
-        <Route element={<AdminLayout page={'Job'} menu={["Job List", "report"]}/>}>
+        <Route element={<AdminLayout page={'Job'} menu={["Job List"]}/>}>
           <Route path='/admin/job/joblist' element={<JobAdmin />}/>
           <Route path='/admin/job/addjob' element/>
           <Route path='/admin/job/updatejob' element/>
           <Route path='/admin/job/deletejob' element/>
-          <Route path='/admin/job/report' element/>
+          {/* <Route path='/admin/job/report' element/> */}
           {/* <Route path="/jobAdmin" element={<JobAdmin />} /> */}
 
         </Route>
