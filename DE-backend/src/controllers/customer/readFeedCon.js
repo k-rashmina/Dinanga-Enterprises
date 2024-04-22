@@ -2,7 +2,9 @@ const customerFeedback = require('../../services/customer/readCusFeedback');
 
 const getCustomerFeedbacks = async (req, res) => {
 
-    res.json(await customerFeedback());
+    const cusemail = req.query.cusemail
+
+    res.json(await customerFeedback(cusemail));
 
 }
 

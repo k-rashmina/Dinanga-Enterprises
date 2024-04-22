@@ -8,7 +8,10 @@ import axios from "axios"
 
 const FeedbackForm = () => {
 
+  const loggedUser = 'kalindur@gmail.c';
+
   const [feedbackData, setfeedbackData] = useState({
+    cusEmail: loggedUser,
     feedbackSub: '',
     feedbackMsg:'',
 

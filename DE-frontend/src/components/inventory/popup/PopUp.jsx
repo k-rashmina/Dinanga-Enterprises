@@ -47,8 +47,8 @@ function PopUp({ props, selectedItem }) {
   if (!item) return null;
 
   return props.trigger ? (
-    <div className="popup">
-      <div className="popup-inner">
+    <div className="Searchpopup">
+      <div className="Searchpopup-inner">
         <img className="list-img" src={list_image} alt="popuplist" />
         <img
           className="close-img"

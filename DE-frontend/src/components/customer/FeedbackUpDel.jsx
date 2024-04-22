@@ -5,39 +5,33 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import axios from "axios";
 
 const FeedbackUpDel = () => {
+  const loggedUser = 'kalindur@gmail.c';
+
   const [records, setRecords] = useState([]);
   const [editedSubject, setEditedSubject] = useState('');
   const [editedMessage, setEditedMessage] = useState('');
   const [editId, setEditId] = useState(null);
   const [getterValue, setGetterValue] = useState(false);
-  const [delVal, setDelVal] = useState(false); // Corrected typo here
 
   useEffect(() => {
-    axios.get("http://localhost:5000/cusfeedback/readcustomerfeedbacks")
+    axios.get(`http://localhost:5000/cusfeedback/readcustomerfeedbacks?cusemail=${loggedUser}`)
       .then(res => {
         setRecords(res.data);
       })
-      .catch(err => console.log(err));
+      .catch(err => alert('No Feedbacks'));
   }, [getterValue]);
-
-  let deleteId = useRef();
 
   const handleDelete = (e) => {
     const confirmVal = window.confirm('Are you sure?');
-    deleteId.current = e.target.id;
-    console.log(confirmVal)
-    if (confirmVal == true) { setDelVal(prev => !prev) }
-  }
-
-  useEffect(() => {
-    if (deleteId.current) {
-      axios.delete(`http://localhost:5000/cusfeedback/delcustomerfeedbacks?id=${deleteId.current}`)
-        .then((res) => {
-          console.log(res.data)
-          setGetterValue(prev => !prev);
+    const idToDelete = e.currentTarget.id;
+    if (confirmVal) {
+      axios.delete(`http://localhost:5000/cusfeedback/delcustomerfeedbacks?id=${idToDelete}`)
+        .then(() => {
+          setGetterValue(prev => !prev); // Reload data
         })
+        .catch(err => console.log(err));
     }
-  }, [delVal])
+  };
 
   const handleEdit = (id, subject, message) => {
     setEditId(id);
@@ -61,11 +55,20 @@ const FeedbackUpDel = () => {
   };
 
   const handleSubmit = (id) => {
-    // Send edited data to backend
-    setEditId(null);
-    setEditedSubject('');
-    setEditedMessage('');
-    setGetterValue(prev => !prev); // Trigger data reload
+    axios.put(`http://localhost:5000/cusfeedback/upcustomerfeedbacks`, {
+      _id: id,
+      cusEmail: loggedUser,
+      feedbackSub: editedSubject,
+      feedbackMsg: editedMessage
+    })
+    .then(() => {
+      setEditId(null);
+      setEditedSubject('');
+      setEditedMessage('');
+      setGetterValue(prev => !prev); 
+      alert("Sucessfull");
+    })
+    .catch(err => console.log(err));
   };
 
   return (
@@ -74,58 +77,41 @@ const FeedbackUpDel = () => {
         <Col xs={12} md={12}>
           <h4 style={{ color: 'black', textAlign: 'center', fontWeight: 'bold', marginBottom: '20px' }}>Previous Feedback</h4>
           <div style={{ borderRadius: '20px', overflow: 'hidden' }}>
-            <Table bordered hover responsive style={{ marginBottom: '0' }}>
-              <thead>
-                <tr style={{ backgroundColor: '#d9d9d9', color: 'black' }}>
-                  <th style={{ fontWeight: 'bold', textAlign: 'center' }}>Date</th>
-                  <th style={{ fontWeight: 'bold', textAlign: 'center' }}>Subject</th>
-                  <th style={{ fontWeight: 'bold', textAlign: 'center' }}>Message</th>
-                  <th style={{ fontWeight: 'bold', textAlign: 'center' }}>Action</th>
-                </tr>
-              </thead>
+            <Table bordered hover responsive>
+            <thead>
+              <tr style={{ backgroundColor: '#d9d9d9', color: 'black' }}>
+                <th style={{ textAlign: 'center' }}>Date</th>
+                <th style={{ textAlign: 'center' }}>Subject</th>
+                <th style={{ textAlign: 'center' }}>Message</th>
+                <th style={{ textAlign: 'center' }}>Action</th>
+              </tr>
+            </thead>
+
               <tbody>
                 {records.map((row, index) => (
                   <tr key={index}>
-                    <td align="center">{new Date().toLocaleDateString()}</td>
+                    <td align="center"> {row.createdAt.substring(0,10)}</td>
                     <td style={{ maxWidth: '200px', wordWrap: 'break-word' }} align="center">
                       {editId === row._id ?
-                        <input
-                          type="text"
-                          name="subject"
-                          value={editedSubject}
-                          onChange={handleInputChange}
-                        /> :
+                        <input type="text" name="subject" value={editedSubject} onChange={handleInputChange} /> :
                         row.feedbackSub
                       }
                     </td>
                     <td style={{ maxWidth: '200px', wordWrap: 'break-word' }} align="center">
                       {editId === row._id ?
-                        <textarea
-                          rows={3}
-                          name="message"
-                          value={editedMessage}
-                          onChange={handleInputChange}
-                        /> :
+                        <textarea rows={3} name="message" value={editedMessage} onChange={handleInputChange} /> :
                         row.feedbackMsg
                       }
                     </td>
                     <td align="center">
                       {editId === row._id ?
                         <>
-                          <Button variant="success" size="sm" style={{ margin: '2px' }} onClick={() => handleSubmit(row._id)}>
-                          <i className="bi bi-check"></i>Submit
-                          </Button>
-                          <Button variant="secondary" size="sm" style={{ margin: '2px' }} onClick={handleCancelEdit}>
-                          <i className="bi bi-x"></i>Cancel
-                          </Button>
+                          <Button variant="success" size="sm" onClick={() => handleSubmit(row._id)}><i className="bi bi-check"></i>Submit</Button>
+                          <Button variant="secondary" size="sm" onClick={handleCancelEdit}><i className="bi bi-x"></i>Cancel</Button>
                         </> :
                         <>
-                          <Button variant="primary" size="sm" style={{ margin: '2px', backgroundColor: '#00adb4' }} onClick={() => handleEdit(row._id, row.feedbackSub, row.feedbackMsg)}>
-                          <i className="bi bi-pencil-square"></i> Edit
-                          </Button>
-                          <Button id={row._id} variant="danger" size="sm" style={{ margin: '2px' }} onClick={handleDelete}>
-                          <i className="bi bi-trash"></i>Delete
-                          </Button>
+                          <Button variant="primary" size="sm" onClick={() => handleEdit(row._id, row.feedbackSub, row.feedbackMsg)}><i className="bi bi-pencil-square"></i>Edit</Button>
+                          <Button id={row._id} variant="danger" size="sm" onClick={handleDelete}> <i className="bi bi-trash"></i>Delete</Button>
                         </>
                       }
                     </td>

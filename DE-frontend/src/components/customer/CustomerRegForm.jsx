@@ -85,7 +85,7 @@ function CustomerRegForm() {
   };
 
   return (
-    <div className='div-shadow rounded-4 position-relative' style={{ width: '650px', height: '585px', backgroundColor: 'white' }}>
+    <div className='div-shadow rounded-4 position-relative' style={{ width: '650px', height: '650px', backgroundColor: 'white' }}>
       <h4 style={{ textAlign: 'center', paddingTop: '30px', paddingBottom: '30px', marginBottom: '20px', borderBottom: 'solid 2px' }}>User Registration</h4>
       <form className='ps-3 pe-3 ' onSubmit={handleSubmit}>
         <label className=''>Name</label><br />
@@ -123,7 +123,7 @@ function CustomerRegForm() {
           <div className="text-danger" style={{ width: '300px', height: '20px'}}>{errors.cusPassword}</div>
           <div className="text-danger" style={{ width: '300px', height: '20px'}}>{errors.pw}</div>
         </div>
-        <div className='d-flex justify-content-center mt-5 position-absolute' style={{top: '450px', left: '275px'}}>
+        <div className='d-flex justify-content-center mt-5 position-absolute' style={{top: '525px', left: '275px'}}>
           <button className='reg-form-button rounded-5'>Sign up</button>
         </div>
       </form>
