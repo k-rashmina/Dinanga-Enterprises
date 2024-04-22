@@ -9,7 +9,7 @@ import axios from 'axios';
 
 const SupplierfeedbackTable = () => {
 
-  const loggedSupplier = 'dinukdelpe@gmail.com';
+  const loggedSupplier = 'dunithpvt@gmail.com';
 
   const [fedDetails, setFedDetails] = useState([]);
 
