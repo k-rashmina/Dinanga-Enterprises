@@ -3,9 +3,9 @@ import { Outlet, Link } from "react-router-dom";
 import regbg1 from "../../assets/regbg1.png";
 
 
-export default function RegLayout({ cus, sup }) {
+export default function LogLayout({ cus, sup }) {
 
-    console.log(cus, sup)
+
 
     return(
         <>
