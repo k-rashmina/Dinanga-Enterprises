@@ -9,7 +9,7 @@ async function getEmployeeTest(req, res) {
     return res.status(200).json({ msg: 'Test employee' });
 }
 
-//Register new employee
+//Register a new employee
 const registerEmployee = async (req, res) => {
     const { name, contactNumber, email, address, username, password, department, role } = req.body;
   
