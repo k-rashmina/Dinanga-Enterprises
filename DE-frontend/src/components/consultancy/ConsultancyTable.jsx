@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -5,13 +6,18 @@ import axios from "axios";
 
 export default function ConsultancyTable() {
   const [data, setData] = useState([]);
+
+  const hasPageLoaded = useRef(false);
+  
   useEffect(() => {
     function GetRecord() {
       axios
         .get(
           "http://localhost:5000/consultantAppointment/getpendingappointments"
         )
-        .then((res) => setData(res.data))
+        .then((res) => {
+          hasPageLoaded.current = true;
+          setData(res.data)})
         .catch((err) => console.log(err));
     }
     GetRecord();
@@ -95,7 +101,7 @@ export default function ConsultancyTable() {
                             <span>{appointment.location}</span>
                           </div>
                           <div className="col-1 text-center ">
-                            <span>{appointment.assignedEmployee}</span>
+                            <span>{hasPageLoaded.current && (appointment.assignedEmployee && appointment.assignedEmployee.name)}</span>
                           </div>
                           <div className="col-2 text-center ">
                             <Link to={`/consultancy/customer/${appointment._id}`}>

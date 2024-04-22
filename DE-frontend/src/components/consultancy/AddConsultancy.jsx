@@ -102,14 +102,14 @@ export default function AddConsultancy() {
                         onChange={() => {
                           const today = new Date();
                           const formattedDate =
-                            today.toLocaleDateString("en-US"); // US English format
+                            today.toLocaleDateString("en-US"); // US English format 
                           var todayDate = formattedDate.split("/");
                           var todaySplitMonth = todayDate[0];
                           var todaySplitDate = todayDate[1];
                           var todaySplitYear = todayDate[2];
 
                           var ChooseDate =
-                            document.getElementById("date").value;
+                            document.getElementById("date").value;// 2002-05-14
                           var SplitChooseDateArray = ChooseDate.split("-");
                           var Chooseyear = SplitChooseDateArray[0];
                           var ChooseMonth = SplitChooseDateArray[1];
@@ -305,7 +305,6 @@ export default function AddConsultancy() {
                               Time: time,
                               Issue: issue,
                               jobService: "",
-                              assignedEmployee: "",
                               respond: "",
                             };
 

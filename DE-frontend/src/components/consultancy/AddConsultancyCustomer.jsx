@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/js/dist/dropdown.js";
@@ -10,6 +10,8 @@ export default function AddConsultancyCustomer() {
 
   const [user, setUser] = React.useState(null); // State to hold user data
 
+  const hasPageLoaded = useRef(false);
+
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -20,6 +22,7 @@ export default function AddConsultancyCustomer() {
           `http://localhost:5000/consultantAppointment/getappointmentdetails/${id}`
         ) // Assuming your backend API endpoint is '/user/:userId'
         .then((res) => {
+          hasPageLoaded.current = true;
           setUser(res.data); // Set user data in state
           console.log(res.data);
         })
@@ -40,6 +43,8 @@ export default function AddConsultancyCustomer() {
   // Default values for date and time
   const defaultDate = user ? formatDate(user.Date) : "";
 
+  console.log(user);
+
   return (
     <div className="container-fluid" style={{ backgroundColor: "#F0F0F0" }}>
       <div className="row">
@@ -58,12 +63,12 @@ export default function AddConsultancyCustomer() {
 
             <div className="col-12 text-center">
               <span className="fs-6">Full Name : </span>
-              <span>{user && user.assignedEmployee}</span>
+              <span>{hasPageLoaded.current && (user.assignedEmployee ? user.assignedEmployee.name : '')}</span>
             </div>
 
             <div className="col-12 mb-5 text-center">
               <span className="fs-6">Phone Number : </span>
-              <span>0778459627</span>
+              <span>{hasPageLoaded.current && (user.assignedEmployee ? user.assignedEmployee.contactNumber : '')}</span>
             </div>
 
             <div className="col-12 text-center">
@@ -306,7 +311,7 @@ export default function AddConsultancyCustomer() {
                         OldIssue = newIssue;
                       }
 
-                      //   // Json Encoding
+                         // Json Encoding
                       var JDirect = {
                         location: location,
                         Date: date,

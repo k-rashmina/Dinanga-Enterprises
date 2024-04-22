@@ -36,7 +36,8 @@ const consultantAppointmentSchema = new schema({
     },
 
     assignedEmployee:{
-        type:String
+        type:mongoose.SchemaTypes.ObjectId,
+        ref:'Employee'
 
     },
 
