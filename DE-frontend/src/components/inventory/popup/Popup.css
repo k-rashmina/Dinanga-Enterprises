@@ -1,4 +1,4 @@
-.popup{
+.Searchpopup{
     position:fixed;
     top:0;
     left:0;
@@ -12,7 +12,7 @@
    
 }
 
-.popup-inner{
+.Searchpopup-inner{
     position:relative;
     padding:32px;
     width:100%;
@@ -28,7 +28,7 @@
    
    
 }
-.popup-inner .list-img{
+.Searchpopup-inner .list-img{
     width: 80px;
     margin-top: -70px;
     /* border-radius: 70%; */
@@ -36,7 +36,7 @@
 
 
 
-.popup-inner .close-img{
+.Searchpopup-inner .close-img{
     position:absolute;
     top:16px;
     right:16px;
