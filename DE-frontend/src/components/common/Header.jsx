@@ -1,8 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 export default function SideBar({menu}) {
+
+    const nav = useNavigate();
 
   const login = false;
     
@@ -25,12 +27,16 @@ export default function SideBar({menu}) {
 
            </div>
        
-       {!login ? <div className="signup-login">
+       {!localStorage.getItem('loggedUser') ? <div className="signup-login">
            <Link className="login-button" to="#">Login</Link>
            <Link className="signup-button" to="#">Signup</Link>
        </div> : 
-       	       <div class="signup-login">
-                <a class="login-button" href="logout">Logout</a>
+       	    <div class="signup-login" onClick={() => {
+                localStorage.removeItem('loggedUser');
+                alert('You are Successfully Logged Out');
+                nav('/');
+            }}>
+                <Link class="login-button" >Logout</Link>
                 
             </div>}
     </nav>
