@@ -1,11 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import {useNavigate} from 'react-router-dom'
 import { Container, Form, Button } from 'react-bootstrap';
-import './LoginForm.css'; // Importing CSS file
+import './cusLogin.css'; // Importing CSS file
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom';
 
-const LoginForm = () => {
-
+const CusLogin = () => {
   const nav = useNavigate();
 
   const [email, setEmail] = useState('');
@@ -14,8 +13,9 @@ const LoginForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (validateForm()) {
-      // Here you can add your login logic
+
       hasPageLoaded.current = true;
       setLogVal(prev => !prev);
     }
@@ -48,7 +48,7 @@ const LoginForm = () => {
 
     if(user){
 
-        localStorage.setItem('loggedSup', user.Supplier_email);
+        localStorage.setItem('loggedUser', user.cusMail);
         return true;
 
     }
@@ -58,11 +58,10 @@ const LoginForm = () => {
   const [logVal, setLogVal] = useState(false);
   const hasPageLoaded = useRef(false);
 
-
   useEffect(() => {
 
     if(hasPageLoaded.current){
-      axios.post(`http://localhost:5000/supplier/getloggedsup`, {mail: email, pass: password})
+      axios.post(`http://localhost:5000/customer/getloggeduser`, {mail: email, pass: password})
       .then(res => {
         
         if(useridentify(res.data)) {
@@ -81,7 +80,7 @@ const LoginForm = () => {
   return (
     <center>
     <dev className="login-container">
-      <h4 className="login-header">Supplier Login</h4>
+      <h4 className="login-header">Customer Login</h4>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
@@ -120,4 +119,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default CusLogin;

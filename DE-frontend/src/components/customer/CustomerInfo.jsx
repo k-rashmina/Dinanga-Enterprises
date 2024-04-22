@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 
 const CustomerInfo = () => {
+
+  const loggedUser = localStorage.getItem('loggedUser');
+
   const [userDetails, setUserDetails] = useState({
     _id: '',
     cusFname: '',
@@ -36,7 +39,7 @@ const CustomerInfo = () => {
   useEffect(() => {
 
     if(editable){
-      axios.put(`http://localhost:5000/customer/upcustomerdetails/?user=${'kalindur@gmail.c'}`, userDetails)
+      axios.put(`http://localhost:5000/customer/upcustomerdetails/?user=${loggedUser}`, userDetails)
       .then(res=>{
         console.log(res);
         setEditable(false); // Set fields as editable on update profile button click
@@ -53,7 +56,7 @@ const CustomerInfo = () => {
   };
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/customer/customerdetails/?user=${'kalindur@gmail.c'}`)
+    axios.get(`http://localhost:5000/customer/customerdetails/?user=${loggedUser}`)
       .then(res => setUserDetails(res.data));
   }, []);
 
@@ -83,6 +86,7 @@ const CustomerInfo = () => {
 
   }, [deleteValue])
 
+ 
   return (
     <div>
       <h2>Your Details</h2>

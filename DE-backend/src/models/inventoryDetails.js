@@ -43,10 +43,7 @@ const inventoryDetailsSchema = new schema({
 },{timestamps: true});
 
 inventoryDetailsSchema.methods.updateReorderState = function () {
-   // If the item is not available, don't update reorderState
-   if (this.availability !== 'Available') {
-    return;
-  }
+   
 
   if (this.quantity == 0) {
     this.reorderState = "Out of Stocks";

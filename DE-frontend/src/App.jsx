@@ -20,6 +20,7 @@ import Layout from './components/common/Layout';
 import AdminLayout from './components/common/AdminLayout';
 import AdminPanel from './components/common/AdminPanel';
 import RegLayout from './components/common/RegLayout';
+import LogLayout from './components/common/LogLayout';
 import SupplierRegForm from './components/supplier/SupplierRegForm';
 import SupplierProfile from './components/supplier/SupplierProfile';
 import ServicesProvided from './components/supplier/ServicesProvided';
@@ -45,6 +46,7 @@ import ToBeOrdered from './components/order/ToBeOrdered';
 import CustomerRegForm from './components/customer/CustomerRegForm';
 import CustomerProfile from './components/customer/CustomerProfile';
 import FeedbackUpDel from './components/customer/FeedbackUpDel';
+import CusLogin from './components/customer/CusLogin';
 
 import AddConsultancy from './components/consultancy/AddConsultancy';
 import ConsultantCustomer from './components/consultancy/AddConsultancyCustomer';
@@ -100,19 +102,17 @@ function App() {
 
           
 
-          
           <Route path='/about' element/>
           <Route path='/contact' element/>
           <Route path='/cusprofile' element={<CustomerProfile />}/>
-          <Route path='/cusfeedback' element={<FeedbackUpDel/>}/>
+          <Route path='/supprofile' element = {<SupplierProfile/>}/>
           <Route path='/job' element/>
 
           <Route path='/job/reqjob' element/>
-          <Route path='/supprofile' element = {<SupplierProfile/>}/>
           <Route path='/supalerts/:supid' element = {<OrderAlerts/>}/>
           <Route path='/supservices' element= {<ServicesProvided/>}/>
           <Route path='/supfeedback' element= {<FeedbackTable/>}/>
-          <Route path='/suplogin' element = {<LoginForm/>}/>
+
           <Route path="/login" component={LoginForm} />
           <Route path="/" component={SupplierRegForm} />
 
@@ -123,9 +123,15 @@ function App() {
           <Route path='/consultancy/customer/:id' element={<ConsultantCustomer/>}/>
         </Route>
         
-        <Route element = {<RegLayout/>} >
+        <Route element = {<RegLayout cus={'cusreg'} sup={'supreg'}/>} >
           <Route path='/cusreg' element={<CustomerRegForm />} />
           <Route path='/supreg' element={<SupplierRegForm />}/>
+        </Route>
+
+        <Route element = {<LogLayout cus={'cuslogin'} sup={'suplogin'}/>} >
+          <Route path='/cuslogin' element={<CusLogin />} />
+          <Route path='/suplogin' element = {<LoginForm/>}/>
+
         </Route>
 
         {/* employee routes */}
@@ -185,10 +191,10 @@ function App() {
         </Route>
 
         {/* admin consultancy routes */}
-        <Route element={<AdminLayout page={'Consultancy'} menu={[ "Consultancy List", "Report"]}/>}>     
+        <Route element={<AdminLayout page={'Consultancy'} menu={[ "Consultancy List"]}/>}>     
           <Route path='/admin/consultancy/consultancylist' element={<ConsultantAdmin/>}/>
 
-          <Route path='/admin/consultancy/report' element/>
+          {/* <Route path='/admin/consultancy/report' element/> */}
         </Route>
 
         {/* admin employee routes */}

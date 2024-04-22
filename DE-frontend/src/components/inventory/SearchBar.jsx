@@ -32,9 +32,9 @@ function SearchBar() {
   }, [searchTerm]);
 
   return (
-    < div className="d-flex justify-content-end">
+    < div className="d-flex justify-content-end" >
     <div className="d-flex align-items-center justify-content-end pe-4 align-items-center" style={{width: '400px'}}>
-    <div className="container">
+    <div className="container" style={{backgroundColor: '#EEEEEE'}}>
       <div className="input-group mb-3">
       <div style={{ position: 'relative' }}>
       <FontAwesomeIcon icon={faSearch} size = "lg" style={{ position: 'absolute', top: '14px', left: '10px' }} />

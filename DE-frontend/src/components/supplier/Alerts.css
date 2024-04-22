@@ -1,10 +1,10 @@
 .order-alerts-container {
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background: linear-gradient(135deg, #ffffff, #ffffff);
+  border-radius: 50px;
+  
+  
 }
 
 .order-alerts-header {
@@ -57,3 +57,58 @@
   background-color: #f44336;
   color: #fff;
 }
+
+.success-message {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 15px 20px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  animation: fadeInOut 2s forwards;
+}
+
+@keyframes fadeInOut {
+  0%, 100% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.8);
+  }
+  50% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.download-report-button {
+  background-color: #00ADB5; /* Green */
+  border-color: black;
+  border-radius: px;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 8px;
+  animation-name: pulse;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
