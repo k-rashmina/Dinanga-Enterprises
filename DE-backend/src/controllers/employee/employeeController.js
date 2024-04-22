@@ -2,12 +2,14 @@ const Employee = require('../../models/employee')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
+const secretKey = 'Maneesha';
+
 // test controller
 async function getEmployeeTest(req, res) {
     return res.status(200).json({ msg: 'Test employee' });
 }
 
-//Register new employee
+//Register a new employee
 const registerEmployee = async (req, res) => {
     const { name, contactNumber, email, address, username, password, department, role } = req.body;
   
@@ -144,26 +146,39 @@ const getAssignedServices = async (req, res) => {
   // Employee login test
   const login = async (req, res) => {
     const { username, password } = req.body;
-  
+
     try {
-      const employee = await Employee.findOne({ username });
+        const employee = await Employee.findOne({ username });
 
-      if (!employee) {
-        return res.status(401).json({ message: "Invalid username or password." });
-      }
+        if (!employee) {
+            return res.status(401).json({ message: "Invalid username or password." });
+        }
 
-      const passwordMatch = await bcrypt.compare(password, employee.password);
+        const passwordMatch = await bcrypt.compare(password, employee.password);
 
-      if (passwordMatch) {
-        res.json({ message: "Login successful!" });
-      } else {
-        res.status(401).json({ message: "Invalid username or password." });
-      }
+        if (passwordMatch) {
+            // Generate a JWT using the secret key
+            const token = jwt.sign(
+                {
+                    employeeId: employee._id, // Include the employee's ID in the payload
+                    username: employee.username // Include the employee's username in the payload
+                },
+                secretKey, // Secret key for signing the token
+                {
+                    expiresIn: '1h' // Token expiration time (e.g., 1 hour)
+                }
+            );
+
+            // Return the JWT to the client
+            res.json({ message: "Login successful!", token });
+        } else {
+            res.status(401).json({ message: "Invalid username or password." });
+        }
     } catch (error) {
-      console.error("Error during login:", error);
-      res.status(500).json({ message: "Internal server error." });
+        console.error("Error during login:", error);
+        res.status(500).json({ message: "Internal server error." });
     }
-  };
+};
 
   //Get available consultancy employees
   const getAvailableConsultancyEmployees = async (req, res) => {

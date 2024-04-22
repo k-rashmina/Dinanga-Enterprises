@@ -135,6 +135,16 @@ const EmployeeDashboard = () => {
     }
   };
 
+  const handleDownloadPDF = () => {
+    // Call the function to print the interface as a PDF
+    printPDF();
+  };
+
+  // Function to print the interface as a PDF
+  const printPDF = () => {
+    window.print();
+  };
+
   return (
     <div>
       <h2 className="text-center mb-4">Employee Dashboard</h2>
@@ -181,6 +191,8 @@ const EmployeeDashboard = () => {
           })}
         </tbody>
       </table>
+
+      <Button variant="primary" onClick={handleDownloadPDF} style={{ marginRight: '10px',backgroundColor:'#00adb4'}}>Download PDF</Button>
 
       {/* Edit Employee Modal */}
       <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
@@ -282,6 +294,7 @@ const EmployeeDashboard = () => {
               </Form.Control.Feedback>
             </Form.Group>
           </Form>
+          
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowEditModal(false)}>
