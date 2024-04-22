@@ -19,7 +19,7 @@ const AssignJobs = () => {
     axios.get("http://localhost:5000/jobAppointment/getpendingdetails")
       .then(res => {
         const initialEmployeeState = res.data.reduce((acc, job) => {
-          acc[job._id] = job.employeeName._id || ''; // Initialize with existing employee name if present
+          acc[job._id] = job.employeeName ? job.employeeName._id : ''; // Initialize with existing employee name if present
           hasPageLoaded.current = true;
           return acc;
         }, {});
