@@ -62,13 +62,13 @@ export default function AddConsultancyCustomer() {
             </div>
 
             <div className="col-12 text-center">
-              <span className="fs-6">Full Name : </span>
-              <span>{hasPageLoaded.current && (user.assignedEmployee ? user.assignedEmployee.name : '')}</span>
+              <span className="fs-4 ">Full Name : </span>
+              <span className="fs-4 ">{hasPageLoaded.current && (user.assignedEmployee ? user.assignedEmployee.name : '')}</span>
             </div>
 
             <div className="col-12 mb-5 text-center">
-              <span className="fs-6">Phone Number : </span>
-              <span>{hasPageLoaded.current && (user.assignedEmployee ? user.assignedEmployee.contactNumber : '')}</span>
+              <span className="fs-4 ">Phone Number : </span>
+              <span className="fs-4 ">{hasPageLoaded.current && (user.assignedEmployee ? user.assignedEmployee.contactNumber : '')}</span>
             </div>
 
             <div className="col-12 text-center">
@@ -76,16 +76,16 @@ export default function AddConsultancyCustomer() {
             </div>
 
             <div className="col-12 text-center mb-5">
-              <span className="fs-4 fw-bold">{user && user.status}</span>
+              <span className="fs-4 ">{user && user.status}</span>
             </div>
-
+{/* 
             <div className="col-12 text-center">
               <span className="fs-3 fw-bold">Assigned Job Services</span>
             </div>
 
             <div className="col-12 mb-4 text-center">
               <span className="fs-5 fw-bold">{user && user.jobService}</span>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -98,10 +98,10 @@ export default function AddConsultancyCustomer() {
             <div className="col-12 mt-5">
               <div className="row">
                 <div className="col-4 text-center">
-                  <span>Location</span>
+                  <span className="fs-5 ">Location :</span>
                 </div>
                 <div className="col-8 d-grid">
-                  <select
+                  <select className="fs-5 "
                     id="location"
                     style={{ border: " 0px solid transparent" }}
                   >
@@ -127,20 +127,20 @@ export default function AddConsultancyCustomer() {
             <div className="col-12 mt-5">
               <div className="row">
                 <div className="col-4 text-center">
-                  <span>Date : </span>
+                  <span className="fs-5 ">Date : </span>
                 </div>
                 <div className="col-8 d-grid">
                   <div className="row">
-                    <div className="col-6">
-                      <span id="OLDDate">{defaultDate}</span>
+                    <div className="col-12">
+                      <span className="fs-5 " id="OLDDate">{defaultDate}</span>
                     </div>
                     <div className="col-6 offset-1 bg-white">
                       <div className="row">
-                        <div className="col-5 d-flex justify-content-end ">
-                          <span>Update Date</span>
+                        <div className="col-5 ">
+                          <span >Update Date</span>
                         </div>
                         <div className="col-6">
-                          <input
+                          <input className="fs-5 "
                             type="date"
                             id="newDate"
                             style={{ border: "0px solid transparent" }}
@@ -199,12 +199,12 @@ export default function AddConsultancyCustomer() {
             <div className="col-12 mt-5">
               <div className="row">
                 <div className="col-4 text-center">
-                  <span>Time : </span>
+                  <span className="fs-5 ">Time : </span>
                 </div>
                 <div className="col-8 d-grid">
                   <div className="row">
                     <div className="col-12">
-                      <span id="OldTIme">{user && user.Time}</span>
+                      <span className="fs-5 " id="OldTIme">{user && user.Time}</span>
                     </div>
                     <div className="col-6 offset-1 bg-white">
                       <div className="row">
@@ -212,7 +212,7 @@ export default function AddConsultancyCustomer() {
                           <span>Update Time</span>
                         </div>
                         <div className="col-6">
-                          <input
+                          <input className="fs-5 "
                             type="Time"
                             id="newTime"
                             style={{ border: "0px solid transparent" }}
@@ -234,12 +234,12 @@ export default function AddConsultancyCustomer() {
             <div className="col-12 mt-5">
               <div className="row">
                 <div className="col-4 text-center">
-                  <span>Issue : </span>
+                  <span className="fs-5 ">Issue : </span>
                 </div>
                 <div className="col-8 d-grid">
                   <div className="row">
                     <div className="col-12">
-                      <span id="OldIssue" className="fw-bold">
+                      <span id="OldIssue" className="fs-5 fw-bold">
                         {user && user.Issue}
                       </span>
                     </div>
@@ -256,7 +256,7 @@ export default function AddConsultancyCustomer() {
               </div>
             </div>
 
-            <div className="col-12 mt-5">
+            {/* <div className="col-12 mt-5">
               <div className="row">
                 <div className="col-4 text-center">
                   <span>Response : </span>
@@ -280,7 +280,7 @@ export default function AddConsultancyCustomer() {
                   ></textarea>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <div className="col-12 mt-4 d-flex justify-content-center ">
               <div className="row">
@@ -374,7 +374,7 @@ export default function AddConsultancyCustomer() {
             </div>
           </div>
         </div>
-        {/* Methana END point eka */}
+        
       </div>
     </div>
   );
