@@ -2,16 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Container, Form, Button, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa';
-import Services from './ServicesProvided';
-import SupplierfeedbackTable from './FeedbackTable';
-import OrderAlerts from './Alerts';
 
 import './SupplierProfile.css';
 import axios from 'axios';
 
 function SupplierProfile() {
 
-  const loggedSupplier = 'dinukdelpe@gmail.com';
+  const loggedSupplier = 'dunithpvt@gmail.com';
 
   const date = new Date().toJSON();
   const today = date.substring(0, 10);
@@ -38,6 +35,7 @@ function SupplierProfile() {
   const toggleSidebar = () => setShowSidebar(!showSidebar);
   const handleCloseFeedbackModal = () => setShowFeedbackModal(false);
   const handleShowFeedbackModal = () => setShowFeedbackModal(true);
+  
 
   const getRandomNumber = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -55,9 +53,6 @@ function SupplierProfile() {
     axios.get(`http://localhost:5000/supplier/readsupplierdetails?email=${loggedSupplier}`).then(res => setSupDetails(res.data));
   }, []);
 
-  // const handleUpdateProfile = () => {
-  //   setIsEditMode (prevState => !prevState)
-  // };
 
   const handleUpdateProfile = () => {
     // Make PUT request to update supplier details
@@ -74,12 +69,7 @@ function SupplierProfile() {
   };
   
 
-  // const handleDeleteProfile = () => {
-  //   // Delete profile logic here
-  //   console.log("Deleting profile...");
-  //   // Make API call to delete the supplier profile
-  //   // After successful deletion, perform any necessary actions like redirecting to another page
-  // };
+
   const handleDeleteProfile = () => {
     // Make DELETE request to delete supplier profile
     axios.delete(`http://localhost:5000/supplier/delsupplierdetails?supid=${supDetails._id}`)
@@ -152,7 +142,7 @@ function SupplierProfile() {
   console.log(supDetails.Supplier_bname);
 
   return (
-    <Container className='div-shadow' fluid style={{ minHeight: '100vh', backgroundColor: '#', display: 'flex', flexDirection: 'row', position: 'relative' }}>
+    <Container className='div-shadow' fluid style={{ minHeight: '100vh', backgroundColor: '#EEEEEE', display: 'flex', flexDirection: 'row', position: 'relative' }}>
       <div className="sidebar-toggle" onClick={toggleSidebar}>
         <FaBars />
       </div>
