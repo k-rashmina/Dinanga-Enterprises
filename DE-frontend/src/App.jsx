@@ -185,10 +185,10 @@ function App() {
         </Route>
 
         {/* admin consultancy routes */}
-        <Route element={<AdminLayout page={'Consultancy'} menu={[ "Consultancy List", "Report"]}/>}>     
+        <Route element={<AdminLayout page={'Consultancy'} menu={[ "Consultancy List"]}/>}>     
           <Route path='/admin/consultancy/consultancylist' element={<ConsultantAdmin/>}/>
 
-          <Route path='/admin/consultancy/report' element/>
+          {/* <Route path='/admin/consultancy/report' element/> */}
         </Route>
 
         {/* admin employee routes */}

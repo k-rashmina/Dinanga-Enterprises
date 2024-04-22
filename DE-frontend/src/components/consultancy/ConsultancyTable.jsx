@@ -48,7 +48,7 @@ export default function ConsultancyTable() {
                   <div className="row">
                     <div className="col-12" style={{backgroundColor:'#d9d9d9'}}>
                       <div className="row">
-                        <div className="col-1 text-center border border-bottom border-0 border-dark">
+                        <div className="col-2 text-center border border-bottom border-0 border-dark">
                           <span className="fw-bold">Appointment Number</span>
                         </div>
 
@@ -56,9 +56,7 @@ export default function ConsultancyTable() {
                           <span className="fw-bold"> Customer Email</span>
                         </div>
 
-                        <div className="col-2 text-center border border-bottom border-0 border-dark">
-                          <span className="fw-bold">Customer Name</span>
-                        </div>
+                
 
                         <div className="col-2 text-center border border-bottom border-0 border-dark">
                           <span className="fw-bold">Date & TIme</span>
@@ -68,7 +66,7 @@ export default function ConsultancyTable() {
                           <span className="fw-bold">Location</span>
                         </div>
 
-                        <div className="col-1 text-center border border-bottom border-0 border-dark">
+                        <div className="col-2 text-center border border-bottom border-0 border-dark">
                           <span className="fw-bold">Employee</span>
                         </div>
                         <div className="col-2 text-center border border-bottom border-0 border-dark"></div>
@@ -78,15 +76,13 @@ export default function ConsultancyTable() {
                     {data.map((appointment) => (
                       <div key={appointment._id} className="col-12 p-4">
                         <div className="row">
-                          <div className="col-1 text-center">
+                          <div className="col-2 text-center">
                             <span>{appointment.consultantNumber}</span>
                           </div>
                           <div className="col-3 text-center">
                             <span>{appointment.Email}</span>
                           </div>
-                          <div className="col-2  text-center">
-                            <span>Amasha Hewagama</span>
-                          </div>
+                          
                           <div className="col-2 ">
                             <div className="row">
                               <div className="col-12 text-center">
@@ -100,7 +96,7 @@ export default function ConsultancyTable() {
                           <div className="col-1 text-center">
                             <span>{appointment.location}</span>
                           </div>
-                          <div className="col-1 text-center ">
+                          <div className="col-2 text-center ">
                             <span>{hasPageLoaded.current && (appointment.assignedEmployee && appointment.assignedEmployee.name)}</span>
                           </div>
                           <div className="col-2 text-center ">
