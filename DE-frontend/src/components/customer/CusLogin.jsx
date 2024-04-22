@@ -66,7 +66,7 @@ const CusLogin = () => {
         
         if(useridentify(res.data)) {
 
-          nav('/cusprofile');
+          nav('/');
 
         }else{
           alert('Invalid Credentials')

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Container, Form, Button, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa';
@@ -8,20 +8,16 @@ import axios from 'axios';
 
 function SupplierProfile() {
 
-  const loggedSupplier = 'dunithpvt@gmail.com';
+
+  const loggedSupplier = localStorage.getItem('loggedSup');
 
   const date = new Date().toJSON();
   const today = date.substring(0, 10);
 
+  const hasPageLoaded = useRef(false) 
   const [showSidebar, setShowSidebar] = useState(false);
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
-  const [supDetails, setSupDetails] = useState({
-    _id: '',
-    Supplier_bname: '',
-    Supplier_email: '',
-    Supplier_contact: '',
-    Supplier_aos: ''
-  });
+  const [supDetails, setSupDetails] = useState({});
   const [isEditMode, setIsEditMode] = useState(false);
 
   const handleInputEvents = (e) => {
@@ -50,7 +46,11 @@ function SupplierProfile() {
   };
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/supplier/readsupplierdetails?email=${loggedSupplier}`).then(res => setSupDetails(res.data));
+    axios.get(`http://localhost:5000/supplier/readsupplierdetails?email=${loggedSupplier}`).then(res => {
+      hasPageLoaded.current = true;
+      setSupDetails(res.data);
+
+  });
   }, []);
 
 
@@ -138,8 +138,8 @@ function SupplierProfile() {
 
 
 
-
-  console.log(supDetails.Supplier_bname);
+console.log(loggedSupplier)
+  
 
   return (
     <Container className='div-shadow' fluid style={{ minHeight: '100vh', backgroundColor: '#EEEEEE', display: 'flex', flexDirection: 'row', position: 'relative' }}>
@@ -164,19 +164,19 @@ function SupplierProfile() {
             <Form>
               <Form.Group controlId="formBusinessName">
                 <Form.Label className="form-label">Business Name</Form.Label>
-                <Form.Control type="text" readOnly={!isEditMode} onChange={handleInputEvents} placeholder="" name='Supplier_bnames' className="form-control" value={supDetails.Supplier_bname} />
+                <Form.Control type="text" readOnly={!isEditMode} onChange={handleInputEvents} placeholder="" name='Supplier_bnames' className="form-control" value={hasPageLoaded.current ? supDetails.Supplier_bname : ''} />
               </Form.Group>
               <Form.Group controlId="formAreaOfSpecialization">
                 <Form.Label className="form-label">Area of Specialization</Form.Label>
-                <Form.Control type="text" readOnly={!isEditMode} onChange={handleInputEvents} placeholder="" name='Supplier_aos' className="form-control" value={supDetails.Supplier_aos} />
+                <Form.Control type="text" readOnly={!isEditMode} onChange={handleInputEvents} placeholder="" name='Supplier_aos' className="form-control" value={hasPageLoaded.current ? supDetails.Supplier_aos : ''} />
               </Form.Group>
               <Form.Group controlId="formEmail">
                 <Form.Label className="form-label">Email</Form.Label>
-                <Form.Control type="email" readOnly={!isEditMode} onChange={handleInputEvents}  name='Supplier_email' className="form-control" value={supDetails.Supplier_email} />
+                <Form.Control type="email" readOnly={!isEditMode} onChange={handleInputEvents}  name='Supplier_email' className="form-control" value={hasPageLoaded.current ? supDetails.Supplier_email : ''} />
               </Form.Group>
               <Form.Group controlId="formServicesProvided">
                 <Form.Label className="form-label">Contact</Form.Label>
-                <Form.Control type="text" readOnly={!isEditMode} onChange={handleInputEvents}  name='Supplier_contact' className="form-control" value={supDetails.Supplier_contact} />
+                <Form.Control type="text" readOnly={!isEditMode} onChange={handleInputEvents}  name='Supplier_contact' className="form-control" value={hasPageLoaded.current ? supDetails.Supplier_contact : ''} />
               </Form.Group>
               <br />
               {!isEditMode && (
