@@ -3,6 +3,7 @@
   margin: 0 auto;
   padding: 20px;
   border-radius: 50px;
+  backdrop-filter: blur(100px);
   
   
 }
@@ -11,6 +12,7 @@
   text-align: center;
   margin-bottom: 20px;
   color: #1E5375; /* Change heading color */
+  backdrop-filter: blur(100px);
 }
 
 .order-list {
@@ -25,6 +27,7 @@
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   width: calc(33.333% - 20px);
   background: linear-gradient(135deg, #00adb5, #ffffff);
+  backdrop-filter: blur(100px);
 }
 
 .order-info {
@@ -112,3 +115,69 @@
   animation-iteration-count: infinite;
 }
 
+.card {
+  width: 300px;
+  height: 220px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 30px;
+  gap: 13px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.062);
+}
+
+#cookieSvg {
+  width: 50px;
+}
+
+#cookieSvg g path {
+  fill: rgb(97, 81, 81);
+}
+
+.cookieHeading {
+  font-size: 1.2em;
+  font-weight: 800;
+  color: rgb(26, 26, 26);
+}
+
+.cookieDescription {
+  text-align: center;
+  font-size: 0.7em;
+  font-weight: 600;
+  color: rgb(99, 99, 99);
+}
+
+.cookieDescription a {
+  --tw-text-opacity: 1;
+  color: rgb(59 130 246);
+}
+
+.cookieDescription a:hover {
+  -webkit-text-decoration-line: underline;
+  text-decoration-line: underline;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 20px;
+  flex-direction: row;
+}
+
+.acceptButton {
+  width: 80px;
+  height: 30px;
+  background-color: #7b57ff;
+  transition-duration: .2s;
+  border: none;
+  color: rgb(241, 241, 241);
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px -1px #977ef3, 0 2px 4px -1px #977ef3;
+  transition: all .6s ease;
+}

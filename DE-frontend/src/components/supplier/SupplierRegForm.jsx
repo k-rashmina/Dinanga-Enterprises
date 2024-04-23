@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './SupplierRegForm.css';
 import axios from 'axios';
-import LoginForm from './LoginForm'; // Import the LoginForm component
+import LoginForm from './LoginForm'; 
 
 function SupplierRegForm() {
     const [formData, setFormData] = useState({
@@ -16,7 +16,7 @@ function SupplierRegForm() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errors, setErrors] = useState({});
     const [showMessage, setShowMessage] = useState(false);
-    const [signedUp, setSignedUp] = useState(false); // New state to track sign-up status
+    const [signedUp, setSignedUp] = useState(false); 
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -27,8 +27,8 @@ function SupplierRegForm() {
                     setShowMessage(true);
                     setTimeout(() => {
                         setShowMessage(false);
-                        setSignedUp(true); // Set signedUp to true after successful sign-up
-                    }, 3000); // Hide message after 3 seconds
+                        setSignedUp(true); 
+                    }, 3000); 
                 })
                 .catch(() => {
                     setShowMessage(true);
@@ -109,7 +109,7 @@ function SupplierRegForm() {
     };
 
     if (signedUp) {
-        return <LoginForm />; // Render the login form after successful sign-up
+        return <LoginForm />; 
     }
 
     return (

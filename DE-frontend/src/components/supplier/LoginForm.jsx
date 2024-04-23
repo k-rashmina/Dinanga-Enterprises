@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
-import './LoginForm.css'; // Importing CSS file
+import './LoginForm.css'; 
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 
@@ -15,7 +15,6 @@ const LoginForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      // Here you can add your login logic
       hasPageLoaded.current = true;
       setLogVal(prev => !prev);
     }

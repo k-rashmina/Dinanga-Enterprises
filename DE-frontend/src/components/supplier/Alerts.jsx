@@ -62,16 +62,16 @@ const OrderAlerts = () => {
 
   const generateHTMLForPDF = () => {
     let html =
-    '<div style="text-align: center; font-size: 40px; font-family: Calibri; margin-bottom: 10px;">' +
-    "<b>Dinanga Enterprises</b>" +
-    "</div>" +
-    '<div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">' +
-    "<b>Address: 68 Paraththa Rd, Panadura 12500</b>" +
-    "</div>" +
-    '<div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">' +
-    "<b>Telephone: +94 71 126 1449<b>" +
-    "</div>" +
-    "<hr/>";
+      '<div style="text-align: center; font-size: 40px; font-family: Calibri; margin-bottom: 10px;">' +
+      "<b>Dinanga Enterprises</b>" +
+      "</div>" +
+      '<div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">' +
+      "<b>Address: 68 Paraththa Rd, Panadura 12500</b>" +
+      "</div>" +
+      '<div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">' +
+      "<b>Telephone: +94 71 126 1449<b>" +
+      "</div>" +
+      "<hr/>";
 
   
     html +=
