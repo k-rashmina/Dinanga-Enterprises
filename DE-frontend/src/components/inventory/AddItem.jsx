@@ -17,10 +17,10 @@ function AddItem() {
 
   const validateItemName = () => {
     const errorsCopy = { ...errors };
-    const validNameRegex = /^[a-zA-Z0-9 ]+$/;
+    const validNameRegex = /^[a-zA-Z0-9 @#]+$/;
     if (!itemName) errorsCopy.itemName = "Item name is required";
     else if (!validNameRegex.test(itemName))
-      errorsCopy.itemName = "Item name must be alphanumeric";
+      errorsCopy.itemName = "Item name must be alphanumeric or contain @ or #";
     else delete errorsCopy.itemName;
     setErrors(errorsCopy);
   };

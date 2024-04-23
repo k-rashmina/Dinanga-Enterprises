@@ -149,7 +149,7 @@ function ItemList() {
         </div>
 
         <center>
-          <div className=" rounded-5 div-shadow mt-5 pb-4 example example1" style={{width: '1180px', height: '394px', overflow: 'scroll', backgroundColor: '#EEEEEE'}}>
+          <div className=" rounded-5 div-shadow mt-5 pb-4 example example1" style={{width: '1180px', height: '450px', overflow: 'scroll', backgroundColor: '#EEEEEE'}}>
 
           <table className="table-hover example1" style={{width: '1090px', backgroundColor: '#EEEEEE'}}>
             <thead  style={{fontSize: '18px', height: '90px', marginBottom: '10px'}}>
