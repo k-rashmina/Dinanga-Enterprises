@@ -1,10 +1,10 @@
 const mongoose = require ('mongoose');
 const feedbackcustomer = require('../../models/customerFeedback');
 
-const getFeedbackCustomer = async () => {
+const getFeedbackCustomer = async (cusemail) => {
     
     try{
-        const feedback = await feedbackcustomer.find ();
+        const feedback = await feedbackcustomer.find({'cusEmail': cusemail});
 
         return (feedback);
     

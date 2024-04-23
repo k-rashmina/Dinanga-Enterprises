@@ -3,10 +3,11 @@ import CardList from "./cards/CardList";
 import InventoryStockValueChart from "./charts/InventoryStockValueChart";
 import InventoryStockStatus from "./charts/InventoryStockStatus";
 import SearchBar from "./SearchBar";
+import AdminHeader from "../common/AdminHeader";
 function DashBoard() {
   return (
     <div>
-      
+      <AdminHeader pageName={"Dashboard"} />
         
         <SearchBar />
      

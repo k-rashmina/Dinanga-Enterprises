@@ -2,13 +2,16 @@ import React from 'react';
 import {useNavigate} from 'react-router-dom';
 import { useState } from 'react';
 import axios from "axios"
-
+import ReportButton from './customerReport'
 
 
 
 const FeedbackForm = () => {
 
+  const loggedUser = 'kalindur@gmail.c';
+
   const [feedbackData, setfeedbackData] = useState({
+    cusEmail: loggedUser,
     feedbackSub: '',
     feedbackMsg:'',
 
@@ -47,6 +50,7 @@ const handleSubmit =(event)=>{
 
   return (
     <div>
+      <ReportButton/>
       <h2>Leave Your Valueble Feedback Here</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">

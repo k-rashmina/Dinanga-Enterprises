@@ -4,6 +4,7 @@ import "./AddItems.css";
 import SearchBar from "./SearchBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWarehouse } from '@fortawesome/free-solid-svg-icons';
+import AdminHeader from "../common/AdminHeader";
 
 function AddItem() {
   const [itemNumber, setItemNumber] = useState("");
@@ -100,6 +101,7 @@ function AddItem() {
 
   return (
     <div class="con">
+      <AdminHeader pageName={'Add Item'}/>
       <SearchBar/>
       <div class="container-fluid px-1 py-5 mx-auto">
         <div class="row d-flex justify-content-center">

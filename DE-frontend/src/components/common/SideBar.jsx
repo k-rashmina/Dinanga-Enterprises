@@ -31,6 +31,7 @@ export default function SideBar({page,menu}) {
 
   return(
 
+
     <div className="d-flex flex-column flex-shrink flex-shrink-0 p-3 text-white bg-dark" style={{width: "300px", minHeight: "100vh", position: 'fixed'}}>
       <a href="/" className="d-flex justify-content-center align-items-center mb-3 mb-md-0 me-md-5 text-white text-decoration-none">
         <svg className="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>

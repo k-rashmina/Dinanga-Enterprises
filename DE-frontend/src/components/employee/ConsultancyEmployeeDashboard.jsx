@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Container, Table, Dropdown, Modal, Button } from "react-bootstrap";
+import {
+  Container,
+  Table,
+  Dropdown,
+  Modal,
+  Form,
+  Button
+} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
@@ -16,14 +23,12 @@ const rows = [
 ];
 
 const ConsultancyEmployeeDashboard = () => {
-  const [status, setStatus] = useState("Pending");
   const [issueInfo, setIssueInfo] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [selectedService, setSelectedService] = useState("");
+  const [comment, setComment] = useState(""); // State for managing comment
+  const [isDone, setIsDone] = useState(false); // State for managing the "Done" button
 
-  const handleStatusChange = (selectedStatus) => {
-    setStatus(selectedStatus);
-  };
 
   const handleIssueButtonClick = (issue) => {
     setIssueInfo(issue);
@@ -36,6 +41,23 @@ const ConsultancyEmployeeDashboard = () => {
 
   const handleServiceSelection = (service) => {
     setSelectedService(service);
+  };
+
+  const handleCommentChange = (e) => {
+    setComment(e.target.value); // Update comment value
+  };
+
+  const handleAddComment = () => {
+    // Function to handle adding the comment
+    console.log("Adding comment:", comment);
+    // You can integrate this with your API service to submit the comment
+    // For now, we'll just log the comment to the console and reset the comment state
+    setComment(""); // Clear the comment after submission
+  };
+
+  const handleDoneButtonClick = () => {
+    setIsDone(true); // Set isDone state to true to change the button color to green
+    setStatus("Completed"); // Update status to "Completed"
   };
 
   return (
@@ -99,27 +121,14 @@ const ConsultancyEmployeeDashboard = () => {
                     </Dropdown.Menu>
                   </Dropdown>
                 </td>
+                
                 <td>
-                  <Dropdown>
-                    <Dropdown.Toggle
-                      variant="secondary"
-                      id={`dropdown-status-${index}`}
-                    >
-                      {status}
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                      <Dropdown.Item
-                        onClick={() => handleStatusChange("Pending")}
-                      >
-                        Pending
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        onClick={() => handleStatusChange("Completed")}
-                      >
-                        Completed
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
+                  <Button
+                    variant={isDone ? "success" : "secondary"} // Change color based on isDone state
+                    onClick={handleDoneButtonClick}
+                  >
+                    Done
+                  </Button>
                 </td>
               </tr>
             ))}
@@ -132,8 +141,23 @@ const ConsultancyEmployeeDashboard = () => {
         <Modal.Header closeButton>
           <Modal.Title>Issue Information</Modal.Title>
         </Modal.Header>
-        <Modal.Body>{issueInfo}</Modal.Body>
+        <Modal.Body>
+          <p>{issueInfo}</p>
+          {/* Text box for adding comments */}
+          <Form.Group controlId="comment">
+            <Form.Label>Comment:</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              value={comment}
+              onChange={handleCommentChange}
+            />
+          </Form.Group>
+        </Modal.Body>
         <Modal.Footer>
+          <Button variant="primary" onClick={handleAddComment}>
+            Add Comment
+          </Button>
           <Button variant="secondary" onClick={handleCloseModal}>
             Close
           </Button>

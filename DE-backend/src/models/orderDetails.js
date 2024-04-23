@@ -5,7 +5,10 @@ const orderDetailsSchema = new schema({
     itemName:{
         type:String,
         required:true,  
-        unique:true
+    },
+    order_number:{
+        type: String,
+        required: true
     },
     itemNumber:{
         type:String,
@@ -24,14 +27,19 @@ const orderDetailsSchema = new schema({
         required:true
     },
     supplierName:{  
-        type:String,
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'suppliers',
         required:true
     },
     comments:{  
         type:String,
         required:true
+    },
+    orderstatus:{
+        type:String,
+        required:true
     }
    
 });
-const orderDetails = mongoose.model('orderDetails',orderDetailsSchema);
+const orderDetails = mongoose.model('orders',orderDetailsSchema);
 module.exports = orderDetails;

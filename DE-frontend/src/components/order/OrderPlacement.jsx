@@ -2,120 +2,153 @@ import React, { useEffect, useRef, useState } from "react";
 import { Container, Row, Col, Form, Button, Image } from "react-bootstrap";
 import formImg from "../../assets/Orderplace.jpg";
 import axios from "axios";
-
+import { useParams } from "react-router-dom";
 
 function OrderPlacement() {
-   
+  const date = new Date().toJSON();
+  const todaydate = date.substring(0, 10);
 
-    const [formData, setFormData] = useState({
-      
-        itemName:'',
-        itemNumber:'',
-        quantity:'',
-        dateofOrder:'',
-        companyAddress:'',
-        supplierName:'',
-        comments:'',
-    
-    });
-    const [formErrors, setFormErrors] = useState({
-      itemName:'',
-      itemNumber:'',
-      quantity:'',
-      dateofOrder:'',
-      companyAddress:'',
-      supplierName:'',
-      comments:'',
-    });
+  const { itemName, itemNumber, unitprice } = useParams();
 
-const [submitValue, setSubmitValue] = useState(false)
-const hasPageLoaded = useRef(false);
+  const [formData, setFormData] = useState({
+    itemName: itemName || "",
+    itemNumber: itemNumber || "",
+    quantity: "",
+    dateofOrder: todaydate, // Setting default to today's date
+    companyAddress: "",
+    supplierName: "",
+    comments: "",
+    orderstatus: "pending",
+  });
 
-const handleSubmit = (e) => {
+  const [formErrors, setFormErrors] = useState({
+    quantity: "",
+    dateofOrder: "",
+    companyAddress: "",
+    supplierName: "",
+    comments: "",
+  });
+
+  const [submitValue, setSubmitValue] = useState(false);
+  const hasPageLoaded = useRef(false);
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (Object.values(formErrors).some(error => error !== '')) {
-        alert("Please correct the errors before submitting.");
-        return;
+    if (Object.values(formErrors).some((error) => error !== "")) {
+      alert("Please correct the errors before submitting.");
+      return;
     }
-    setSubmitValue(prev => !prev);
-    }
+    setSubmitValue((prev) => !prev);
+    hasPageLoaded.current = true;
+  };
 
-useEffect(() => {
-  if(hasPageLoaded.current){
-      axios.post("http://localhost:5000/order/add", formData).then(()=>{
-          alert("order added")
-      }).catch((err)=>{
-          
+  let [savedOrder, setSavedOrder] = useState({});
+
+  console.log(savedOrder._id);
+
+  useEffect(() => {
+    if (hasPageLoaded.current) {
+      axios
+        .post("http://localhost:5000/order/add", formData)
+        .then((res) => {
+          setSavedOrder(res.data);
+          alert("Placed Order Successfully");
+        })
+        .catch((err) => {
+          console.log("failed");
+        });
+    }
+  }, [submitValue]);
+
+  useEffect(() => {
+    if (savedOrder._id) {
+      axios({
+        method: "post",
+        url: `http://localhost:5000/transaction/addpurchtransaction`,
+        data: {
+          status: "pending",
+          amount: unitprice * formData.quantity,
+          order_id: savedOrder._id,
+          desc: `${savedOrder.itemName} Purchase Transaction`, // Accessing itemName from savedOrder
+          create_date: todaydate,
+          update_date: todaydate,
+        },
       })
-  }
-  hasPageLoaded.current = true
-}, [submitValue])
-
-    const validateItemName = (value) => {
-      return value.length < 3 ? 'Item Name must be at least 3 characters long!' : '';
+        .then((res) => console.log(res.data))
+        .catch((err) => console.log("failed"));
     }
-    
-    const validateItemNumber = (value) => {
-      return isNaN(value) ? 'Item Number must be a number!' : '';
+  }, [savedOrder]);
+
+  const validateQuantity = (value) => {
+    return isNaN(value) || value < 0 ? "Quantity cannot be a negative number!" : "";
+  };
+
+  const validateDateofOrder = (value) => {
+    const selectedDate = new Date(value);
+    const todayDate = new Date();
+
+    if (selectedDate > todayDate) {
+      return "Date of Order cannot be in the future!";
     }
-    
-    const validateQuantity = (value) => {
-      return isNaN(value) ? 'Quantity must be a number!' : '';
-    }
-    
-    const validateDateofOrder = (value) => {
-      return new Date(value) > new Date() ? 'Date of Order cannot be in the future!' : '';
-    }
-    
-    const validateCompanyAddress = (value) => {
-      return value.length < 10 ? 'Company Address must be at least 10 characters long!' : '';
-    }
-    
-    const validateSupplierName = (value) => {
-      return value.length < 3 ? 'Supplier Name must be at least 3 characters long!' : '';
-    }
-    
-    const validateComments = (value) => {
-      return value.length > 200 ? 'Comments must be less than 200 characters long!' : '';
-    }
+    return "";
+  };
 
+  const validateCompanyAddress = (value) => {
+    return value.length < 10
+      ? "Company Address must be at least 10 characters long!"
+      : "";
+  };
 
-    const handleChange = (event) => {
-      const {name, value} = event.target;
-      let errors = {...formErrors};
-    
-      errors.itemName = name === 'itemName' ? validateItemName(value) : errors.itemName;
-      errors.itemNumber = name === 'itemNumber' ? validateItemNumber(value) : errors.itemNumber;
-      errors.quantity = name === 'quantity' ? validateQuantity(value) : errors.quantity;
-      errors.dateofOrder = name === 'dateofOrder' ? validateDateofOrder(value) : errors.dateofOrder;
-      errors.companyAddress = name === 'companyAddress' ? validateCompanyAddress(value) : errors.companyAddress;
-      errors.supplierName = name === 'supplierName' ? validateSupplierName(value) : errors.supplierName;
-      errors.comments = name === 'comments' ? validateComments(value) : errors.comments;
-    
-      setFormErrors(errors);
-      setFormData(prevState =>({
-          ...prevState,
-          [name]: value,
-      }));
-    };
+  const validateSupplierName = (value) => {
+    return value.length < 3
+      ? "Supplier Name must be at least 3 characters long!"
+      : "";
+  };
 
+  const validateComments = (value) => {
+    return value.length > 200
+      ? "Comments must be less than 200 characters long!"
+      : "";
+  };
 
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    let errors = { ...formErrors };
 
+    errors.quantity =
+      name === "quantity" ? validateQuantity(value) : errors.quantity;
+    errors.dateofOrder =
+      name === "dateofOrder" ? validateDateofOrder(value) : errors.dateofOrder;
+    errors.companyAddress =
+      name === "companyAddress"
+        ? validateCompanyAddress(value)
+        : errors.companyAddress;
+    errors.supplierName =
+      name === "supplierName"
+        ? validateSupplierName(value)
+        : errors.supplierName;
+    errors.comments =
+      name === "comments" ? validateComments(value) : errors.comments;
 
+    setFormErrors(errors);
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
+  const [supList, setSupList] = useState([]);
 
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/supplier/readsuplist")
+      .then((res) => setSupList(res.data))
+      .catch((err) => console.log("error"));
+  }, []);
 
-
-        
-
-
-
-    const today = new Date().toISOString().split('T')[0];
-
-
-
-        <p></p>
-
+  const supOptionElems = supList.map((sup) => {
+    return <option key={sup._id} value={sup._id}>{sup.Supplier_bname}</option>;
+  });
 
   return (
     <div>
@@ -127,6 +160,7 @@ useEffect(() => {
           alignItems: "center",
           display: "flex",
           justifyContent: "center",
+          fontSize:"20px",
         }}
       >
         <Row
@@ -145,19 +179,31 @@ useEffect(() => {
             >
               <Row>
                 <Col md={6} className="d-flex flex-column">
-                  <h5 style={{ marginBottom: "20px", fontWeight: "bold" }}>
-                   Order Placement
-                  </h5>
+                  <h3 style={{ marginBottom: "10px", fontWeight: "bold" }}>
+                    Order Placement
+                  </h3>
                   <Form.Group className="mb-3">
                     <Form.Label>Item Name</Form.Label>
-                    <Form.Control type="text" name="itemName" value={formData.itemName} onChange={handleChange}  required />
-                    <p style={{color: 'red'}}>{formErrors.itemName}</p>
-                    </Form.Group>
+                    <Form.Control
+                      type="text"
+                      name="itemName"
+                      value={formData.itemName}
+                      onChange={handleChange}
+                      readOnly
+                    />
+                    <p style={{ color: "red" }}>{formErrors.itemName}</p>
+                  </Form.Group>
 
                   <Form.Group className="mb-3">
                     <Form.Label>Item Number</Form.Label>
-                    <Form.Control type="text" name="itemNumber" value={formData.itemNumber} onChange={handleChange}  required />
-                    <p style={{color: 'red'}}>{formErrors.itemNumber}</p>
+                    <Form.Control
+                      type="text"
+                      name="itemNumber"
+                      value={formData.itemNumber}
+                      onChange={handleChange}
+                      readOnly
+                    />
+                    <p style={{ color: "red" }}>{formErrors.itemNumber}</p>
                   </Form.Group>
 
                   <Form.Group className="mb-3">
@@ -165,52 +211,66 @@ useEffect(() => {
                     <Form.Control
                       name="quantity"
                       type="number"
-                      value={formData.quantity} 
+                      value={formData.quantity}
                       onChange={handleChange}
                       required
-                    ></Form.Control>
-                    <p style={{color: 'red'}}>{formErrors.quantity}</p>
+                      min={1}
+                    />
+                    <p style={{ color: "red" }}>{formErrors.quantity}</p>
                   </Form.Group>
 
                   <Form.Group className="mb-3">
                     <Form.Label>Date of order</Form.Label>
-                    <Form.Control name="dateofOrder" type="date" 
-                     value={formData.dateofOrder} onChange={handleChange}
-                    required min ={today}>
-                     </Form.Control>
-                     <p style={{color: 'red'}}>{formErrors.dateofOrder}</p>
+                    <Form.Control
+                      name="dateofOrder"
+                      type="date"
+                      value={formData.dateofOrder}
+                      onChange={handleChange}
+                      required
+                      max={todaydate}
+                      min={todaydate}
+                    />
+                    <p style={{ color: "red" }}>{formErrors.dateofOrder}</p>
                   </Form.Group>
 
                   <Form.Group className="mb-3">
                     <Form.Label>Company Address</Form.Label>
-                    <Form.Control type="text" name="companyAddress"
-                     value={formData.companyAddress} 
-                     onChange={handleChange}
-                     required>
-                    </Form.Control>
-                    <p style={{color: 'red'}}>{formErrors.companyAddress}</p>
+                    <Form.Control
+                      type="text"
+                      name="companyAddress"
+                      value={formData.companyAddress}
+                      onChange={handleChange}
+                      required
+                    />
+                    <p style={{ color: "red" }}>{formErrors.companyAddress}</p>
                   </Form.Group>
 
                   <Form.Group className="mb-3">
                     <Form.Label>Supplier Name</Form.Label>
-                    <Form.Control type="text" name="supplierName" 
-                    value={formData.supplierName} 
-                    onChange={handleChange}
-                    required>
+                    <Form.Control
+                      as="select"
+                      name="supplierName"
+                      value={formData.supplierName}
+                      onChange={handleChange}
+                      required
+                    >
+                      <option value="">--Select--</option>
+                      {supOptionElems}
                     </Form.Control>
-                    <p style={{color: 'red'}}>{formErrors.supplierName}</p>
+                    <p style={{ color: "red" }}>{formErrors.supplierName}</p>
                   </Form.Group>
 
                   <Form.Group className="mb-3">
                     <Form.Label>Comments</Form.Label>
-                    <Form.Control type="text" name="comments"
-                    value={formData.comments} 
-                    onChange={handleChange}
-                    required>
-                    </Form.Control>
-                    <p style={{color: 'red'}}>{formErrors.comments}</p>
+                    <Form.Control
+                      type="text"
+                      name="comments"
+                      value={formData.comments}
+                      onChange={handleChange}
+                      required
+                    />
+                    <p style={{ color: "red" }}>{formErrors.comments}</p>
                   </Form.Group>
-
 
                   <Button
                     variant="primary"
@@ -226,12 +286,16 @@ useEffect(() => {
                   </Button>
                 </Col>
                 <Col md={6} className="d-none d-md-block">
-                <Image
+                  <Image
                     src={formImg}
                     alt="Car Service"
                     fluid
                     rounded
-                    style={{ borderRadius: "100px", minHeight: "800px",minWidth: "400px" }}
+                    style={{
+                      borderRadius: "100px",
+                      minHeight: "860px",
+                      minWidth: "400px",
+                    }}
                   />
                 </Col>
               </Row>
@@ -243,4 +307,4 @@ useEffect(() => {
   );
 }
 
-export default OrderPlacement;
+export default OrderPlacement;

@@ -8,31 +8,26 @@ const CustomerProfile = () => {
   const imageUrl = 'https://source.unsplash.com/600x300/?student';
 
   return (
-    
+    <div className="container-fluid">
       <div className="row">
-        <div className="col-md-4" style={{ backgroundColor: '#393E46' }}>
+        <div className="col-lg-4" style={{ backgroundColor: '#393E46', height: '100vh' }}>
           <div className="profile-container">
-            <ProfilePicture imageUrl={imageUrl} />
+            <ProfilePicture imageUrl={imageUrl}  />
           </div>
         </div>
-        <div className="col-md-4" style={{ backgroundColor: '#EEEEEE' }}>
+        <div className="col-lg-4" style={{ backgroundColor: '#EEEEEE', height: '100vh' }}>
           <div className="info-container">
             <CustomerInfo />
           </div>
         </div>
-        <div className="col-md-4" style={{ backgroundColor: '#EEEEEE' }}>
+        <div className="col-lg-4" style={{ backgroundColor: '#EEEEEE', height: '100vh' }}>
           <div className="feedback-container">
             <FeedbackForm />
           </div>
         </div>
       </div>
-    
+    </div>
   );
 }
 
 export default CustomerProfile;
-
-
-
-
-

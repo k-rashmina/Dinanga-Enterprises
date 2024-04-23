@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 
 const CustomerInfo = () => {
+
+  const loggedUser = localStorage.getItem('loggedUser');
+
   const [userDetails, setUserDetails] = useState({
+    _id: '',
     cusFname: '',
     cusLname: '',
     bDate: '',
@@ -13,9 +18,6 @@ const CustomerInfo = () => {
   });
   const [editable, setEditable] = useState(false); // State to track if fields are editable
 
-  // useEffect(()=>{
-  //   fetchData();
-  // },[]);
 
   const handleInputs = (e) => {
     const { id, value } = e.target;
@@ -26,29 +28,65 @@ const CustomerInfo = () => {
     }));
   };
 
+//handle updating activities
+  const [updateSubmitValue, setUpdateSubmitValue] = useState(false);
+
   const handleUpdateProfile = () => {
-
-    axios.put(`http://localhost:5000/customer/upcustomerdetails/?user=${'kalindur@gmail.c'}`)
-    .then(res=>{
-      console.log(res);
-      setEditable(true); // Set fields as editable on update profile button click
-      fetchData(); // fetch updated data after successfully update
-
-    })
-    .catch(err => console.log(err));
-
+    setUpdateSubmitValue(prev => !prev);
   };
+
+  //API call for updating profile details
+  useEffect(() => {
+
+    if(editable){
+      axios.put(`http://localhost:5000/customer/upcustomerdetails/?user=${loggedUser}`, userDetails)
+      .then(res=>{
+        console.log(res);
+        setEditable(false); // Set fields as editable on update profile button click
+
+      })
+      .catch(err => console.log(err));
+    }
+
+  }, [updateSubmitValue])
 
   const handleSubmit = () => {
     // Logic to submit updated profile
-    setEditable(false); // Set fields as non-editable after submission
+    setEditable(prevState => !prevState); // Set fields as non-editable after submission
   };
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/customer/customerdetails/?user=${'kalindur@gmail.c'}`)
+    axios.get(`http://localhost:5000/customer/customerdetails/?user=${loggedUser}`)
       .then(res => setUserDetails(res.data));
   }, []);
 
+
+
+//handle deleting activities
+  let confirmVal;
+  const [deleteValue, setDeleteValue] = useState(false);
+  const handleDeleteEvent = () => {
+    confirmVal = confirm('Confirm delete profile');
+
+    if(confirmVal == true) { setDeleteValue(prev => !prev)};
+    
+  }
+
+  const delNav = useNavigate();
+  //API call for delete profile
+  useEffect(() => {
+
+    if(deleteValue){
+      axios.delete(`http://localhost:5000/customer/delcustomerdetails?id=${userDetails._id}`)
+      .then(res => {
+        delNav('/');
+      })
+      .catch(err => console.log(err));
+    }
+
+  }, [deleteValue])
+
+ 
   return (
     <div>
       <h2>Your Details</h2>
@@ -120,24 +158,21 @@ const CustomerInfo = () => {
           />
         </div>
         {editable ? (
+          <div>
+            <button type="button" className="btn btn-primary me-2" onClick={handleUpdateProfile}>Submit</button>
+            <button className='btn btn-primary me-2' onClick={handleSubmit}>Cancel</button>
+          </div>
+        ) : (
           <button
             type="button"
             className="btn btn-primary me-2"
             onClick={handleSubmit}
           >
-            Submit
-          </button>
-        ) : (
-          <button
-            type="button"
-            className="btn btn-primary me-2"
-            onClick={handleUpdateProfile}
-          >
             Update Profile
           </button>
         )}
         {!editable && (
-          <button type="button" className="btn btn-danger">Delete Profile</button>
+          <button type="button" className="btn btn-danger" onClick={handleDeleteEvent}>Delete Profile</button>
         )}
       </form>
     </div>

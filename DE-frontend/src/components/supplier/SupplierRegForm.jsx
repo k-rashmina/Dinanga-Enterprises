@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './SupplierRegForm.css';
 import axios from 'axios';
+import LoginForm from './LoginForm'; // Import the LoginForm component
 
 function SupplierRegForm() {
     const [formData, setFormData] = useState({
@@ -15,6 +16,7 @@ function SupplierRegForm() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errors, setErrors] = useState({});
     const [showMessage, setShowMessage] = useState(false);
+    const [signedUp, setSignedUp] = useState(false); // New state to track sign-up status
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -25,6 +27,7 @@ function SupplierRegForm() {
                     setShowMessage(true);
                     setTimeout(() => {
                         setShowMessage(false);
+                        setSignedUp(true); // Set signedUp to true after successful sign-up
                     }, 3000); // Hide message after 3 seconds
                 })
                 .catch(() => {
@@ -105,6 +108,10 @@ function SupplierRegForm() {
         }));
     };
 
+    if (signedUp) {
+        return <LoginForm />; // Render the login form after successful sign-up
+    }
+
     return (
         <div className="div-shadow rounded-4 position-relative" style={{ width: '650px', height: '600px', backgroundColor: 'white' }}>
             <h4 style={{ textAlign: 'center', paddingTop: '30px', paddingBottom: '30px', marginBottom: '20px', borderBottom: 'solid 2px' }}>Supplier Registration</h4>
@@ -114,27 +121,31 @@ function SupplierRegForm() {
                 <input type="text" name="Supplier_bname" value={formData.Supplier_bname} onChange={handleChange} onBlur={handleChange} style={{ width: '618px', backgroundColor: 'white' }} className="border-color rounded-2" placeholder="Enter Business Name" />
                 <span className="fs-6 text-danger">{errors['Supplier_bname']}</span>
                 <br />
-                {/* Add similar spans for other fields if needed */}
+                
                 <label>Email</label><br />
                 <input type="email" value={formData.Supplier_email} onChange={handleChange} className="border-color rounded-2" style={{ width: '618px', backgroundColor: 'white' }} name="Supplier_email" placeholder="Jason@example.com" />
                 <span className="fs-6 text-danger">{errors['Supplier_email']}</span>
                 <br />
+
                 <label>Contact Number</label><br />
-                <input type="text" name="Supplier_contact" value={formData.Supplier_contact} onChange={handleChange} style={{ width: '618px', backgroundColor: 'white' }} className="border-color rounded-2" />
+                <input type="text" name="Supplier_contact" value={formData.Supplier_contact} onChange={handleChange} style={{ width: '618px', backgroundColor: 'white' }} className="border-color rounded-2" placeholder="+94 12 345 6789" />
                 <span className="fs-6 text-danger">{errors['Supplier_contact']}</span>
                 <br />
+
                 <label>Area of Specialization</label><br />
-                <input type="text" name="Supplier_aos" value={formData.Supplier_aos} onChange={handleChange} style={{ width: '618px', backgroundColor: 'white' }} className="border-color rounded-2" />
+                <input type="text" name="Supplier_aos" value={formData.Supplier_aos} onChange={handleChange} style={{ width: '618px', backgroundColor: 'white' }} className="border-color rounded-2" placeholder="Eg: Engine Repair" />
                 <span className="fs-6 text-danger">{errors['Supplier_aos']}</span>
                 <br />
+
                 <div className="d-flex justify-content-between  flex-wrap">
                     <label style={{ width: '300px' }}>Password</label><br />
                     <label style={{ width: '300px' }}>Confirm Password</label><br />
-                    <input type="password" name="Supplier_Pw" value={formData.Supplier_Pw} onChange={handleChange} style={{ width: '300px', backgroundColor: 'white' }} className="border-color rounded-2" />
-                    <input type="password" name="confirmPassword" value={confirmPassword} onChange={handleChange} style={{ width: '300px', backgroundColor: 'white' }} className="border-color rounded-2" />
+                    <input type="password" name="Supplier_Pw" value={formData.Supplier_Pw} onChange={handleChange} style={{ width: '300px', backgroundColor: 'white' }} className="border-color rounded-2" placeholder="*********"/>
+                    <input type="password" name="confirmPassword" value={confirmPassword} onChange={handleChange} style={{ width: '300px', backgroundColor: 'white' }} className="border-color rounded-2" placeholder="*********"/>
                     <span className="fs-6 text-danger">{errors['Supplier_Pw']}</span>
                     <span className="fs-6 text-danger">{errors['confirmPassword']}</span>
                 </div>
+
                 <div className="d-flex justify-content-center position-absolute" style={{ top: '525px', left: '275px' }}>
                     <button className="reg-form-button rounded-5">Sign Up</button>
                 </div>
