@@ -1,0 +1,56 @@
+/* EmployeeLogin.css */
+.login-container {
+    max-width: 800px;
+    margin-top: 50px;
+    padding: 50px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+}
+
+.login-form {
+    padding: 20px;
+}
+
+.login-input {
+    width: 100%; 
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.login-input:focus {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-color: #007bff;
+}
+
+.eye-icon {
+    cursor: pointer;
+    padding: 6px;
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+.login-button-form {
+    width: 100%; /* Set the login button to take the full width of the container */
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    background-color: #007bff;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    display: block;
+    margin: 10px auto 0; /* Center the button */
+}
+
+.login-button-form:hover {
+    background-color: #0056b3;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.button-container {
+    text-align: center;
+}
