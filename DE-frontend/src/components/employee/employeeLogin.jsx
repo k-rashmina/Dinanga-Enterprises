@@ -80,7 +80,7 @@ const EmployeeLogin = () => {
                         </Form.Group>
 
                         
-                        <Col xs={6} className="p-0">
+                        <Row  xs={6} className="p-0 justify-content-center">
                           <div className="button-container">
                             <Button
                                 variant="primary"
@@ -90,7 +90,7 @@ const EmployeeLogin = () => {
                                 Login
                             </Button>
                             </div>
-                        </Col>
+                        </Row>
                     </Form>
                 </Col>
             </Row>
