@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button, Form, Alert } from "react-bootstrap";
 import EmployeeApiService from "./EmployeeServices";
+import { Navbar, Nav, Container } from "react-bootstrap";
 
 const EmployeeDashboard = () => {
   const [employeeData, setEmployeeData] = useState([]);
+  const [empDetails,setEmpDetails] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [newPassword, setNewPassword] = useState('');
   const [showEditModal, setShowEditModal] = useState(false);
@@ -13,9 +15,20 @@ const EmployeeDashboard = () => {
     handleGetEmployeeDetails();
   }, []);
 
+  const handleSearch = (e) =>{
+    const { name, value } = e.target;
+    const filteredEmployees = empDetails.filter(employee =>
+      employee.name.toLowerCase().includes(value.toLowerCase())
+  );
+  setEmployeeData(filteredEmployees)
+    console.log(employeeData)
+  }
+
   const handleGetEmployeeDetails = async () => {
     const response = await EmployeeApiService.getEmployees();
     setEmployeeData(response);
+    setEmpDetails(response)
+
   };
 
   const deleteEmployeeDetails = async (id) => {
@@ -130,6 +143,7 @@ const EmployeeDashboard = () => {
       console.error("Error updating employee:", error);
     }
   };
+  
 
   //PDF Generation
   const handleDownloadPDF = () => {
@@ -192,11 +206,26 @@ const EmployeeDashboard = () => {
   
     return html;
   };
+
   
 
   return (
     <div>
-      <h2 className="text-center mb-4">Employee Dashboard</h2>
+      <Navbar bg="light" expand="lg">
+        <Container>
+          <Navbar.Brand href="#"><h2><b>Employee Dashboard</b></h2></Navbar.Brand>
+          <Nav className="ml-auto">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search"
+            aria-label="Search"
+            onChange={handleSearch}
+          />
+          </Nav>
+        </Container>
+      </Navbar>
+      <h2 className="text-center mb-4"></h2>
       <table className="table table-striped">
         <thead>
           <tr>
