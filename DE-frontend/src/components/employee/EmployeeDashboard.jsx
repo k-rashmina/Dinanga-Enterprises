@@ -137,7 +137,7 @@ const EmployeeDashboard = () => {
     printPDF();
   };
 
-  // Function to print the interface as a PDF
+  //Function to print the interface as a PDF
   const printPDF = () => {
     const htmlContent = generateHTMLForPDF();
     const windowContent = '' + htmlContent + '</body></html>';
