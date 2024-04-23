@@ -12,11 +12,9 @@ const EmployeeProfile = () => {
     email: "",
     address: "",
     username: "",
-    previousPassword: "",
-    newPassword: ""
   });
-  
-  const navigate = useNavigate(); 
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const fetchEmployeeInfo = async () => {
     try {
@@ -29,8 +27,6 @@ const EmployeeProfile = () => {
           email: response.email,
           address: response.address,
           username: response.username,
-          previousPassword: "",
-          newPassword: ""
         });
       }
     } catch (error) {
@@ -46,8 +42,65 @@ const EmployeeProfile = () => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
+
+    validateField(name, value);
+  };
+
+  const validateField = (name, value) => {
+    let fieldErrors = { ...errors };
+
+    // Validations
+    switch (name) {
+      case "fullName":
+        // Name validation (only letters)
+        const namePattern = /^[a-zA-Z\s]+$/;
+        if (!value.match(namePattern)) {
+          fieldErrors.fullName = "Name can only contain letters.";
+        } else {
+          delete fieldErrors.fullName;
+        }
+        break;
+      case "contactNumber":
+        // Contact number validation
+        const contactNumberPattern = /^0\d{9}$/;
+        if (!value.match(contactNumberPattern)) {
+          fieldErrors.contactNumber = "Contact number must start with 0 and be exactly 10 digits long.";
+        } else {
+          delete fieldErrors.contactNumber;
+        }
+        break;
+      case "email":
+        // Email validation
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!value.match(emailPattern)) {
+          fieldErrors.email = "Invalid email address.";
+        } else {
+          delete fieldErrors.email;
+        }
+        break;
+      case "address":
+        // Address validation
+        if (!value) {
+          fieldErrors.address = "Address is required.";
+        } else {
+          delete fieldErrors.address;
+        }
+        break;
+      case "username":
+        // Username validation
+        if (!value) {
+          fieldErrors.username = "Username is required.";
+        } else {
+          delete fieldErrors.username;
+        }
+        break;
+      default:
+        break;
+    }
+
+    setErrors(fieldErrors);
   };
 
   const handleEdit = () => {
@@ -56,16 +109,28 @@ const EmployeeProfile = () => {
 
   const handleCancel = () => {
     setIsEditing(false);
-    fetchEmployeeInfo();
+    fetchEmployeeInfo(); 
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Extract the employee ID from localStorage
+
+    let isValid = true;
+    for (let key in formData) {
+        validateField(key, formData[key]);
+        if (errors[key]) {
+            isValid = false;
+        }
+    }
+
+    if (!isValid) {
+        console.log("Please fix the validation errors before saving.");
+        return;
+    }
+
     const employeeId = localStorage.getItem('emp_id');
 
-    // Create an object containing the updated form data
     const updatedData = {
         fullName: formData.fullName,
         contactNumber: formData.contactNumber,
@@ -74,19 +139,14 @@ const EmployeeProfile = () => {
         username: formData.username,
     };
 
-  
-    // Make an API call to update the employee details
     try {
-        const response = await EmployeeApiService.updateEmployeeDetails(employeeId, updatedData);
+        const response = await EmployeeApiService.updateEmployee(employeeId, updatedData);
 
-        // Handle the response from the server
         if (response.success) {
             console.log('Employee details updated successfully');
             
-            // Reload employee data to reflect the changes
-            fetchEmployeeInfo();
+            await fetchEmployeeInfo(); 
 
-            // Stop editing
             setIsEditing(false);
         } else {
             console.error('Failed to update employee details:', response.error);
@@ -99,21 +159,17 @@ const EmployeeProfile = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
-   
     navigate("/emplogin");
   };
 
   return (
     <>
-      {/*Header with profile icon and dropdown */}
+      {/* Header with profile icon and dropdown */}
       <Navbar bg="light" expand="lg">
         <Container>
           <Navbar.Brand href="#">Welcome {formData.fullName}!</Navbar.Brand>
           <Nav className="ml-auto">
-            <NavDropdown
-              title={<i className="bi bi-person-circle"></i>}
-              id="nav-dropdown"
-            >
+            <NavDropdown title={<i className="bi bi-person-circle"></i>} id="nav-dropdown">
               <NavDropdown.Item onClick={handleLogout}>
                 Logout
               </NavDropdown.Item>
@@ -122,11 +178,10 @@ const EmployeeProfile = () => {
         </Container>
       </Navbar>
 
-      {/*Employee profile*/}
+      {/* Employee profile */}
       <Container style={{ marginTop: "50px" }}>
         <h2 className="text-center mb-4">Employee Profile</h2>
         <Form onSubmit={handleSubmit}>
-
           {/* Form fields */}
           <Form.Group controlId="fullName">
             <Form.Label>Full Name</Form.Label>
@@ -136,7 +191,12 @@ const EmployeeProfile = () => {
               value={formData.fullName}
               onChange={handleChange}
               readOnly={!isEditing}
+              isInvalid={!!errors.fullName}
+              required
             />
+            <Form.Control.Feedback type="invalid">
+              {errors.fullName}
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group controlId="contactNumber">
             <Form.Label>Contact Number</Form.Label>
@@ -146,7 +206,12 @@ const EmployeeProfile = () => {
               value={formData.contactNumber}
               onChange={handleChange}
               readOnly={!isEditing}
+              isInvalid={!!errors.contactNumber}
+              required
             />
+            <Form.Control.Feedback type="invalid">
+              {errors.contactNumber}
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group controlId="email">
             <Form.Label>Email Address</Form.Label>
@@ -156,7 +221,12 @@ const EmployeeProfile = () => {
               value={formData.email}
               onChange={handleChange}
               readOnly={!isEditing}
+              isInvalid={!!errors.email}
+              required
             />
+            <Form.Control.Feedback type="invalid">
+              {errors.email}
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group controlId="address">
             <Form.Label>Address</Form.Label>
@@ -166,7 +236,12 @@ const EmployeeProfile = () => {
               value={formData.address}
               onChange={handleChange}
               readOnly={!isEditing}
+              isInvalid={!!errors.address}
+              required
             />
+            <Form.Control.Feedback type="invalid">
+              {errors.address}
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group controlId="username">
             <Form.Label>Username</Form.Label>
@@ -176,20 +251,20 @@ const EmployeeProfile = () => {
               value={formData.username}
               onChange={handleChange}
               readOnly={!isEditing}
+              isInvalid={!!errors.username}
+              required
             />
+            <Form.Control.Feedback type="invalid">
+              {errors.username}
+            </Form.Control.Feedback>
           </Form.Group>
 
-          {/*Edit,cancel and save buttons */}
-          <Button
-            variant="primary"
-            type="button"
-            onClick={isEditing ? handleCancel : handleEdit}
-            className="mr-2"
-          >
+          {/* Edit, cancel, and save buttons */}
+          <Button variant="primary" type="button" onClick={isEditing ? handleCancel : handleEdit} className="mr-2">
             {isEditing ? "Cancel" : "Edit"}
           </Button>
           {isEditing && (
-            <Button variant="success" type="submit">
+            <Button variant="success" type="submit" onClick={handleSubmit}> 
               Save
             </Button>
           )}
