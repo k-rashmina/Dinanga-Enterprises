@@ -221,7 +221,7 @@ console.log(transactionInfo)
             
             <div className="d-flex justify-content-between border-bottom border-dark border-2 border-opacity-25">
               <h4 className="ps-3 mt-4 pt-1 pb-4 " style={{textAlign: 'start'}}>Update Transaction</h4>
-              <button className="fs-2 fw-semibold mt-2" style={{width: '60px', height: '60px', border: 'none'}} onClick={closeModal}>X</button>
+              <button type="button" className="fs-2 fw-semibold mt-2" style={{width: '60px', height: '60px', border: 'none'}} onClick={closeModal}>X</button>
             </div>
 
             <div className="d-flex flex-column align-items-start mt-4">

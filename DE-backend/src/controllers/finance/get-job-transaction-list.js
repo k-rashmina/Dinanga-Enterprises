@@ -7,7 +7,7 @@ const getJobTransactionList = async (req, res) => {
     from: req.query.from,
     to: req.query.to,
     status: req.query.status,
-    job: req.query.email,
+    job: req.query.ref,
     t_type: req.query.t_type
   } 
   res.json(await jobTransactionList(filter));

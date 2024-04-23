@@ -6,7 +6,7 @@ const getPurchTransactionList = async (req, res) => {
         from: req.query.from,
         to: req.query.to,
         status: req.query.status,
-        order: req.query.email
+        order: req.query.ref
       }
 
     res.json(await purchTransactionListService(filter));

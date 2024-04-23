@@ -6,7 +6,7 @@ export default function TransactionTable(props) {
   // console.log(props.transactions)
   const transactElems = props.transactions.map(transact => {
     // console.log(transact.transact_no)
-    let transactRef = props.name == 'Customer' ? transact.ref_id._id : transact.order_id;
+    let transactRef = props.name == 'Customer' ? transact.ref_id.jobNumber : transact.order_id.order_number;
     let transactPerson = props.name == 'Customer' ? transact.ref_id.email : 'Maneesha@gmail.com'
     let date = transact.create_date.substring(0, 10);
     return(
@@ -27,7 +27,7 @@ export default function TransactionTable(props) {
     transactElems.length == 0 
     ?
       <div className="d-flex justify-content-center align-items-center" style={{height: '394px'}}>
-        <h3 className="text-muted">No Such Transactions</h3>
+        <h3 className="text-muted">No Transactions</h3>
       </div>
     :
       <div className="align-self-center rounded-5 div-shadow mt-5 ps-4 pb-4 example example1" style={{width: '1040px', height: '394px', overflow: 'scroll'}}>
