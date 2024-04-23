@@ -7,6 +7,10 @@ const inventoryDetailsSchema = new schema({
     required: true,
     unique: true,
   },
+  // brand:{
+  //   type: String,
+  //   required: true,
+  // },
   itemName: {
     type: String,
     required: true,

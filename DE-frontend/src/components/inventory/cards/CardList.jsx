@@ -36,12 +36,9 @@ const CardList = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/inventory/stockValueChart"
+          "http://localhost:5000/inventory/displaystockValue"
         );
-        const total = response.data.reduce(
-          (acc, item) => acc + item.stockPrice,
-          0
-        );
+        const total = response.data.stockValue;
         setTotalStockValue(total);
       } catch (error) {
         console.error("Error fetching data:", error);

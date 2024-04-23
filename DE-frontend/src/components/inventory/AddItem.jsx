@@ -89,8 +89,8 @@ function AddItem() {
     if (noErrors) {
       const newItem = {
         itemNumber: "DE123", // Hardcoded for now, will be generated in the backend
-        brand,
         itemName,
+        brand,
         quantity,
         reorderLevel,
         itemPrice,
@@ -103,6 +103,8 @@ function AddItem() {
         })
         .catch((err) => {
           alert("Please fill all the fields");
+          console.log(newItem)
+          console.log(err)
         });
     }
   }
@@ -179,12 +181,12 @@ function AddItem() {
                       }}
                       onBlur={validateBrand}
                     >
-                      <option value="">Select a brand</option>
-                      <option value="brand1">Toyota </option>
-                      <option value="brand2">Honda </option>
-                      <option value="brand3">Suzuki</option>
-                      <option value = "barand4">Mazda</option>
-                      <option value = "brand5"></option>
+                      <option value="">Select vehicle brand</option>
+                      <option value="Toyota">Toyota </option>
+                      <option value="Honda">Honda </option>
+                      <option value="Suzuki">Suzuki</option>
+                      <option value = "Mazda">Mazda</option>
+                      <option value = "Any">Any</option>
                     
                     </select>
                       {errors.brand && (
