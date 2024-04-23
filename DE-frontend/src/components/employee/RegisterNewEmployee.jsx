@@ -20,7 +20,7 @@ const RegisterNewEmployee = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Validation logic for the name field
+    //Validations logic for the name
     if (name === "name") {
       // Remove non-alphabetic characters
       const newValue = value.replace(/[^a-zA-Z\s]/g, "");
@@ -29,21 +29,19 @@ const RegisterNewEmployee = () => {
         [name]: newValue
       });
     } else {
-      // Set form data
       setFormData({
         ...formData,
         [name]: value
       });
     }
 
-    // Perform validation for the field
     validateField(name, value);
   };
 
   const validateField = (name, value) => {
     let fieldErrors = { ...errors };
 
-    // Validation logic
+    //Validations
     switch (name) {
       case "name":
         if (!value) {
@@ -53,7 +51,7 @@ const RegisterNewEmployee = () => {
         }
         break;
       case "contactNumber":
-        // Allow only numbers, and check length and starting digit
+        //Allow only numbers, and check length and starting digit
         const contactNumberPattern = /^0\d{9}$/;
         if (!value.match(contactNumberPattern)) {
           fieldErrors.contactNumber = "Contact number must start with 0 and be exactly 10 digits long.";
@@ -75,7 +73,7 @@ const RegisterNewEmployee = () => {
         } else {
           delete fieldErrors.password;
         }
-        // Validate password match with confirmPassword
+        //Validate password match with confirmPassword
         if (formData.confirmPassword && formData.confirmPassword !== value) {
           fieldErrors.confirmPassword = "Passwords do not match.";
         } else {
@@ -100,14 +98,12 @@ const RegisterNewEmployee = () => {
         break;
     }
 
-    // Update errors state
     setErrors(fieldErrors);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate all fields before submitting
     let isValid = true;
     for (let key in formData) {
       validateField(key, formData[key]);
