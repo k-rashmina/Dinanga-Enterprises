@@ -14,15 +14,14 @@ function OrderPlacement() {
     itemName: itemName || "",
     itemNumber: itemNumber || "",
     quantity: "",
-    dateofOrder: "",
+    dateofOrder: todaydate, // Setting default to today's date
     companyAddress: "",
     supplierName: "",
     comments: "",
     orderstatus: "pending",
   });
+
   const [formErrors, setFormErrors] = useState({
-    // itemName:'',
-    // itemNumber:'',
     quantity: "",
     dateofOrder: "",
     companyAddress: "",
@@ -53,7 +52,7 @@ function OrderPlacement() {
         .post("http://localhost:5000/order/add", formData)
         .then((res) => {
           setSavedOrder(res.data);
-          alert("order added");
+          alert("Placed Order Successfully");
         })
         .catch((err) => {
           console.log("failed");
@@ -61,42 +60,37 @@ function OrderPlacement() {
     }
   }, [submitValue]);
 
-  //Creating new purchase transaction
   useEffect(() => {
-    if (savedOrder) {
+    if (savedOrder._id) {
       axios({
         method: "post",
         url: `http://localhost:5000/transaction/addpurchtransaction`,
         data: {
           status: "pending",
-          amount: unitprice * savedOrder.quantity,
+          amount: unitprice * formData.quantity,
           order_id: savedOrder._id,
-          desc: `${savedOrder} Purchase Transaction`,
+          desc: `${savedOrder.itemName} Purchase Transaction`, // Accessing itemName from savedOrder
           create_date: todaydate,
           update_date: todaydate,
         },
       })
         .then((res) => console.log(res.data))
-        .catch(console.log("failed"));
+        .catch((err) => console.log("failed"));
     }
   }, [savedOrder]);
 
-  // const validateItemName = (value) => {
-  //   return value.length < 3 ? 'Item Name must be at least 3 characters long!' : '';
-  // }
-
-  // const validateItemNumber = (value) => {
-  //   return isNaN(value) ? 'Item Number must be a number!' : '';
-  // }
-
   const validateQuantity = (value) => {
-    return isNaN(value) ? "Quantity must be a number!" : "";
+    return isNaN(value) || value < 0 ? "Quantity cannot be a negative number!" : "";
   };
 
   const validateDateofOrder = (value) => {
-    return new Date(value) > new Date()
-      ? "Date of Order cannot be in the future!"
-      : "";
+    const selectedDate = new Date(value);
+    const todayDate = new Date();
+
+    if (selectedDate > todayDate) {
+      return "Date of Order cannot be in the future!";
+    }
+    return "";
   };
 
   const validateCompanyAddress = (value) => {
@@ -121,8 +115,6 @@ function OrderPlacement() {
     const { name, value } = event.target;
     let errors = { ...formErrors };
 
-    // errors.itemName = name === 'itemName' ? validateItemName(value) : errors.itemName;
-    // errors.itemNumber = name === 'itemNumber' ? validateItemNumber(value) : errors.itemNumber;
     errors.quantity =
       name === "quantity" ? validateQuantity(value) : errors.quantity;
     errors.dateofOrder =
@@ -151,14 +143,12 @@ function OrderPlacement() {
     axios
       .get("http://localhost:5000/supplier/readsuplist")
       .then((res) => setSupList(res.data))
-      .catch(console.log("error"));
+      .catch((err) => console.log("error"));
   }, []);
 
   const supOptionElems = supList.map((sup) => {
-    return <option value={sup._id}>{sup.Supplier_bname}</option>;
+    return <option key={sup._id} value={sup._id}>{sup.Supplier_bname}</option>;
   });
-
-  const today = new Date().toISOString().split("T")[0];
 
   return (
     <div>
@@ -199,9 +189,8 @@ function OrderPlacement() {
                       name="itemName"
                       value={formData.itemName}
                       onChange={handleChange}
-                      readOnly // This will make the field read-only
+                      readOnly
                     />
-
                     <p style={{ color: "red" }}>{formErrors.itemName}</p>
                   </Form.Group>
 
@@ -212,7 +201,7 @@ function OrderPlacement() {
                       name="itemNumber"
                       value={formData.itemNumber}
                       onChange={handleChange}
-                      readOnly // This will make the field read-only
+                      readOnly
                     />
                     <p style={{ color: "red" }}>{formErrors.itemNumber}</p>
                   </Form.Group>
@@ -225,7 +214,8 @@ function OrderPlacement() {
                       value={formData.quantity}
                       onChange={handleChange}
                       required
-                    ></Form.Control>
+                      min={1}
+                    />
                     <p style={{ color: "red" }}>{formErrors.quantity}</p>
                   </Form.Group>
 
@@ -237,8 +227,9 @@ function OrderPlacement() {
                       value={formData.dateofOrder}
                       onChange={handleChange}
                       required
-                      min={today}
-                    ></Form.Control>
+                      max={todaydate}
+                      min={todaydate}
+                    />
                     <p style={{ color: "red" }}>{formErrors.dateofOrder}</p>
                   </Form.Group>
 
@@ -250,20 +241,20 @@ function OrderPlacement() {
                       value={formData.companyAddress}
                       onChange={handleChange}
                       required
-                    ></Form.Control>
+                    />
                     <p style={{ color: "red" }}>{formErrors.companyAddress}</p>
                   </Form.Group>
 
                   <Form.Group className="mb-3">
                     <Form.Label>Supplier Name</Form.Label>
                     <Form.Control
-                      as="Select"
+                      as="select"
                       name="supplierName"
                       value={formData.supplierName}
                       onChange={handleChange}
                       required
                     >
-                      <option value={""}>--Select--</option>
+                      <option value="">--Select--</option>
                       {supOptionElems}
                     </Form.Control>
                     <p style={{ color: "red" }}>{formErrors.supplierName}</p>
@@ -277,7 +268,7 @@ function OrderPlacement() {
                       value={formData.comments}
                       onChange={handleChange}
                       required
-                    ></Form.Control>
+                    />
                     <p style={{ color: "red" }}>{formErrors.comments}</p>
                   </Form.Group>
 
