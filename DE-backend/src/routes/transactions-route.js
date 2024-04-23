@@ -7,10 +7,12 @@ const getPurchTransactionList = require('../controllers/finance/get-purch-transa
 const postPurchTransaction = require('../controllers/finance/post-purch-transaction');
 const putPurchTransaction = require('../controllers/finance/put-purch-transaction');
 const delPurchTransaction = require('../controllers/finance/del-purch-transaction');
+const getTransactionInfo = require('../controllers/finance/get-transaction-info');
 
 const router = express.Router();
 
 router.get('/jobtransactionlist', (req, res) => getJobTransactionList(req, res));
+router.get('/jobtransactionlist/transaction', (req, res) => getTransactionInfo(req, res));
 router.post('/addjobtransaction', (req, res) => postJobTransaction(req, res));
 router.put('/upjobtransaction', (req, res) => putJobTransaction(req, res));
 router.delete('/deljobtransaction', (req, res) => delJobTransaction(req, res));

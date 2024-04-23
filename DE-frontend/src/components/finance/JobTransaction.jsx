@@ -25,7 +25,7 @@ export default function JobTransaction() {
       {jobtransactList? 
         <TransactionTable name={'Customer'} transactions={jobtransactList}/> : 
         <div className="d-flex justify-content-center align-items-center" style={{height: '394px'}}>
-          <h3 className="text-muted">Search Transactions</h3>
+          <h3 className="text-muted">No Transactions</h3>
         </div>
       }
     </div>
