@@ -1,14 +1,15 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
 import { useState } from 'react';
-import axios from "axios"
-import ReportButton from './customerReport'
+import axios from "axios";
+import "./CustomerRegForm.css";
+
 
 
 
 const FeedbackForm = () => {
 
-  const loggedUser = 'kalindur@gmail.c';
+  const loggedUser = localStorage.getItem('loggedUser');
 
   const [feedbackData, setfeedbackData] = useState({
     cusEmail: loggedUser,
@@ -50,8 +51,7 @@ const handleSubmit =(event)=>{
 
   return (
     <div>
-      <ReportButton/>
-      <h2>Leave Your Valueble Feedback Here</h2>
+      <h2 style={{ color: '#393E46', textAlign: 'center', fontWeight: 'bold', marginTop: '20px' }}>Leave Your Valueble Feedback Here</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="subject" className="form-label">Subject</label>
@@ -61,8 +61,8 @@ const handleSubmit =(event)=>{
           <label htmlFor="message" className="form-label">Message</label>
           <textarea className="form-control" id="feedbackMsg"  rows="4" name ="feedbackMsg"placeholder='Enter message here'  value={feedbackData.feedbackMsg} onChange={handleChange} required></textarea>
         </div>
-        <button type="submit" className="btn btn-primary me-2">Submit</button>
-        <button type="button" onClick={handleClick} className="btn btn-secondary">Previous Feedback</button>
+        <button type="submit" className="reg-form-button  me-2">Submit</button>
+        <button type="button" onClick={handleClick} className="reg-form-button2  me-2">Previous Feedback</button>
       </form>
     </div>
   );

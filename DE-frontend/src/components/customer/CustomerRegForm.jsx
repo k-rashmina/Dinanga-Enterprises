@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import "./CustomerRegForm.css";
 import regbg from "../../assets/regbg1.png";
 import axios from "axios";
+import {useNavigate} from 'react-router-dom';
 
 function CustomerRegForm() {
   const [formData, setFormData] = useState({
@@ -16,18 +17,22 @@ function CustomerRegForm() {
 
   const [errors, setErrors] = useState({});
 
+  const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
       axios.post("http://localhost:5000/customer/addcustomerdetails", formData)
         .then(() => {
           alert("Registered successfully");
+          navigate('/cuslogin');
         })
         .catch((error) => {
           console.error("Registration failed:", error);
         });
     }
   };
+  
 
   const handleChange = (event) => {
     const { name, value } = event.target;

@@ -24,6 +24,7 @@ const customerReport = async (req, res) => {
       '<table style="width: 100%; border-collapse: collapse;">' +
       "<tr>" +
       "<th>Name</th>" +
+      "<th>Birth Date</th>" +
       "<th>Email</th>" +
       "<th>Phone Number</th>" +
       "<th>Address</th>" +
@@ -34,6 +35,7 @@ const customerReport = async (req, res) => {
       html +=
         "<tr>" +
         `<td>${customer.cusFname} ${customer.cusLname}</td>` +
+        `<td>${customer.bDate}</td>` +
         `<td>${customer.cusMail}</td>` +
         `<td>${customer.pNum}</td>` +
         `<td>${customer.cusAddr}</td>` +
