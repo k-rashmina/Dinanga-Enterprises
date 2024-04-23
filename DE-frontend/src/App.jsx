@@ -195,7 +195,7 @@ function App() {
         </Route>
 
         {/* admin employee routes */}
-        <Route element={<AdminLayout page={'Employee'} menu={["Dashboard", "Add Employee", "Reports"]}/>}>
+        <Route element={<AdminLayout page={'Employee'} menu={["Dashboard", "Add Employee"]}/>}>
 
           <Route path='/admin/employee/dashboard' element={<EmployeeDashboard/>}/>
           <Route path='/admin/employee/addemployee' element={<RegisterNewEmployee/>}/>
