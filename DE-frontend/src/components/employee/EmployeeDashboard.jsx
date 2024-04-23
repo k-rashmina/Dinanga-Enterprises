@@ -31,10 +31,10 @@ const EmployeeDashboard = () => {
   const validateField = (name, value) => {
     let fieldErrors = { ...errors };
 
-    // Validation logic
+    //Validations
     switch (name) {
       case "name":
-        // Name validation (only letters)
+        //Name validation (only letters)
         const namePattern = /^[a-zA-Z\s]+$/;
         if (!value.match(namePattern)) {
           fieldErrors.name = "Name can only contain letters.";
@@ -43,7 +43,7 @@ const EmployeeDashboard = () => {
         }
         break;
       case "contactNumber":
-        // Contact number validation
+        //Contact number validation
         const contactNumberPattern = /^0\d{9}$/;
         if (!value.match(contactNumberPattern)) {
           fieldErrors.contactNumber = "Contact number must start with 0 and be exactly 10 digits long.";
@@ -52,7 +52,7 @@ const EmployeeDashboard = () => {
         }
         break;
       case "email":
-        // Email validation
+        //Email validation
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!value.match(emailPattern)) {
           fieldErrors.email = "Invalid email address.";
@@ -61,7 +61,7 @@ const EmployeeDashboard = () => {
         }
         break;
       case "address":
-        // Add address validation if needed (e.g., non-empty)
+        //Add address validation
         if (!value) {
           fieldErrors.address = "Address is required.";
         } else {
@@ -69,7 +69,7 @@ const EmployeeDashboard = () => {
         }
         break;
       case "username":
-        // Add username validation if needed
+        //Add username validation
         if (!value) {
           fieldErrors.username = "Username is required.";
         } else {
@@ -77,7 +77,7 @@ const EmployeeDashboard = () => {
         }
         break;
       case "password":
-        // Password validation (length)
+        //Password validation
         if (value.length < 8) {
           fieldErrors.password = "Password must be at least 8 characters long.";
         } else {
@@ -94,19 +94,16 @@ const EmployeeDashboard = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Update the selected employee with the changed value
     setSelectedEmployee((prev) => ({
       ...prev,
       [name]: value,
     }));
 
-    // Validate the changed field
     validateField(name, value);
   };
 
   const handleSaveChanges = async () => {
     try {
-      // Validate before saving
       let isValid = true;
       for (let key in selectedEmployee) {
         validateField(key, selectedEmployee[key]);
@@ -120,7 +117,6 @@ const EmployeeDashboard = () => {
         return;
       }
 
-      // Save changes
       await EmployeeApiService.updateEmployee(selectedEmployee);
       const updatedData = employeeData.map((employee) => {
         if (employee._id === selectedEmployee._id) {
@@ -135,15 +131,68 @@ const EmployeeDashboard = () => {
     }
   };
 
+  //PDF Generation
   const handleDownloadPDF = () => {
-    // Call the function to print the interface as a PDF
+
     printPDF();
   };
 
   // Function to print the interface as a PDF
   const printPDF = () => {
-    window.print();
+    const htmlContent = generateHTMLForPDF();
+    const windowContent = '' + htmlContent + '</body></html>';
+    const printWin = window.open('', '', 'width=1024,height=768');
+    printWin.document.open();
+    printWin.document.write(windowContent);
+    printWin.document.close();
+    printWin.print();
   };
+
+  const generateHTMLForPDF = () => {
+    let html =
+      '<div style="text-align: center; font-size: 40px; font-family: Calibri; margin-bottom: 10px;">' +
+      "<b>Dinanga Enterprises</b>" +
+      "</div>" +
+      '<div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">' +
+      "<b>Address: 68 Paraththa Rd, Panadura 12500</b>" +
+      "</div>" +
+      '<div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">' +
+      "<b>Telephone: +94 71 126 1449</b>" +
+      "</div>" +
+      "<hr/>";
+    
+    html +=
+      '<h1 style="text-align: center; font-size: 24px;">Employee Report</h1>';
+    
+    html +=
+      '<table border="1" style="width: 80%; margin: 0 auto; text-align: center;">' +
+      '<tr>' +
+      '<th>#</th>' +
+      '<th>Employee Name</th>' +
+      '<th>Contact Number</th>' +
+      '<th>Email Address</th>' +
+      '<th>Address</th>' +
+      '<th>Department</th>' +
+      '<th>Availability</th>' +
+      '</tr>';
+    
+    html += employeeData.map((employee, index) => (
+      `<tr key=${index + employee._id}>
+        <td>${index + 1}</td>
+        <td>${employee.name}</td>
+        <td>${employee.contactNumber}</td>
+        <td>${employee.email}</td>
+        <td>${employee.address}</td>
+        <td>${employee.department}</td>
+        <td>${employee.availability ? 'Available' : 'Not-available'}</td>
+      </tr>`
+    )).join('');
+    
+    html += '</table>';
+  
+    return html;
+  };
+  
 
   return (
     <div>
@@ -194,7 +243,7 @@ const EmployeeDashboard = () => {
 
       <Button variant="primary" onClick={handleDownloadPDF} style={{ marginRight: '10px',backgroundColor:'#00adb4'}}>Download PDF</Button>
 
-      {/* Edit Employee Modal */}
+      {/*Edit Employee Modal */}
       <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Edit Employee</Modal.Title>
@@ -279,7 +328,7 @@ const EmployeeDashboard = () => {
             <Form.Group controlId="formPassword">
               <Form.Label>New Password</Form.Label>
               <Form.Control
-                type="password"
+                type="text"
                 name="password"
                 value={newPassword}
                 onChange={(e) => {
