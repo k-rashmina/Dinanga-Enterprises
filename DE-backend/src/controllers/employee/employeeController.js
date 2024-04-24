@@ -72,11 +72,11 @@ const deleteEmployee = async (req, res) => {
 //Update employee
 const updateEmployee = async (req, res) => {
   try {
-    const { name, contactNumber, email, address, username, password } = req.body;
+    const { name,fullName, contactNumber, email, address, username, password } = req.body;
     const employeeId = req.params.id;
-
+    console.log(req.body)
     let updatedFields = {
-      name,
+      name:name ? name:fullName,
       contactNumber,
       email,
       address,
@@ -91,7 +91,7 @@ const updateEmployee = async (req, res) => {
     }
 
     const employee = await Employee.findByIdAndUpdate(employeeId, updatedFields, { new: true });
-
+    console.log(employee)
     if (!employee) {
       return res.status(404).json({ msg: 'Employee not found' });
     }
