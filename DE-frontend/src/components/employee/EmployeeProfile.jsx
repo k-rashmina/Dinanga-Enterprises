@@ -200,7 +200,7 @@ const EmployeeProfile = () => {
           <Form.Group controlId="contactNumber">
             <Form.Label>Contact Number</Form.Label>
             <Form.Control
-              type="tel"
+              type="number"
               name="contactNumber"
               value={formData.contactNumber}
               onChange={handleChange}
