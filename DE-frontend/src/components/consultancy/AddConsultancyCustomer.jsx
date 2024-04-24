@@ -43,7 +43,7 @@ export default function AddConsultancyCustomer() {
   // Default values for date and time
   const defaultDate = user ? formatDate(user.Date) : "";
 
-  console.log(user);
+  
 
   return (
     <div className="container-fluid" style={{ backgroundColor: "#F0F0F0" }}>
@@ -51,9 +51,6 @@ export default function AddConsultancyCustomer() {
         <div className="col-12 text-center mt-3">
           <h1>Consultancy Service</h1>
         </div>
-
-        {/* content */}
-        {/* methana Start */}
 
         <div className="col-4 mt-3 border-2  border-top border-end border-info">
           <div className="row">
@@ -323,7 +320,7 @@ export default function AddConsultancyCustomer() {
                         `http://localhost:5000/consultantAppointment/updateappointment/${id}`,
                         JDirect
                       );
-                      alert("appoinment added successfully");
+                      alert("appoinment update successfully");
                       // navigate(`/consultancy/customer/${id}`)
                       window.location
                         .reload()

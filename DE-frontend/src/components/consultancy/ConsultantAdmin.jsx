@@ -7,7 +7,7 @@ import AdminHeader from "../common/AdminHeader";
 export default function ConsultantAdmin() {
   const [data, setData] = useState([]);
   const [employee, setEmployee] = useState({});
-  const hasPageLoaded = useRef(false)
+  const hasPageLoaded = useRef(false);
 
   const [availableEmployees, setAvailableEmployees] = useState([]);
 
@@ -22,19 +22,19 @@ export default function ConsultantAdmin() {
   //   return <option value={emp._id}>{emp.name}</option>;
   // });
 
-   
-
   useEffect(() => {
     axios
       .get("http://localhost:5000/consultantAppointment/getpendingappointments")
       .then((res) => {
         const initialEmployeeState = res.data.reduce((acc, consul) => {
-          acc[consul._id] = consul.assignedEmployee ? consul.assignedEmployee._id : ""; // Initialize with existing employee name if present
-          console.log('initial', consul)
-          hasPageLoaded.current = true
+          acc[consul._id] = consul.assignedEmployee
+            ? consul.assignedEmployee._id
+            : ""; // Initialize with existing employee name if present
+          console.log("initial", consul);
+          hasPageLoaded.current = true;
           return acc;
         }, {});
-        console.log('initial', initialEmployeeState)
+        console.log("initial", initialEmployeeState);
         setEmployee(initialEmployeeState);
         setData(res.data);
       })
@@ -66,7 +66,7 @@ export default function ConsultantAdmin() {
         alert("Error occurred while adding employee");
       });
   };
-  console.log(employee)
+  console.log(employee);
 
   const handleDownloadPDF = () => {
     // Call the function to print the interface as a PDF
@@ -76,8 +76,8 @@ export default function ConsultantAdmin() {
   // Function to print the interface as a PDF
   const printPDF = () => {
     const htmlContent = generateHTMLForPDF();
-    const windowContent = '' + htmlContent + '</body></html>';
-    const printWin = window.open('', '', 'width=1024,height=768');
+    const windowContent = "" + htmlContent + "</body></html>";
+    const printWin = window.open("", "", "width=1024,height=768");
     printWin.document.open();
     printWin.document.write(windowContent);
     printWin.document.close();
@@ -96,9 +96,8 @@ export default function ConsultantAdmin() {
       "<b>Telephone: +94 71 126 1449</b>" +
       "</div>" +
       "<hr/>";
-  
-    html +=
-      `<h1 style="text-align: center; font-size: 24px;">Consultant Appointment History</h1>
+
+    html += `<h1 style="text-align: center; font-size: 24px;">Consultant Appointment History</h1>
         <table border="1" style="width: 80%; margin: 0 auto; text-align: center;">
           <tr>
             <th>Appointment Number</th>
@@ -107,51 +106,61 @@ export default function ConsultantAdmin() {
             <th>Location</th>
             <th>Employee</th>
           </tr>`;
-    
-    html += data.map(appointment => (
-      `<tr key=${appointment._id}>
+
+    html += data
+      .map(
+        (appointment) =>
+          `<tr key=${appointment._id}>
         <td>${appointment.consultantNumber}</td>
         <td>${appointment.Email}</td>
-        <td style="width: 20%;">${appointment.Date.substring(0, 10)}  ${appointment.Time}</td>
+        <td style="width: 20%;">${appointment.Date.substring(0, 10)}  ${
+            appointment.Time
+          }</td>
         <td>${appointment.location}</td>
-        <td>${hasPageLoaded.current && (appointment.assignedEmployee ? appointment.assignedEmployee.name : 'Not Assigned')}</td>
+        <td>${
+          hasPageLoaded.current &&
+          (appointment.assignedEmployee
+            ? appointment.assignedEmployee.name
+            : "Not Assigned")
+        }</td>
       </tr>`
-    )).join('');
-    
-    html += '</table>';
-      
+      )
+      .join("");
+
+    html += "</table>";
+
     html +=
-  '<div style="text-align: center; font-size: 16px; font-weight: bold; margin-top: 20px;">' +
-  '  Today Total Number of Consultancy Appointments: ' + data.length +
-  '</div>';
+      '<div style="text-align: center; font-size: 16px; font-weight: bold; margin-top: 20px;">' +
+      "  Today Total Number of Consultancy Appointments: " +
+      data.length +
+      "</div>";
 
     return html;
   };
 
-console.log(data)
   return (
     <>
-      <AdminHeader pageName={"Consultancy List"} />
+      <div className="col-12">
+        <AdminHeader pageName={"Consultancy List"} />
+      </div>
       <div className="container-fluid">
         <div className="row">
-          <div className="col-12">
+          <div className="col-12 mt-5">
             <div className="row">
               <div
                 className="col-12 "
                 style={{
                   backgroundColor: "white",
                   width: "100%",
-                  height: "100vh",
+                  height: "160vh",
                   display: "flex",
                   justifyContent: "center",
-                  alignItems: "center",
+                  // alignItems: "center",
                   marginTop: "0px",
                 }}
               >
-
-                
                 <div className="row ">
-                  <div  className="col-12 border border-1 border-black rounded rounded-3 ">
+                  <div className="col-12 border border-1 border-black rounded rounded-3 ">
                     <div className="row">
                       <div
                         className="col-12"
@@ -179,9 +188,10 @@ console.log(data)
                           </div>
                         </div>
                       </div>
+                      
 
                       {data.map((appointment) => (
-                        <div  key={appointment._id} className="col-12 p-4">
+                        <div key={appointment._id} className="col-12 p-4">
                           <div className="row">
                             <div className="col-2 text-center">
                               <span>{appointment.consultantNumber}</span>
@@ -189,7 +199,7 @@ console.log(data)
                             <div className="col-3 text-center">
                               <span>{appointment.Email}</span>
                             </div>
-                           
+
                             <div className="col-2 ">
                               <div className="row">
                                 <div className="col-12 text-center">
@@ -206,32 +216,41 @@ console.log(data)
                               <span>{appointment.location}</span>
                             </div>
                             <div className="col-3 text-center">
-                              <select value={employee[appointment._id] || ""}
+                              <select
+                                value={employee[appointment._id] || ""}
                                 onChange={(e) => handleChange(e, appointment)}
                               >
-                                 <option value=""> Select Employee</option>
-                                 {availableEmployees.map((emp) => (
-                                   <option value={emp._id}>{emp.name}</option>
-                                  ))}
+                                <option value=""> Select Employee</option>
+                                {availableEmployees.map((emp) => (
+                                  <option value={emp._id}>{emp.name}</option>
+                                ))}
                               </select>
                             </div>
                           </div>
                         </div>
                       ))}
 
-                      <div className="col-12">
+                   
+                    </div>
+                    <div className="col-12">
                         <div className="row">
                           <div className="col-12 text-center mb-3">
-                              <span className="fw-bold">Today Total Number of Consultancy Appointments: {data.length}</span>
+                            <span className="fw-bold">
+                              Today Total Number of Consultancy Appointments:{" "}
+                              {data.length}
+                            </span>
                           </div>
-                          </div>
-                          </div>
+                        </div>
+                      </div>
 
-                      <button onClick={handleDownloadPDF}
-                      >
-                        Print
-                      </button>
-                    </div>
+                      <button
+                       style={{
+                        width: "400px",
+                        margin: "0 auto",
+                        display: "block",
+                        marginTop: "20px"
+                      }}
+                       onClick={handleDownloadPDF}>Print</button>
                   </div>
                 </div>
               </div>
