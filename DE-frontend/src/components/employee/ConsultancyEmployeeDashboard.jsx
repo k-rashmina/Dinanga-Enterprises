@@ -23,15 +23,12 @@ const rows = [
 ];
 
 const ConsultancyEmployeeDashboard = () => {
-  const [status, setStatus] = useState("Pending");
   const [issueInfo, setIssueInfo] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [selectedService, setSelectedService] = useState("");
   const [comment, setComment] = useState(""); // State for managing comment
+  const [isDone, setIsDone] = useState(false); // State for managing the "Done" button
 
-  const handleStatusChange = (selectedStatus) => {
-    setStatus(selectedStatus);
-  };
 
   const handleIssueButtonClick = (issue) => {
     setIssueInfo(issue);
@@ -56,6 +53,11 @@ const ConsultancyEmployeeDashboard = () => {
     // You can integrate this with your API service to submit the comment
     // For now, we'll just log the comment to the console and reset the comment state
     setComment(""); // Clear the comment after submission
+  };
+
+  const handleDoneButtonClick = () => {
+    setIsDone(true); // Set isDone state to true to change the button color to green
+    setStatus("Completed"); // Update status to "Completed"
   };
 
   return (
@@ -119,32 +121,14 @@ const ConsultancyEmployeeDashboard = () => {
                     </Dropdown.Menu>
                   </Dropdown>
                 </td>
+                
                 <td>
-                  <Dropdown>
-                    <Dropdown.Toggle
-                      variant="secondary"
-                      id={`dropdown-status-${index}`}
-                    >
-                      {status}
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                      <Dropdown.Item
-                        onClick={() => handleStatusChange("Pending")}
-                      >
-                        Pending
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        onClick={() => handleStatusChange("In Progress")}
-                      >
-                        In Progress
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        onClick={() => handleStatusChange("Completed")}
-                      >
-                        Completed
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
+                  <Button
+                    variant={isDone ? "success" : "secondary"} // Change color based on isDone state
+                    onClick={handleDoneButtonClick}
+                  >
+                    Done
+                  </Button>
                 </td>
               </tr>
             ))}

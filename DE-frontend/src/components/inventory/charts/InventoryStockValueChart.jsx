@@ -21,7 +21,7 @@ const InventoryStockValueChart = () => {
   }, []);
 
   return (
-    <div style={{ width: '100%'}}>
+    <div style={{ width: '90%'}}>
       <Chart
         width={'100%'}
         height={'300px'}

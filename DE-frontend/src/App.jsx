@@ -1,4 +1,5 @@
 import {BrowserRouter, Routes, Route, Link} from 'react-router-dom';
+import BackgroundImage from './components/common/BackgroundImage';
 
 // import { useState } from 'react'
 // Import employee pages
@@ -8,6 +9,7 @@ import EmployeeLogin from './components/employee/EmployeeLogin'
 import EmployeeDashboard from './components/employee/EmployeeDashboard';
 import RegisterNewEmployee from './components/employee/RegisterNewEmployee';
 import EmployeeProfile from './components/employee/EmployeeProfile';
+// import ProtectedRoute from './components/employee/ProtectedRoute';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -58,6 +60,7 @@ import FinDashboard from './components/finance/DashBoard';
 import JobTransaction from './components/finance/JobTransaction';
 import PurchaseTransaction from './components/finance/PurchaseTransaction';
 import AddTransaction from './components/finance/AddTransaction';
+import CreateJobTransaction from './components/finance/CreateJobTransaction';
 
 
 
@@ -65,6 +68,7 @@ import AddItem from './components/inventory/AddItem';
 import ItemList from './components/inventory/ItemList';
 import DashBoard from './components/inventory/DashBoard';
 import Report from './components/inventory/Report';
+import TransactionInfo from './components/finance/TransactionInfo';
 
 
 
@@ -78,7 +82,7 @@ function App() {
       <Routes>
         {/* main routes */}
         <Route element={<Layout/>}>
-          <Route path='/' element={<h2>this is the home page</h2>}/>
+          <Route path='/' element={<BackgroundImage/>}/>
 
 
 
@@ -89,6 +93,12 @@ function App() {
           <Route path='/empprofile' element={<EmployeeProfile/>}/>
           <Route path='/empjobs' element={<EmployeeJobsDashboard/>}/>
           <Route path='/empconsultancy' element={<ConsultancyEmployeeDashboard/>}/>
+          
+          {/* Employee login route */}
+        {/* <Route path='/emplogin' element={<EmployeeLogin />} /> */}
+        
+        {/* Protected employee profile route */}
+        {/* <ProtectedRoute path='/empprofile' element={<EmployeeProfile />} /> */}
 
 
           
@@ -100,16 +110,16 @@ function App() {
           <Route path="/jobCustomer" element={<JobCustomer />} />
           <Route path="/updateAppointment" element={<UpdateAppointment/>} />
 
+          <Route path="/payment/:type" element={<CreateJobTransaction/>} />
           
 
           <Route path='/about' element/>
           <Route path='/contact' element/>
           <Route path='/cusprofile' element={<CustomerProfile />}/>
-          <Route path='/cusfeedback' element={<FeedbackUpDel/>}/>
+          <Route path='/supprofile' element = {<SupplierProfile/>}/>
           <Route path='/job' element/>
 
           <Route path='/job/reqjob' element/>
-          <Route path='/supprofile' element = {<SupplierProfile/>}/>
           <Route path='/supalerts/:supid' element = {<OrderAlerts/>}/>
           <Route path='/supservices' element= {<ServicesProvided/>}/>
           <Route path='/supfeedback' element= {<FeedbackTable/>}/>
@@ -147,11 +157,12 @@ function App() {
         <Route path='/admin' element={<AdminPanel/>}/>
 
         {/* admin finance routes */}
-        <Route element={<AdminLayout page={'Finance'} menu={["Dashboard", "Job Transactions", "Purchase Transactions", "Add Transaction", "Refunds", "Reports"]}/>}>
+        <Route element={<AdminLayout page={'Finance'} menu={["Dashboard", "Job Transactions", "Purchase Transactions", "Add Transaction"]}/>}>
 
 
           <Route path='/admin/finance/dashboard' element={<FinDashboard />}/>
           <Route path='/admin/finance/jobtransactions' element={<JobTransaction />}/>
+          <Route path='/admin/finance/jobtransactions/:ttype/:tid' element={<TransactionInfo />} />
           <Route path='/admin/finance/purchasetransactions' element={<PurchaseTransaction />}/>
           <Route path='/admin/finance/addtransaction' element={<AddTransaction />}/>
 
@@ -162,12 +173,12 @@ function App() {
         {/* admin job routes */}
 
 
-        <Route element={<AdminLayout page={'Job'} menu={["Job List", "report"]}/>}>
+        <Route element={<AdminLayout page={'Job'} menu={["Job List"]}/>}>
           <Route path='/admin/job/joblist' element={<JobAdmin />}/>
           <Route path='/admin/job/addjob' element/>
           <Route path='/admin/job/updatejob' element/>
           <Route path='/admin/job/deletejob' element/>
-          <Route path='/admin/job/report' element/>
+          {/* <Route path='/admin/job/report' element/> */}
           {/* <Route path="/jobAdmin" element={<JobAdmin />} /> */}
 
         </Route>
@@ -192,10 +203,10 @@ function App() {
         </Route>
 
         {/* admin consultancy routes */}
-        <Route element={<AdminLayout page={'Consultancy'} menu={[ "Consultancy List", "Report"]}/>}>     
+        <Route element={<AdminLayout page={'Consultancy'} menu={[ "Consultancy List"]}/>}>     
           <Route path='/admin/consultancy/consultancylist' element={<ConsultantAdmin/>}/>
 
-          <Route path='/admin/consultancy/report' element/>
+          {/* <Route path='/admin/consultancy/report' element/> */}
         </Route>
 
         {/* admin employee routes */}

@@ -1,9 +1,9 @@
-const pendingAppointment = require("../../models/jobAppointment");
+const JobAppointment = require("../../models/jobAppointment");
 
 const getAppointmentsWithPendingStatus = async (req, res) => {
     try {
-        // Find appointments where the status is "pending"
-        const appointments = await pendingAppointment.find({ status: "pending" });
+        // Find appointments where the status is "pending" and populate the "serviceType" field
+        const appointments = await JobAppointment.find({ status: "pending" }).populate(['serviceType', 'employeeName']);
 
         res.status(200).json(appointments);
     } catch (error) {

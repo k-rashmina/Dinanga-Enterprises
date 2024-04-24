@@ -1,30 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Container, Form, Button, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa';
-import Services from './ServicesProvided';
-import SupplierfeedbackTable from './FeedbackTable';
-import OrderAlerts from './Alerts';
 
 import './SupplierProfile.css';
 import axios from 'axios';
 
 function SupplierProfile() {
 
-  const loggedSupplier = 'dinukdelpe@gmail.com';
+
+  const loggedSupplier = localStorage.getItem('loggedSup');
 
   const date = new Date().toJSON();
   const today = date.substring(0, 10);
 
+  const hasPageLoaded = useRef(false) 
   const [showSidebar, setShowSidebar] = useState(false);
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
-  const [supDetails, setSupDetails] = useState({
-    _id: '',
-    Supplier_bname: '',
-    Supplier_email: '',
-    Supplier_contact: '',
-    Supplier_aos: ''
-  });
+  const [supDetails, setSupDetails] = useState({});
   const [isEditMode, setIsEditMode] = useState(false);
 
   const handleInputEvents = (e) => {
@@ -38,6 +31,7 @@ function SupplierProfile() {
   const toggleSidebar = () => setShowSidebar(!showSidebar);
   const handleCloseFeedbackModal = () => setShowFeedbackModal(false);
   const handleShowFeedbackModal = () => setShowFeedbackModal(true);
+  
 
   const getRandomNumber = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -52,12 +46,13 @@ function SupplierProfile() {
   };
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/supplier/readsupplierdetails?email=${loggedSupplier}`).then(res => setSupDetails(res.data));
+    axios.get(`http://localhost:5000/supplier/readsupplierdetails?email=${loggedSupplier}`).then(res => {
+      hasPageLoaded.current = true;
+      setSupDetails(res.data);
+
+  });
   }, []);
 
-  // const handleUpdateProfile = () => {
-  //   setIsEditMode (prevState => !prevState)
-  // };
 
   const handleUpdateProfile = () => {
     // Make PUT request to update supplier details
@@ -74,12 +69,7 @@ function SupplierProfile() {
   };
   
 
-  // const handleDeleteProfile = () => {
-  //   // Delete profile logic here
-  //   console.log("Deleting profile...");
-  //   // Make API call to delete the supplier profile
-  //   // After successful deletion, perform any necessary actions like redirecting to another page
-  // };
+
   const handleDeleteProfile = () => {
     // Make DELETE request to delete supplier profile
     axios.delete(`http://localhost:5000/supplier/delsupplierdetails?supid=${supDetails._id}`)
@@ -148,11 +138,11 @@ function SupplierProfile() {
 
 
 
-
-  console.log(supDetails.Supplier_bname);
+console.log(loggedSupplier)
+  
 
   return (
-    <Container className='div-shadow' fluid style={{ minHeight: '100vh', backgroundColor: '#', display: 'flex', flexDirection: 'row', position: 'relative' }}>
+    <Container className='div-shadow' fluid style={{ minHeight: '100vh', backgroundColor: '#EEEEEE', display: 'flex', flexDirection: 'row', position: 'relative' }}>
       <div className="sidebar-toggle" onClick={toggleSidebar}>
         <FaBars />
       </div>
@@ -174,19 +164,19 @@ function SupplierProfile() {
             <Form>
               <Form.Group controlId="formBusinessName">
                 <Form.Label className="form-label">Business Name</Form.Label>
-                <Form.Control type="text" readOnly={!isEditMode} onChange={handleInputEvents} placeholder="" name='Supplier_bnames' className="form-control" value={supDetails.Supplier_bname} />
+                <Form.Control type="text" readOnly={!isEditMode} onChange={handleInputEvents} placeholder="" name='Supplier_bnames' className="form-control" value={hasPageLoaded.current ? supDetails.Supplier_bname : ''} />
               </Form.Group>
               <Form.Group controlId="formAreaOfSpecialization">
                 <Form.Label className="form-label">Area of Specialization</Form.Label>
-                <Form.Control type="text" readOnly={!isEditMode} onChange={handleInputEvents} placeholder="" name='Supplier_aos' className="form-control" value={supDetails.Supplier_aos} />
+                <Form.Control type="text" readOnly={!isEditMode} onChange={handleInputEvents} placeholder="" name='Supplier_aos' className="form-control" value={hasPageLoaded.current ? supDetails.Supplier_aos : ''} />
               </Form.Group>
               <Form.Group controlId="formEmail">
                 <Form.Label className="form-label">Email</Form.Label>
-                <Form.Control type="email" readOnly={!isEditMode} onChange={handleInputEvents}  name='Supplier_email' className="form-control" value={supDetails.Supplier_email} />
+                <Form.Control type="email" readOnly={!isEditMode} onChange={handleInputEvents}  name='Supplier_email' className="form-control" value={hasPageLoaded.current ? supDetails.Supplier_email : ''} />
               </Form.Group>
               <Form.Group controlId="formServicesProvided">
                 <Form.Label className="form-label">Contact</Form.Label>
-                <Form.Control type="text" readOnly={!isEditMode} onChange={handleInputEvents}  name='Supplier_contact' className="form-control" value={supDetails.Supplier_contact} />
+                <Form.Control type="text" readOnly={!isEditMode} onChange={handleInputEvents}  name='Supplier_contact' className="form-control" value={hasPageLoaded.current ? supDetails.Supplier_contact : ''} />
               </Form.Group>
               <br />
               {!isEditMode && (

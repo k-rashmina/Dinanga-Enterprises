@@ -14,6 +14,7 @@ const JobServicesAppointmentFormBootstrap = () => {
     vehicleType: '',
     status: 'pending',
     paymentStatus:'pending',
+
   });
 
   const [formComplete, setFormComplete] = useState(false);
@@ -106,9 +107,12 @@ const JobServicesAppointmentFormBootstrap = () => {
     validateForm();
 
     axios.post("http://localhost:5000/jobAppointment/addjobappointment", formData)
-      .then(() => {
+      .then((res) => {
+        console.log(res.data);
+        localStorage.setItem('createdJob', JSON.stringify(res.data));
         alert("Appointment added");
-        navigate('/jobCustomer');
+        // navigate('/jobCustomer');
+        navigate('/payment/new'); 
       })
       .catch((err) => {
         alert(err);
@@ -122,7 +126,7 @@ const JobServicesAppointmentFormBootstrap = () => {
           <Form action="POST" onSubmit={handleSubmit} style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '15px', boxShadow: '0 3px 10px rgba(0,0,0,.2)' }}>
             <Row>
               <Col md={6} className="d-flex flex-column">
-                <h5 style={{ marginBottom: '0px', fontWeight: 'bold' }}>Job Services Appointment</h5>
+                <h2 style={{ marginBottom: '0px', fontWeight: 'bold' }}>Job Services Appointment</h2>
                 <Form.Group className="mb-3">
                   <Form.Label>Date</Form.Label>
                   <Form.Control type="date" name="date" value={formData.date} onChange={handleChange} required min={today} onBlur={() => handleBlur('date')} />
@@ -176,7 +180,7 @@ const JobServicesAppointmentFormBootstrap = () => {
                   <p style={{ color: 'red' }}>{vehicleTypeErr}</p>
                 </Form.Group>
                 <Button variant="primary" type="submit" style={{ marginTop: '10px', backgroundColor: '#00adb4', borderRadius: '20px', border: 'none' }}>
-                  Submit
+                  Proceed
                 </Button>
               </Col>
               <Col md={6} className="d-none d-md-block">
