@@ -56,7 +56,7 @@ function SearchBar() {
         </button>
         
       </div>
-      {error && <div className="alert alert-danger"style = {{position:'absolute',}}>{error}</div>}
+      {error && <div className="alert alert-danger"style = {{position:'absolute', zIndex: 9999,}}>{error}</div>}
       {searchResults.length > 0 && ( // Render search results only when there are results
        
         <table style = {{position:'absolute', zIndex: 9999,background:'#FFFFFF',borderRadius:'10px', backgroundColor:'#EEEEEE',fontSize:'20px'}}>
