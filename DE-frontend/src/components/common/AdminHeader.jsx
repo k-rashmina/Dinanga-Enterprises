@@ -6,7 +6,7 @@ export default function AdminHeader({pageName}) {
 
   const date = Date().split(' ');
   const dateString = `${date[0]} ${date[1]} ${date[2]}, ${date[3]}`;
-  const user = 'Kalindu Rashmina'
+  const user = 'Naveen Dhakshitha'
 
   return(
 

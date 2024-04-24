@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import AdminHeader from "../common/AdminHeader";
 import "./OnGoingOrders.css";
 
 const OnGoingOrders = () => {
@@ -7,7 +8,8 @@ const OnGoingOrders = () => {
   const [editableItemId, setEditableItemId] = useState(null);
 
   const hasPageLoaded = useRef(false);
-  const today = new Date().toISOString().split('T')[0]; // Get today's date
+  const today = new Date().toISOString(); // Get today's date
+  
 
   useEffect(() => {
     fetchOrderData();
@@ -126,11 +128,10 @@ const OnGoingOrders = () => {
   };
 
   return (
-    <div style={{ marginTop: "90px", maxWidth: '1500px', overflow: 'scroll'}}>
-      <h3 style={{ marginBottom: "30px", marginLeft: "10px", fontWeight: "bold" }}>
-        Current Orders
-      </h3>
-      <table className="styled-table" style={{ marginLeft: "10px", marginRight: "20px", height:'900px',fontSize:"17px"}}>
+    <>
+     <AdminHeader pageName={'Current Orders'} />
+    <div style={{ marginTop: "60px", maxWidth: '1500px', overflow: 'scroll'}}>
+      <table className="styled-table" style={{ marginLeft: "10px", marginRight: "20px", height:'300px',fontSize:"20px"}}>
         <thead>
           <tr>
             <th>itemName</th>
@@ -138,7 +139,7 @@ const OnGoingOrders = () => {
             <th>Quantity</th>
             <th>DateOfOrder</th>
             <th>CompanyAddress</th>
-            <th>Supplier Email</th>
+            {/* <th>Supplier Email</th> */}
             <th>Comments</th>
             <th>Actions</th>
           </tr>
@@ -204,7 +205,7 @@ const OnGoingOrders = () => {
                   item.companyAddress
                 )}
               </td>
-              <td>
+              {/* <td>
                 {editableItemId === item._id ? (
                   <input
                     type="text"
@@ -214,7 +215,7 @@ const OnGoingOrders = () => {
                 ) : (
                   item.supplierName.Supplier_email
                 )}
-              </td>
+              </td> */}
               <td>
                 {editableItemId === item._id ? (
                   <input
@@ -238,6 +239,7 @@ const OnGoingOrders = () => {
         </tbody>
       </table>
     </div>
+    </>
   );
 };
 
