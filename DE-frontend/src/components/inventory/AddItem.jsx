@@ -18,7 +18,7 @@ function AddItem() {
 
   const validateItemName = () => {
     const errorsCopy = { ...errors };
-    const validNameRegex = /^[a-zA-Z0-9]+$/;
+    const validNameRegex = /^[a-zA-Z 0-9]+$/;
     if (!itemName) errorsCopy.itemName = "Item name is required";
     else if (!validNameRegex.test(itemName))
       errorsCopy.itemName = "Item name must be alphanumeric only";
@@ -54,7 +54,7 @@ function AddItem() {
   const validateReorderLevel = () => {
     const errorsCopy = { ...errors };
     if (!reorderLevel) errorsCopy.reorderLevel = "Reorder level is required";
-    else if (!/^\d+$/.test(reorderLevel))
+    else if (!/^[\d]+$/.test(reorderLevel))
       errorsCopy.reorderLevel = "Reorder level must be a number";
     else delete errorsCopy.reorderLevel;
     setErrors(errorsCopy);
@@ -88,7 +88,7 @@ function AddItem() {
     const noErrors = Object.keys(errors).length === 0;
     if (noErrors) {
       const newItem = {
-        itemNumber: "DE123", // Hardcoded for now, will be generated in the backend
+        itemNumber: "DE012", // Hardcoded for now, will be generated in the backend
         itemName,
         brand,
         quantity,
