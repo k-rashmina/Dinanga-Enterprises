@@ -15,7 +15,7 @@ const getPurchTransactionList = async (filter) => {
           $gte: new Date(`${filter.from}T00:00:00.000Z`),
           $lt: new Date(filter.to)
       }
-      }).where('status').equals(filter.status).where('order_id').equals(filter.order).populate('order_id'))
+      }).where('status').equals(filter.status).populate({path: 'order_id', match: {'order_number': {$in: [filter.order]}}}))
 
     }
     else if(filter.status){
@@ -35,7 +35,7 @@ const getPurchTransactionList = async (filter) => {
           $gte: new Date(new Date(filter.from).setHours(0o0, 0o0, 0o0)),
           $lt: new Date(new Date(filter.to).setHours(23, 59, 59))
       }
-      }).where('order_id').equals(filter.order).populate('order_id'))
+      }).populate({path: 'order_id', match: {'order_number': {$in: [filter.order]}}}))
 
     }
     else{

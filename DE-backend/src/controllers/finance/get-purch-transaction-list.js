@@ -16,6 +16,8 @@ const getPurchTransactionList = async (req, res) => {
       order: req.query.ref
     }
 
+    console.log(filter)
+
   res.json(await purchTransactionListService(filter));
 
   }catch(e){

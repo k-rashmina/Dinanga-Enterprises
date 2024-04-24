@@ -6,8 +6,8 @@ export default function TransactionTable(props) {
   // console.log(props.transactions)
   const transactElems = props.transactions.map(transact => {
     // console.log(transact.transact_no)
-    let transactRef = props.name == 'Customer' ? transact.ref_id.jobNumber : (transact.order_id?.order_number);
-    let transactPerson = props.name == 'Customer' ? transact.ref_id.email : 'Maneesha@gmail.com'
+    let transactRef = props.name == 'Customer' ? transact.ref_id?.jobNumber : (transact.order_id?.order_number);
+    let transactPerson = props.name == 'Customer' ? transact.ref_id?.email : 'Maneesha@gmail.com'
     let date = transact.create_date.substring(0, 10);
     return(
       <tr style={{height: '50px'}}> 

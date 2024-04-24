@@ -166,6 +166,18 @@ body{
   font-size: 18px;
 }
 
+.adminPanelImg{
+
+  color: #000;
+  overflow-x: hidden;
+  height: 100vh; 
+  background-image: url("../../assets/inv_back.jpg");
+  background-repeat: no-repeat;
+  background-size: cover; /* Resize the background image to cover the entire container */
+  background-position: center; 
+
+}
+
 
 /*header*/
 nav {

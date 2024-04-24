@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Form, Button, Image } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import FormImg from '../../assets/jobs and services appointment image.png';
 import axios from "axios";
 
 const CreateJobTransaction = () => {
-
+  const {type} = useParams();
   const nav = useNavigate();
 
   const date = new Date().toJSON();
@@ -44,14 +44,40 @@ const CreateJobTransaction = () => {
 
   }
 
+
   const handleSubmit =  () => {
   
     // setSubVal(true);
-     axios.post(`http://localhost:5000/transaction/addjobtransaction`, transactionDetails)
+      if(type == 'new'){
+        axios.post(`http://localhost:5000/transaction/addjobtransaction`, transactionDetails)
       .then(res => {
         alert(res.data);
         nav('/jobCustomer')
       })
+    }else{
+        alert('calling updateeee');
+
+        axios({
+          method: 'get',
+          url: `http://localhost:5000/transaction/gettransactionforjob?jobid=${createdJob._id}`,
+        }).then(res => {
+          
+          let transactionInfo = res.data[0] ;
+          transactionInfo = {...transactionInfo, pay_type: transactionDetails.pay_type};
+          axios.put(`http://localhost:5000/transaction/upjobtransaction`, transactionInfo)
+          .then(res => {
+            alert(res.data);
+            closeModal();
+          })
+          
+        });
+
+        // axios.put(`http://localhost:5000/transaction/upjobtransaction`, transactionInfo)
+        // .then(res => {
+        //   alert(res.data);
+        //   closeModal();
+        // })
+      }
       // .catch(alert('Please try again'))
 
   }
@@ -72,6 +98,8 @@ const CreateJobTransaction = () => {
   //   setCreatedJob(localStorage.getItem('createdJob'));
   //   console.log('hi: ', createdJob.date)
   // }, [])
+
+  console.log(type)
 
   return (
     <div>
