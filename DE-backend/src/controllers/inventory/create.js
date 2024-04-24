@@ -1,10 +1,14 @@
 const inventoryDetails = require("../../models/inventoryDetails");
+const counter = require("../../models/counter");
 
 const createInventoryItem = async (req, res) => {
     try {
+
+      let DECounter = await counter.findOneAndUpdate({'table': 'inventory'}, {$inc: {'count': 1}}, {new: true})
+
       const {
-        itemNumber,
         itemName,
+        brand,
         quantity,
         reorderLevel,
         reorderState,
@@ -13,8 +17,8 @@ const createInventoryItem = async (req, res) => {
       } = req.body;
   
       const newItem = new inventoryDetails({
-        itemNumber,
         itemName,
+        brand,
         quantity,
         reorderLevel,
         itemPrice,
@@ -22,7 +26,10 @@ const createInventoryItem = async (req, res) => {
         availability,
       });
 
+      newItem.itemNumber = `DE${DECounter.count}`;
+
       newItem.updateReorderState();
+
       
       await newItem.save();
 
