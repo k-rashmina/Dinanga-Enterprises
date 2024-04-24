@@ -59,6 +59,7 @@ import FinDashboard from './components/finance/DashBoard';
 import JobTransaction from './components/finance/JobTransaction';
 import PurchaseTransaction from './components/finance/PurchaseTransaction';
 import AddTransaction from './components/finance/AddTransaction';
+import CreateJobTransaction from './components/finance/CreateJobTransaction';
 
 
 
@@ -108,6 +109,7 @@ function App() {
           <Route path="/jobCustomer" element={<JobCustomer />} />
           <Route path="/updateAppointment" element={<UpdateAppointment/>} />
 
+          <Route path="/payment" element={<CreateJobTransaction/>} />
           
 
           <Route path='/about' element/>

@@ -58,6 +58,20 @@ const getPurchTransactionList = async (filter) => {
 }
 
 
+const getPurchTransaction = async (tid) => {
+
+    try{
+  
+      return (await purchTransaction.findById(tid).populate('order_id').exec())
+  
+    }catch(err){
+  
+      return('failed')
+  
+    }
+  
+  }
+
 
 //Purchase Transaction database reading function
 const addPurchTransaction = async (transaction) => {
@@ -115,4 +129,4 @@ const deletePurchtransaction = async (delTransactId) => {
 
 }
 
-module.exports = {addPurchTransaction, getPurchTransactionList, putPurchTransaction, deletePurchtransaction};
+module.exports = {addPurchTransaction, getPurchTransactionList, getPurchTransaction, putPurchTransaction, deletePurchtransaction};

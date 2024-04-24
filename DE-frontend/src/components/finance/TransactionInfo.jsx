@@ -6,14 +6,20 @@ import axios from 'axios';
 
 export default function TransactionInfo() {
 
+  //getting transaction id from route param
+  const { ttype, tid } = useParams();
+
+  const getlink = ttype == 'job' ? 'jobtransactionlist' : 'purchtransactionlist'
+  const updLink = ttype == 'job' ? 'upjobtransaction' : 'uppurchtransaction'
+  const delLink = ttype == 'job' ? 'deljobtransaction' : 'delpurchtransaction'
+
   const nav = useNavigate();
 
   //today
   const date = new Date().toJSON();
   const today = date.substring(0, 10);
 
-  //getting transaction id from route param
-  const { ttype, tid } = useParams();
+
 
   //transaction info state
   const [transactionInfo, setTransactionInfo] = useState({});
@@ -22,7 +28,7 @@ export default function TransactionInfo() {
   const hasPageLoaded = useRef(false);
   useEffect(() => {
 
-    axios.get(`http://localhost:5000/transaction/jobtransactionlist/transaction?tid=${tid}`)
+    axios.get(`http://localhost:5000/transaction/${getlink}/transaction?tid=${tid}`)
     .then(res => res.data != 'failed' && setTransactionInfo(res.data))
 
     hasPageLoaded.current = true;
@@ -79,7 +85,7 @@ export default function TransactionInfo() {
   useEffect(() => {
 
     if(pageRender.current){
-      axios.put('http://localhost:5000/transaction/upjobtransaction', transactionInfo)
+      axios.put(`http://localhost:5000/transaction/${updLink}`, transactionInfo)
       .then(res => {
         alert(res.data);
         closeModal();
@@ -105,7 +111,7 @@ export default function TransactionInfo() {
   useEffect(() => {
 
     if(deleteRef.current){
-      axios.delete(`http://localhost:5000/transaction/deljobtransaction?tid=${transactionInfo._id}`)
+      axios.delete(`http://localhost:5000/transaction/${delLink}?tid=${transactionInfo._id}`)
       .then(res => {
         alert(res.data);
         nav('/admin/finance/jobtransactions');
@@ -147,7 +153,7 @@ console.log(transactionInfo)
             :
               <div className="d-flex justify-content-between ms-5 me-5 pb-3 pt-3 border-bottom border-dark border-2 border-opacity-25">
                 <h5>Order Number</h5>
-                <h5>{transactionInfo.order_id}</h5>
+                <h5>{transactionInfo.order_id?.order_number}</h5>
               </div> 
             }
 
@@ -185,23 +191,32 @@ console.log(transactionInfo)
 
             <div className="d-flex justify-content-between ms-5 me-5 pb-3 pt-3 border-bottom border-dark border-2 border-opacity-25">
               <h5>Payment Date</h5>
-              <h5>{hasPageLoaded.current && transactionInfo.pay_date.substring(0, 10)}</h5>
+              <h5>{hasPageLoaded.current && transactionInfo.pay_date?.substring(0, 10)}</h5>
             </div>
 
-            <div className="d-flex justify-content-between ms-5 me-5 pb-3 pt-3 border-bottom border-dark border-2 border-opacity-25">
-              <h5>Job Service Amount</h5>
-              <h5>LKR {hasPageLoaded.current && transactionInfo.amount.job_amt}</h5>
-            </div>
+            {ttype == 'job' ? 
+            <>
+              <div className="d-flex justify-content-between ms-5 me-5 pb-3 pt-3 border-bottom border-dark border-2 border-opacity-25">
+                <h5>Job Service Amount</h5>
+                <h5>LKR {hasPageLoaded.current && transactionInfo.amount?.job_amt.toFixed(2)}</h5>
+              </div>
 
-            <div className="d-flex justify-content-between ms-5 me-5 pb-3 pt-3 border-bottom border-dark border-2 border-opacity-25">
-              <h5>Tax Amount</h5>
-              <h5>LKR {hasPageLoaded.current && transactionInfo.amount.tax_amt}</h5>
-            </div>
+              <div className="d-flex justify-content-between ms-5 me-5 pb-3 pt-3 border-bottom border-dark border-2 border-opacity-25">
+                <h5>Tax Amount</h5>
+                <h5>LKR {hasPageLoaded.current && transactionInfo.amount?.tax_amt.toFixed(2)}</h5>
+              </div>
 
-            <div className="d-flex justify-content-between ms-5 me-5 pb-3 pt-3 border-bottom border-dark border-2 border-opacity-25">
+              <div className="d-flex justify-content-between ms-5 me-5 pb-3 pt-3 border-bottom border-dark border-2 border-opacity-25">
               <h5>Total Amount</h5>
-              <h5>LKR {hasPageLoaded.current && transactionInfo.amount.tot_amount}</h5>
+              <h5>LKR {hasPageLoaded.current && transactionInfo.amount?.tot_amount.toFixed(2)}</h5>
             </div>
+            </> :
+            <div className="d-flex justify-content-between ms-5 me-5 pb-3 pt-3 border-bottom border-dark border-2 border-opacity-25">
+            <h5>Total Amount</h5>
+            <h5>LKR {hasPageLoaded.current && transactionInfo.amount.toFixed(2)}</h5>
+          </div>}
+
+            
 
           </div>
 
@@ -249,7 +264,7 @@ console.log(transactionInfo)
 
             <div className="d-flex flex-column align-items-start mt-4">
               <label className="fs-5 ms-3">Payment Date</label>
-              <input className="ms-4 mt-2 filter-input rounded-2" style={{width: '90%'}} type="date"  max={today}  name="pay_date" value={hasPageLoaded.current && transactionInfo.pay_date.substring(0, 10)} onChange={handleInputEvents} required={transactionInfo.status == 'success' ? true : false}/>
+              <input className="ms-4 mt-2 filter-input rounded-2" style={{width: '90%'}} type="date"  max={today}  name="pay_date" value={hasPageLoaded.current && transactionInfo.pay_date?.substring(0, 10)} onChange={handleInputEvents} required={transactionInfo.status == 'success' ? true : false}/>
             </div>
 
             <div className="d-flex justify-content-center ps-5 pe-5 mt-5">
