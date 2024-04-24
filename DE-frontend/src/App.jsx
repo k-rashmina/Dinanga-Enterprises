@@ -42,7 +42,6 @@ import OrderDashboard from'./components/order/Dashboard';
 import OnGoingOrders from './components/order/OnGoingOrders';
 import OrderHistory from './components/order/OrderHistory';
 import OrderPlacement from './components/order/OrderPlacement';
-import OrderReport from './components/order/Report';
 import ToBeOrdered from './components/order/ToBeOrdered';
 
 import CustomerRegForm from './components/customer/CustomerRegForm';
@@ -193,13 +192,13 @@ function App() {
         </Route>
 
         {/* admin order routes */}
-        <Route element={<AdminLayout page={'Order'} menu={["Dashboard", "To Be Ordered", "Current Orders", "Order History", "Report"]}/>}>
+        <Route element={<AdminLayout page={'Order'} menu={["Dashboard", "To Be Ordered", "Current Orders", "Order History"]}/>}>
           <Route path='/admin/order/dashboard' element = {<OrderDashboard/>}/>
           <Route path='/admin/order/tobeordered' element = {<ToBeOrdered/>}/>
           <Route path='/admin/order/addorder/:itemName/:itemNumber/:unitprice' element = {<OrderPlacement/>}/>
           <Route path='/admin/order/currentorders' element = {<OnGoingOrders/>}/>
           <Route path='/admin/order/orderhistory' element = {<OrderHistory/>}/>
-          <Route path='/admin/order/report' element = {<OrderReport/>}/>
+          
         </Route>
 
         {/* admin consultancy routes */}

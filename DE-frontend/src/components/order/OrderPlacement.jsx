@@ -14,7 +14,7 @@ function OrderPlacement() {
     itemName: itemName || "",
     itemNumber: itemNumber || "",
     quantity: "",
-    dateofOrder: todaydate, // Setting default to today's date
+    dateofOrder: todaydate, 
     companyAddress: "",
     supplierName: "",
     comments: "",
@@ -69,7 +69,7 @@ function OrderPlacement() {
           status: "pending",
           amount: unitprice * formData.quantity,
           order_id: savedOrder._id,
-          desc: `${savedOrder.itemName} Purchase Transaction`, // Accessing itemName from savedOrder
+          desc: `${savedOrder.itemName} Purchase Transaction`, 
           create_date: todaydate,
           update_date: todaydate,
         },
@@ -106,8 +106,8 @@ function OrderPlacement() {
   };
 
   const validateComments = (value) => {
-    return value.length > 200
-      ? "Comments must be less than 200 characters long!"
+    return value.length > 75
+      ? "Comments must be less than 75 characters long!"
       : "";
   };
 
