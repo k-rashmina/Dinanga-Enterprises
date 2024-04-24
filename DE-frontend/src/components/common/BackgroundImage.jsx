@@ -36,7 +36,7 @@ function BackgroundImage() {
       color: 'white',
       textShadow: '2px 2px 4px #000000',
       marginTop: '-100px', // Added top margin
-      fontSize: '80px',
+
     },
     image: {
       width: '100%', // This ensures the image covers the container
