@@ -47,6 +47,9 @@ function SupplierRegForm() {
         if (!formData.Supplier_bname) {
             formIsValid = false;
             errors['Supplier_bname'] = 'Please enter your business name.';
+        } else if (/[^A-Za-z\s]/.test(formData.Supplier_bname)) {
+            formIsValid = false;
+            errors['Supplier_bname'] = 'Please enter only alphabets for business name.';
         }
 
         // Validate Email
@@ -71,6 +74,9 @@ function SupplierRegForm() {
         if (!formData.Supplier_aos) {
             formIsValid = false;
             errors['Supplier_aos'] = 'Please enter your area of specialization.';
+        } else if (/[^A-Za-z\s]/.test(formData.Supplier_aos)) {
+            formIsValid = false;
+            errors['Supplier_aos'] = 'Please enter only alphabets for area of specialization.';
         }
 
         // Validate Password
@@ -97,15 +103,39 @@ function SupplierRegForm() {
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-        if (name === 'Supplier_Pw') {
-            setPassword(value);
-        } else if (name === 'confirmPassword') {
-            setConfirmPassword(value);
+        let error = '';
+
+        if (name === 'Supplier_bname' && /[^A-Za-z\s]/.test(value)) {
+            error = 'Please enter only alphabets for business name.';
+        } else if (name === 'Supplier_email' && !/\S+@\S+\.\S+/.test(value)) {
+            error = 'Please enter a valid email address.';
+        } else if (name === 'Supplier_contact' && !/^\d{10}$/.test(value)) {
+            error = 'Please enter a valid 10-digit contact number.';
+        } else if (name === 'Supplier_aos' && /[^A-Za-z\s]/.test(value)) {
+            error = 'Please enter only alphabets for area of specialization.';
+        } else if (name === 'Supplier_Pw' && value.length < 8) {
+            error = 'Password must be at least 8 characters long.';
+        } else if (name === 'confirmPassword' && value !== password) {
+            error = 'Passwords do not match.';
         }
-        setFormData((prevState) => ({
+
+        setErrors((prevState) => ({
             ...prevState,
-            [name]: value,
+            [name]: error,
         }));
+
+        if (!error) {
+            setFormData((prevState) => ({
+                ...prevState,
+                [name]: value,
+            }));
+
+            if (name === 'Supplier_Pw') {
+                setPassword(value);
+            } else if (name === 'confirmPassword') {
+                setConfirmPassword(value);
+            }
+        }
     };
 
     if (signedUp) {
