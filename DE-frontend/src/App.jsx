@@ -109,7 +109,7 @@ function App() {
           <Route path="/jobCustomer" element={<JobCustomer />} />
           <Route path="/updateAppointment" element={<UpdateAppointment/>} />
 
-          <Route path="/payment" element={<CreateJobTransaction/>} />
+          <Route path="/payment/:type" element={<CreateJobTransaction/>} />
           
 
           <Route path='/about' element/>
@@ -156,7 +156,7 @@ function App() {
         <Route path='/admin' element={<AdminPanel/>}/>
 
         {/* admin finance routes */}
-        <Route element={<AdminLayout page={'Finance'} menu={["Dashboard", "Job Transactions", "Purchase Transactions", "Add Transaction", "Refunds", "Reports"]}/>}>
+        <Route element={<AdminLayout page={'Finance'} menu={["Dashboard", "Job Transactions", "Purchase Transactions", "Add Transaction"]}/>}>
 
 
           <Route path='/admin/finance/dashboard' element={<FinDashboard />}/>

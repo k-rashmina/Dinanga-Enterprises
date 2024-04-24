@@ -11,6 +11,7 @@ const getTransactionInfo = require('../controllers/finance/get-transaction-info'
 const getDashboardStat = require('../controllers/finance/get-dashboard-stat');
 const transactionReport = require('../controllers/finance/transaction-report');
 const getPurchTransactionInfo = require('../controllers/finance/get-purch-transaction-info');
+const getTransactionForJob = require('../controllers/finance/get-transaction-for-job');
 
 
 const router = express.Router();
@@ -23,6 +24,8 @@ router.delete('/deljobtransaction', (req, res) => delJobTransaction(req, res));
 
 router.get('/getdashboardstat', (req, res) => getDashboardStat(req, res));
 router.get('/gettransactionreport', (req, res) => transactionReport(req, res));
+router.get('/gettransactionforjob', (req, res) => getTransactionForJob(req, res));
+
 
 router.get('/purchtransactionlist', (req, res) => getPurchTransactionList(req, res));
 router.get('/purchtransactionlist/transaction', (req, res) => getPurchTransactionInfo(req, res));

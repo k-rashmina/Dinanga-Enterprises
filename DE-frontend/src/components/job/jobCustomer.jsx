@@ -7,6 +7,8 @@ import axios from "axios";
 import { useRef } from 'react';
 
 const CreatedJobsTableBootstrap = () => {
+  const loggedUser = localStorage.getItem('loggedUser');
+
   const [data , setData] = useState([]);
   const [records, setRecords] = useState([]);
   const hasPageLoaded = useRef(false);
@@ -68,6 +70,13 @@ const CreatedJobsTableBootstrap = () => {
       }
     }
   };
+
+  const handlePay = (data) => {
+
+    localStorage.setItem('createdJob', JSON.stringify(data));
+    navigate('/payment/update');
+
+  }
   
 
   return (
@@ -95,7 +104,7 @@ const CreatedJobsTableBootstrap = () => {
                     <td>
                       {row.serviceType?.service_name}
                       {row.paymentStatus === "pending" && (
-                        <Button variant="outline-dark" size="sm" style={{ marginLeft: '8px', borderRadius: '4px', fontSize: '0.8rem' }}>
+                        <Button onClick={() => handlePay(row)} variant="outline-dark" size="sm" style={{ marginLeft: '8px', borderRadius: '4px', fontSize: '0.8rem' }}>
                           <i className="bi bi-credit-card-2-back"></i> Pay
                         </Button>
                       )}

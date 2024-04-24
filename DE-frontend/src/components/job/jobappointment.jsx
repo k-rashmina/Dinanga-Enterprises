@@ -112,7 +112,7 @@ const JobServicesAppointmentFormBootstrap = () => {
         localStorage.setItem('createdJob', JSON.stringify(res.data));
         alert("Appointment added");
         // navigate('/jobCustomer');
-        navigate('/payment'); 
+        navigate('/payment/new'); 
       })
       .catch((err) => {
         alert(err);
