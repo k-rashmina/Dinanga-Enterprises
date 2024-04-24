@@ -61,7 +61,7 @@ const CreatedJobsTableBootstrap = () => {
               <thead>
                 <tr style={{ backgroundColor: '#d9d9d9', color: 'black' }}>
                   <th style={{ fontWeight: 'bold' }}>Job Number</th>
-                  <th style={{ fontWeight: 'bold' }}>Service type</th>
+                  {/* <th style={{ fontWeight: 'bold' }}>Service type</th> */}
                   <th style={{ fontWeight: 'bold' }} align="center">Vehicle type</th>
                   <th style={{ fontWeight: 'bold' }} align="center">Date</th>
                   <th style={{ fontWeight: 'bold' }} align="center">Time</th>
@@ -73,7 +73,7 @@ const CreatedJobsTableBootstrap = () => {
                 {data.map((row, index) => (
                   <tr key={index}>
                     <td align="center">{row.jobNumber}</td>
-                    <td>{editId === row._id ?
+                    {/* <td>{editId === row._id ?
                       <select value={updatedData.serviceType} onChange={e => handleChange('serviceType', e.target.value)}>
                         <option>battery replacement</option>
                         <option>abs replacement</option>
@@ -86,7 +86,7 @@ const CreatedJobsTableBootstrap = () => {
                         <option>inverter coolant change</option>
                       </select>
                       : row.serviceType}
-                    </td>
+                    </td> */}
                     <td>{editId === row._id ?
                       <select value={updatedData.vehicleType} onChange={e => handleChange('vehicleType', e.target.value)}>
                         <option>Toyota</option>

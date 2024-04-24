@@ -9,9 +9,12 @@ const EmployeeLogin = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
+
     try {
-      const response = await EmployeeApiService.loginEmployee(username, password);
+      const response = await EmployeeApiService.loginEmployee(
+        username,
+        password
+      );
 
       console.log("Login successful:", response);
 

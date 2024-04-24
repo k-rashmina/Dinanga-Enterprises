@@ -15,7 +15,7 @@ function Report() {
   return (
     <div >
       <AdminHeader pageName={'Report'}/>
-      <button onClick={generateReport}>Generate Report</button>
+      <button className='form-button rounded-5 ms-9 fw-semibold' onClick={generateReport}>Generate Report</button>
       <center>
       <NewListings/>
       <NewStocks/>

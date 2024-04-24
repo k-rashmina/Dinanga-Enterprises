@@ -5,7 +5,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import axios from "axios";
 
 const FeedbackUpDel = () => {
-  const loggedUser = 'kalindur@gmail.c';
+  const loggedUser = localStorage.getItem('loggedUser');
 
   const [records, setRecords] = useState([]);
   const [editedSubject, setEditedSubject] = useState('');

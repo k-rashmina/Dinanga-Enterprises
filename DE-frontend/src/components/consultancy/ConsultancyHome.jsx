@@ -15,8 +15,6 @@ export default function ConsultancyHome() {
             justifyContent: "center",
             alignItems: "center",
             backgroundImage: `url(${gifImage})`,
-            // backgroundColor:"whitesmoke"
-            // background: `url('https://media0.giphy.com/media/8m7FhQS9nPHXChu21U/giphy.gif?cid=790b7611ce6ce2b92c44292960b2e928699bf4d2cb0211f6&rid=giphy.gif&ct=g')`,
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",
             backgroundSize: "100%",

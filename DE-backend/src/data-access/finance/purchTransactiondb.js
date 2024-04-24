@@ -15,7 +15,7 @@ const getPurchTransactionList = async (filter) => {
           $gte: new Date(`${filter.from}T00:00:00.000Z`),
           $lt: new Date(filter.to)
       }
-      }).where('status').equals(filter.status).where('order_id').equals(filter.order))
+      }).where('status').equals(filter.status).populate({path: 'order_id', match: {'order_number': {$in: [filter.order]}}}))
 
     }
     else if(filter.status){
@@ -25,7 +25,7 @@ const getPurchTransactionList = async (filter) => {
           $gte: new Date(new Date(filter.from).setHours(0o0, 0o0, 0o0)),
           $lt: new Date(new Date(filter.to).setHours(23, 59, 59))
       }
-      }).where('status').equals(filter.status))
+      }).where('status').equals(filter.status).populate('order_id'))
 
     }
     else if(filter.order){
@@ -35,7 +35,7 @@ const getPurchTransactionList = async (filter) => {
           $gte: new Date(new Date(filter.from).setHours(0o0, 0o0, 0o0)),
           $lt: new Date(new Date(filter.to).setHours(23, 59, 59))
       }
-      }).where('order_id').equals(filter.order))
+      }).populate({path: 'order_id', match: {'order_number': {$in: [filter.order]}}}))
 
     }
     else{
@@ -45,7 +45,7 @@ const getPurchTransactionList = async (filter) => {
           $gte: new Date(new Date(filter.from).setHours(0o0, 0o0, 0o0)),
           $lt: new Date(new Date(filter.to).setHours(23, 59, 59))
       }
-      }))
+      }).populate('order_id'))
 
     }
 
@@ -57,6 +57,20 @@ const getPurchTransactionList = async (filter) => {
 
 }
 
+
+const getPurchTransaction = async (tid) => {
+
+    try{
+  
+      return (await purchTransaction.findById(tid).populate('order_id').exec())
+  
+    }catch(err){
+  
+      return('failed')
+  
+    }
+  
+  }
 
 
 //Purchase Transaction database reading function
@@ -115,4 +129,4 @@ const deletePurchtransaction = async (delTransactId) => {
 
 }
 
-module.exports = {addPurchTransaction, getPurchTransactionList, putPurchTransaction, deletePurchtransaction};
+module.exports = {addPurchTransaction, getPurchTransactionList, getPurchTransaction, putPurchTransaction, deletePurchtransaction};

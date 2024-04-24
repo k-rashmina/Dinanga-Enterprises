@@ -4,5 +4,5 @@ module.exports = async function putJobTransactionService(upTransact) {
 
   const updated = await putJobTransaction(upTransact);
 
-  return updated;
+  return 'Transaction Updated Successfully';
 }

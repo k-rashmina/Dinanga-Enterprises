@@ -9,13 +9,10 @@ export default function AddConsultancy() {
     <div
       className="pt-5"
       style={{
-        // background: `url('https://media.giphy.com/media/PX1KtZ0NxxMZi/giphy.gif')`,
-        // backgroundColor:"white",
         backgroundImage: `url(${invBackImage})`, // Use backgroundImage for the div
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         backgroundSize: "100%",
-        // fillOpacity: "10px",
       }}
     >
       <h1 class="text-black text-center mt-0">
@@ -24,7 +21,7 @@ export default function AddConsultancy() {
       <div>
         <div className="container-fluid">
           <div className="row ">
-            <div className="col-8 border border-3 border-info mt-3">
+            <div className="col-8 border border-3 border-info mt-3" style={{backdropFilter:`blur(20px)`}}>
               <div className="row">
                 <div className="col-9  mt-5 ">
                   <div className="row">
@@ -58,7 +55,11 @@ export default function AddConsultancy() {
                           }
                         }}
                       />
-                      <span id="EmailError" class="text-danger"  style={{ fontWeight: 'bold' }}></span>
+                      <span
+                        id="EmailError"
+                        class="text-danger"
+                        style={{ fontWeight: "bold" }}
+                      ></span>
                     </div>
                   </div>
                 </div>
@@ -69,7 +70,23 @@ export default function AddConsultancy() {
                       <span class="fw-bold fs-5 text-black">Location</span>
                     </div>
                     <div className="col-8 d-grid ">
-                      <select name="location" id="location">
+                      <select
+                        name="location"
+                        id="location"
+                        onBlur={function () {
+                          var temporyLocation =
+                            document.getElementById("location").value;
+                          if (temporyLocation == "") {
+                            // Location
+                            document.getElementById("LocationError").innerText =
+                              "Please Select a Location ";
+                          } else if (temporyLocation != "") {
+                            // Location
+                            document.getElementById("LocationError").innerText =
+                              "";
+                          }
+                        }}
+                      >
                         <option value="">Select Location</option>
                         <option value="Panadura">Panadura</option>
                         <option value="Kurunagala">Kurunagala</option>
@@ -83,7 +100,11 @@ export default function AddConsultancy() {
                         <option value="Mathara">Mathara</option>
                         <option value="Badulla">Badulla</option>
                       </select>
-                      <span id="LocationError" class="text-danger"  style={{ fontWeight: 'bold' }}></span>
+                      <span
+                        id="LocationError"
+                        class="text-danger"
+                        style={{ fontWeight: "bold" }}
+                      ></span>
                     </div>
                   </div>
                 </div>
@@ -99,17 +120,59 @@ export default function AddConsultancy() {
                         type="Date"
                         id="date"
                         name="Date"
+                        onBlur={function () {
+                          var TemporyIsNullDate =
+                            document.getElementById("date").value;
+                          if (TemporyIsNullDate == "") {
+                            document.getElementById("DateError").innerText =
+                              "Please Select a Date";
+                          } else if (TemporyIsNullDate != "") {
+                            const today = new Date();
+                            const formattedDate =
+                              today.toLocaleDateString("en-US"); // US English format
+                            var todayDate = formattedDate.split("/");
+                            var todaySplitMonth = todayDate[0];
+                            var todaySplitDate = todayDate[1];
+                            var todaySplitYear = todayDate[2];
+
+                            var ChooseDate =
+                              document.getElementById("date").value; // 2002-05-14
+                            var SplitChooseDateArray = ChooseDate.split("-");
+                            var Chooseyear = SplitChooseDateArray[0];
+                            var ChooseMonth = SplitChooseDateArray[1];
+                            var ChooseDate = SplitChooseDateArray[2];
+                            // calculation
+                            var YearAnswer = Chooseyear - todaySplitYear;
+                            var MonthAnsewer = ChooseMonth - todaySplitMonth;
+                            var DateAnswer = ChooseDate - todaySplitDate;
+
+                            // check
+                            if (YearAnswer < 0) {
+                              document.getElementById("DateError").innerText =
+                                "Please Select Valid Year";
+                            } else if (MonthAnsewer < 0) {
+                              document.getElementById("DateError").innerText =
+                                "Please Select Valid Month";
+                            } else if (MonthAnsewer < !0 && DateAnswer < 0) {
+                              document.getElementById("DateError").innerText =
+                                "Please Select Valid Date";
+                            } else {
+                              document.getElementById("DateError").innerText =
+                                "";
+                            }
+                          }
+                        }}
                         onChange={() => {
                           const today = new Date();
                           const formattedDate =
-                            today.toLocaleDateString("en-US"); // US English format 
+                            today.toLocaleDateString("en-US"); // US English format
                           var todayDate = formattedDate.split("/");
                           var todaySplitMonth = todayDate[0];
                           var todaySplitDate = todayDate[1];
                           var todaySplitYear = todayDate[2];
 
                           var ChooseDate =
-                            document.getElementById("date").value;// 2002-05-14
+                            document.getElementById("date").value; // 2002-05-14
                           var SplitChooseDateArray = ChooseDate.split("-");
                           var Chooseyear = SplitChooseDateArray[0];
                           var ChooseMonth = SplitChooseDateArray[1];
@@ -134,7 +197,11 @@ export default function AddConsultancy() {
                           }
                         }}
                       />
-                      <span id="DateError" class="text-danger"  style={{ fontWeight: 'bold' }}></span>
+                      <span
+                        id="DateError"
+                        class="text-danger"
+                        style={{ fontWeight: "bold" }}
+                      ></span>
                     </div>
                   </div>
                 </div>
@@ -145,8 +212,27 @@ export default function AddConsultancy() {
                       <span class="fw-bold fs-5 text-black">Time</span>
                     </div>
                     <div className="col-8 d-grid ">
-                      <input type="time" id="time" name="time" />
-                      <span id="timeError" class="text-danger"  style={{ fontWeight: 'bold' }}></span>
+                      <input type="time" id="time" name="time"
+                      
+                      onBlur={function () {
+                        var TimeTempory =
+                          document.getElementById("time").value;
+
+                        if (TimeTempory == "") {
+                          document.getElementById("timeError").innerText =
+                          "Please Choose a Time Slot";
+                        } else if (TimeTempory != "") {
+                          document.getElementById("timeError").innerText =
+                            "";
+                        }
+                      }}
+                      
+                      />
+                      <span
+                        id="timeError"
+                        class="text-danger"
+                        style={{ fontWeight: "bold" }}
+                      ></span>
                     </div>
                   </div>
                 </div>
@@ -169,10 +255,17 @@ export default function AddConsultancy() {
                           if (IssueTempory == "") {
                             document.getElementById("IssueError").innerText =
                               "Please Type Your Issue";
+                          } else if (IssueTempory != "") {
+                            document.getElementById("IssueError").innerText =
+                              "";
                           }
                         }}
                       ></textarea>
-                      <span id="IssueError" class="text-danger"  style={{ fontWeight: 'bold' }}></span>
+                      <span
+                        id="IssueError"
+                        class="text-danger"
+                        style={{ fontWeight: "bold" }}
+                      ></span>
                     </div>
                   </div>
                 </div>

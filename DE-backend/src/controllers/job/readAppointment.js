@@ -2,7 +2,7 @@ const jobAppointment = require("../../models/jobAppointment");
 
 const getAppointmentDetails = async (req, res) => {
     try {
-      const appointment = await jobAppointment.find();
+      const appointment = await jobAppointment.find().populate(['employeeName', 'serviceType']).exec();
       res.status(200).json(appointment);
     } catch (error) {
       res.status(500).json({ message: error.message });
