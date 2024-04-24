@@ -7,7 +7,7 @@ import { faWarehouse } from "@fortawesome/free-solid-svg-icons";
 import AdminHeader from "../common/AdminHeader";
 
 function AddItem() {
-  // const [itemNumber, setItemNumber] = useState("");
+ 
   const [brand, setBrand] = useState("");
   const [itemName, setItemName] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -26,15 +26,7 @@ function AddItem() {
     setErrors(errorsCopy);
   };
 
-  // const validateItemNumber = () => {
-  //   const errorsCopy = { ...errors };
-  //   if (!itemNumber) errorsCopy.itemNumber = "Item number is required";
-  //   else if (!/^DE\d{3}$/i.test(itemNumber))
-  //     errorsCopy.itemNumber =
-  //       "Item number must start with DE followed by 3 digits";
-  //   else delete errorsCopy.itemNumber;
-  //   setErrors(errorsCopy);
-  // };
+ 
   const validateBrand = () => {
     const errorsCopy = { ...errors };
     if (!brand) errorsCopy.brand = " Vehicle Brand is required";
@@ -45,7 +37,7 @@ function AddItem() {
   const validateQuantity = () => {
     const errorsCopy = { ...errors };
     if (!quantity) errorsCopy.quantity = "Quantity is required";
-    else if (!/^\d+$/.test(quantity))
+    else if (!/^[\d]+$/.test(quantity))
       errorsCopy.quantity = "Quantity must be a number";
     else delete errorsCopy.quantity;
     setErrors(errorsCopy);
@@ -63,7 +55,7 @@ function AddItem() {
   const validateItemPrice = () => {
     const errorsCopy = { ...errors };
     if (!itemPrice) errorsCopy.itemPrice = "Item price is required";
-    else if (!/^\d+$/.test(itemPrice))
+    else if (!/^[\d]+$/.test(itemPrice))
       errorsCopy.itemPrice = "Item Price must be a number";
     else delete errorsCopy.itemPrice;
     setErrors(errorsCopy);
