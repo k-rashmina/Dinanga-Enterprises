@@ -15,7 +15,7 @@ const OrderCard = ({
     <div className={`card bg-${bgColor} order-card card mb-5`} style={{width: "17rem", marginLeft: "20px"}}>
       <div className="card-block">
         <FontAwesomeIcon icon={iconClass} size="3x" className="f-right" />
-        <h2 className="m-b-20 text-center">{title}</h2>
+        <h3 className="m-b-20 text-center">{title}</h3>
         <h2 className="text-center">
           <span style={{ fontSize: '32px' }}>{totalOrders}</span>
         </h2>
@@ -36,12 +36,9 @@ const CardList = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/inventory/stockValueChart"
+          "http://localhost:5000/inventory/displaystockValue"
         );
-        const total = response.data.reduce(
-          (acc, item) => acc + item.stockPrice,
-          0
-        );
+        const total = response.data.stockValue;
         setTotalStockValue(total);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -80,8 +77,8 @@ const CardList = () => {
     {
       iconClass: faRocket,
       bgColor: "c-green",
-      title: "Variations",
-      totalOrders: 486,
+      title: "Out of Stocks",
+      totalOrders: stockStatus['Out of Stocks'] || 'Loading...',
       completedOrders: 322,
     },
     {

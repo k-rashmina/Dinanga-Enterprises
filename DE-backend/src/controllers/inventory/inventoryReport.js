@@ -21,8 +21,8 @@ const inventoryReport = async (req, res) => {
     // Find items that were created or updated within the last week
     report = await inventoryDetails.find({
       $or: [
-        { createdAt: { $gte: oneWeekAgo } },
-        { updatedAt: { $gte: oneWeekAgo } },
+        { createdAt: { $gte: oneWeekAgo } }
+        // { updatedAt: { $gte: oneWeekAgo } },
       ],
     });
 
@@ -54,10 +54,10 @@ const inventoryReport = async (req, res) => {
     "Dinanga Enterprises" +
     "</div>" +
     '<div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">' +
-    "Address: 123 Main St, City, Country" +
+    "Address: 123 Main St, Panadura, Sri Lanka" +
     "</div>" +
     '<div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">' +
-    "Telephone: (123) 456-7890" +
+    "Telephone: 0112747789" +
     "</div>" +
     "<hr/>";
 
@@ -68,7 +68,7 @@ const inventoryReport = async (req, res) => {
     oneWeekAgoStr +
     " To " +
     todayStr +
-    " Listings and Updations</h2>" +
+    " New Listings </h2>" +
     "<style>" +
     "table { width: 100%; border-collapse: collapse;  font-family:Calibri}" +
     "table, th, td { border: 1px solid black; padding:8px; text-align:left;font-size:12px }" +

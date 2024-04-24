@@ -1,4 +1,5 @@
 import {BrowserRouter, Routes, Route, Link} from 'react-router-dom';
+import BackgroundImage from './components/common/BackgroundImage';
 
 // import { useState } from 'react'
 // Import employee pages
@@ -59,6 +60,7 @@ import FinDashboard from './components/finance/DashBoard';
 import JobTransaction from './components/finance/JobTransaction';
 import PurchaseTransaction from './components/finance/PurchaseTransaction';
 import AddTransaction from './components/finance/AddTransaction';
+import CreateJobTransaction from './components/finance/CreateJobTransaction';
 
 
 
@@ -66,6 +68,7 @@ import AddItem from './components/inventory/AddItem';
 import ItemList from './components/inventory/ItemList';
 import DashBoard from './components/inventory/DashBoard';
 import Report from './components/inventory/Report';
+import TransactionInfo from './components/finance/TransactionInfo';
 
 
 
@@ -79,7 +82,7 @@ function App() {
       <Routes>
         {/* main routes */}
         <Route element={<Layout/>}>
-          <Route path='/' element={<h2>this is the home page</h2>}/>
+          <Route path='/' element={<BackgroundImage/>}/>
 
 
 
@@ -107,6 +110,7 @@ function App() {
           <Route path="/jobCustomer" element={<JobCustomer />} />
           <Route path="/updateAppointment" element={<UpdateAppointment/>} />
 
+          <Route path="/payment/:type" element={<CreateJobTransaction/>} />
           
 
           <Route path='/about' element/>
@@ -153,11 +157,12 @@ function App() {
         <Route path='/admin' element={<AdminPanel/>}/>
 
         {/* admin finance routes */}
-        <Route element={<AdminLayout page={'Finance'} menu={["Dashboard", "Job Transactions", "Purchase Transactions", "Add Transaction", "Refunds", "Reports"]}/>}>
+        <Route element={<AdminLayout page={'Finance'} menu={["Dashboard", "Job Transactions", "Purchase Transactions", "Add Transaction"]}/>}>
 
 
           <Route path='/admin/finance/dashboard' element={<FinDashboard />}/>
           <Route path='/admin/finance/jobtransactions' element={<JobTransaction />}/>
+          <Route path='/admin/finance/jobtransactions/:ttype/:tid' element={<TransactionInfo />} />
           <Route path='/admin/finance/purchasetransactions' element={<PurchaseTransaction />}/>
           <Route path='/admin/finance/addtransaction' element={<AddTransaction />}/>
 
