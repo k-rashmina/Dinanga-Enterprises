@@ -80,7 +80,7 @@ const EmployeeLogin = () => {
                         </Form.Group>
 
                         
-                        <Row  xs={6} className="p-0 justify-content-center">
+                        <Row className="p-0 justify-content-center">
                           <div className="button-container">
                             <Button
                                 variant="primary"
