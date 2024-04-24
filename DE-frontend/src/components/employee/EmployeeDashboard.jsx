@@ -218,7 +218,7 @@ const EmployeeDashboard = () => {
           <input
             type="text"
             className="form-control"
-            placeholder="Search"
+            placeholder="Search Employee"
             aria-label="Search"
             onChange={handleSearch}
           />
