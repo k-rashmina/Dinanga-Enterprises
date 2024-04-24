@@ -115,7 +115,7 @@ const EmployeeProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
+    console.log("Hello")
     let isValid = true;
     for (let key in formData) {
         validateField(key, formData[key]);
@@ -138,11 +138,10 @@ const EmployeeProfile = () => {
         address: formData.address,
         username: formData.username,
     };
-
     try {
-        const response = await EmployeeApiService.updateEmployee(employeeId, updatedData);
+        const response = await EmployeeApiService.updateProfile(employeeId, updatedData);
 
-        if (response.success) {
+        if (response) {
             console.log('Employee details updated successfully');
             
             await fetchEmployeeInfo(); 
