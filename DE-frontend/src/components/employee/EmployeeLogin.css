@@ -1,4 +1,4 @@
-/* EmployeeLogin.css */
+
 .login-container {
     max-width: 800px;
     margin-top: 50px;
@@ -34,7 +34,7 @@
 }
 
 .login-button-form {
-    width: 100%; /* Set the login button to take the full width of the container */
+    width: 100%; 
     padding: 10px;
     border-radius: 8px;
     text-align: center;
@@ -43,7 +43,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     display: block;
-    margin: 10px auto 0; /* Center the button */
+    margin: 10px auto 0; 
 }
 
 .login-button-form:hover {
