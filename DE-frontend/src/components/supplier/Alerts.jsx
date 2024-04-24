@@ -28,7 +28,7 @@ const OrderAlerts = () => {
     if (statusMessage !== '') {
       setTimeout(() => {
         setStatusMessage('');
-      }, 3000); // Hide status message after 3 seconds
+      }, 3000); 
     }
   }, [statusMessage]);
 
@@ -45,11 +45,10 @@ const OrderAlerts = () => {
   }, []);
 
   const handleDownloadPDF = () => {
-    // Call the function to print the interface as a PDF
+    
     printPDF();
   };
 
-  // Function to print the interface as a PDF
   const printPDF = () => {
     const htmlContent = generateHTMLForPDF();
     const windowContent = '' + htmlContent + '</body></html>';

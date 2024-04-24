@@ -34,9 +34,9 @@ const LoginForm = () => {
     }
 
     // Validate Password
-    if (!password) {
+    if (!password){
       formIsValid = false;
-      errors['password'] = 'Please enter your password.';
+      errors['password'] = 'Please enter a valid password';
     }
 
     setErrors(errors);

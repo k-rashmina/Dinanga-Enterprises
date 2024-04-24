@@ -168,7 +168,7 @@ console.log(loggedSupplier)
               </Form.Group>
               <Form.Group controlId="formEmail">
                 <Form.Label className="form-label">Email</Form.Label>
-                <Form.Control type="email" readOnly={!isEditMode} onChange={handleInputEvents}  name='Supplier_email' className="form-control" value={hasPageLoaded.current ? supDetails.Supplier_email : ''} />
+                <Form.Control type="email" readOnly={!isEditMode} onChange={handleInputEvents}  name='Supplier_email' className="form-control" value={hasPageLoaded.current ? supDetails.Supplier_email : '' } disabled />
               </Form.Group>
               <Form.Group controlId="formServicesProvided">
                 <Form.Label className="form-label">Contact</Form.Label>
