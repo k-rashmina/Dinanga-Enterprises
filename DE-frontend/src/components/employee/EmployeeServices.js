@@ -76,6 +76,20 @@ const EmployeeApiService = {
     }
   },
 
+  updateProfile: async (employeeId,employee) => {
+    try {
+      const response = await axios.put(
+        `${BASE_URL}/updateEmployee/${employeeId}`,
+        employee
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error updating employee:", error);
+      throw error;
+    }
+  },
+  
+
   loginEmployee: async (username, password) => {
     try {
       const response = await axios.post(`${BASE_URL}login`, {
