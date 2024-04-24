@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import AdminHeader from "../common/AdminHeader";
 import axios from 'axios';
 
 function ToBeOrdered() {
@@ -13,11 +14,11 @@ function ToBeOrdered() {
   }, []);
 
   return (
-    <div style={{ marginTop: "90px", marginLeft: "10px", width: "97%", display: "flex", justifyContent: "flex-start" }}>
+    <>
+    <AdminHeader pageName={'To Be Ordered'} />
+    <div style={{ marginTop: "30px", marginLeft: "10px", width: "97%", display: "flex", justifyContent: "flex-start" }}>
       <div style={{ width: "100%", maxWidth: "1200px" }}>
-      <h3 style={{ marginBottom: "30px", marginLeft: "10px", fontWeight: "bold" }}>
-        To Be Ordered
-      </h3>
+    
         <table className="styled-table" style={{ width: "50%", minWidth: "100%" ,fontSize:"20px"}}>
           <thead>
             <tr>
@@ -62,6 +63,7 @@ function ToBeOrdered() {
         </table>
       </div>
     </div>
+    </>
   );
 }
 
