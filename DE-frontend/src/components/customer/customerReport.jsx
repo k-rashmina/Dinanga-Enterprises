@@ -10,7 +10,8 @@ function customerReport() {
       }
   return (
     <div>
-      <button onClick={generateReport}>Generate Report</button>
+     <button onClick={generateReport} className="btn btn-primary" style={{ backgroundColor: '#00ADB5', marginTop: '5px' }}>Generate Customer Report</button>
+
     </div>
   )
 }

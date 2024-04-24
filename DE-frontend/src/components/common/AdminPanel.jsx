@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import ReportButton from './../customer/customerReport'
 import apimg from '../../assets/adminPanel.jpg'
 
 export default function AdminPanel() {
@@ -52,7 +53,10 @@ export default function AdminPanel() {
         <div className="me-5"><Link to='inventory/dashboard'>Inventory</Link></div>
         <div className="me-5"><Link to='order/dashboard'>Orders</Link></div>
         <div className="me-5"><Link to='consultancy/consultancylist'>Consultancy</Link></div>
+        <div className="me-5"><Link to='employee/dashboard'>Employee</Link></div>
+        <div className="me-5"><ReportButton/></div>
         <div className="me-5"><Link to='employee/dashboard'>Employee</Link></div> */}
+
 
     </>
 
