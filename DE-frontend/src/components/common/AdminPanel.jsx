@@ -45,8 +45,10 @@ export default function AdminPanel() {
             </div>
           </Link>
         </div>
-
+        <div className="me-5 mt-5"><ReportButton/></div>
       </div>
+
+      
 
       {/* <div className="me-5"><Link to='finance/dashboard'>Finance</Link></div>
         <div className="me-5"><Link to='job/joblist'>Jobs</Link></div>
