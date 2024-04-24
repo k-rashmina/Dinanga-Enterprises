@@ -3,7 +3,7 @@ const jobTransaction = require('../../models/Job-Transaction');
 const counter = require('../../models/counter');
 
 
-//Job Transaction database reading function
+//Job Transaction reading function
 const getJobTransactionList = async (filter) => {
 
   //console.log(new Date(filter.from), new Date(`${filter.from}T00:00:00.000Z`))
@@ -17,7 +17,7 @@ const getJobTransactionList = async (filter) => {
             $gte: new Date(`${filter.from}T00:00:00.000Z`),
             $lt: new Date(filter.to)
           }
-        }).where('transact_type').equals(filter.t_type).where('status').equals(filter.status).where('ref_id').equals(filter.job).populate('ref_id'))
+        }).where('transact_type').equals(filter.t_type).where('status').equals(filter.status).populate({path: 'ref_id', match: {'jobNumber': {$in: [filter.job]}}}))
   
       }
       else if(filter.status){
@@ -37,7 +37,7 @@ const getJobTransactionList = async (filter) => {
             $gte: new Date(new Date(filter.from).setHours(0o0, 0o0, 0o0)),
             $lt: new Date(new Date(filter.to).setHours(23, 59, 59))
           }
-        }).where('transact_type').equals(filter.t_type).where('ref_id').equals(filter.job).populate('ref_id'))
+        }).where('transact_type').equals(filter.t_type).populate({path: 'ref_id', match: {'jobNumber': {$in: [filter.job]}}}))
   
       }
       else{
@@ -53,13 +53,14 @@ const getJobTransactionList = async (filter) => {
     }
     else{
 
+      console.log('elseee')
       if(filter.status && filter.job){
         return (await jobTransaction.find({
           'create_date': {
             $gte: new Date(`${filter.from}T00:00:00.000Z`),
             $lt: new Date(filter.to)
           }
-        }).where('status').equals(filter.status).where('ref_id').equals(filter.job).populate('ref_id'))
+        }).where('status').equals(filter.status).populate({path: 'ref_id', match: {'jobNumber': {$in: [filter.job]}}}))
   
       }
       else if(filter.status){
@@ -74,12 +75,13 @@ const getJobTransactionList = async (filter) => {
       }
       else if(filter.job){
   
+        console.log('filter eseee iff job', filter.job)
         return (await jobTransaction.find({
           'create_date': {
             $gte: new Date(new Date(filter.from).setHours(0o0, 0o0, 0o0)),
             $lt: new Date(new Date(filter.to).setHours(23, 59, 59))
           }
-        }).where('ref_id').equals(filter.job).populate('ref_id'))
+        }).populate({path: 'ref_id', match: {'jobNumber': {$in: [filter.job]}}}))
   
       }
       else{
@@ -90,15 +92,12 @@ const getJobTransactionList = async (filter) => {
             $lt: new Date(new Date(filter.to).setHours(23, 59, 59))
           }
         }).populate('ref_id').exec())
-
-
-        
       }
     }
 
   }catch(err){
 
-    //console.log(err.message);
+    console.log(`Error occured in getJobTransactionList:  ${err}`);
 
   }
   
@@ -106,9 +105,38 @@ const getJobTransactionList = async (filter) => {
 
 
 
+//Single Job Trnasction Reading Function
+const getJobTransaction = async (tid) => {
+
+  try{
+
+    return (await jobTransaction.findById(tid).populate('ref_id').exec())
+
+  }catch(err){
+
+    return('failed')
+
+  }
+
+}
 
 
-//Job Transaction database creating function
+const getTransactionForJob = async(jobid) => {
+
+  try{
+
+    return (await jobTransaction.find({'ref_id': jobid}))
+
+  }catch(err){
+
+    return('failed')
+
+  }
+
+}
+
+
+//Job Transaction creating function
 const addJobTransaction = async (newTransact) => {
 
   try{
@@ -133,7 +161,7 @@ const addJobTransaction = async (newTransact) => {
 
 
 
-//Job Transaction database updating function
+//Job Transaction updating function
 const putJobTransaction = async (upTransact) => {
 
   try{
@@ -151,7 +179,7 @@ const putJobTransaction = async (upTransact) => {
 
 
 
-//Job Transaction database deleting function
+//Job Transaction deleting function
 const deleteJobTransaction = async (delTransactID) => {
   console.log(delTransactID);
 
@@ -170,4 +198,4 @@ const deleteJobTransaction = async (delTransactID) => {
 
 
 
-module.exports = {getJobTransactionList, addJobTransaction, putJobTransaction, deleteJobTransaction}
+module.exports = {getJobTransactionList, getJobTransaction, getTransactionForJob, addJobTransaction, putJobTransaction, deleteJobTransaction}

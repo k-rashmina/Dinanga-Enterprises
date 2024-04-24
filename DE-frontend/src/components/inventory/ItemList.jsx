@@ -32,7 +32,7 @@ function ItemList() {
     axios
       .put(`http://localhost:5000/inventory/updateItem/${itemId}`, updatedItem)
       .then(() => {
-        console.log("Item updated successfully");
+        alert("Item updated successfully");
         setEditableItemId(null); // Exit edit mode
         fetchInventoryData(); // Fetch updated inventory data
       })
@@ -41,17 +41,20 @@ function ItemList() {
       });
   };
 
+  
   const handleDelete = (itemId) => {
-    axios
-      .delete(`http://localhost:5000/inventory/deleteItem/${itemId}`)
-      .then(() => {
-        setInventory((prevInventory) =>
-          prevInventory.filter((item) => item._id !== itemId)
-        );
-      })
-      .catch((error) => {
-        console.error("Error deleting item:", error);
-      });
+    if (window.confirm('Are you sure you want to delete this item?')) {
+      axios
+        .delete(`http://localhost:5000/inventory/deleteItem/${itemId}`)
+        .then(() => {
+          setInventory((prevInventory) =>
+            prevInventory.filter((item) => item._id !== itemId)
+          );
+        })
+        .catch((error) => {
+          console.error("Error deleting item:", error);
+        });
+    }
   };
 
   const handleEdit = (itemId) => {
@@ -149,7 +152,7 @@ function ItemList() {
         </div>
 
         <center>
-          <div className=" rounded-5 div-shadow mt-5 pb-4 example example1" style={{width: '1180px', height: '394px', overflow: 'scroll', backgroundColor: '#EEEEEE'}}>
+          <div className=" rounded-5 div-shadow mt-5 pb-4 example example1" style={{width: '1180px', height: '450px', overflow: 'scroll', backgroundColor: '#EEEEEE'}}>
 
           <table className="table-hover example1" style={{width: '1090px', backgroundColor: '#EEEEEE'}}>
             <thead  style={{fontSize: '18px', height: '90px', marginBottom: '10px'}}>
@@ -218,6 +221,7 @@ function ItemList() {
                         className="form-control"
                         id="form-control"
                         value={item.reorderState}
+                        readOnly
                         onChange={(e) => handleChange(e, "reorderState", item._id)}
                       />
                     ) : (

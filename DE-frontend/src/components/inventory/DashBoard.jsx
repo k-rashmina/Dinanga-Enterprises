@@ -14,6 +14,8 @@ function DashBoard() {
       <CardList/>
 
       <div className="d-flex justify-content-center">
+      
+
         <InventoryStockValueChart />
       </div>
       <div ClassName="shadow p-3 mb-5 bg-white rounded">

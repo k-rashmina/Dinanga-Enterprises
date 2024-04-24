@@ -13,7 +13,11 @@ const createJobAppointment = async (Job) => {
 
         await newJob.save();
 
-        return('appointment created')
+        const savedJob = newJob.toObject({getters: true})
+
+        const returnJob = jobAppointment.findOne({'_id': savedJob._id}).populate('serviceType').exec();
+
+        return(returnJob)
 
     }catch(err){
         console.log(err);

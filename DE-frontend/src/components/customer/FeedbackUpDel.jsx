@@ -3,9 +3,10 @@ import { Container, Table, Button, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import axios from "axios";
+import "./CustomerRegForm.css";
 
 const FeedbackUpDel = () => {
-  const loggedUser = 'kalindur@gmail.c';
+  const loggedUser = localStorage.getItem('loggedUser');
 
   const [records, setRecords] = useState([]);
   const [editedSubject, setEditedSubject] = useState('');
@@ -75,11 +76,11 @@ const FeedbackUpDel = () => {
     <Container fluid style={{ padding: '16px', backgroundColor: '#fff', minHeight: '100vh' }}>
       <Row className="justify-content-center">
         <Col xs={12} md={12}>
-          <h4 style={{ color: 'black', textAlign: 'center', fontWeight: 'bold', marginBottom: '20px' }}>Previous Feedback</h4>
+          <h4 style={{ color: '#00ADB5', textAlign: 'center', fontWeight: 'bold', marginBottom: '20px' }}>Previous Feedback</h4>
           <div style={{ borderRadius: '20px', overflow: 'hidden' }}>
             <Table bordered hover responsive>
             <thead>
-              <tr style={{ backgroundColor: '#d9d9d9', color: 'black' }}>
+              <tr style={{ backgroundColor: '#00ADB5', color: 'white' }}>
                 <th style={{ textAlign: 'center' }}>Date</th>
                 <th style={{ textAlign: 'center' }}>Subject</th>
                 <th style={{ textAlign: 'center' }}>Message</th>
