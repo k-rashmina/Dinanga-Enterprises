@@ -53,6 +53,7 @@ const getJobTransactionList = async (filter) => {
     }
     else{
 
+      console.log('elseee')
       if(filter.status && filter.job){
         return (await jobTransaction.find({
           'create_date': {
@@ -74,6 +75,7 @@ const getJobTransactionList = async (filter) => {
       }
       else if(filter.job){
   
+        console.log('filter eseee iff job')
         return (await jobTransaction.find({
           'create_date': {
             $gte: new Date(new Date(filter.from).setHours(0o0, 0o0, 0o0)),
@@ -90,15 +92,12 @@ const getJobTransactionList = async (filter) => {
             $lt: new Date(new Date(filter.to).setHours(23, 59, 59))
           }
         }).populate('ref_id').exec())
-
-
-        
       }
     }
 
   }catch(err){
 
-    //console.log(err.message);
+    console.log(`Error occured in getJobTransactionList:  ${err}`);
 
   }
   
@@ -120,6 +119,7 @@ const getJobTransaction = async (tid) => {
   }
 
 }
+
 
 
 
