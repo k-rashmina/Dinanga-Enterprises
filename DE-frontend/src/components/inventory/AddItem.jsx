@@ -79,7 +79,7 @@ function AddItem() {
     // Check if there are any errors after validation
     const noErrors = Object.keys(errors).length === 0;
     if (noErrors) {
-      const newItem = { // Hardcoded for now, will be generated in the backend
+      const newItem = { 
         itemName,
         brand,
         quantity,
