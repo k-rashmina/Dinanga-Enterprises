@@ -11,15 +11,15 @@ const rows = [
     dueDate: '04/15/2023',
     status: 'Pending',
   },
-  // Add other rows here
+
 ];
 
 const EmployeeJobsDashboard = () => {
   const [isDone, setIsDone] = useState(false);
 
   const handleDoneButtonClick = () => {
-    setIsDone(true); // Set isDone state to true to change the button color to green
-    setStatus("Completed"); // Update status to "Completed"
+    setIsDone(true); 
+    setStatus("Completed"); 
   };
 
   return (
@@ -45,7 +45,7 @@ const EmployeeJobsDashboard = () => {
                 <td>{row.dueDate}</td>
                 <td>
                 <Button 
-                    variant={isDone ? "success" : "secondary"} // Change color based on isDone state
+                    variant={isDone ? "success" : "secondary"}
                     onClick={handleDoneButtonClick}
                   >
                     Done

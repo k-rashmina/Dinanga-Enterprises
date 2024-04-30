@@ -19,15 +19,14 @@ const rows = [
     availableJobServices: ["Oil Change", "Tire Rotation", "Brake Inspection"],
     status: "Pending"
   }
-  // Add other rows here
 ];
 
 const ConsultancyEmployeeDashboard = () => {
   const [issueInfo, setIssueInfo] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [selectedService, setSelectedService] = useState("");
-  const [comment, setComment] = useState(""); // State for managing comment
-  const [isDone, setIsDone] = useState(false); // State for managing the "Done" button
+  const [comment, setComment] = useState(""); 
+  const [isDone, setIsDone] = useState(false); 
 
 
   const handleIssueButtonClick = (issue) => {
@@ -44,20 +43,19 @@ const ConsultancyEmployeeDashboard = () => {
   };
 
   const handleCommentChange = (e) => {
-    setComment(e.target.value); // Update comment value
+    setComment(e.target.value);
   };
 
   const handleAddComment = () => {
-    // Function to handle adding the comment
     console.log("Adding comment:", comment);
-    // You can integrate this with your API service to submit the comment
-    // For now, we'll just log the comment to the console and reset the comment state
-    setComment(""); // Clear the comment after submission
+  
+
+    setComment(""); 
   };
 
   const handleDoneButtonClick = () => {
-    setIsDone(true); // Set isDone state to true to change the button color to green
-    setStatus("Completed"); // Update status to "Completed"
+    setIsDone(true); 
+    setStatus("Completed"); 
   };
 
   return (
@@ -124,7 +122,7 @@ const ConsultancyEmployeeDashboard = () => {
                 
                 <td>
                   <Button
-                    variant={isDone ? "success" : "secondary"} // Change color based on isDone state
+                    variant={isDone ? "success" : "secondary"} 
                     onClick={handleDoneButtonClick}
                   >
                     Done
@@ -136,14 +134,14 @@ const ConsultancyEmployeeDashboard = () => {
         </Table>
       </div>
 
-      {/* Modal for Issue Information */}
+      {/*Modal for Issue Button */}
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>Issue Information</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <p>{issueInfo}</p>
-          {/* Text box for adding comments */}
+          
           <Form.Group controlId="comment">
             <Form.Label>Comment:</Form.Label>
             <Form.Control
