@@ -5,6 +5,9 @@ import axios from "axios";
 import invBackImage from "../../assets/conform4.jpg"; // Import the image
 
 export default function AddConsultancy() {
+
+  const today =new Date().toISOString().split('T')[0];
+
   return (
     <div
       className="pt-5"
@@ -117,85 +120,38 @@ export default function AddConsultancy() {
                     </div>
                     <div className="col-8 d-grid ">
                       <input
+                        required min={today}
                         type="Date"
                         id="date"
                         name="Date"
                         onBlur={function () {
-                          var TemporyIsNullDate =
+
+                          
+                           var TemporyIsNullDate =
                             document.getElementById("date").value;
                           if (TemporyIsNullDate == "") {
-                            document.getElementById("DateError").innerText =
+                             document.getElementById("DateError").innerText =
                               "Please Select a Date";
-                          } else if (TemporyIsNullDate != "") {
-                            const today = new Date();
-                            const formattedDate =
-                              today.toLocaleDateString("en-US"); // US English format
-                            var todayDate = formattedDate.split("/");
-                            var todaySplitMonth = todayDate[0];
-                            var todaySplitDate = todayDate[1];
-                            var todaySplitYear = todayDate[2];
-
-                            var ChooseDate =
-                              document.getElementById("date").value; // 2002-05-14
-                            var SplitChooseDateArray = ChooseDate.split("-");
-                            var Chooseyear = SplitChooseDateArray[0];
-                            var ChooseMonth = SplitChooseDateArray[1];
-                            var ChooseDate = SplitChooseDateArray[2];
-                            // calculation
-                            var YearAnswer = Chooseyear - todaySplitYear;
-                            var MonthAnsewer = ChooseMonth - todaySplitMonth;
-                            var DateAnswer = ChooseDate - todaySplitDate;
-
-                            // check
-                            if (YearAnswer < 0) {
-                              document.getElementById("DateError").innerText =
-                                "Please Select Valid Year";
-                            } else if (MonthAnsewer < 0) {
-                              document.getElementById("DateError").innerText =
-                                "Please Select Valid Month";
-                            } else if (MonthAnsewer < !0 && DateAnswer < 0) {
-                              document.getElementById("DateError").innerText =
-                                "Please Select Valid Date";
-                            } else {
-                              document.getElementById("DateError").innerText =
-                                "";
-                            }
-                          }
+                           }else{
+                            document.getElementById("DateError").innerText =
+                            " ";
+                           }
+                           
+                           
+                           
+                           
                         }}
                         onChange={() => {
-                          const today = new Date();
-                          const formattedDate =
-                            today.toLocaleDateString("en-US"); // US English format
-                          var todayDate = formattedDate.split("/");
-                          var todaySplitMonth = todayDate[0];
-                          var todaySplitDate = todayDate[1];
-                          var todaySplitYear = todayDate[2];
 
-                          var ChooseDate =
-                            document.getElementById("date").value; // 2002-05-14
-                          var SplitChooseDateArray = ChooseDate.split("-");
-                          var Chooseyear = SplitChooseDateArray[0];
-                          var ChooseMonth = SplitChooseDateArray[1];
-                          var ChooseDate = SplitChooseDateArray[2];
-                          // calculation
-                          var YearAnswer = Chooseyear - todaySplitYear;
-                          var MonthAnsewer = ChooseMonth - todaySplitMonth;
-                          var DateAnswer = ChooseDate - todaySplitDate;
-
-                          // check
-                          if (YearAnswer < 0) {
-                            document.getElementById("DateError").innerText =
-                              "Please Select Valid Year";
-                          } else if (MonthAnsewer < 0) {
-                            document.getElementById("DateError").innerText =
-                              "Please Select Valid Month";
-                          } else if (MonthAnsewer < !0 && DateAnswer < 0) {
-                            document.getElementById("DateError").innerText =
-                              "Please Select Valid Date";
-                          } else {
-                            document.getElementById("DateError").innerText = "";
-                          }
-                        }}
+                          var TemporyIsNullDate =
+                          document.getElementById("date").value;
+                        if (TemporyIsNullDate =! "") {
+                           document.getElementById("DateError").innerText =
+                            " ";
+                         }
+                        
+                         }
+                        }
                       />
                       <span
                         id="DateError"
@@ -343,10 +299,6 @@ export default function AddConsultancy() {
                             // issue
                             document.getElementById("IssueError").innerText =
                               "";
-                          } else if (
-                            document.getElementById("DateError").innerText != ""
-                          ) {
-                            alert("Please you must choose a Date first");
                           } else if (time == "") {
                             // email
                             document.getElementById("EmailError").innerText =
