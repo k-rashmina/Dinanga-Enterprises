@@ -139,7 +139,6 @@ const OnGoingOrders = () => {
             <th>Quantity</th>
             <th>DateOfOrder</th>
             <th>CompanyAddress</th>
-            {/* <th>Supplier Email</th> */}
             <th>Comments</th>
             <th>Actions</th>
           </tr>
