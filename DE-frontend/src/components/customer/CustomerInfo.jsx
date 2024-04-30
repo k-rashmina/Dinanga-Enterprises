@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import "./CustomerRegForm.css";
 
 const CustomerInfo = () => {
+
+  const loggedUser = localStorage.getItem('loggedUser');
+  const delNav = useNavigate();
+
   const [userDetails, setUserDetails] = useState({
     _id: '',
     cusFname: '',
@@ -14,7 +19,18 @@ const CustomerInfo = () => {
     cusAddr: ''
   });
   const [editable, setEditable] = useState(false); // State to track if fields are editable
+  const [errorMsg, setErrorMsg] = useState(''); // State to track error message
 
+  // Function to fetch user details from the database
+  const fetchUserDetails = () => {
+    axios.get(`http://localhost:5000/customer/customerdetails/?user=${loggedUser}`)
+      .then(res => setUserDetails(res.data))
+      .catch(err => console.log(err));
+  };
+
+  useEffect(() => {
+    fetchUserDetails(); // Fetch user details when component mounts
+  }, []);
 
   const handleInputs = (e) => {
     const { id, value } = e.target;
@@ -25,67 +41,48 @@ const CustomerInfo = () => {
     }));
   };
 
-//handle updating activities
-  const [updateSubmitValue, setUpdateSubmitValue] = useState(false);
-
   const handleUpdateProfile = () => {
-    setUpdateSubmitValue(prev => !prev);
+    // Check if any field is empty
+    if (Object.values(userDetails).some(value => value === '')) {
+      setErrorMsg('Please fill all fields before submitting.');
+    } else {
+      axios.put(`http://localhost:5000/customer/upcustomerdetails/?user=${loggedUser}`, userDetails)
+        .then(res => {
+          console.log(res);
+          setEditable(false); // Set fields as non-editable on update profile button click
+          setErrorMsg(''); // Clear error message
+          alert('Successfully Submitted');
+        })
+        .catch(err => console.log(err));
+    }
   };
 
-  //API call for updating profile details
-  useEffect(() => {
-
-    if(editable){
-      axios.put(`http://localhost:5000/customer/upcustomerdetails/?user=${'kalindur@gmail.c'}`, userDetails)
-      .then(res=>{
-        console.log(res);
-        setEditable(false); // Set fields as editable on update profile button click
-
-      })
-      .catch(err => console.log(err));
-    }
-
-  }, [updateSubmitValue])
+  const handleCancel = () => {
+    fetchUserDetails(); // Fetch user details again from the database
+    setEditable(false); // Set fields as non-editable
+    setErrorMsg(''); // Clear error message
+  };
 
   const handleSubmit = () => {
     // Logic to submit updated profile
-    setEditable(prevState => !prevState); // Set fields as non-editable after submission
+    setEditable(prevState => !prevState); // Toggle editable state
   };
 
-  useEffect(() => {
-    axios.get(`http://localhost:5000/customer/customerdetails/?user=${'kalindur@gmail.c'}`)
-      .then(res => setUserDetails(res.data));
-  }, []);
-
-
-
-//handle deleting activities
-  let confirmVal;
-  const [deleteValue, setDeleteValue] = useState(false);
   const handleDeleteEvent = () => {
-    confirmVal = confirm('Confirm delete profile');
+    const confirmVal = window.confirm('Confirm delete profile');
 
-    if(confirmVal == true) { setDeleteValue(prev => !prev)};
-    
-  }
-
-  const delNav = useNavigate();
-  //API call for delete profile
-  useEffect(() => {
-
-    if(deleteValue){
+    if(confirmVal === true) { 
       axios.delete(`http://localhost:5000/customer/delcustomerdetails?id=${userDetails._id}`)
-      .then(res => {
-        delNav('/');
-      })
-      .catch(err => console.log(err));
-    }
-
-  }, [deleteValue])
+        .then(res => {
+          delNav('/');
+        })
+        .catch(err => console.log(err));
+    }   
+  };
 
   return (
     <div>
-      <h2>Your Details</h2>
+      <h2 style={{ color: '#393E46', textAlign: 'center', fontWeight: 'bold', marginTop: '20px' }}>Your Details</h2>
       <form>
         <div className="mb-3">
           <label htmlFor="cusFname" className="form-label">First Name</label>
@@ -115,7 +112,7 @@ const CustomerInfo = () => {
             type="date"
             className="form-control"
             id="bDate"
-            value={userDetails.bDate.substring(0, 10)}
+            value={userDetails.bDate ? userDetails.bDate.substring(0, 10) : ''}
             onChange={handleInputs}
             readOnly={!editable} // Set readOnly based on editable state
           />
@@ -132,11 +129,11 @@ const CustomerInfo = () => {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="cusPassword" className="form-label">Address</label>
+          <label htmlFor="cusAddr" className="form-label">Address</label>
           <input
             type="text"
             className="form-control"
-            id="cusPassword"
+            id="cusAddr"
             value={userDetails.cusAddr}
             onChange={handleInputs}
             readOnly={!editable} // Set readOnly based on editable state
@@ -153,22 +150,23 @@ const CustomerInfo = () => {
             readOnly={!editable} // Set readOnly based on editable state
           />
         </div>
+        {errorMsg && <div className="alert alert-danger">{errorMsg}</div>} {/* Display error message */}
         {editable ? (
           <div>
             <button type="button" className="btn btn-primary me-2" onClick={handleUpdateProfile}>Submit</button>
-            <button className='btn btn-primary me-2' onClick={handleSubmit}>Cancel</button>
+            <button className='btn btn-danger' onClick={handleCancel}>Cancel</button>
           </div>
         ) : (
           <button
             type="button"
-            className="btn btn-primary me-2"
+            className="reg-form-button me-2"
             onClick={handleSubmit}
           >
             Update Profile
           </button>
         )}
         {!editable && (
-          <button type="button" className="btn btn-danger" onClick={handleDeleteEvent}>Delete Profile</button>
+          <button type="button" className="reg-form-button2 me-2" onClick={handleDeleteEvent}>Delete Profile</button>
         )}
       </form>
     </div>

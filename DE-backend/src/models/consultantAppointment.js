@@ -9,8 +9,8 @@ const consultantAppointmentSchema = new schema({
     },
     Email:{
         type:String,
-        required:true,  
-        unique:true
+        required:true
+        
     },
     location:{
         type:String,
@@ -36,7 +36,8 @@ const consultantAppointmentSchema = new schema({
     },
 
     assignedEmployee:{
-        type:String
+        type:mongoose.SchemaTypes.ObjectId,
+        ref:'Employee'
 
     },
 
@@ -54,5 +55,5 @@ const consultantAppointmentSchema = new schema({
 
 
 
-const consultantAppointment = mongoose.model("consultantAppointment",consultantAppointmentSchema);
+const consultantAppointment = mongoose.model("consultant_Appointment",consultantAppointmentSchema);
 module.exports = consultantAppointment;

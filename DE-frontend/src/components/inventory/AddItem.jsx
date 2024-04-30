@@ -3,10 +3,12 @@ import axios from "axios";
 import "./AddItems.css";
 import SearchBar from "./SearchBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faWarehouse } from '@fortawesome/free-solid-svg-icons';
+import { faWarehouse } from "@fortawesome/free-solid-svg-icons";
+import AdminHeader from "../common/AdminHeader";
 
 function AddItem() {
-  const [itemNumber, setItemNumber] = useState("");
+ 
+  const [brand, setBrand] = useState("");
   const [itemName, setItemName] = useState("");
   const [quantity, setQuantity] = useState("");
   const [reorderLevel, setReorderLevel] = useState("");
@@ -16,28 +18,26 @@ function AddItem() {
 
   const validateItemName = () => {
     const errorsCopy = { ...errors };
-    const validNameRegex = /^[a-zA-Z0-9 ]+$/;
+    const validNameRegex = /^[a-zA-Z 0-9]+$/;
     if (!itemName) errorsCopy.itemName = "Item name is required";
     else if (!validNameRegex.test(itemName))
-      errorsCopy.itemName = "Item name must be alphanumeric";
+      errorsCopy.itemName = "Item name must be alphanumeric only";
     else delete errorsCopy.itemName;
     setErrors(errorsCopy);
   };
 
-  const validateItemNumber = () => {
+ 
+  const validateBrand = () => {
     const errorsCopy = { ...errors };
-    if (!itemNumber) errorsCopy.itemNumber = "Item number is required";
-    else if (!/^DE\d{3}$/i.test(itemNumber))
-      errorsCopy.itemNumber =
-        "Item number must start with DE followed by 3 digits";
-    else delete errorsCopy.itemNumber;
+    if (!brand) errorsCopy.brand = " Vehicle Brand is required";
+    else delete errorsCopy.brand;
     setErrors(errorsCopy);
   };
 
   const validateQuantity = () => {
     const errorsCopy = { ...errors };
     if (!quantity) errorsCopy.quantity = "Quantity is required";
-    else if (!/^\d+$/.test(quantity))
+    else if (!/^[\d]+$/.test(quantity))
       errorsCopy.quantity = "Quantity must be a number";
     else delete errorsCopy.quantity;
     setErrors(errorsCopy);
@@ -46,7 +46,7 @@ function AddItem() {
   const validateReorderLevel = () => {
     const errorsCopy = { ...errors };
     if (!reorderLevel) errorsCopy.reorderLevel = "Reorder level is required";
-    else if (!/^\d+$/.test(reorderLevel))
+    else if (!/^[\d]+$/.test(reorderLevel))
       errorsCopy.reorderLevel = "Reorder level must be a number";
     else delete errorsCopy.reorderLevel;
     setErrors(errorsCopy);
@@ -55,7 +55,7 @@ function AddItem() {
   const validateItemPrice = () => {
     const errorsCopy = { ...errors };
     if (!itemPrice) errorsCopy.itemPrice = "Item price is required";
-    else if (!/^\d+$/.test(itemPrice))
+    else if (!/^[\d]+$/.test(itemPrice))
       errorsCopy.itemPrice = "Item Price must be a number";
     else delete errorsCopy.itemPrice;
     setErrors(errorsCopy);
@@ -71,7 +71,7 @@ function AddItem() {
   function sendData(e) {
     e.preventDefault();
     validateItemName() &
-      validateItemNumber() &
+      validateBrand() &
       validateQuantity() &
       validateReorderLevel() &
       validateItemPrice() &
@@ -80,8 +80,9 @@ function AddItem() {
     const noErrors = Object.keys(errors).length === 0;
     if (noErrors) {
       const newItem = {
-        itemNumber,
+        itemNumber: "DE012", // Hardcoded for now, will be generated in the backend
         itemName,
+        brand,
         quantity,
         reorderLevel,
         itemPrice,
@@ -94,22 +95,32 @@ function AddItem() {
         })
         .catch((err) => {
           alert("Please fill all the fields");
+          console.log(newItem)
+          console.log(err)
         });
     }
   }
 
   return (
     <div class="con">
-      <SearchBar/>
+      <AdminHeader pageName={"Add Item"} />
+      <SearchBar />
       <div class="container-fluid px-1 py-5 mx-auto">
         <div class="row d-flex justify-content-center">
           <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
-            
-           
-            <div class="card"style = {{borderRadius:"10px",boxShadow:"0px 0px 10px 2px rgba(0,0,0,0.4)"}}>
+            <div
+              class="card"
+              style={{
+                borderRadius: "10px",
+                boxShadow: "0px 0px 10px 2px rgba(0,0,0,0.4)",
+              }}
+            >
               <h5 class="text-center mb-4">
                 Add Details for warehouse records
-                <FontAwesomeIcon icon={faWarehouse} style={{ marginLeft: "10px" }} />
+                <FontAwesomeIcon
+                  icon={faWarehouse}
+                  style={{ marginLeft: "10px" }}
+                />
               </h5>
               <form className="form-card" onSubmit={sendData}>
                 <div class="row justify-content-between text-left">
@@ -129,9 +140,9 @@ function AddItem() {
                         }`}
                         placeholder="Item Name"
                         value={itemName}
-                        onChange={(e) =>{
-                          setItemName(e.target.value)
-                          validateItemName(); // Validate in real-time  
+                        onChange={(e) => {
+                          setItemName(e.target.value);
+                          validateItemName(); // Validate in real-time
                         }}
                         onBlur={validateItemName}
                       />
@@ -146,30 +157,37 @@ function AddItem() {
                   <div class="row justify-content-between text-left">
                     <div class="form-group col-md-6 mb-3">
                       <label class="form-control-label px-3">
-                        Item Number<span class="text-danger"> *</span>
+                        Vehicle Brand<span class="text-danger"> *</span>
                       </label>
-                      <input
-                        type="text"
-                        id="itemnumber"
-                        name="itemnumber"
-                        // class="form-control"
-                        className={`form-control ${
-                          errors.itemNumber ? "is-invalid" : ""
-                        }`}
-                        placeholder="Enter item number"
-                        value={itemNumber}
-                        onChange={(e) => {
-                          setItemNumber(e.target.value);
-                          validateItemNumber(); // Validate in real-time
-                        }}
-                        onBlur={validateItemNumber}
-                      />
-                      {errors.itemNumber && (
+                      <select
+                       style={{ borderColor: '#00ADB5', borderWidth: '2px', borderStyle: 'solid' }}
+                      id="brand"
+                      name="brand"
+                      className={`form-control ${
+                        errors.brand ? "is-invalid" : ""
+                      }`}
+                      value={brand}
+                      onChange={(e) => {
+                        setBrand(e.target.value);
+                        validateBrand(); // Validate in real-time
+                      }}
+                      onBlur={validateBrand}
+                    >
+                      <option value="">Select vehicle brand</option>
+                      <option value="Toyota">Toyota </option>
+                      <option value="Honda">Honda </option>
+                      <option value="Suzuki">Suzuki</option>
+                      <option value = "Mazda">Mazda</option>
+                      <option value = "Any">Any</option>
+                    
+                    </select>
+                      {errors.brand && (
                         <div className="invalid-feedback">
-                          {errors.itemNumber}
+                          {errors.brand}
                         </div>
                       )}
                     </div>
+                   
 
                     <div class="form-group col-md-6 mb-3">
                       <label class="form-control-label px-3">
@@ -237,8 +255,9 @@ function AddItem() {
                         }`}
                         placeholder=""
                         value={itemPrice}
-                        onChange={(e) => {setItemPrice(e.target.value)
-                        validateItemPrice(); // Validate in real-time
+                        onChange={(e) => {
+                          setItemPrice(e.target.value);
+                          validateItemPrice(); // Validate in real-time
                         }}
                         onBlur={validateItemPrice}
                       />

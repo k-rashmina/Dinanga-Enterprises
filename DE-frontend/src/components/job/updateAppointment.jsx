@@ -10,6 +10,12 @@ const CreatedJobsTableBootstrap = () => {
   const [editId, setEditID] = useState(-1);
   const [updatedData, setUpdatedData] = useState({});
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toISOString().split('T')[0]; // Formats as "yyyy-mm-dd"
+  };
+
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -55,7 +61,7 @@ const CreatedJobsTableBootstrap = () => {
               <thead>
                 <tr style={{ backgroundColor: '#d9d9d9', color: 'black' }}>
                   <th style={{ fontWeight: 'bold' }}>Job Number</th>
-                  <th style={{ fontWeight: 'bold' }}>Service type</th>
+                  {/* <th style={{ fontWeight: 'bold' }}>Service type</th> */}
                   <th style={{ fontWeight: 'bold' }} align="center">Vehicle type</th>
                   <th style={{ fontWeight: 'bold' }} align="center">Date</th>
                   <th style={{ fontWeight: 'bold' }} align="center">Time</th>
@@ -67,12 +73,12 @@ const CreatedJobsTableBootstrap = () => {
                 {data.map((row, index) => (
                   <tr key={index}>
                     <td align="center">{row.jobNumber}</td>
-                    <td>{editId === row._id ?
+                    {/* <td>{editId === row._id ?
                       <select value={updatedData.serviceType} onChange={e => handleChange('serviceType', e.target.value)}>
                         <option>battery replacement</option>
                         <option>abs replacement</option>
                         <option>hybrid battery service</option>
-                        <option>brake service</option>
+                        <option>break service</option>
                         <option>engine oil change</option>
                         <option>engine overall repair</option>
                         <option>dual clutch change</option>
@@ -80,7 +86,7 @@ const CreatedJobsTableBootstrap = () => {
                         <option>inverter coolant change</option>
                       </select>
                       : row.serviceType}
-                    </td>
+                    </td> */}
                     <td>{editId === row._id ?
                       <select value={updatedData.vehicleType} onChange={e => handleChange('vehicleType', e.target.value)}>
                         <option>Toyota</option>
@@ -92,7 +98,7 @@ const CreatedJobsTableBootstrap = () => {
                     </td>
                     <td>{editId === row._id ?
                       <input type="date" value={updatedData.date} onChange={e => handleChange('date', e.target.value)} required min={today} />
-                      : row.date}
+                      : formatDate(row.date)}
                     </td>
                     <td>{editId === row._id ?
                       <input type="time" value={updatedData.time} onChange={e => handleChange('time', e.target.value)} />

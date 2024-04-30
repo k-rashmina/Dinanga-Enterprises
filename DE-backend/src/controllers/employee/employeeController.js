@@ -2,12 +2,14 @@ const Employee = require('../../models/employee')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
+const secretKey = 'Maneesha';
+
 // test controller
 async function getEmployeeTest(req, res) {
     return res.status(200).json({ msg: 'Test employee' });
 }
 
-//Register new employee
+//Register a new employee
 const registerEmployee = async (req, res) => {
     const { name, contactNumber, email, address, username, password, department, role } = req.body;
   
@@ -74,7 +76,7 @@ const updateEmployee = async (req, res) => {
   try {
     const { name, contactNumber, email, address, username, password } = req.body;
     const employeeId = req.params.id;
-    
+
     let updatedFields = {
       name,
       contactNumber,
@@ -144,58 +146,58 @@ const getAssignedServices = async (req, res) => {
   // Employee login test
   const login = async (req, res) => {
     const { username, password } = req.body;
-  
-    try {
-      // Check if the employee exists
-      let employee = await Employee.findOne({ username });
-  
-      if (!employee) {
-        return res.status(400).json({ msg: 'Invalid username' });
-      }
 
-      // Validate password
-      const isMatch = await bcrypt.compare(password, employee.password);
-  
-      if (!isMatch) {
-        return res.status(400).json({ msg: 'Invalid password' });
-      }
-  
-      // Create and return JWT token
-      const payload = {
-        user: {
-          id: employee.id,
-          username: employee.username,
-          department: employee.department
+    try {
+        const employee = await Employee.findOne({ username });
+
+        if (!employee) {
+            return res.status(401).json({ message: "Invalid username or password." });
         }
-      };
-  
-      jwt.sign(
-        payload,
-        token = process.env.TOKEN,
-        { expiresIn: 3600 }, // Token expires in 1 hour
-        (err, token) => {
-          if (err) throw err;
-          res.json({ token });
+
+        const passwordMatch = await bcrypt.compare(password, employee.password);
+
+        if (passwordMatch) {
+            // Generate a JWT using the secret key
+            const token = jwt.sign(
+                {
+                    employeeId: employee._id, // Include the employee's ID in the payload
+                    username: employee.username // Include the employee's username in the payload
+                },
+                secretKey, // Secret key for signing the token
+                {
+                    expiresIn: '1h' // Token expiration time (e.g., 1 hour)
+                }
+            );
+
+            // Return the JWT to the client
+            res.json({ message: "Login successful!", token });
+        } else {
+            res.status(401).json({ message: "Invalid username or password." });
         }
-      );
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server error');
+    } catch (error) {
+        console.error("Error during login:", error);
+        res.status(500).json({ message: "Internal server error." });
     }
-  };
+};
 
   //Get available consultancy employees
   const getAvailableConsultancyEmployees = async (req, res) => {
     try {
       // Query the database for consultancy employees who are available
       const consultancyEmployees = await Employee.find({
-        department: 'consultancy',
+        department: 'Consultancy',
         availability: true
       });
-  
+      
       // Extract and return only the names of available consultancy employees
-      const employeeNames = consultancyEmployees.map(employee => {employee.name, employee._id});
-  
+      // const employeeNames = consultancyEmployees.map(employee => {employee.name, employee._id});
+      const employeeNames = consultancyEmployees.map(employee => {
+        return {
+          name:employee.name,
+          _id:employee._id
+        }
+      });
+      console.log(employeeNames)
       res.json(employeeNames);
     } catch (err) {
       console.error(err.message);
@@ -203,6 +205,30 @@ const getAssignedServices = async (req, res) => {
     }
   };
 
+  //Get available mechanical employees
+  const getAvailableMechanicalEmployees = async (req, res) => {
+    try {
+      const mechanicalEmployees = await Employee.find({
+        department: 'Mechanical',
+        availability: true
+      });
+      
+      const employeeNames = mechanicalEmployees.map(employee => {
+        return {
+          name:employee.name,
+          _id:employee._id
+        }
+      });
+      console.log(employeeNames)
+      res.json(employeeNames);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  };
+
+
+  //Get all employee details
   const getAllEmployeeDetails = async (req, res) => {
     try {
       const employees = await Employee.find();
@@ -232,6 +258,7 @@ module.exports = {
     getAssignedServices,
     login,
     getAvailableConsultancyEmployees,
+    getAvailableMechanicalEmployees,
     getAllEmployeeDetails,
     // passwordsMatch,
     // updateServiceIssue,

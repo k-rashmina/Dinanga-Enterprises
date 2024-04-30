@@ -1,6 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import {saveAs} from 'file-saver';
+import NewListings from './report/NewListings';
+import NewStocks from './report/NewStocks';
+import SoldItems from './report/SoldItems';
+import AdminHeader from '../common/AdminHeader';
 
 function Report() {
 
@@ -9,8 +13,16 @@ function Report() {
     saveAs(new Blob([res.data],{type: 'application/pdf'}), 'inventoryReport.pdf');
   }
   return (
-    <div>Report
-      <button onClick={generateReport}>Generate Report</button>
+    <div >
+      <AdminHeader pageName={'Report'}/>
+      <button className='form-button rounded-5 ms-9 fw-semibold' onClick={generateReport}>Generate Report</button>
+      <center>
+      <NewListings/>
+      <NewStocks/>
+      <SoldItems/>
+      </center>
+      
+      
     </div>
   )
 }

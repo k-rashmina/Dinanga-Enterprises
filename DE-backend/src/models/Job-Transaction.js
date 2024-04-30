@@ -61,7 +61,7 @@ const jobTrasactionSchema = new Schema({
   },
   model_type: {
     type: String,
-    enum: ['jobappointments', 'services'],
+    enum: ['jobAppointment', 'services'],
     required: true
   }
 })

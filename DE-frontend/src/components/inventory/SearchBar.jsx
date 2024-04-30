@@ -32,9 +32,9 @@ function SearchBar() {
   }, [searchTerm]);
 
   return (
-    < div className="d-flex justify-content-end">
+    < div className="d-flex justify-content-end" >
     <div className="d-flex align-items-center justify-content-end pe-4 align-items-center" style={{width: '400px'}}>
-    <div className="container">
+    <div className="container" style={{backgroundColor: '#EEEEEE'}}>
       <div className="input-group mb-3">
       <div style={{ position: 'relative' }}>
       <FontAwesomeIcon icon={faSearch} size = "lg" style={{ position: 'absolute', top: '14px', left: '10px' }} />
@@ -56,7 +56,7 @@ function SearchBar() {
         </button>
         
       </div>
-      {error && <div className="alert alert-danger"style = {{position:'absolute',}}>{error}</div>}
+      {error && <div className="alert alert-danger"style = {{position:'absolute', zIndex: 9999,}}>{error}</div>}
       {searchResults.length > 0 && ( // Render search results only when there are results
        
         <table style = {{position:'absolute', zIndex: 9999,background:'#FFFFFF',borderRadius:'10px', backgroundColor:'#EEEEEE',fontSize:'20px'}}>

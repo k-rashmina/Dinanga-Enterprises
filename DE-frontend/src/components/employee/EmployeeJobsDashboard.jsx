@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Table, Dropdown } from 'react-bootstrap';
+import { Container, Table, Button} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
@@ -15,10 +15,11 @@ const rows = [
 ];
 
 const EmployeeJobsDashboard = () => {
-  const [status, setStatus] = useState('Pending');
+  const [isDone, setIsDone] = useState(false);
 
-  const handleStatusChange = (selectedStatus) => {
-    setStatus(selectedStatus);
+  const handleDoneButtonClick = () => {
+    setIsDone(true); // Set isDone state to true to change the button color to green
+    setStatus("Completed"); // Update status to "Completed"
   };
 
   return (
@@ -43,15 +44,12 @@ const EmployeeJobsDashboard = () => {
                 <td>{row.location}</td>
                 <td>{row.dueDate}</td>
                 <td>
-                  <Dropdown>
-                    <Dropdown.Toggle variant="secondary" id={`dropdown-status-${index}`}>
-                      {status}
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                      <Dropdown.Item onClick={() => handleStatusChange('Pending')}>Pending</Dropdown.Item>
-                      <Dropdown.Item onClick={() => handleStatusChange('Completed')}>Completed</Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
+                <Button 
+                    variant={isDone ? "success" : "secondary"} // Change color based on isDone state
+                    onClick={handleDoneButtonClick}
+                  >
+                    Done
+                  </Button>
                 </td>
               </tr>
             ))}

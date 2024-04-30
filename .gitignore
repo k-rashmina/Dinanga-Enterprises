@@ -13,6 +13,9 @@ node_modules
 dist
 dist-ssr
 *.local
+customerReport.pdf
+inventoryReport.pdf
+TransactionReport.pdf
 
 # Editor directories and files
 .vscode/*

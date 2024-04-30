@@ -8,8 +8,7 @@ export default function AdminLayout(props) {
     <>
       <SideBar page={props.page} menu={props.menu}/>
 
-      <div style={{flex: 'auto', position: 'relative', height: '100vh'
-}}>
+      <div style={{flex: 'auto', position: 'relative', height: '100vh', marginLeft: '300px'}}>
         <Outlet/>  
       </div>
 

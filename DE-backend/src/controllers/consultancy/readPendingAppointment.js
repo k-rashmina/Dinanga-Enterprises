@@ -3,9 +3,9 @@ const consultantAppointment = require("../../models/consultantAppointment");
 const getAppointmentsWithPendingStatus = async (req, res) => {
     try {
         // Find appointments where the status is "pending"
-        const appointments = await consultantAppointment.find({ status: "pending" })
+        const appointments = await consultantAppointment.find({ status: "pending" }).populate('assignedEmployee').exec();
             // Select only the consultantNumber, Date, and location fields
-            .select('consultantNumber Email Date Time location');
+            // .select('consultantNumber Email Date Time location assignedEmployee');
 
         res.status(200).json(appointments);
     } catch (error) {

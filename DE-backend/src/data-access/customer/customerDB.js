@@ -22,6 +22,18 @@ const getCusDetails = async(cusid) =>{
 // }
 
 
+const getLoggedUser = async(user) => {
+
+    try{
+
+        const loggedUser = await cusDetails.findOne().where('cusMail').equals(user.mail).where('cusPassword').equals(user.pass);
+        return loggedUser;
+    }catch(err){
+        return 'error';
+    }
+
+}
+
 const addCusDetails = async(newCustomer) =>{
 
     try{
@@ -68,4 +80,4 @@ const deleteCustomer = async(delCusId) =>{
     }
 }
 
-module.exports = {addCusDetails,getCusDetails,updateCustomer,deleteCustomer};
+module.exports = {addCusDetails, getLoggedUser, getCusDetails,updateCustomer,deleteCustomer};

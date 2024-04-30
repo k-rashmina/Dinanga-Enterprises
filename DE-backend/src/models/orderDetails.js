@@ -6,6 +6,10 @@ const orderDetailsSchema = new schema({
         type:String,
         required:true,  
     },
+    order_number:{
+        type: String,
+        required: true
+    },
     itemNumber:{
         type:String,
         required:true

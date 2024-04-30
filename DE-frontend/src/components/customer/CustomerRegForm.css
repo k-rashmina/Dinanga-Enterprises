@@ -17,3 +17,18 @@
     border-style: solid;
     border-color: #00ADB5;
   }
+
+  .reg-form-button2{
+    background-color: #393E46;
+    border-width: 2px;
+    padding: 10px 20px 10px 20px;
+    border-color: #393E46;
+    color: #fff;
+    border-style: solid;
+    transition: 0.4s;
+  }
+
+  .reg-form-button2:hover{
+    background-color: #EEEEEE;
+    color: #00ADB5;
+  }

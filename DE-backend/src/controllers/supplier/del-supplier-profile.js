@@ -3,7 +3,7 @@ const deleteSupplierProfileDetails =  require('../../services/supplier/delSuppli
 
 const deleteSupplierProfile= async (req, res) => {
 
-    const deleteSupplier = req.body._id;
+    const deleteSupplier = req.query.supid;
 
     res.json(await deleteSupplierProfileDetails(deleteSupplier));
 

@@ -9,10 +9,13 @@ import Article5 from "../../assets/Article-5.png";
 
 const Services = () => {
   const [selectedService, setSelectedService] = useState(null);
+  const [showSidebar, setShowSidebar] = useState(false);
 
   const handleServiceClick = (service) => {
     setSelectedService(service);
   };
+
+  const toggleSidebar = () => setShowSidebar(!showSidebar);
 
   const getServiceDetails = (service) => {
     switch (service) {

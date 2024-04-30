@@ -69,13 +69,13 @@ const Services = () => {
   };
 
   return (
-    <div className='bg-dark'>
-    <div className="container bg-dark" style={{ color: '#fff',maxWidth: '150vh', minHeight: '100vh', WebkitAlignContent: 'center' }}>
-      <h4 className="mb-4" style={{ textAlign: 'left', fontSize: '3rem', fontStyle: 'Bold', marginTop: 50 }}>Services</h4>
+    <div  style={{ paddingTop: '40px', backgroundColor: '#191B1A' }}> {/* Added style to remove gap */}
+    <div className="container bg-dark" style={{ color: '#fff',maxWidth: '150vh', minHeight: '100vh', WebkitAlignContent: 'center'}}>
+      <h4 className="mb-4" style={{ textAlign: 'left', fontSize: '3rem', fontStyle: 'Bold'}}>Services</h4>
       <div className="row">
         {servicesData.map((service, index) => (
           <div className="col-xs-12 col-sm-6 col-md-4" key={index}>
-            <div className="card text-white bg-secondary mb-3" style={{ margin: 20, height: '368px' }}>
+            <div className="card text-white bg-secondary mb-3" style={{ margin: 0, height: '300px' }}>
               <img src={service.imageUrl} className="card-img-top" alt={service.title} style={{ objectFit: 'cover', height: '160px' }}/>
               <div className="card-body">
                 <h5 className="card-title">{service.title}</h5>
@@ -85,7 +85,7 @@ const Services = () => {
           </div>
         ))}
         <div className="col-12 text-center mt-3">
-          <button type="button" className="btn btn-primary" onClick={handleAppointmentClick} style={{ backgroundColor: '#fff', color: '#000', fontWeight: 'Bold', padding: '10px 20px', fontSize: '1rem', borderRadius: '25px' }}>
+          <button type="button" className="btn btn-primary" onClick={handleAppointmentClick} style={{ backgroundColor: '#00adb4', color: '#fff', fontWeight: 'Bold', padding: '10px 30px',marginBottom:'30px',fontSize: '1rem', borderRadius: '25px' }}>
             Make Job Appointment
           </button>
         </div>
