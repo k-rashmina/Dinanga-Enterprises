@@ -40,9 +40,9 @@ function SupplierProfile() {
   const randomProfilePictureUrl = `https://picsum.photos/200/200?random=${getRandomNumber(1, 1000)}`;
 
   const handleFeedbackHistory = () => {
-    // Handle feedback history logic here
+    
     console.log("Showing feedback history...");
-    // You can add further actions here, like displaying a modal or navigating to a different page
+
   };
 
   useEffect(() => {
@@ -55,33 +55,32 @@ function SupplierProfile() {
 
 
   const handleUpdateProfile = () => {
-    // Make PUT request to update supplier details
+    
     axios.put('http://localhost:5000/supplier/upsupplierdetails', supDetails)
       .then(response => {
         console.log("Profile updated successfully:", response.data);
-        setIsEditMode(false); // Disable edit mode after successful update
-        // You can add further actions here, like displaying a success message or updating state
+        setIsEditMode(false); 
       })
       .catch(error => {
         console.error("Error updating profile:", error);
-        // Handle error, display an error message, etc.
+        
       });
   };
   
 
 
   const handleDeleteProfile = () => {
-    // Make DELETE request to delete supplier profile
+   
     axios.delete(`http://localhost:5000/supplier/delsupplierdetails?supid=${supDetails._id}`)
       .then(response => {
         console.log("Profile deleted successfully:", response.data);
         alert("deleted")
-        // You can add further actions here, like displaying a success message or redirecting to another page
+        
         history.push('/supreg');
       })
       .catch(error => {
         console.error("Error deleting profile:", error);
-        // Handle error, display an error message, etc.
+        
       });
   };
 
@@ -113,7 +112,7 @@ function SupplierProfile() {
 
   const [fedSubVal, setFedSubVal] = useState(false);
   const handleFeedbackSubmit = () => {
-    // Prepare data object to send
+    
     setFedSubVal(prev => !prev);
 
   };
@@ -121,17 +120,14 @@ function SupplierProfile() {
   
   useEffect(() => {
 
-    // Send feedback data to the server
+    
     axios.post('http://localhost:5000/supFeedback/addsupplierfeedbacks', formData)
     .then(response => {
-      console.log(response.data); // Log the response if needed
-      // Handle any success scenario here (e.g., show a success message)
-      // Close the modal after successful submission
+      console.log(response.data); 
       handleCloseFeedbackModal();
     })
     .catch(error => {
       console.error('Error submitting feedback:', error);
-      // Handle error scenario here (e.g., show an error message)
     });
 
   }, [fedSubVal])
@@ -172,7 +168,7 @@ console.log(loggedSupplier)
               </Form.Group>
               <Form.Group controlId="formEmail">
                 <Form.Label className="form-label">Email</Form.Label>
-                <Form.Control type="email" readOnly={!isEditMode} onChange={handleInputEvents}  name='Supplier_email' className="form-control" value={hasPageLoaded.current ? supDetails.Supplier_email : ''} />
+                <Form.Control type="email" readOnly={!isEditMode} onChange={handleInputEvents}  name='Supplier_email' className="form-control" value={hasPageLoaded.current ? supDetails.Supplier_email : '' } disabled />
               </Form.Group>
               <Form.Group controlId="formServicesProvided">
                 <Form.Label className="form-label">Contact</Form.Label>

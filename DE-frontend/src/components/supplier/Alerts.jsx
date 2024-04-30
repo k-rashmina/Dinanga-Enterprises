@@ -28,7 +28,7 @@ const OrderAlerts = () => {
     if (statusMessage !== '') {
       setTimeout(() => {
         setStatusMessage('');
-      }, 3000); // Hide status message after 3 seconds
+      }, 3000); 
     }
   }, [statusMessage]);
 
@@ -45,11 +45,10 @@ const OrderAlerts = () => {
   }, []);
 
   const handleDownloadPDF = () => {
-    // Call the function to print the interface as a PDF
+    
     printPDF();
   };
 
-  // Function to print the interface as a PDF
   const printPDF = () => {
     const htmlContent = generateHTMLForPDF();
     const windowContent = '' + htmlContent + '</body></html>';
@@ -62,16 +61,16 @@ const OrderAlerts = () => {
 
   const generateHTMLForPDF = () => {
     let html =
-    '<div style="text-align: center; font-size: 40px; font-family: Calibri; margin-bottom: 10px;">' +
-    "<b>Dinanga Enterprises</b>" +
-    "</div>" +
-    '<div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">' +
-    "<b>Address: 68 Paraththa Rd, Panadura 12500</b>" +
-    "</div>" +
-    '<div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">' +
-    "<b>Telephone: +94 71 126 1449<b>" +
-    "</div>" +
-    "<hr/>";
+      '<div style="text-align: center; font-size: 40px; font-family: Calibri; margin-bottom: 10px;">' +
+      "<b>Dinanga Enterprises</b>" +
+      "</div>" +
+      '<div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">' +
+      "<b>Address: 68 Paraththa Rd, Panadura 12500</b>" +
+      "</div>" +
+      '<div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">' +
+      "<b>Telephone: +94 71 126 1449<b>" +
+      "</div>" +
+      "<hr/>";
 
   
     html +=

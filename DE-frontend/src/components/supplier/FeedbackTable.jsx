@@ -9,7 +9,7 @@ import axios from 'axios';
 
 const SupplierfeedbackTable = () => {
 
-  const loggedSupplier = 'dunithpvt@gmail.com';
+  const loggedSupplier = localStorage.getItem('loggedSup');
 
   const [fedDetails, setFedDetails] = useState([]);
 

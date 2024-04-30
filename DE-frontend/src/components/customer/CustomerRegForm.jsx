@@ -5,6 +5,9 @@ import axios from "axios";
 import {useNavigate} from 'react-router-dom';
 
 function CustomerRegForm() {
+  const date = new Date().toJSON();
+  const today = date.substring(0, 10);
+
   const [formData, setFormData] = useState({
     cusFname: '',
     cusLname: '',
@@ -110,7 +113,7 @@ function CustomerRegForm() {
         <div className='d-flex justify-content-between  flex-wrap'>
           <label style={{ width: '300px' }}>Date Of Birth</label>
           <label style={{ width: '300px' }}>Phone</label>
-          <input type="date" name='bDate' value={formData.bDate} onChange={handleChange} onBlur={handleChange} style={{ width: '300px', backgroundColor: 'white' }} className='border-color rounded-2' placeholder='' required />
+          <input type="date" max={today} name='bDate' value={formData.bDate} onChange={handleChange} onBlur={handleChange} style={{ width: '300px', backgroundColor: 'white' }} className='border-color rounded-2' placeholder='' required />
           <input type="text" name='pNum' value={formData.pNum} onChange={handleChange} style={{ width: '300px', backgroundColor: 'white' }} className='border-color rounded-2' placeholder=' 07XXXXXXXX' required />
           <div className="text-danger" style={{ width: '300px', height: '20px'}}>{errors.bDate}</div>
           <div className="text-danger" style={{ width: '300px', height: '20px'}}>{errors.pNum}</div>
