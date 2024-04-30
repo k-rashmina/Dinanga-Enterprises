@@ -36,42 +36,48 @@ function CustomerRegForm() {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value,
-    }));
 
-    // Validate each field as it changes
-    const newErrors = { ...errors };
-    switch (name) {
-      case 'cusFname':
-      case 'cusLname':
-        newErrors[name] = value.trim() === '' ? 'This field is required' : '';
-        break;
-      case 'bDate':
-        newErrors[name] = value === '' ? 'This field is required' : '';
-        break;
-      case 'cusMail':
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        newErrors[name] = !emailPattern.test(value) ? 'Invalid email address' : '';
-        break;
-      case 'cusPassword':
-        newErrors[name] = value.length < 8 ? 'Password must be at least 8 characters long' : '';
-        break;
-      case 'pw':
-        newErrors[name] = value !== formData.cusPassword ? 'Passwords do not match' : '';
-        break;
-      case 'pNum':
-        const phonePattern = /^\d{10}$/;
-        newErrors[name] = !phonePattern.test(value) ? 'Invalid phone number' : '';
-        break;
-      case 'cusAddr':
-        newErrors[name] = value.trim() === '' ? 'This field is required' : '';
-        break;
-      default:
-        break;
+    // Prevent typing special characters
+    if (/^[a-zA-Z]*$/.test(value)) {
+      setFormData(prevState => ({
+        ...prevState,
+        [name]: value,
+      }));
+
+      // Validate each field as it changes
+      const newErrors = { ...errors };
+      switch (name) {
+        case 'cusFname':
+        case 'cusLname':
+          newErrors[name] = value.trim() === '' ? 'This field is required' : '';
+          break;
+        case 'bDate':
+          newErrors[name] = value === '' ? 'This field is required' : '';
+          break;
+        case 'cusMail':
+          const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          newErrors[name] = !emailPattern.test(value) ? 'Invalid email address' : '';
+          break;
+        case 'cusPassword':
+          newErrors[name] = value.length < 8 ? 'Password must be at least 8 characters long' : '';
+          break;
+        case 'pw':
+          newErrors[name] = value !== formData.cusPassword ? 'Passwords do not match' : '';
+          break;
+        case 'pNum':
+          const phonePattern = /^\d{10}$/;
+          newErrors[name] = !phonePattern.test(value) ? 'Invalid phone number' : '';
+          break;
+        case 'cusAddr':
+          newErrors[name] = value.trim() === '' ? 'This field is required' : '';
+          break;
+        default:
+          break;
+      }
+      setErrors(newErrors);
+    } else {
+      // Special characters entered, do not update the state
     }
-    setErrors(newErrors);
   };
 
   const validateForm = () => {
