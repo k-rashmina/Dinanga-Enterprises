@@ -115,6 +115,7 @@ function App() {
           <Route path='/about' element/>
           <Route path='/contact' element/>
           <Route path='/cusprofile' element={<CustomerProfile />}/>
+          <Route path='/cusfeedback' element={<FeedbackUpDel />} />
           <Route path='/supprofile' element = {<SupplierProfile/>}/>
           <Route path='/job' element/>
 
