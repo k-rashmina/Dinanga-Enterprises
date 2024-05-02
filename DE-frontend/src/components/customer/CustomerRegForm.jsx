@@ -39,28 +39,38 @@ function CustomerRegForm() {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-
-    // Prevent typing special characters
-    if (/^[a-zA-Z]*$/.test(value)) {
+  
+    // Prevent typing special characters for cusFname and cusLname
+    if (name === 'cusFname' || name === 'cusLname') {
+      if (/^[a-zA-Z]*$/.test(value) || value === '') {
+        setFormData(prevState => ({
+          ...prevState,
+          [name]: value,
+        }));
+        // Validate if the field is empty
+        const newErrors = { ...errors };
+        newErrors[name] = value.trim() === '' ? 'This field is required' : '';
+        setErrors(newErrors);
+      }
+    } else {
+      // For other fields, perform validations and update state
       setFormData(prevState => ({
         ...prevState,
         [name]: value,
       }));
-
+  
       // Validate each field as it changes
       const newErrors = { ...errors };
       switch (name) {
-        case 'cusFname':
-        case 'cusLname':
-          newErrors[name] = value.trim() === '' ? 'This field is required' : '';
-          break;
         case 'bDate':
           newErrors[name] = value === '' ? 'This field is required' : '';
           break;
-        case 'cusMail':
-          const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          newErrors[name] = !emailPattern.test(value) ? 'Invalid email address' : '';
-          break;
+          case 'cusMail':
+            const emailPattern = /^[^\s@A-Z]+@[^\s@A-Z]+\.[^\s@A-Z]+$/;
+            newErrors[name] = !emailPattern.test(value) ? 'Invalid email address' : '';
+            break;
+          
+          
         case 'cusPassword':
           newErrors[name] = value.length < 8 ? 'Password must be at least 8 characters long' : '';
           break;
@@ -78,10 +88,10 @@ function CustomerRegForm() {
           break;
       }
       setErrors(newErrors);
-    } else {
-      // Special characters entered, do not update the state
     }
   };
+  
+  
 
   const validateForm = () => {
     let valid = true;
