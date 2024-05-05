@@ -1,40 +1,97 @@
 .supplier-feedback-container {
-    padding: 16px;
-    background-color: #f8f9fa;
-    min-height: 100vh;
+  padding: 16px;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.feedback-header {
+  color: #17a2b8;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 20px;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
   }
-  
-  .feedback-header {
-    color: #17a2b8;
-    text-align: center;
-    font-weight: bold;
-    margin-bottom: 20px;
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .feedback-table-container {
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.feedback-table-container {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
+}
+
+.feedback-table-container:hover {
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.feedback-table {
+  margin-bottom: 0;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-header-row {
+  background: linear-gradient(to right, #45aaf2, #17a2b8);
+  color: white;
+  animation: slideInFromTop 0.5s ease;
+}
+
+@keyframes slideInFromTop {
+  0% {
+    transform: translateY(-100%);
   }
-  
-  .feedback-table {
-    margin-bottom: 0;
+  100% {
+    transform: translateY(0);
   }
-  
-  .table-header-row {
-    background-color: #17a2b8;
-    color: white;
+}
+
+.feedback-table tr {
+  transition: background-color 0.3s;
+}
+
+.feedback-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.feedback-table td, .feedback-table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.action-button {
+  margin: 2px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  animation: scaleIn 0.3s ease;
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0);
   }
-  
-  .action-button {
-    margin: 2px;
+  100% {
+    transform: scale(1);
   }
-  
-  .edit-button {
-    background-color: #007bff;
-  }
-  
-  .delete-button {
-    background-color: #dc3545;
-  }
-  
+}
+
+.action-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.edit-button {
+  background-color: #007bff;
+}
+
+.delete-button {
+  background-color: #dc3545;
+}

@@ -4,14 +4,12 @@
   padding: 20px;
   border-radius: 50px;
   backdrop-filter: blur(100px);
-  
-  
 }
 
 .order-alerts-header {
   text-align: center;
   margin-bottom: 20px;
-  color: #1E5375; /* Change heading color */
+  color: #1E5375;
   backdrop-filter: blur(100px);
 }
 
@@ -98,16 +96,16 @@
 }
 
 .download-report-button {
-  background-color: #00ADB5; /* Green */
+  display: block;
+  margin: 20px auto;
+  background-color: #00ADB5;
   border-color: black;
   border-radius: px;
   color: white;
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
   font-size: 16px;
-  margin: 4px 2px;
   cursor: pointer;
   border-radius: 8px;
   animation-name: pulse;
@@ -180,4 +178,86 @@
   border-radius: 20px;
   box-shadow: 0 4px 6px -1px #977ef3, 0 2px 4px -1px #977ef3;
   transition: all .6s ease;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.accept-button,
+.reject-button {
+  background-color: #00ADB5;
+  border: none;
+  color: #fff;
+  padding: 12px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  margin: 0 10px;
+}
+
+.accept-button {
+  background-color: #00ADB5;
+}
+
+.accept-button:hover {
+  background-color: #00c2cb;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.accept-button:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.accept-button:hover:before {
+  transform: translateX(0);
+}
+
+.reject-button {
+  background-color: #ff4d4d;
+}
+
+.reject-button:hover {
+  background-color: #ff6666;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.reject-button:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.reject-button:hover:before {
+  transform: translateX(0);
+}
+
+.accept-button:focus,
+.reject-button:focus {
+  outline: none;
 }

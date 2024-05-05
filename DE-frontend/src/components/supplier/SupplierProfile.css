@@ -1,18 +1,18 @@
 .sidebar {
   width: 0;
   height: 100%;
-  background-color: rgba(0, 173, 181, 0.8); /* Adjust opacity for better blur effect */
+  background-color: rgba(0, 173, 181, 0.8);
   position: fixed;
   top: 0;
   left: 0;
   overflow-x: hidden;
-  transition: width 0.5s ease-in-out; /* Add transition for width */
+  transition: width 0.5s ease-in-out;
   box-shadow: 0 4px 6px rgba(182, 85, 85, 0.1);
 }
 
 .sidebar.open {
   width: 250px;
-  backdrop-filter: blur(20px); /* Apply blur effect */
+  backdrop-filter: blur(20px);
 }
 
 .sidebar h3 {
@@ -21,7 +21,7 @@
   text-align: center;
   font-size: 1.5rem;
   text-transform: uppercase;
-  transition: opacity 0.5s ease-in-out; /* Add transition for opacity */
+  transition: opacity 0.5s ease-in-out;
 }
 
 .sidebar ul {
@@ -36,7 +36,7 @@
   font-size: 1.2rem;
   color: #fff;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  transition: background-color 0.3s ease; /* Add transition for background-color */
+  transition: background-color 0.3s ease;
 }
 
 .sidebar ul li:hover {
@@ -48,50 +48,33 @@
   top: 20px;
   left: 20px;
   cursor: pointer;
-  color: #52dce3;
+  color: #00ADB5;
   z-index: 999;
   font-size: 1.5rem;
-  transition: transform 0.3s ease; /* Add transition for transform */
+  transition: transform 0.3s ease;
 }
 
 .sidebar-toggle:hover {
-  transform: scale(1.1); /* Add hover effect */
+  transform: scale(1.1);
 }
 
-
-.sidebar-toggle {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  cursor: pointer;
-  color: #52dce3;
-  z-index: 999;
-  font-size: 1.5rem;
-  transition: transform 0.3s ease; /* Add transition for transform */
-}
-
-.sidebar-toggle:hover {
-  transform: scale(1.1); /* Add hover effect */
-}
-
-/* Main Content Styles */
 .profile-card {
-  background-color: #1B262C;
+  background: linear-gradient(135deg, #11998e, #f5e8e8);
   border-radius: 30px;
   padding: 20px;
   color: #fff;
-  margin-left: 160px;
-  margin-right: 30px;
+  width: 80%; 
+  max-width: 1800px; 
+  margin: 0 auto; 
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease; /* Add transition for all properties */
+  transition: all 0.3s ease;
 }
 
 .profile-heading {
   margin-top: 0;
   color: #00ADB5;
-  text-align: center; /* Centers the text */
+  text-align: center;
 }
-
 
 .profile-details {
   width: 80%;
@@ -102,41 +85,111 @@
   margin-bottom: 20px;
 }
 
-/* General input styles */
 .profile-details .form-control {
   width: 100%;
-  background-color: #37474F; /* Dark grey background */
+  background-color: #37474F;
   border: none;
-  border-bottom: 2px solid #00ADB5; /* Teal bottom border */
+  border-bottom: 2px solid #00ADB5;
   border-radius: 0;
-  color: #fff; /* White text color for readability */
-  transition: border-color 0.3s ease; /* Smooth transition for border color change */
+  color: #fff;
+  transition: border-color 0.3s ease;
 }
 
 .profile-details .form-control:focus {
   outline: none;
-  border-color: #52dce3; /* Lighter teal on focus */
+  border-color: #00ADB5;
 }
 
 .profile-picture-container img {
-  width: 100px;  /* or any specific size */
-  height: 100px; /* equal to width to maintain aspect ratio */
-  border-radius: 50%; /* makes the image circular */
-  object-fit: cover; /* ensures the image covers the space without distortion */
-  border: 2px solid #00ADB5; /* optional: adds a border around the image */
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  filter: blur(8px); /* Adjust the blur intensity as needed */
   margin-top: 10px;
   margin-right: 30px;
 }
 
-
-/* Styles for disabled inputs */
 .profile-details .form-control:disabled {
-  background-color: #2E3D49; /* Slightly lighter than the default input background */
-  color: #62727b; /* Lighter text color to indicate non-editability */
-  border-bottom: 2px dashed #62727b; /* Dashed border to differ from editable inputs */
+  background-color: #2E3D49;
+  color: #62727b;
+  border-bottom: 2px dashed #62727b;
 }
 
 .profile-details .form-control:disabled:hover {
-  cursor: not-allowed; /* Show a not-allowed cursor on hover */
+  cursor: not-allowed;
+}
+
+.custom-button {
+  background-color: #00ADB5;
+  border: none;
+  color: #fff;
+  padding: 12px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.custom-button.btn-primary {
+  background-color: #00ADB5;
+}
+
+.custom-button.btn-primary:hover {
+  background-color: #00c2cb;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.custom-button.btn-primary:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.custom-button.btn-primary:hover:before {
+  transform: translateX(0);
+}
+
+.custom-button.btn-danger {
+  background-color: #ff4d4d;
+}
+
+.custom-button.btn-danger:hover {
+  background-color: #ff6666;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.custom-button.btn-danger:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.custom-button.btn-danger:hover:before {
+  transform: translateX(0);
+}
+
+.custom-button:focus {
+  outline: none;
 }
 
