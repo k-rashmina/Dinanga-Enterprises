@@ -75,14 +75,14 @@ export default function AddConsultancyCustomer() {
             <div className="col-12 text-center mb-5">
               <span className="fs-4 ">{user && user.status}</span>
             </div>
-{/* 
+
             <div className="col-12 text-center">
               <span className="fs-3 fw-bold">Assigned Job Services</span>
             </div>
 
             <div className="col-12 mb-4 text-center">
               <span className="fs-5 fw-bold">{user && user.jobService}</span>
-            </div> */}
+            </div>
           </div>
         </div>
 
@@ -253,7 +253,7 @@ export default function AddConsultancyCustomer() {
               </div>
             </div>
 
-            {/* <div className="col-12 mt-5">
+            <div className="col-12 mt-5">
               <div className="row">
                 <div className="col-4 text-center">
                   <span>Response : </span>
@@ -277,7 +277,7 @@ export default function AddConsultancyCustomer() {
                   ></textarea>
                 </div>
               </div>
-            </div> */}
+            </div>
 
             <div className="col-12 mt-4 d-flex justify-content-center ">
               <div className="row">
