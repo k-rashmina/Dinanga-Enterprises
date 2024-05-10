@@ -366,7 +366,7 @@ export default function AddConsultancy() {
                                 (res) =>
                                   console.log("Worked: " + JSON.stringify(res)),
                                 alert("appoinment added successfully"),
-                                (window.location = "/consultancy/:consid")
+                                (window.location = "/consultancy/req")
                               )
                               .catch((err) =>
                                 console.log("Failed: " + JSON.stringify(err))
