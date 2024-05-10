@@ -7,13 +7,15 @@ import axios from "axios";
 export default function ConsultancyTable() {
   const [data, setData] = useState([]);
 
+  const loggedUser = localStorage.getItem('loggedUser');
+
   const hasPageLoaded = useRef(false);
   
   useEffect(() => {
     function GetRecord() {
       axios
         .get(
-          "http://localhost:5000/consultantAppointment/getpendingappointments"
+          `http://localhost:5000/consultantAppointment/getcusappointments?email=${loggedUser}`
         )
         .then((res) => {
           hasPageLoaded.current = true;

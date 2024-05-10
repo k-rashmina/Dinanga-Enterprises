@@ -6,6 +6,8 @@ import invBackImage from "../../assets/conform4.jpg"; // Import the image
 
 export default function AddConsultancy() {
 
+  const loggedUser = localStorage.getItem('loggedUser');
+
   const today =new Date().toISOString().split('T')[0];
 
   return (
@@ -37,6 +39,7 @@ export default function AddConsultancy() {
                         type="email"
                         name="email"
                         id="email"
+                        value={loggedUser}
                         onBlur={function () {
                           var EmailTempry =
                             document.getElementById("email").value;

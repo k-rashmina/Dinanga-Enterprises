@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import batteryReplacement from '../../assets/batteryreplacement.jpeg';
 import Hybridbatteryservice from '../../assets/battery service.jpg';
@@ -65,7 +65,7 @@ const Services = () => {
   const navigate = useNavigate();
 
   const handleAppointmentClick = () => {
-    navigate('/jobAppointment');
+    navigate( localStorage.getItem('loggedUser') ? '/jobAppointment' : '/cuslogin');
   };
 
   return (
@@ -89,6 +89,15 @@ const Services = () => {
             Make Job Appointment
           </button>
         </div>
+
+        <div className="col-12 text-center mt-3">
+          <Link to={localStorage.getItem('loggedUser') ? '/jobCustomer' : '/cuslogin'}>
+            <button type="button" className="btn btn-primary" style={{ backgroundColor: '#00adb4', color: '#fff', fontWeight: 'Bold', padding: '10px 30px',marginBottom:'30px',fontSize: '1rem', borderRadius: '25px' }}>
+              View Job Appointment History
+            </button>
+          </Link>
+        </div>
+
       </div>
     </div>
     </div>

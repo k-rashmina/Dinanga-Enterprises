@@ -1,11 +1,11 @@
-const pendingEmpAppointment = require("../../models/jobAppointment");
+const jobAppointment = require("../../models/jobAppointment");
 
 const getPendingAppForEmp = async (req, res) => {
     try {
-        const { employee_id } = req.body; // Assuming employee_id is sent in the request body
+        const employee_id = req.query.empid; // Assuming employee_id is sent in the request 
 
         // Find appointments where the status is "pending" and employee_id matches
-        const appointments = await pendingEmpAppointment.find({ status: "pending", employee_id }).populate('serviceType').exec();
+        const appointments = await jobAppointment.find({ status: "pending", employeeName: employee_id }).populate('serviceType').exec();
 
         res.status(200).json(appointments);
     } catch (error) {

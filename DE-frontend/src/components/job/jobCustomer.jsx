@@ -14,7 +14,7 @@ const CreatedJobsTableBootstrap = () => {
   const hasPageLoaded = useRef(false);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/jobAppointment/getappointmentdetails")
+    axios.get(`http://localhost:5000/jobAppointment/getappointmentdetails?email=${loggedUser}`)
     .then(res => {
       hasPageLoaded.current = true;
       setData(res.data);

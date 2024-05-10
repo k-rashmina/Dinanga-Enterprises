@@ -130,7 +130,7 @@ function App() {
       
           <Route path='/consultancy' element={<AddConsultancy/>}/>
           <Route path='/consultancy/req' element={<ConsultancyHome/>}/>
-          <Route path='/consultancy/:consid' element={<ConsultancyTable/>}/>
+          <Route path='/consultancyhistory' element={<ConsultancyTable/>}/>
           <Route path='/consultancy/customer/:id' element={<ConsultantCustomer/>}/>
         </Route>
         

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Container,
   Table,
@@ -9,28 +9,35 @@ import {
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import axios from "axios"
 
-const rows = [
-  {
-    customerName: "John Doe",
-    customerContactNumber: "123-456-7890",
-    location: "123 Main St, City",
-    issue: "Battery Replacement",
-    availableJobServices: ["Oil Change", "Tire Rotation", "Brake Inspection"],
-    status: "Pending"
-  }
-];
+// const rows = [
+//   {
+//     customerName: "John Doe",
+//     customerContactNumber: "123-456-7890",
+//     location: "123 Main St, City",
+//     issue: "Battery Replacement",
+//     availableJobServices: ["Oil Change", "Tire Rotation", "Brake Inspection"],
+//     status: "Pending"
+//   }
+// ];
 
 const ConsultancyEmployeeDashboard = () => {
-  const [issueInfo, setIssueInfo] = useState("");
+
+  const loggedEmp = '662627c645d29e582b7b19ad'
+
+  const [issueInfo, setIssueInfo] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [selectedService, setSelectedService] = useState("");
   const [comment, setComment] = useState(""); 
   const [isDone, setIsDone] = useState(false); 
+  const hasPageLoaded = useRef(false);
+  const doneConsultancy = useRef({});
+  const[updateState, setUpdateState] = useState(false)
 
 
-  const handleIssueButtonClick = (issue) => {
-    setIssueInfo(issue);
+  const handleIssueButtonClick = (row) => {
+    setIssueInfo(row);
     setShowModal(true);
   };
 
@@ -38,25 +45,94 @@ const ConsultancyEmployeeDashboard = () => {
     setShowModal(false);
   };
 
-  const handleServiceSelection = (service) => {
-    setSelectedService(service);
+  const handleServiceSelection = (row, service) => {
+    row.jobService = service.service_name;
   };
 
   const handleCommentChange = (e) => {
     setComment(e.target.value);
+
   };
 
   const handleAddComment = () => {
-    console.log("Adding comment:", comment);
+    issueInfo.respond = comment;
+    alert('comment added')
   
 
     setComment(""); 
   };
 
-  const handleDoneButtonClick = () => {
-    setIsDone(true); 
-    setStatus("Completed"); 
+  const handleDoneButtonClick = (row) => {
+
+    if(row.jobService && row.respond){
+      hasPageLoaded.current = true;
+      doneConsultancy.current = row;
+      setIsDone(prev => !prev); 
+      // setStatus("Completed"); 
+    }
+    else{
+      alert("Please enter a comment and a job service")
+    }
+
+    
   };
+
+
+  //use effect for consultancy update
+  useEffect(() => {
+
+    if(hasPageLoaded.current){
+
+      if(confirm('Confirm Consultancy Completion')){
+
+        axios
+        .put(
+          `http://localhost:5000/consultantAppointment/updaterespond/${doneConsultancy.current._id}`,
+          {
+            jobService: doneConsultancy.current.jobService,
+            assignedEmployee: doneConsultancy.current.assignedEmployee,
+            respond: doneConsultancy.current.respond,
+            status: "done",
+          }
+        )
+        .then(() => {
+          console.log("Elakiri")
+          doneConsultancy.current = {}
+          setUpdateState(prev => !prev);
+        })
+        .catch((err) => {
+          console.log(err); // Log error to console for debugging
+          alert("Error occurred while adding employee");
+        });
+      }
+    }
+
+  }, [isDone])
+
+
+
+
+
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+
+    axios.get(`http://localhost:5000/consultantAppointment/getemployeeread?empid=${loggedEmp}`)
+    .then(res => {
+      setRows(res.data)
+    })
+
+  }, [updateState])
+
+  const [ServiceOptions, setServiceOptions] = useState([])
+
+  useEffect(() => {
+
+    axios.get('http://localhost:5000/getjobservices').then(res => setServiceOptions(res.data));
+
+  }, [])
+
+  console.log(rows);
 
   return (
     <Container
@@ -77,7 +153,7 @@ const ConsultancyEmployeeDashboard = () => {
         <Table bordered hover responsive style={{ marginBottom: "0" }}>
           <thead>
             <tr style={{ backgroundColor: "#d9d9d9", color: "black" }}>
-              <th style={{ fontWeight: "bold" }}>Customer Name</th>
+              <th style={{ fontWeight: "bold" }}>Consultant Number</th>
               <th style={{ fontWeight: "bold" }}>Customer Contact</th>
               <th style={{ fontWeight: "bold" }}>Location</th>
               <th style={{ fontWeight: "bold" }}>Issue</th>
@@ -88,13 +164,13 @@ const ConsultancyEmployeeDashboard = () => {
           <tbody>
             {rows.map((row, index) => (
               <tr key={index}>
-                <td>{row.customerName}</td>
-                <td>{row.customerContactNumber}</td>
+                <td>{row.consultantNumber}</td>
+                <td>{row.Email}</td>
                 <td>{row.location}</td>
                 <td>
                   <Button
                     variant="info"
-                    onClick={() => handleIssueButtonClick(row.issue)}
+                    onClick={() => handleIssueButtonClick(row)}
                   >
                     View Issue
                   </Button>
@@ -108,12 +184,12 @@ const ConsultancyEmployeeDashboard = () => {
                       {selectedService || "Select Service"}
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                      {row.availableJobServices.map((service, serviceIndex) => (
+                      {ServiceOptions.map((service, serviceIndex) => (
                         <Dropdown.Item
                           key={serviceIndex}
-                          onClick={() => handleServiceSelection(service)}
+                          onClick={() => handleServiceSelection(row, service)}
                         >
-                          {service}
+                          {service.service_name}
                         </Dropdown.Item>
                       ))}
                     </Dropdown.Menu>
@@ -122,8 +198,8 @@ const ConsultancyEmployeeDashboard = () => {
                 
                 <td>
                   <Button
-                    variant={isDone ? "success" : "secondary"} 
-                    onClick={handleDoneButtonClick}
+                    variant={"success"} 
+                    onClick={() => handleDoneButtonClick(row)}
                   >
                     Done
                   </Button>
@@ -140,7 +216,7 @@ const ConsultancyEmployeeDashboard = () => {
           <Modal.Title>Issue Information</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>{issueInfo}</p>
+          <p>{issueInfo.Issue}</p>
           
           <Form.Group controlId="comment">
             <Form.Label>Comment:</Form.Label>
