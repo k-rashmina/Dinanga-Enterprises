@@ -22,7 +22,7 @@ router.get("/getAllItems", readController.getAllItems);
 router.delete("/deleteItem/:id", deleteController.deleteInventoryItem);
 router.post("/completeService", consumeController.consumedItems);
 router.get("/searchItem/:name", searchController.searchItems);
-router.get("/updateJobItem", jobItemsUpdateController.jobItemsUpdate);
+router.put("/updateJobItem", jobItemsUpdateController.jobItemsUpdate);
 router.get("/stockValueChart",getStockValueController.getStockValue);
 router.get("/stockStatus",getStockStatusController.getStockStatus);
 router.get("/inventoryReport", InventoryReportController.inventoryReport);
