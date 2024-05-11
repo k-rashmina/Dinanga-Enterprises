@@ -37,13 +37,23 @@ const EmployeeJobsDashboard = () => {
     if(hasPageLoaded.current){
       const confirmation = confirm('Confirm Job Completion');
       if(confirmation){
-        axios.put("http://localhost:5000/jobAppointment/updateappointment/" + doneJob.current._id, doneJob.current)
-        .then(res => {
-          console.log("Job marked done");
-          doneJob.current = {};
-          setUpdateStatus(prev => !prev);
-        })
-        .catch(err => console.log(err));
+          
+          axios.put(`http://localhost:5000/inventory/updateJobItem?jid=${doneJob.current._id}`)
+          .then(() => {
+
+            axios.put("http://localhost:5000/jobAppointment/updateappointment/" + doneJob.current._id, doneJob.current)
+            .then(res => {
+              console.log("Job marked done");
+              doneJob.current = {};
+              setUpdateStatus(prev => !prev);
+            })
+            .catch(err => console.log(err));
+
+          }).catch(err => {
+
+            alert("Inventory items are out of stock");
+
+          })
       }
     }
 
