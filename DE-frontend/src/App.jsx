@@ -1,5 +1,5 @@
 import {BrowserRouter, Routes, Route, Link} from 'react-router-dom';
-import BackgroundImage from './components/common/BackgroundImage';
+import Home from './components/common/Home';
 
 // import { useState } from 'react'
 // Import employee pages
@@ -81,7 +81,7 @@ function App() {
       <Routes>
         {/* main routes */}
         <Route element={<Layout/>}>
-          <Route path='/' element={<BackgroundImage/>}/>
+          <Route path='/' element={<Home/>}/>
 
 
 
