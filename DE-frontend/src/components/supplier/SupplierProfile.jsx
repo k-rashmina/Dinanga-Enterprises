@@ -37,7 +37,7 @@ function SupplierProfile() {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
 
-  const randomProfilePictureUrl = `https://picsum.photos/200/200?random=${getRandomNumber(1, 1000)}`;
+  //const randomProfilePictureUrl = `https://picsum.photos/200/200?random=${getRandomNumber(1, 1000)}`;
 
   const handleFeedbackHistory = () => {
     
@@ -213,9 +213,9 @@ console.log(loggedSupplier)
           <Button variant="success" onClick={handleFeedbackSubmit}>Submit</Button>
         </Modal.Footer>
       </Modal>
-      <div className="profile-picture-container">
+      {/* <div className="profile-picture-container">
         <img src={randomProfilePictureUrl} alt="Profile" className="profile-picture" />
-      </div>
+      </div> */}
     </Container>
   );
 }
