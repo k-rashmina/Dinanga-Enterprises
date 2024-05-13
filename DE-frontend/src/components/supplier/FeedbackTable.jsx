@@ -7,6 +7,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import './FeedbackTable.css';
 import axios from 'axios';
 
+
 const SupplierfeedbackTable = () => {
 
   const loggedSupplier = localStorage.getItem('loggedSup');
