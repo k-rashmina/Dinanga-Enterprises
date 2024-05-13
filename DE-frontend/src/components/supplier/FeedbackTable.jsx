@@ -7,6 +7,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import './FeedbackTable.css';
 import axios from 'axios';
 
+
 const SupplierfeedbackTable = () => {
 
   const loggedSupplier = localStorage.getItem('loggedSup');
@@ -15,18 +16,50 @@ const SupplierfeedbackTable = () => {
   const [editingIndex, setEditingIndex] = useState(-1);
   const [editedSubject, setEditedSubject] = useState('');
   const [editedMessage, setEditedMessage] = useState('');
+  const [editedId, setEditedId] = useState('');
+  const [updateSubmit, setUpdateSubmit] = useState(false);
+  const hasPageLoaded = useRef(false);
+  const [hasupdated, setHasUpdated] = useState(false);
 
   useEffect(() => {
     axios.get(`http://localhost:5000/supFeedback/readsupplierfeedbacks?supemail=${loggedSupplier}`)
     .then(res => setFedDetails(res.data))
     .catch(console.log('loading'))
-  }, [])
+  }, [hasupdated])
 
-  const handleEdit = (index, subject, message) => {
+  const handleEdit = (index, id, subject, message) => {
     setEditingIndex(index);
+    setEditedId(id);
     setEditedSubject(subject);
     setEditedMessage(message);
   }
+
+
+
+  useEffect(() => {
+
+    if(hasPageLoaded.current){
+
+      const data = {
+        _id: editedId,
+        Supplier_Message: editedMessage,
+        Supplier_Subject: editedSubject
+      }
+      
+      axios.put(`http://localhost:5000/supFeedback/upsupplierfeedbacks`, data).then(res => {
+        hasPageLoaded.current = false;
+        setEditingIndex(-1);
+        setEditedSubject('');
+        setEditedMessage('');
+        alert("Feedback Updated");
+        setHasUpdated(prev => !prev);
+      }).catch((err) => {
+        alert("Update Unsuccessful");
+      })
+
+    }
+
+  }, [updateSubmit])
 
   const handleCancelEdit = () => {
     setEditingIndex(-1);
@@ -44,9 +77,22 @@ const SupplierfeedbackTable = () => {
 
   const handleSubmitEdit = (index) => {
     // Handle submit action, e.g., send edited data to backend
-    setEditingIndex(-1);
-    setEditedSubject('');
-    setEditedMessage('');
+    hasPageLoaded.current = true;
+    setUpdateSubmit(prev => !prev);
+    // setEditingIndex(-1);
+    // setEditedSubject('');
+    // setEditedMessage('');
+  }
+
+
+  const handleDelete = (id) => {
+    
+
+    axios.delete(`http://localhost:5000/supFeedback/delsupplierfeedbacks?id=${id}`).then(res => {
+      alert("Feedback Deleted Successfully");
+      setHasUpdated(prev => !prev);
+    })
+
   }
 
   const tableElems = fedDetails.map((feedback, index) => {
@@ -73,10 +119,10 @@ const SupplierfeedbackTable = () => {
           <td align="center">{feedback.Supplier_Subject}</td>
           <td align="center">{feedback.Supplier_Message}</td>
           <td align="center">
-            <Button variant="info" size="sm" className="action-button edit-button" onClick={() => handleEdit(index, feedback.Supplier_Subject, feedback.Supplier_Message)}>
+            <Button variant="info" size="sm" className="action-button edit-button" onClick={() => handleEdit(index, feedback._id, feedback.Supplier_Subject, feedback.Supplier_Message)}>
               <i className="bi bi-pencil-square"></i>Edit
             </Button>
-            <Button variant="danger" size="sm" className="action-button delete-button">
+            <Button variant="danger" size="sm" className="action-button delete-button" onClick={() => handleDelete(feedback._id)}>
               <i className="bi bi-trash"></i>Delete
             </Button>
           </td>
