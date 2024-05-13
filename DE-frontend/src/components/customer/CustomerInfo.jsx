@@ -74,6 +74,7 @@ const CustomerInfo = () => {
     if(confirmVal === true) { 
       axios.delete(`http://localhost:5000/customer/delcustomerdetails?id=${userDetails._id}`)
         .then(res => {
+          localStorage.removeItem('loggedUser');
           delNav('/');
         })
         .catch(err => console.log(err));

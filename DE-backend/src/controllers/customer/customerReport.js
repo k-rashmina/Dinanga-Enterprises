@@ -9,13 +9,13 @@ const customerReport = async (req, res) => {
     // Heading of the PDF
     let html = `
       <div style="text-align: center; font-size: 24px; font-family: Calibri; margin-bottom: 10px;">
-        Dinanga Enterprises
+       <b> Dinanga Enterprises</b>
       </div>
       <div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">
-        Address: 123 Main St, City, Country
+        Address: 68 Paraththa Rd, Panadura 12500 
       </div>
       <div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">
-        Telephone: (123) 456-7890
+        Telephone: +94 71 126 1449
       </div>
       <hr/>
       <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
@@ -33,13 +33,13 @@ const customerReport = async (req, res) => {
         weekday: 'short', year: 'numeric', month: 'short', day: 'numeric'
       });
       html += `
-        <tr>
-          <td style="border: 1px solid black;">${customer.cusFname} ${customer.cusLname}</td>
-          <td style="border: 1px solid black;">${formattedDate}</td>
-          <td style="border: 1px solid black;">${customer.cusMail}</td>
-          <td style="border: 1px solid black;">${customer.pNum}</td>
-          <td style="border: 1px solid black;">${customer.cusAddr}</td>
-        </tr>`;
+      <tr>
+      <td style="border: 1px solid black; text-align: center;">${customer.cusFname} ${customer.cusLname}</td>
+      <td style="border: 1px solid black; text-align: center;">${formattedDate}</td>
+      <td style="border: 1px solid black; text-align: center;">${customer.cusMail}</td>
+      <td style="border: 1px solid black; text-align: center;">${customer.pNum}</td>
+      <td style="border: 1px solid black; text-align: center;">${customer.cusAddr}</td>
+    </tr>`;
     });
 
     html += `</table>`; // Close the table
