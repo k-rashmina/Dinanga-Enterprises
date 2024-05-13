@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, Table, Button, Row, Col } from 'react-bootstrap';
+import { Container, Table, Button, Row, Col, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './FeedbackTable.css';
@@ -12,26 +12,68 @@ const SupplierfeedbackTable = () => {
   const loggedSupplier = localStorage.getItem('loggedSup');
 
   const [fedDetails, setFedDetails] = useState([]);
+  const [editingIndex, setEditingIndex] = useState(-1);
+  const [editedSubject, setEditedSubject] = useState('');
+  const [editedMessage, setEditedMessage] = useState('');
 
   useEffect(() => {
-
     axios.get(`http://localhost:5000/supFeedback/readsupplierfeedbacks?supemail=${loggedSupplier}`)
     .then(res => setFedDetails(res.data))
     .catch(console.log('loading'))
-
   }, [])
 
+  const handleEdit = (index, subject, message) => {
+    setEditingIndex(index);
+    setEditedSubject(subject);
+    setEditedMessage(message);
+  }
 
-  const tableElems = fedDetails.map(feedback => {
+  const handleCancelEdit = () => {
+    setEditingIndex(-1);
+    setEditedSubject('');
+    setEditedMessage('');
+  }
 
-    return(
+  const handleSubjectChange = (event) => {
+    setEditedSubject(event.target.value);
+  }
 
-        <tr>
+  const handleMessageChange = (event) => {
+    setEditedMessage(event.target.value);
+  }
+
+  const handleSubmitEdit = (index) => {
+    // Handle submit action, e.g., send edited data to backend
+    setEditingIndex(-1);
+    setEditedSubject('');
+    setEditedMessage('');
+  }
+
+  const tableElems = fedDetails.map((feedback, index) => {
+    if (index === editingIndex) {
+      return (
+        <tr key={index}>
+          <td align="center">{feedback.fed_date.substring(0, 10)}</td>
+          <td align="center">
+            <Form.Control type="text" value={editedSubject} onChange={handleSubjectChange} />
+          </td>
+          <td align="center">
+            <Form.Control as="textarea" rows={3} value={editedMessage} onChange={handleMessageChange} />
+          </td>
+          <td align="center">
+            <Button variant="success" size="sm" className="action-button submit-button" onClick={() => handleSubmitEdit(index)}>Submit</Button>
+            <Button variant="secondary" size="sm" className="action-button cancel-button" onClick={handleCancelEdit}>Cancel</Button>
+          </td>
+        </tr>
+      );
+    } else {
+      return (
+        <tr key={index}>
           <td align="center">{feedback.fed_date.substring(0, 10)}</td>
           <td align="center">{feedback.Supplier_Subject}</td>
           <td align="center">{feedback.Supplier_Message}</td>
           <td align="center">
-            <Button variant="info" size="sm" className="action-button edit-button">
+            <Button variant="info" size="sm" className="action-button edit-button" onClick={() => handleEdit(index, feedback.Supplier_Subject, feedback.Supplier_Message)}>
               <i className="bi bi-pencil-square"></i>Edit
             </Button>
             <Button variant="danger" size="sm" className="action-button delete-button">
@@ -39,10 +81,9 @@ const SupplierfeedbackTable = () => {
             </Button>
           </td>
         </tr>
-
-    )
-
-  })
+      );
+    }
+  });
 
   return (
     <Container fluid className="supplier-feedback-container">
