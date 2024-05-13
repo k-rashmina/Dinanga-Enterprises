@@ -1,5 +1,6 @@
 import './home.css';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import backgroundImage from '../../assets/homepage.jpg';
 import jobImg from '../../assets/homePageJob.jpg';
 import Engineoilchange from '../../assets/engine oil change.jpg';
@@ -52,74 +53,34 @@ function Home() {
         <img src={backgroundImage} />
       </div>
 
-
-      {/* <div className="form-div">
-        <form action="login.jsp" method="get">
-          <div className="form-details">
-            <div className="guest-div">
-              <label for="guest">Guests: </label>
-              <select name="guest" id="guest" required>
-                <option value="" selected disabled hidden>Select an Option</option>
-                <option value="1">1 guest</option>
-                <option value="2">2 guests</option>
-                <option value="3">3 guests</option>
-              </select>
-            </div>
-
-            <div className="start-date-div">
-              <label for="startDate">Check-in: </label>
-              <input type="date" name="startDate" id="startDate" min="2023-10-23" required />
-            </div>
-
-            <div className="end-date-div">
-              <label for="endDate">Check-out: </label>
-              <input type="date" name="endDate" id="endDate" min="2023-10-23" required />
-            </div>
-          </div>
-          <div className="search-rooms-button">
-            <input type="submit" name="submit" id="submit" value="Search Rooms" />
-          </div>
-
-        </form>
-      </div> */}
-
       <div className="section-2">
         <div><img src={backgroundImage} className='section-2-img' /></div>
         <div className="section-2-details">
-          <p className="Welcome-message">Welcome to Regency Hotel</p>
-          <p className="slogan">-You're one step closer to paradise</p>
-          <a href="#"><button className="about-us-button">MORE ABOUT US</button></a>
+          <p className="Welcome-message">Welcome to Dinanga Enterprises</p>
+          <p className="slogan">-The one place for all your spare part needs-</p>
+          <center><Link to={'/about'}><button className="about-us-button">MORE ABOUT US</button></Link></center>
         </div>
 
       </div>
 
       <div className="section-3">
-        <div><img src={backgroundImage} /></div>
+        <div style={{marginTop: '26px'}}><img src={backgroundImage} /></div>
         <div className="section-3-details" >
-          <p className="section-3-header">Rooms</p>
-          <p className="section-3-info">Our hotel rooms are designed to provide guests with a comfortable and relaxing stay.
-            Each room features a comfortable bed with clean linens and pillows, modern amenities such as a flat-screen TV, complimentary Wi-Fi, and a mini-fridge.<br/><br/>
-              The private bathroom is equipped with clean towels, toiletries, and a shower or bathtub. Guests will find sufficient storage space for their belongings in the closet or dresser.
-              Climate control is available in each room to ensure guests' comfort throughout their stay.<br/><br/>Safety features such as smoke detectors, fire alarms, and a safe for storing valuables are also provided.
-                Daily housekeeping services are available to keep your room clean and tidy.
+          <p className="section-3-header">Consultancy Service</p>
+          <p className="section-3-info">We are thrilled to introduce our new appointment consultancy meeting feature, designed to streamline your experience and provide personalized assistance for all your spare parts needs. Our appointment consultancy meeting feature allows you to schedule dedicated time with our expert team to discuss your specific requirements, troubleshoot any issues you may be facing  with your spare part equipments. With just a few clicks, you can conveniently request an appointment. Simply select your preferred date and time, provide some basic information about your inquiry, and our team will confirm your appointment promptly.
           </p>
-          <a href="#"><button className="book-now-button">BOOK NOW</button></a>
+          <Link to={''}><button className="book-now-button">BOOK CONSULTANCY</button></Link>
         </div>
 
       </div>
 
       <div className="section-4">
-        <div><img src={jobImg} /></div>
+        <div style={{marginTop: '26px'}}><img style={{height: '370px'}} src={jobImg} /></div>
         <div className="section-4-details">
           <p className="section-4-header">Job Services</p>
-          <p className="section-4-info">The Regency Hotel is a stunning example of modern architecture. The buildin's sleek lines and contemporary design are sure to impress guests as they approach.
-            The hotel's entrance is marked by a striking glass canopy that provides shelter from the elements while also allowing natural light to flood the lobby.<br/><br/>
-              The exterior of the building is accented with lush greenery, which provides a welcome contrast to the sleek metal and glass facade.
-              Guests can enjoy the hotel's outdoor seating area, which features comfortable chairs and tables surrounded by fragrant flowers and plants.
-              <br/><br/>The pool area is enhanced with comfortable seating, lush greenery, and water features to create a soothing and inviting atmosphere.
-                The pool itself is designed to accommodate different activities, such as swimming laps, playing water games, or simply lounging in the sun.
-                Whether you're looking to cool off on a hot day or enjoy some outdoor exercise.
+          <p className="section-4-info">Discover the unparalleled automotive care experience at Dinanga Enterprises! With a comprehensive suite of services including battery maintenance, brake servicing, engine overhauls, and meticulous detailing, we are your one-stop destination for all vehicle maintenance needs. Our expert technicians, equipped with cutting-edge technology and industry-leading expertise, ensure that every visit leaves your vehicle performing at its peak. Whether it's a routine oil change or a complex engine repair, trust Dinanga Enterprises to deliver quality service, reliability, and peace of mind with every mile. Experience excellence in automotive care – choose Dinanga Enterprises today.
           </p>
+          <Link to={'/about'}><button className="appointment-button">MAKE APPOINTMENT</button></Link>
         </div>
 
       </div>

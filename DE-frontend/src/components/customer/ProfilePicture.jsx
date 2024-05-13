@@ -13,8 +13,8 @@ const ProfilePicture = ({ imageUrl }) => {
   return (
     <div className="text-center"><br/>
       <img src={imageUrl} alt="Profile Picture" className="rounded-circle" style={{ width: '150px', height: '150px' }} />
-      <h4 class="text-white">{userDetails.cusFname}</h4>
-      <h5 class="text-white">{userDetails.cusMail}</h5>
+      <h4 class="text-white mt-4">{userDetails.cusFname}</h4>
+      <h5 class="text-white mt-3">{userDetails.cusMail}</h5>
 
     </div>
   );

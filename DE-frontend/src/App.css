@@ -293,7 +293,7 @@ nav {
   /*footer*/
   
   .footer {
-  	
+  	max-width: 100vw;
     background-color: #444444;
     color: white;
     padding: 20px;

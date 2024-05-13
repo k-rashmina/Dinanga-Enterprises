@@ -10,27 +10,27 @@ const Footer = () => {
         <div className="footer-top">
           <div className="footer-section">
             <h3>SUPPORT</h3>
-            <p>Email: regencyhotel@gmail.com</p>
+            <p>Email: dinangaenterprises@gmail.com</p>
           </div>
           <hr className="footer-line" />
             <div className="footer-section">
               <h3>Contact Us</h3>
-              <p>Address: 123 Dambulla, Sri Lanka</p>
+              <p>Address: 123 Panadura, Sri Lanka</p>
               <p>Phone: +94702641683</p>
               <p>Fax: +9434567890</p>
             </div>
         </div>
         <hr className="footer-line" />
         <div className="footer-bottom">
-            <p>Copyright&copy; 2023 Regency-Hotel. All rights reserved.</p>
+            <p>Copyright&copy; 2024 ITP24_B5_13. All rights reserved.</p>
             <div className="social-media-links">
-            <a href="#"><img src={facebookImg} alt="Facebook" /></a>
-            <a href="#"><img src={twitterImg} alt="Twitter" /></a>
-            <a href="#"><img src={instagramImg} alt="Instagram" /></a>
+            <Link to={''}><img src={facebookImg} alt="Facebook" /></Link>
+            <Link to={''}><img src={twitterImg} alt="Twitter" /></Link>
+            <Link to={''}><img src={instagramImg} alt="Instagram" /></Link>
             </div>
             <div className="footer-buttons">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms and Conditions</a>
+            <Link to={''}>Privacy Policy</Link>
+            <Link to={''}>Terms and Conditions</Link>
             </div>
         </div>
       </footer>

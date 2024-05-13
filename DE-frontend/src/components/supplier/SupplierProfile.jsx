@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Container, Form, Button, Modal } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa';
 
 import './SupplierProfile.css';
@@ -10,6 +10,8 @@ function SupplierProfile() {
 
 
   const loggedSupplier = localStorage.getItem('loggedSup');
+
+  const nav = useNavigate();
 
   const date = new Date().toJSON();
   const today = date.substring(0, 10);
@@ -75,8 +77,10 @@ function SupplierProfile() {
       .then(response => {
         console.log("Profile deleted successfully:", response.data);
         alert("deleted")
+        localStorage.removeItem('loggedSup');
         
         history.push('/supreg');
+        nav('/')
       })
       .catch(error => {
         console.error("Error deleting profile:", error);
