@@ -297,7 +297,7 @@ const EmployeeDashboard = () => {
             <Form.Group controlId="formContactNumber">
               <Form.Label>Contact Number</Form.Label>
               <Form.Control
-                type="text"
+                type="number"
                 name="contactNumber"
                 value={selectedEmployee?.contactNumber}
                 onChange={handleChange}
