@@ -16,7 +16,7 @@ function ToBeOrdered() {
   return (
     <>
     <AdminHeader pageName={'To Be Ordered'} />
-    <div style={{ marginTop: "30px", marginLeft: "10px", width: "97%", display: "flex", justifyContent: "flex-start" }}>
+    <div style={{ marginTop: "60px", marginLeft: "10px", width: "97%", display: "flex", justifyContent: "flex-start" }}>
       <div style={{ width: "100%", maxWidth: "1200px" }}>
     
         <table className="styled-table" style={{ width: "50%", minWidth: "100%" ,fontSize:"20px"}}>

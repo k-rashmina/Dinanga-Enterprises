@@ -19,8 +19,8 @@ const OrderChart = () => {
   return (
     <div>
       <Chart
-        width={'800px'}
-        height={'600px'}
+        width={'1000px'}
+        height={'800px'}
         chartType="PieChart"
         loader={<div>Loading Chart</div>}
         data={[
@@ -28,8 +28,8 @@ const OrderChart = () => {
           ...statusCounts.map(({ _id, count }) => ([_id, count]))
         ]}
         options={{
-          title: 'Order Status',
-          is3D: true,
+          
+          is2D: true,
         }}
         rootProps={{ 'data-testid': '1' }}
       />
