@@ -134,16 +134,16 @@ const SupplierfeedbackTable = () => {
   return (
     <Container fluid className="supplier-feedback-container">
       <Row className="justify-content-center">
-        <Col xs={12} md={10} lg={8}>
+        <Col xs={12} md={10} lg={20}>
           <h3 className="feedback-header">Feedback History</h3>
           <div className="feedback-table-container">
             <Table bordered hover responsive className="feedback-table">
               <thead>
                 <tr className="table-header-row">
-                  <th>Date</th>
-                  <th>Subject</th>
-                  <th>Message</th>
-                  <th>Action</th>
+                  <th><center>Date</center></th>
+                  <th><center>Subject</center></th>
+                  <th><center>Message</center></th>
+                  <th><center>Action</center></th>
                 </tr>
               </thead>
               <tbody>

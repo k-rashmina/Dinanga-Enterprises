@@ -1,22 +1,28 @@
 import React, { useState } from 'react';
 import './SupplierRegForm.css';
 import axios from 'axios';
-import LoginForm from './LoginForm'; 
+import LoginForm from './LoginForm';
+import regbg from "../../assets/regbg1.png";
+import { useNavigate } from 'react-router-dom';
 
 function SupplierRegForm() {
+    const date = new Date().toJSON();
+    const today = date.substring(0, 10);
+
     const [formData, setFormData] = useState({
         Supplier_bname: '',
         Supplier_email: '',
         Supplier_contact: '',
         Supplier_aos: '',
         Supplier_Pw: '',
+        confirmPassword: '',
     });
 
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
     const [errors, setErrors] = useState({});
     const [showMessage, setShowMessage] = useState(false);
-    const [signedUp, setSignedUp] = useState(false); 
+    const [signedUp, setSignedUp] = useState(false);
+
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -27,8 +33,8 @@ function SupplierRegForm() {
                     setShowMessage(true);
                     setTimeout(() => {
                         setShowMessage(false);
-                        setSignedUp(true); 
-                    }, 3000); 
+                        setSignedUp(true);
+                    }, 3000);
                 })
                 .catch(() => {
                     setShowMessage(true);
@@ -40,106 +46,114 @@ function SupplierRegForm() {
     };
 
     const validateForm = () => {
-        let errors = {};
         let formIsValid = true;
+        let newErrors = {};
 
-        // Validate Business Name
-        if (!formData.Supplier_bname) {
-            formIsValid = false;
-            errors['Supplier_bname'] = 'Please enter your business name.';
-        } else if (/[^A-Za-z\s]/.test(formData.Supplier_bname)) {
-            formIsValid = false;
-            errors['Supplier_bname'] = 'Please enter only alphabets for business name.';
+        for (const field in formData) {
+            switch (field) {
+                case 'Supplier_bname':
+                    if (!formData[field]) {
+                        formIsValid = false;
+                        newErrors[field] = 'Please enter your business name.';
+                    } else if (/[^A-Za-z0-9\s]/.test(formData[field])) {
+                        formIsValid = false;
+                        newErrors[field] = 'Please enter only alphabets and numbers for business name.';
+                    }
+                    break;
+                case 'Supplier_email':
+                    if (!formData[field]) {
+                        formIsValid = false;
+                        newErrors[field] = 'Please enter your email address.';
+                    } else if (!/^\S+@\S+\.\S+$/.test(formData[field])) {
+                        formIsValid = false;
+                        newErrors[field] = 'Please enter a valid email address.';
+                    }
+                    break;
+                case 'Supplier_contact':
+                    if (!formData[field]) {
+                        formIsValid = false;
+                        newErrors[field] = 'Please enter your contact number.';
+                    } else if (!/^\d+$/.test(formData[field])) {
+                        formIsValid = false;
+                        newErrors[field] = 'Please enter only numbers for contact number.';
+                    }
+                    break;
+                case 'Supplier_aos':
+                    if (!formData[field]) {
+                        formIsValid = false;
+                        newErrors[field] = 'Please enter your area of specialization.';
+                    } else if (/[^A-Za-z\s]/.test(formData[field])) {
+                        formIsValid = false;
+                        newErrors[field] = 'Please enter only alphabets for area of specialization.';
+                    }
+                    break;
+                case 'Supplier_Pw':
+                    if (!formData[field]) {
+                        formIsValid = false;
+                        newErrors[field] = 'Please enter your password.';
+                    } else if (formData[field].length < 8) {
+                        formIsValid = false;
+                        newErrors[field] = 'Password must be at least 8 characters long.';
+                    }
+                    break;
+                case 'confirmPassword':
+                    if (!formData[field]) {
+                        formIsValid = false;
+                        newErrors[field] = 'Please confirm your password.';
+                    } else if (formData[field] !== formData['Supplier_Pw']) {
+                        formIsValid = false;
+                        newErrors[field] = 'Passwords do not match.';
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
 
-        // Validate Email
-        if (!formData.Supplier_email) {
-            formIsValid = false;
-            errors['Supplier_email'] = 'Please enter your email address.';
-        } else if (!/\S+@\S+\.\S+/.test(formData.Supplier_email)) {
-            formIsValid = false;
-            errors['Supplier_email'] = 'Please enter a valid email address.';
-        }
-
-        // Validate Contact Number
-        if (!formData.Supplier_contact) {
-            formIsValid = false;
-            errors['Supplier_contact'] = 'Please enter your contact number.';
-        } else if (!/^\d{10}$/.test(formData.Supplier_contact)) {
-            formIsValid = false;
-            errors['Supplier_contact'] = 'Please enter a valid 10-digit contact number.';
-        }
-
-        // Validate Area of Specialization
-        if (!formData.Supplier_aos) {
-            formIsValid = false;
-            errors['Supplier_aos'] = 'Please enter your area of specialization.';
-        } else if (/[^A-Za-z\s]/.test(formData.Supplier_aos)) {
-            formIsValid = false;
-            errors['Supplier_aos'] = 'Please enter only alphabets for area of specialization.';
-        }
-
-        // Validate Password
-        if (!formData.Supplier_Pw) {
-            formIsValid = false;
-            errors['Supplier_Pw'] = 'Please enter your password.';
-        } else if (formData.Supplier_Pw.length < 8) {
-            formIsValid = false;
-            errors['Supplier_Pw'] = 'Password must be at least 8 characters long.';
-        }
-
-        // Validate Confirm Password
-        if (!confirmPassword) {
-            formIsValid = false;
-            errors['confirmPassword'] = 'Please confirm your password.';
-        } else if (formData.Supplier_Pw !== confirmPassword) {
-            formIsValid = false;
-            errors['confirmPassword'] = 'Passwords do not match.';
-        }
-
-        setErrors(errors);
+        setErrors(newErrors);
         return formIsValid;
     };
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-        let error = '';
 
-        if (name === 'Supplier_bname' && /[^A-Za-z\s]/.test(value)) {
-            error = 'Please enter only alphabets for business name.';
-        } else if (name === 'Supplier_email' && !/\S+@\S+\.\S+/.test(value)) {
-            error = 'Please enter a valid email address.';
-        } else if (name === 'Supplier_contact' && !/^\d{10}$/.test(value)) {
-            error = 'Please enter a valid 10-digit contact number.';
-        } else if (name === 'Supplier_aos' && /[^A-Za-z\s]/.test(value)) {
-            error = 'Please enter only alphabets for area of specialization.';
-        } else if (name === 'Supplier_Pw' && value.length < 8) {
-            error = 'Password must be at least 8 characters long.';
-        } else if (name === 'confirmPassword' && value !== password) {
-            error = 'Passwords do not match.';
+        // Block typing if symbols entered for business name
+        if (name === 'Supplier_bname') {
+            if (/[^A-Za-z0-9\s]/.test(value)) {
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    [name]: 'Please enter only alphabets and numbers for business name.',
+                }));
+                return;
+            }
+        }
+        // Block typing if any letters entered for contact number
+        if (name === 'Supplier_contact') {
+            if (/\D/.test(value)) {
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    [name]: 'Please enter only numbers for contact number.',
+                }));
+                return;
+            }
         }
 
-        setErrors((prevState) => ({
-            ...prevState,
-            [name]: error,
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            [name]: value,
         }));
 
-        if (!error) {
-            setFormData((prevState) => ({
-                ...prevState,
-                [name]: value,
+        // Clear error message when user starts typing again
+        if (errors[name]) {
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                [name]: '',
             }));
-
-            if (name === 'Supplier_Pw') {
-                setPassword(value);
-            } else if (name === 'confirmPassword') {
-                setConfirmPassword(value);
-            }
         }
     };
 
     if (signedUp) {
-        return <LoginForm />; 
+        return <LoginForm />;
     }
 
     return (
@@ -151,14 +165,14 @@ function SupplierRegForm() {
                 <input type="text" name="Supplier_bname" value={formData.Supplier_bname} onChange={handleChange} onBlur={handleChange} style={{ width: '618px', backgroundColor: 'white' }} className="border-color rounded-2" placeholder="Enter Business Name" />
                 <span className="fs-6 text-danger">{errors['Supplier_bname']}</span>
                 <br />
-                
+
                 <label>Email</label><br />
                 <input type="email" value={formData.Supplier_email} onChange={handleChange} className="border-color rounded-2" style={{ width: '618px', backgroundColor: 'white' }} name="Supplier_email" placeholder="Jason@example.com" />
                 <span className="fs-6 text-danger">{errors['Supplier_email']}</span>
                 <br />
 
                 <label>Contact Number</label><br />
-                <input type="text" name="Supplier_contact" value={formData.Supplier_contact} onChange={handleChange} style={{ width: '618px', backgroundColor: 'white' }} className="border-color rounded-2" placeholder="+94 12 345 6789" />
+                <input type="tel" name="Supplier_contact" value={formData.Supplier_contact} onChange={handleChange} style={{ width: '618px', backgroundColor: 'white' }} className="border-color rounded-2" placeholder="1234567890" />
                 <span className="fs-6 text-danger">{errors['Supplier_contact']}</span>
                 <br />
 
@@ -170,8 +184,8 @@ function SupplierRegForm() {
                 <div className="d-flex justify-content-between  flex-wrap">
                     <label style={{ width: '300px' }}>Password</label><br />
                     <label style={{ width: '300px' }}>Confirm Password</label><br />
-                    <input type="password" name="Supplier_Pw" value={formData.Supplier_Pw} onChange={handleChange} style={{ width: '300px', backgroundColor: 'white' }} className="border-color rounded-2" placeholder="*********"/>
-                    <input type="password" name="confirmPassword" value={confirmPassword} onChange={handleChange} style={{ width: '300px', backgroundColor: 'white' }} className="border-color rounded-2" placeholder="*********"/>
+                    <input type="password" name="Supplier_Pw" value={formData.Supplier_Pw} onChange={handleChange} style={{ width: '300px', backgroundColor: 'white' }} className="border-color rounded-2" placeholder="*********" />
+                    <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} style={{ width: '300px', backgroundColor: 'white' }} className="border-color rounded-2" placeholder="*********" />
                     <span className="fs-6 text-danger">{errors['Supplier_Pw']}</span>
                     <span className="fs-6 text-danger">{errors['confirmPassword']}</span>
                 </div>
