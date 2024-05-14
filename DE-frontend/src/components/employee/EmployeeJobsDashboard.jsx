@@ -3,11 +3,18 @@ import { Container, Table, Button} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import axios from "axios"
+import EmployeeNavBar from './EmployeeNavBar';
 
 const EmployeeJobsDashboard = () => {
 
   const loggedEmp = localStorage.getItem("emp_id")
-
+  const [formData, setFormData] = useState({
+    fullName: "",
+    contactNumber: "",
+    email: "",
+    address: "",
+    username: ""
+  });
   const [isDone, setIsDone] = useState(false);
   const doneJob = useRef({});
   const hasPageLoaded = useRef(false);
@@ -61,7 +68,10 @@ const EmployeeJobsDashboard = () => {
   }, [updateStatus])
 
   return (
-    <Container fluid style={{ padding: '16px', backgroundColor: '#fff', minHeight: '100vh' }}>
+    <React.Fragment>
+<EmployeeNavBar fullName={formData.fullName} />
+
+<Container fluid style={{ padding: '16px', backgroundColor: '#fff', minHeight: '100vh' }}>
       <h4 style={{ color: 'black', textAlign: 'center', fontWeight: 'bold', marginBottom: '20px' }}>Created Jobs</h4>
       <div style={{ borderRadius: '20px', overflow: 'hidden' }}>
         <Table bordered hover responsive style={{ marginBottom: '0' }}>
@@ -97,6 +107,8 @@ const EmployeeJobsDashboard = () => {
         </Table>
       </div>
     </Container>
+    </React.Fragment>
+    
   );
 };
 
