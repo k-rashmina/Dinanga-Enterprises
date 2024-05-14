@@ -94,6 +94,11 @@ function SupplierProfile() {
     fed_date: today
   });
 
+  const [formErrors, setFormErrors] = useState({
+    Supplier_Subject: '',
+    Supplier_Message: ''
+  });
+
   const handleFeedbackInputs = e => {
 
     const {name, value} = e.target;
@@ -106,29 +111,63 @@ function SupplierProfile() {
         [name]: value
 
       }
-    })
+    });
+
+    // Clear previous error message when user starts typing
+    setFormErrors(prev => ({
+      ...prev,
+      [name]: ''
+    }));
   }
   
 
   const [fedSubVal, setFedSubVal] = useState(false);
   const handleFeedbackSubmit = () => {
-    
-    setFedSubVal(prev => !prev);
-
+    const errors = validateForm(formData);
+    if (Object.values(errors).some(error => error !== '')) {
+      // If there are errors, set them in state
+      setFormErrors(errors);
+    } else {
+      // If there are no errors, proceed with form submission
+      setFedSubVal(prev => !prev);
+    }
   };
   
-  
+  const validateForm = (formData) => {
+    let errors = {
+      Supplier_Subject: '',
+      Supplier_Message: ''
+    };
+
+    if (formData.Supplier_Subject.trim() === '') {
+      errors.Supplier_Subject = 'Subject is required';
+    }
+    if (formData.Supplier_Message.trim() === '') {
+      errors.Supplier_Message = 'Message is required';
+    }
+
+    return errors;
+  };
+
   useEffect(() => {
 
-    
-    axios.post('http://localhost:5000/supFeedback/addsupplierfeedbacks', formData)
-    .then(response => {
-      console.log(response.data); 
-      handleCloseFeedbackModal();
-    })
-    .catch(error => {
-      console.error('Error submitting feedback:', error);
-    });
+    if (fedSubVal) {
+      axios.post('http://localhost:5000/supFeedback/addsupplierfeedbacks', formData)
+        .then(response => {
+          console.log(response.data); 
+          handleCloseFeedbackModal();
+          // Reset form data after successful submission
+          setFormData({
+            Supplier_Email: loggedSupplier,
+            Supplier_Subject: '',
+            Supplier_Message: '',
+            fed_date: today
+          });
+        })
+        .catch(error => {
+          console.error('Error submitting feedback:', error);
+        });
+    }
 
   }, [fedSubVal])
 
@@ -200,11 +239,13 @@ console.log(loggedSupplier)
             <Form.Group controlId="formSubject">
               <Form.Label className="form-label">Subject</Form.Label>
               <Form.Control type="text" placeholder="Enter subject" name="Supplier_Subject" className="form-control" value={formData.Supplier_Subject} onChange={handleFeedbackInputs} />
+              {formErrors.Supplier_Subject && <div className="text-danger">{formErrors.Supplier_Subject}</div>}
             </Form.Group>
             <br />
             <Form.Group controlId="formMessage">
               <Form.Label className="form-label">Message</Form.Label>
               <Form.Control as="textarea" rows={3} placeholder="Enter your message" name="Supplier_Message" className="form-control" value={formData.Supplier_Message} onChange={handleFeedbackInputs} />
+              {formErrors.Supplier_Message && <div className="text-danger">{formErrors.Supplier_Message}</div>}
             </Form.Group>
           </Form>
         </Modal.Body>
