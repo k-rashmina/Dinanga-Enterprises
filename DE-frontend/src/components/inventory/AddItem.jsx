@@ -123,7 +123,7 @@ function AddItem() {
                 />
               </h5>
               <form className="form-card" onSubmit={sendData}>
-                <div class="row justify-content-between text-left">
+                <div class="row justify-content-between text-left" >
                   <div class="row justify-content-between text-left">
                     <div class="form-group col-12 flex-column d-flex mb-3">
                       <label class="form-control-label px-3">
