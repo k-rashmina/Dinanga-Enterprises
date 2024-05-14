@@ -10,7 +10,9 @@ function customerReport() {
       }
   return (
     <div>
-     <button onClick={generateReport} className="btn btn-primary" style={{ backgroundColor: '#00ADB5', marginTop: '5px' }}>Generate Customer Report</button>
+     <button onClick={generateReport} className="btn btn-primary" style={{ color: 'white', backgroundColor: '#00ADB5', borderColor: 'white', marginTop: '5px' }} onMouseEnter={(e) => e.target.style.backgroundColor = '#393E46'} onMouseLeave={(e) => e.target.style.backgroundColor = '#00ADB5'}>
+  Generate Customer Report
+</button>
 
     </div>
   )

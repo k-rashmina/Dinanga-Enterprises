@@ -69,7 +69,7 @@ import DashBoard from './components/inventory/DashBoard';
 import Report from './components/inventory/Report';
 import TransactionInfo from './components/finance/TransactionInfo';
 
-
+import Aboutus from './components/common/Aboutus';
 
 
 
@@ -112,7 +112,7 @@ function App() {
           <Route path="/payment/:type" element={<CreateJobTransaction/>} />
           
 
-          <Route path='/about' element/>
+          <Route path='/about' element = {<Aboutus />}/>
           <Route path='/contact' element/>
           <Route path='/cusprofile' element={<CustomerProfile />}/>
           <Route path='/cusfeedback' element={<FeedbackUpDel />} />

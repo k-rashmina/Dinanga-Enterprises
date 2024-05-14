@@ -54,9 +54,18 @@ function CustomerRegForm() {
       }
     } else {
       // For other fields, perform validations and update state
+      let newValue = value;
+  
+      if (name === 'pNum') {
+        // Remove non-digit characters for phone number
+        newValue = value.replace(/\D/g, '');
+        // Limit input to 10 characters
+        newValue = newValue.slice(0, 10);
+      }
+  
       setFormData(prevState => ({
         ...prevState,
-        [name]: value,
+        [name]: newValue,
       }));
   
       // Validate each field as it changes
@@ -65,12 +74,10 @@ function CustomerRegForm() {
         case 'bDate':
           newErrors[name] = value === '' ? 'This field is required' : '';
           break;
-          case 'cusMail':
-            const emailPattern = /^[^\s@A-Z]+@[^\s@A-Z]+\.[^\s@A-Z]+$/;
-            newErrors[name] = !emailPattern.test(value) ? 'Invalid email address' : '';
-            break;
-          
-          
+        case 'cusMail':
+          const emailPattern = /^[^\s@A-Z]+@[^\s@A-Z]+\.[^\s@A-Z]+$/;
+          newErrors[name] = !emailPattern.test(value) ? 'Invalid email address' : '';
+          break;
         case 'cusPassword':
           newErrors[name] = value.length < 8 ? 'Password must be at least 8 characters long' : '';
           break;
@@ -78,8 +85,7 @@ function CustomerRegForm() {
           newErrors[name] = value !== formData.cusPassword ? 'Passwords do not match' : '';
           break;
         case 'pNum':
-          const phonePattern = /^\d{10}$/;
-          newErrors[name] = !phonePattern.test(value) ? 'Invalid phone number' : '';
+          newErrors[name] = newValue.length !== 10 ? 'Phone number must be 10 digits' : '';
           break;
         case 'cusAddr':
           newErrors[name] = value.trim() === '' ? 'This field is required' : '';
@@ -90,6 +96,8 @@ function CustomerRegForm() {
       setErrors(newErrors);
     }
   };
+  
+  
   
   
 

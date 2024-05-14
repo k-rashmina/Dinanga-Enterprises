@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {useNavigate} from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom';
 import { Container, Form, Button } from 'react-bootstrap';
 import './cusLogin.css'; // Importing CSS file
-import axios from 'axios'
+import axios from 'axios';
 
 const CusLogin = () => {
   const nav = useNavigate();
@@ -15,7 +15,6 @@ const CusLogin = () => {
     e.preventDefault();
 
     if (validateForm()) {
-
       hasPageLoaded.current = true;
       setLogVal(prev => !prev);
     }
@@ -45,76 +44,68 @@ const CusLogin = () => {
   };
 
   const useridentify = (user) => {
-
-    if(user){
-
-        localStorage.setItem('loggedUser', user.cusMail);
-        return true;
-
+    if (user) {
+      localStorage.setItem('loggedUser', user.cusMail);
+      return true;
     }
     return false;
-  }
+  };
 
   const [logVal, setLogVal] = useState(false);
   const hasPageLoaded = useRef(false);
 
   useEffect(() => {
-
-    if(hasPageLoaded.current){
-      axios.post(`http://localhost:5000/customer/getloggeduser`, {mail: email, pass: password})
-      .then(res => {
-        
-        if(useridentify(res.data)) {
-
-          nav('/');
-
-        }else{
-          alert('Invalid Credentials')
-        }
-
-      })
+    if (hasPageLoaded.current) {
+      axios.post(`http://localhost:5000/customer/getloggeduser`, { mail: email, pass: password })
+        .then(res => {
+          if (useridentify(res.data)) {
+            nav('/');
+          } else {
+            alert('Invalid Credentials');
+          }
+        });
     }
-
-  }, [logVal])
+  }, [logVal]);
 
   return (
     <center>
-    <dev className="login-container">
-      <h4 className="login-header">Customer Login</h4>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className={`login-input border-color ${errors['email'] ? 'is-invalid' : ''}`}
-          />
-          <Form.Text className="text-danger">
-            {errors['email']}
-          </Form.Text>
-        </Form.Group>
+      <div className="login-container">
+        <h4 className="login-header">Customer Login</h4>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="formBasicEmail">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className={`login-input border-color ${errors['email'] ? 'is-invalid' : ''}`}
+            />
+            <Form.Text className="text-danger">
+              {errors['email']}
+            </Form.Text>
+          </Form.Group>
 
-        <Form.Group controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className={`login-input border-color ${errors['password'] ? 'is-invalid' : ''}`}
-          />
-          <Form.Text className="text-danger">
-            {errors['password']}
-          </Form.Text>
-        </Form.Group>
+          <Form.Group controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className={`login-input border-color ${errors['password'] ? 'is-invalid' : ''}`}
+            />
+            <Form.Text className="text-danger">
+              {errors['password']}
+            </Form.Text>
+          </Form.Group>
 
-        <Button variant="primary" type="submit" className="login-btn reg-form-button">
-          Submit
-        </Button>
-      </Form>
-    </dev>
+          <Button variant="primary" type="submit" className="login-btn reg-form-button">
+            Submit
+          </Button>
+        </Form>
+        <p className="mt-3">Don't have an account? <Link to="/cusreg">Create one</Link></p>
+      </div>
     </center>
   );
 };
