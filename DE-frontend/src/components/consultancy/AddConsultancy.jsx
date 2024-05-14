@@ -233,6 +233,7 @@ export default function AddConsultancy() {
                   <div className="row d-flex justify-content-center">
                     <div className="col-3 mb-5">
                       <button
+                      className="btn btn-outline-info rounded-5 text-black"
                         type="submit"
                         onClick={() => {
                           var email = document.getElementById("email").value;
@@ -366,22 +367,14 @@ export default function AddConsultancy() {
                                 (res) =>
                                   console.log("Worked: " + JSON.stringify(res)),
                                 alert("appoinment added successfully"),
-                                (window.location = "/consultancy/:consid")
+                                (window.location = "/consultancy/req")
                               )
                               .catch((err) =>
                                 console.log("Failed: " + JSON.stringify(err))
                               );
                           }
                         }}
-                        style={{
-                          background: "#00ADB5",
-                          borderRadius: "50px",
-                          border: "0px white solid",
-                          fontSize: "20px",
-                          padding: "10px",
-                          paddingLeft: "20px",
-                          paddingRight: "20px",
-                        }}
+                        
                       >
                         Submit
                       </button>

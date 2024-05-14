@@ -4,7 +4,7 @@ const readCusAppointments = async (req, res) => {
     try {
       const customer = req.query.email;
       // console.log(customer)
-      const appointments = await consultantAppointment.find({"Email": customer});
+      const appointments = await consultantAppointment.find({"Email": customer}).populate('assignedEmployee').exec();
       // console.log(appointment);
       res.status(200).json(appointments);
     } catch (error) {
