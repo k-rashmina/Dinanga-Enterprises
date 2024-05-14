@@ -1,15 +1,16 @@
-import React from 'react'
-import Chart from './PieChart'
+import React from 'react';
+import Chart from './PieChart';
+import AdminHeader from '../common/AdminHeader';
 
 function Dashboard() {
   return (
     <>
-    <h3 style={{ marginBottom: "30px", marginLeft: "10px", fontWeight: "bold",marginTop: "80px",fontSize: "35px",alignItems:"center"}}>
-        ORDER DASHBOARD
-      </h3>
-      <Chart />
-      </>
-  )
+      <AdminHeader pageName={'Order Dashboard'} />
+      <div style={{ backgroundColor: 'white' }}>
+        <Chart />
+      </div>
+    </>
+  );
 }
 
-export default Dashboard
+export default Dashboard;

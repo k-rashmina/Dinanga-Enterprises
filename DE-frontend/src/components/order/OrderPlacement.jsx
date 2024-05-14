@@ -155,7 +155,7 @@ function OrderPlacement() {
       <Container
         fluid
         style={{
-          minHeight: "100vh",
+          minHeight: "20vh",
           backgroundColor: "#191B1A",
           alignItems: "center",
           display: "flex",
@@ -165,7 +165,7 @@ function OrderPlacement() {
       >
         <Row
           className="justify-content-md-center align-items-center"
-          style={{ minHeight: "100vh" }}
+          style={{ minHeight: "50vh" }}
         >
           <Col lg={18}>
             <Form
