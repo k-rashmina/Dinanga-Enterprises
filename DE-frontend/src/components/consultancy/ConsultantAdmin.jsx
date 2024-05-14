@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import AdminHeader from "../common/AdminHeader";
+import SupLogo from "../../assets/DELogo.png";
 
 export default function ConsultantAdmin() {
   const [data, setData] = useState([]);
@@ -18,9 +19,7 @@ export default function ConsultantAdmin() {
       .catch((err) => console.log(err));
   }, []);
 
-  // const availableEmpsElems = availableEmployees.map((emp) => {
-  //   return <option value={emp._id}>{emp.name}</option>;
-  // });
+  
 
   useEffect(() => {
     axios
@@ -86,16 +85,17 @@ export default function ConsultantAdmin() {
 
   const generateHTMLForPDF = () => {
     let html =
-      '<div style="text-align: center; font-size: 40px; font-family: Calibri; margin-bottom: 10px;">' +
-      "<b>Dinanga Enterprises</b>" +
-      "</div>" +
-      '<div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">' +
-      "<b>Address: 68 Paraththa Rd, Panadura 12500</b>" +
-      "</div>" +
-      '<div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">' +
-      "<b>Telephone: +94 71 126 1449</b>" +
-      "</div>" +
-      "<hr/>";
+    `<div style="text-align: center; font-size: 40px; font-family: Calibri; margin-bottom: 10px; display: flex; align-items: center; justify-content: center;">
+      <img src="${SupLogo}" alt="Company logo" style="height: 120px; width: 120px;">
+      <b>Dinanga Enterprises</b>
+    </div>
+    <div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">
+      <b>Address: 68 Paraththa Rd, Panadura 12500</b>
+    </div>
+    <div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">
+      <b>Telephone: +94 71 126 1449</b>
+    </div
+     <hr/>`;
 
     html += `<h1 style="text-align: center; font-size: 24px;">Consultant Appointment History</h1>
         <table border="1" style="width: 80%; margin: 0 auto; text-align: center;">

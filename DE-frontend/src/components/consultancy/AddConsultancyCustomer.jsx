@@ -43,6 +43,8 @@ export default function AddConsultancyCustomer() {
   // Default values for date and time
   const defaultDate = user ? formatDate(user.Date) : "";
 
+  const today =new Date().toISOString().split('T')[0];
+
   
 
   return (
@@ -81,7 +83,7 @@ export default function AddConsultancyCustomer() {
             </div>
 
             <div className="col-12 mb-4 text-center">
-              <span className="fs-5 fw-bold">{user && user.jobService}</span>
+              <span className="fs-4">{user && user.jobService}</span>
             </div>
           </div>
         </div>
@@ -138,48 +140,12 @@ export default function AddConsultancyCustomer() {
                         </div>
                         <div className="col-6">
                           <input className="fs-5 "
+                            required min={today}
                             type="date"
                             id="newDate"
                             style={{ border: "0px solid transparent" }}
                             onChange={function () {
-                              // Validate the Date
-                              const today = new Date();
-                              const formattedDate =
-                                today.toLocaleDateString("en-US"); // US English format
-                              var todayDate = formattedDate.split("/");
-                              var todaySplitMonth = todayDate[0];
-                              var todaySplitDate = todayDate[1];
-                              var todaySplitYear = todayDate[2];
-
-                              var ChooseDate =
-                                document.getElementById("newDate").value;
-                              var SplitChooseDateArray = ChooseDate.split("-");
-                              var Chooseyear = SplitChooseDateArray[0];
-                              var ChooseMonth = SplitChooseDateArray[1];
-                              var ChooseDate = SplitChooseDateArray[2];
-                              // calculation
-                              var YearAnswer = Chooseyear - todaySplitYear;
-                              var MonthAnsewer = ChooseMonth - todaySplitMonth;
-                              var DateAnswer = ChooseDate - todaySplitDate;
-
-                              // check
-                              if (YearAnswer < 0) {
-                                document.getElementById("DateError").innerText =
-                                  "Please Select Valid Year";
-                              } else if (MonthAnsewer < 0) {
-                                document.getElementById("DateError").innerText =
-                                  "Please Select Valid Month";
-                              } else if (MonthAnsewer < !0 && DateAnswer < 0) {
-                                document.getElementById("DateError").innerText =
-                                  "Please Select Valid Date";
-                              } else {
-                                document.getElementById("DateError").innerText =
-                                  "";
-                                var newDate =
-                                  document.getElementById("newDate").value;
-                                document.getElementById("OLDDate").innerText =
-                                  newDate;
-                              }
+                              document.getElementById("OLDDate").innerHTML = document.getElementById("newDate").value;
                             }}
                           ></input>
                         </div>
@@ -231,7 +197,7 @@ export default function AddConsultancyCustomer() {
             <div className="col-12 mt-5">
               <div className="row">
                 <div className="col-4 text-center">
-                  <span className="fs-5 ">Issue : </span>
+                  <span className="fs-5">Issue : </span>
                 </div>
                 <div className="col-8 d-grid">
                   <div className="row">
@@ -256,12 +222,12 @@ export default function AddConsultancyCustomer() {
             <div className="col-12 mt-5">
               <div className="row">
                 <div className="col-4 text-center">
-                  <span>Response : </span>
+                  <span className="fs-5">Response : </span>
                 </div>
                 <div className="col-8 d-grid">
                 <div className="row">
                     <div className="col-12">
-                      <span id="respond" className="fw-bold">
+                      <span id="respond"  className="fs-5 fw-bold">
                         {user && user.respond}
                       </span>
                     </div>
@@ -270,7 +236,7 @@ export default function AddConsultancyCustomer() {
                     className="fw-bold"
                     id=""
                     cols="30"
-                    rows="5"
+                    rows="2"
                     style={{ border: "0px solid transparent" }}
                     readOnly
                     disabled
@@ -283,16 +249,7 @@ export default function AddConsultancyCustomer() {
               <div className="row">
                 <div className="col-6 d-flex justify-content-center align-items-center">
                   <button
-                    style={{
-                      background: "#00ADB5",
-                      borderRadius: "50px",
-                      border: "0px white solid",
-                      fontSize: "20px",
-                      padding: "10px",
-                      paddingLeft: "20px",
-                      paddingRight: "20px",
-                      marginBottom: "20px",
-                    }}
+                   className="btn btn-outline-info rounded-5 text-black"
                     onClick={function () {
                       var location = document.getElementById("location").value;
                       var date = document.getElementById("OLDDate").innerText;
@@ -339,16 +296,8 @@ export default function AddConsultancyCustomer() {
 
                 <div className="col-6 d-flex justify-content-center align-items-center">
                   <button
-                    style={{
-                      background: "#00ADB5",
-                      borderRadius: "50px",
-                      border: "0px white solid",
-                      fontSize: "20px",
-                      padding: "10px",
-                      paddingLeft: "20px",
-                      paddingRight: "20px",
-                      marginBottom: "20px",
-                    }}
+
+                    className="btn btn-outline-info rounded-5 text-black"
                     onClick={function () {
                       axios.delete(
                         `http://localhost:5000/consultantAppointment/deleteappointment/${id}`
@@ -356,7 +305,7 @@ export default function AddConsultancyCustomer() {
                         .then((res) =>
                           console.log("Worked: " + JSON.stringify(res)),
                           alert("appoinment delete successfully"),
-                          window.location = "/consultancy/:consid"
+                          window.location = "/consultancyhistory"
     
                         )
                         .catch((err) =>

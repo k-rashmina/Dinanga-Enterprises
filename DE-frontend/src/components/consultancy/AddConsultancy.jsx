@@ -233,6 +233,7 @@ export default function AddConsultancy() {
                   <div className="row d-flex justify-content-center">
                     <div className="col-3 mb-5">
                       <button
+                      className="btn btn-outline-info rounded-5 text-black"
                         type="submit"
                         onClick={() => {
                           var email = document.getElementById("email").value;
@@ -373,15 +374,7 @@ export default function AddConsultancy() {
                               );
                           }
                         }}
-                        style={{
-                          background: "#00ADB5",
-                          borderRadius: "50px",
-                          border: "0px white solid",
-                          fontSize: "20px",
-                          padding: "10px",
-                          paddingLeft: "20px",
-                          paddingRight: "20px",
-                        }}
+                        
                       >
                         Submit
                       </button>
