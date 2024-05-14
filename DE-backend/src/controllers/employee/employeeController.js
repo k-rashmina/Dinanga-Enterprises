@@ -120,7 +120,8 @@ const updateEmployee = async (req, res) => {
             const token = jwt.sign(
                 {
                     employeeId: employee._id, 
-                    username: employee.username 
+                    username: employee.username,
+                    department: employee.department
                 },
                 secretKey, 
                 {
