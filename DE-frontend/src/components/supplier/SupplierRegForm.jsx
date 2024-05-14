@@ -73,9 +73,9 @@ function SupplierRegForm() {
                     if (!formData[field]) {
                         formIsValid = false;
                         newErrors[field] = 'Please enter your contact number.';
-                    } else if (!/^\d+$/.test(formData[field])) {
+                    } else if (!/^\d{10}$/.test(formData[field])) {
                         formIsValid = false;
-                        newErrors[field] = 'Please enter only numbers for contact number.';
+                        newErrors[field] = 'Please enter a 10-digit contact number.';
                     }
                     break;
                 case 'Supplier_aos':
@@ -127,12 +127,12 @@ function SupplierRegForm() {
                 return;
             }
         }
-        // Block typing if any letters entered for contact number
+        // Limit contact number to 10 digits
         if (name === 'Supplier_contact') {
-            if (/\D/.test(value)) {
+            if (!/^\d{0,10}$/.test(value)) {
                 setErrors((prevErrors) => ({
                     ...prevErrors,
-                    [name]: 'Please enter only numbers for contact number.',
+                    [name]: 'Please enter a maximum of 10 digits for contact number.',
                 }));
                 return;
             }
