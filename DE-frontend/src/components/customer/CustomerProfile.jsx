@@ -8,19 +8,19 @@ const CustomerProfile = () => {
   const imageUrl = 'https://source.unsplash.com/600x300/?student';
 
   return (
-    <div className="">
+    <div style={{backgroundColor: 'white'}}>
       <div className="d-flex justify-content-between">
-        <div className="col-lg-4" style={{ backgroundColor: '#393E46', height: '100vh', maxWidth: '300px' }}>
+        <div className="col-lg-4 mt-3" style={{ backgroundColor: '#393E46', height: '100vh', maxWidth: '300px' }}>
           <div className="profile-container">
             <ProfilePicture imageUrl={imageUrl}  />
           </div>
         </div>
-        <div className="col-lg-4" style={{ backgroundColor: '#EEEEEE', height: '100vh' }}>
+        <div className="col-lg-4 ps-3 pe-3 mt-3 mb-3" style={{ backgroundColor: '#EEEEEE', height: '100vh' }}>
           <div className="info-container">
             <CustomerInfo />
           </div>
         </div>
-        <div className="col-lg-4" style={{ backgroundColor: '#EEEEEE', height: '100vh', marginRight: '40px' }}>
+        <div className="col-lg-4 ps-3 pe-3 mt-3 mb-3" style={{ backgroundColor: '#EEEEEE', height: '100vh', marginRight: '40px' }}>
           <div className="feedback-container">
             <FeedbackForm />
           </div>
