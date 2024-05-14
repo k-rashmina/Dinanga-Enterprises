@@ -70,7 +70,7 @@ const Services = () => {
 
   return (
     <div  style={{ paddingTop: '40px', backgroundColor: '#191B1A' }}> {/* Added style to remove gap */}
-    <div className="container bg-dark" style={{ color: '#fff',maxWidth: '150vh', minHeight: '100vh', WebkitAlignContent: 'center'}}>
+    <div className="container bg-dark" style={{ color: '#fff', maxWidth: '150vh', minHeight: '100vh', WebkitAlignContent: 'center', paddingLeft: '15px', paddingRight: '15px' }}> {/* Adjust left and right margins */}
       <h4 className="mb-4" style={{ textAlign: 'left', fontSize: '3rem', fontStyle: 'Bold'}}>Services</h4>
       <div className="row">
         {servicesData.map((service, index) => (
