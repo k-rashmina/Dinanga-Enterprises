@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Navbar, Nav, NavDropdown, Container, Form, Button } from "react-bootstrap";
+import {
+  Navbar,
+  Nav,
+  NavDropdown,
+  Container,
+  Form,
+  Button
+} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import EmployeeApiService from "./EmployeeServices"; 
-import { useNavigate } from "react-router-dom"; 
+import EmployeeApiService from "./EmployeeServices";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import EmployeeNavBar from "./EmployeeNavBar";
 
 const EmployeeProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -11,14 +19,13 @@ const EmployeeProfile = () => {
     contactNumber: "",
     email: "",
     address: "",
-    username: "",
+    username: ""
   });
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
 
   const fetchEmployeeInfo = async () => {
     try {
-      const employeeId = localStorage.getItem('emp_id');
+      const employeeId = localStorage.getItem("emp_id");
       const response = await EmployeeApiService.getEmployeeDetails(employeeId);
       if (response) {
         setFormData({
@@ -26,7 +33,7 @@ const EmployeeProfile = () => {
           contactNumber: response.contactNumber,
           email: response.email,
           address: response.address,
-          username: response.username,
+          username: response.username
         });
       }
     } catch (error) {
@@ -42,7 +49,7 @@ const EmployeeProfile = () => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value,
+      [name]: value
     });
 
     validateField(name, value);
@@ -66,7 +73,8 @@ const EmployeeProfile = () => {
         // Contact number validation
         const contactNumberPattern = /^0\d{9}$/;
         if (!value.match(contactNumberPattern)) {
-          fieldErrors.contactNumber = "Contact number must start with 0 and be exactly 10 digits long.";
+          fieldErrors.contactNumber =
+            "Contact number must start with 0 and be exactly 10 digits long.";
         } else {
           delete fieldErrors.contactNumber;
         }
@@ -109,76 +117,62 @@ const EmployeeProfile = () => {
 
   const handleCancel = () => {
     setIsEditing(false);
-    fetchEmployeeInfo(); 
+    fetchEmployeeInfo();
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("Hello")
+    console.log("Hello");
     let isValid = true;
     for (let key in formData) {
-        validateField(key, formData[key]);
-        if (errors[key]) {
-            isValid = false;
-        }
+      validateField(key, formData[key]);
+      if (errors[key]) {
+        isValid = false;
+      }
     }
 
     if (!isValid) {
-        console.log("Please fix the validation errors before saving.");
-        return;
+      console.log("Please fix the validation errors before saving.");
+      return;
     }
 
-    const employeeId = localStorage.getItem('emp_id');
+    const employeeId = localStorage.getItem("emp_id");
 
     const updatedData = {
-        fullName: formData.fullName,
-        contactNumber: formData.contactNumber,
-        email: formData.email,
-        address: formData.address,
-        username: formData.username,
+      fullName: formData.fullName,
+      contactNumber: formData.contactNumber,
+      email: formData.email,
+      address: formData.address,
+      username: formData.username
     };
     try {
-        const response = await EmployeeApiService.updateProfile(employeeId, updatedData);
+      const response = await EmployeeApiService.updateProfile(
+        employeeId,
+        updatedData
+      );
 
-        if (response) {
-            console.log('Employee details updated successfully');
-            
-            await fetchEmployeeInfo(); 
+      if (response) {
+        console.log("Employee details updated successfully");
 
-            setIsEditing(false);
-        } else {
-            console.error('Failed to update employee details:', response.error);
-        }
+        await fetchEmployeeInfo();
+
+        setIsEditing(false);
+      } else {
+        console.error("Failed to update employee details:", response.error);
+      }
     } catch (error) {
-        console.error('Failed to update employee details:', error);
+      console.error("Failed to update employee details:", error);
     }
-};
-
-
-  const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    navigate("/emplogin");
   };
 
   return (
     <>
       {/* Header with profile icon and dropdown */}
-      <Navbar bg="light" expand="lg">
-        <Container>
-          <Navbar.Brand href="#">Welcome {formData.fullName}!</Navbar.Brand>
-          <Nav className="ml-auto">
-            <NavDropdown title={<i className="bi bi-person-circle"></i>} id="nav-dropdown">
-              <NavDropdown.Item onClick={handleLogout}>
-                Logout
-              </NavDropdown.Item>
-            </NavDropdown>
-          </Nav>
-        </Container>
-      </Navbar>
+      <EmployeeNavBar fullName={formData.fullName} />
 
       {/* Employee profile */}
-      <Container style={{ marginTop: "50px" }}>
+      <Container style={{ marginTop: "30px" }}>
         <h2 className="text-center mb-4">Employee Profile</h2>
         <Form onSubmit={handleSubmit}>
           {/* Form fields */}
@@ -259,11 +253,16 @@ const EmployeeProfile = () => {
           </Form.Group>
 
           {/* Edit, cancel, and save buttons */}
-          <Button variant="primary" type="button" onClick={isEditing ? handleCancel : handleEdit} className="mr-2">
+          <Button
+            variant="primary"
+            type="button"
+            onClick={isEditing ? handleCancel : handleEdit}
+            className="mr-2"
+          >
             {isEditing ? "Cancel" : "Edit"}
           </Button>
           {isEditing && (
-            <Button variant="success" type="submit" onClick={handleSubmit}> 
+            <Button variant="success" type="submit" onClick={handleSubmit}>
               Save
             </Button>
           )}

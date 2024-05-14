@@ -3,23 +3,18 @@ import { Container, Table, Button} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import axios from "axios"
-
-// const rows = [
-//   {
-//     jobTitle: 'Car Service',
-//     customerContactNumber: '123-456-7890',
-//     location: '123 Main St, City',
-//     dueDate: '04/15/2023',
-//     status: 'Pending',
-//   },
-
-// ];
-
+import EmployeeNavBar from './EmployeeNavBar';
 
 const EmployeeJobsDashboard = () => {
 
-  const loggedEmp = '6628b323c670dd2b53788de4'
-
+  const loggedEmp = localStorage.getItem("emp_id")
+  const [formData, setFormData] = useState({
+    fullName: "",
+    contactNumber: "",
+    email: "",
+    address: "",
+    username: ""
+  });
   const [isDone, setIsDone] = useState(false);
   const doneJob = useRef({});
   const hasPageLoaded = useRef(false);
@@ -38,10 +33,10 @@ const EmployeeJobsDashboard = () => {
       const confirmation = confirm('Confirm Job Completion');
       if(confirmation){
           
-          axios.put(`http://localhost:5000/inventory/updateJobItem?jid=${doneJob.current._id}`)
+          axios.put(`http://localhost:4000/inventory/updateJobItem?jid=${doneJob.current._id}`)
           .then(() => {
 
-            axios.put("http://localhost:5000/jobAppointment/updateappointment/" + doneJob.current._id, doneJob.current)
+            axios.put("http://localhost:4000/jobAppointment/updateappointment/" + doneJob.current._id, doneJob.current)
             .then(res => {
               console.log("Job marked done");
               doneJob.current = {};
@@ -64,7 +59,7 @@ const EmployeeJobsDashboard = () => {
 
   useEffect(() => {
 
-    axios.get(`http://localhost:5000/jobAppointment/getpendingempjobs?empid=${loggedEmp}`)
+    axios.get(`http://localhost:4000/jobAppointment/getpendingempjobs?empid=${loggedEmp}`)
     .then(res => {
       console.log(res.data)
       setRows(res.data)
@@ -73,7 +68,10 @@ const EmployeeJobsDashboard = () => {
   }, [updateStatus])
 
   return (
-    <Container fluid style={{ padding: '16px', backgroundColor: '#fff', minHeight: '100vh' }}>
+    <React.Fragment>
+<EmployeeNavBar fullName={formData.fullName} />
+
+<Container fluid style={{ padding: '16px', backgroundColor: '#fff', minHeight: '100vh' }}>
       <h4 style={{ color: 'black', textAlign: 'center', fontWeight: 'bold', marginBottom: '20px' }}>Created Jobs</h4>
       <div style={{ borderRadius: '20px', overflow: 'hidden' }}>
         <Table bordered hover responsive style={{ marginBottom: '0' }}>
@@ -109,6 +107,8 @@ const EmployeeJobsDashboard = () => {
         </Table>
       </div>
     </Container>
+    </React.Fragment>
+    
   );
 };
 
