@@ -11,20 +11,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import axios from "axios"
 
-// const rows = [
-//   {
-//     customerName: "John Doe",
-//     customerContactNumber: "123-456-7890",
-//     location: "123 Main St, City",
-//     issue: "Battery Replacement",
-//     availableJobServices: ["Oil Change", "Tire Rotation", "Brake Inspection"],
-//     status: "Pending"
-//   }
-// ];
 
 const ConsultancyEmployeeDashboard = () => {
 
-  const loggedEmp = '662627c645d29e582b7b19ad'
+  const loggedEmp = localStorage.getItem("emp_id")
 
   const [issueInfo, setIssueInfo] = useState({});
   const [showModal, setShowModal] = useState(false);
@@ -87,7 +77,7 @@ const ConsultancyEmployeeDashboard = () => {
 
         axios
         .put(
-          `http://localhost:5000/consultantAppointment/updaterespond/${doneConsultancy.current._id}`,
+          `http://localhost:4000/consultantAppointment/updaterespond/${doneConsultancy.current._id}`,
           {
             jobService: doneConsultancy.current.jobService,
             assignedEmployee: doneConsultancy.current.assignedEmployee,
@@ -117,7 +107,7 @@ const ConsultancyEmployeeDashboard = () => {
 
   useEffect(() => {
 
-    axios.get(`http://localhost:5000/consultantAppointment/getemployeeread?empid=${loggedEmp}`)
+    axios.get(`http://localhost:4000/consultantAppointment/getemployeeread?empid=${loggedEmp}`)
     .then(res => {
       setRows(res.data)
     })
@@ -128,7 +118,7 @@ const ConsultancyEmployeeDashboard = () => {
 
   useEffect(() => {
 
-    axios.get('http://localhost:5000/getjobservices').then(res => setServiceOptions(res.data));
+    axios.get('http://localhost:4000/getjobservices').then(res => setServiceOptions(res.data));
 
   }, [])
 
