@@ -4,21 +4,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import axios from "axios"
 
-// const rows = [
-//   {
-//     jobTitle: 'Car Service',
-//     customerContactNumber: '123-456-7890',
-//     location: '123 Main St, City',
-//     dueDate: '04/15/2023',
-//     status: 'Pending',
-//   },
-
-// ];
-
-
 const EmployeeJobsDashboard = () => {
 
-  const loggedEmp = '66229769086c2274a165f91a'
+  const loggedEmp = localStorage.getItem("emp_id")
 
   const [isDone, setIsDone] = useState(false);
   const doneJob = useRef({});
@@ -38,10 +26,10 @@ const EmployeeJobsDashboard = () => {
       const confirmation = confirm('Confirm Job Completion');
       if(confirmation){
           
-          axios.put(`http://localhost:5000/inventory/updateJobItem?jid=${doneJob.current._id}`)
+          axios.put(`http://localhost:4000/inventory/updateJobItem?jid=${doneJob.current._id}`)
           .then(() => {
 
-            axios.put("http://localhost:5000/jobAppointment/updateappointment/" + doneJob.current._id, doneJob.current)
+            axios.put("http://localhost:4000/jobAppointment/updateappointment/" + doneJob.current._id, doneJob.current)
             .then(res => {
               console.log("Job marked done");
               doneJob.current = {};
@@ -64,7 +52,7 @@ const EmployeeJobsDashboard = () => {
 
   useEffect(() => {
 
-    axios.get(`http://localhost:5000/jobAppointment/getpendingempjobs?empid=${loggedEmp}`)
+    axios.get(`http://localhost:4000/jobAppointment/getpendingempjobs?empid=${loggedEmp}`)
     .then(res => {
       console.log(res.data)
       setRows(res.data)
