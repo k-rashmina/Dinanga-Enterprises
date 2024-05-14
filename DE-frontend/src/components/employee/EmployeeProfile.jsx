@@ -3,6 +3,7 @@ import { Navbar, Nav, NavDropdown, Container, Form, Button } from "react-bootstr
 import "bootstrap/dist/css/bootstrap.min.css";
 import EmployeeApiService from "./EmployeeServices"; 
 import { useNavigate } from "react-router-dom"; 
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 const EmployeeProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -155,6 +156,9 @@ const EmployeeProfile = () => {
     }
 };
 
+const handleProfile = () => {
+  navigate("/empprofile");
+};
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
@@ -169,6 +173,9 @@ const EmployeeProfile = () => {
           <Navbar.Brand href="#">Welcome {formData.fullName}!</Navbar.Brand>
           <Nav className="ml-auto">
             <NavDropdown title={<i className="bi bi-person-circle"></i>} id="nav-dropdown">
+            <NavDropdown.Item onClick={handleProfile}>
+                <i className="bi bi-person"></i> Profile
+              </NavDropdown.Item>
               <NavDropdown.Item onClick={handleLogout}>
                 Logout
               </NavDropdown.Item>
@@ -178,7 +185,7 @@ const EmployeeProfile = () => {
       </Navbar>
 
       {/* Employee profile */}
-      <Container style={{ marginTop: "50px" }}>
+      <Container style={{ marginTop: "30px" }}>
         <h2 className="text-center mb-4">Employee Profile</h2>
         <Form onSubmit={handleSubmit}>
           {/* Form fields */}
