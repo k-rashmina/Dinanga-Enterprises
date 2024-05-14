@@ -104,7 +104,7 @@ function AddItem() {
     <div class="con">
       <AdminHeader pageName={"Add Item"} />
       <SearchBar />
-      <div class="container-fluid px-1 py-5 mx-auto">
+      <div class="container-fluid px-1 py-5 mx-auto" style={{ marginTop: '-60px' }}>
         <div class="row d-flex justify-content-center">
           <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
             <div
@@ -123,7 +123,7 @@ function AddItem() {
                 />
               </h5>
               <form className="form-card" onSubmit={sendData}>
-                <div class="row justify-content-between text-left">
+                <div class="row justify-content-between text-left" >
                   <div class="row justify-content-between text-left">
                     <div class="form-group col-12 flex-column d-flex mb-3">
                       <label class="form-control-label px-3">

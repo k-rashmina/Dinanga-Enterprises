@@ -48,18 +48,26 @@ const inventoryReport = async (req, res) => {
   let todayStr = today.toLocaleDateString("default", options);
   let oneWeekAgoStr = oneWeekAgo.toLocaleDateString("default", options);
 
-  //Heading of the PDF
   let html =
-    '<div style="text-align: center; font-size: 24px; font-family: Calibri; margin-bottom: 10px;">' +
-    "Dinanga Enterprises" +
-    "</div>" +
-    '<div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">' +
-    "Address: 123 Main St, Panadura, Sri Lanka" +
-    "</div>" +
-    '<div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">' +
-    "Telephone: 0112747789" +
-    "</div>" +
-    "<hr/>";
+  '<div style="display: flex; align-items: center; font-family: Calibri;">' +
+  '<div style="margin-right: 20px;">' +
+  '<img src="http://localhost:5000/assets/logo1.png" style="max-height: 200px;"/>' +
+  "</div>" +
+  '<div style="flex-grow: 1; text-align: center;">' +
+  '<div style="font-size: 24px; margin-bottom: 10px;">' +
+  "Dinanga Enterprises" +
+  "</div>" +
+  '<div style="font-size: 14px; margin-bottom: 10px;">' +
+  "Address: 123 Main St, Panadura, Sri Lanka" +
+  "</div>" +
+  '<div style="font-size: 14px; margin-bottom: 10px;">' +
+  "Telephone: 0112747789" +
+  "</div>" +
+  "</div>" +
+  "</div>" +
+  "<hr/>";
+
+
 
   //Sub Heading | Inventory Report
   html +=
