@@ -32,7 +32,7 @@ import FeedbackTable from './components/supplier/FeedbackTable';
 
 
 import Services from '../src/components/job/Services';
-import JobAppointment from '../src/components/job/jobAppointment';
+import JobAppointment from '../src/components/job/jobappointment';
 import JobCustomer from '../src/components/job/jobCustomer';
 
 import JobAdmin from '../src/components/job/jobAdmin';

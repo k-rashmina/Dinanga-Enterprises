@@ -8,13 +8,12 @@ const JobServicesAppointmentFormBootstrap = () => {
   const [formData, setFormData] = useState({
     date: '',
     time: '',
-    email: '',
+    email: '', // Initially empty
     location: '',
     serviceType: '',
     vehicleType: '',
     status: 'pending',
-    paymentStatus:'pending',
-
+    paymentStatus: 'pending',
   });
 
   const [formComplete, setFormComplete] = useState(false);
@@ -23,9 +22,6 @@ const JobServicesAppointmentFormBootstrap = () => {
   const [locationErr, setLocationErr] = useState('');
   const [serviceTypeErr, setServiceTypeErr] = useState('');
   const [vehicleTypeErr, setVehicleTypeErr] = useState('');
-  const [emailErr, setEmailErr] = useState('');
-
-  
 
   const today = new Date().toISOString().split('T')[0];
   const navigate = useNavigate();
@@ -33,26 +29,22 @@ const JobServicesAppointmentFormBootstrap = () => {
   const [serviceOptions, setServiceOptions] = useState([]);
 
   useEffect(() => {
-
+    // Fetch service options
     axios.get('http://localhost:5000/getjobservices').then(res => setServiceOptions(res.data));
 
-  }, [])
+    // Fetch logged-in user's email from session and set it as the initial value for the email field
+    const loggedUser = localStorage.getItem('loggedUser');
+    if (loggedUser) {
+      setFormData(prevState => ({
+        ...prevState,
+        email: loggedUser
+      }));
+    }
+  }, []);
 
-  const serviceOptionsElems = serviceOptions.map(service => {
-    return(
-      <option key={service._id} value={service._id}>{service.service_name}</option>    )
-  })
-
-  // useEffect(() => {
-  //   // Fetch services data from your backend API
-  //   axios.get("http://localhost:5000/servicesModel/")
-  //     .then(response => {
-  //       setServices(response.data); // Assuming response.data is an array of service objects
-  //     })
-  //     .catch(error => {
-  //       console.error('Error fetching services:', error);
-  //     });
-  //   }, []);
+  const serviceOptionsElems = serviceOptions.map(service => (
+    <option key={service._id} value={service._id}>{service.service_name}</option>
+  ));
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -63,8 +55,8 @@ const JobServicesAppointmentFormBootstrap = () => {
   };
 
   const validateForm = () => {
-    const { date, time, email, location, serviceType, vehicleType } = formData;
-    if (date.trim() !== '' && time.trim() !== '' && email.trim() !== '' && location.trim() !== '' && serviceType.trim() !== '' && vehicleType.trim() !== '') {
+    const { date, time, location, serviceType, vehicleType } = formData;
+    if (date.trim() !== '' && time.trim() !== ''  && location.trim() !== '' && serviceType.trim() !== '' && vehicleType.trim() !== '') {
       setFormComplete(true);
     } else {
       setFormComplete(false);
@@ -78,9 +70,6 @@ const JobServicesAppointmentFormBootstrap = () => {
         break;
       case 'time':
         setTimeErr(formData.time === '' ? 'Time is required.' : '');
-        break;
-      case 'email':
-        setEmailErr(formData.email === '' ? 'Email is required.' : '');
         break;
       case 'location':
         setLocationErr(formData.location === '' ? 'Location is required.' : '');
@@ -96,12 +85,7 @@ const JobServicesAppointmentFormBootstrap = () => {
     }
   };
 
-  const emailValidation = (e) => {
-    const emailVal = e.target.value;
-    const regEx = /^[^\.\s][\w\-]+(\.[\w\-]+)*@([\w-]+\.)+[\w-]{2,}$/gm
-    setEmailErr(regEx.test(emailVal) ? '' : 'Email is invalid');
-  };
-
+ 
   const handleSubmit = (event) => {
     event.preventDefault();
     validateForm();
@@ -141,9 +125,7 @@ const JobServicesAppointmentFormBootstrap = () => {
                   <Form.Label>Email</Form.Label>
                   <Form.Control type="email" name="email" placeholder='Enter valid email' value={formData.email} onChange={(e) => {
                     handleChange(e);
-                    emailValidation(e);
-                  }} required onBlur={() => handleBlur('email')} />
-                  <p style={{ color: 'red' }}>{emailErr}</p>
+                  }} readOnly required  />
                 </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Label>Location</Form.Label>

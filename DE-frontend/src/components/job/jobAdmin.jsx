@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Container, Navbar, Table, Form, Button } from 'react-bootstrap';
-import { PersonCircle } from 'react-bootstrap-icons';
+import SupLogo from '../../assets/DELogo.png';
 import axios from "axios";
+import AdminHeader from "../common/AdminHeader";
 
 const AssignJobs = () => {
   const [data, setJobs] = useState([]);
@@ -74,17 +75,19 @@ const AssignJobs = () => {
 
   const generateHTMLForPDF = () => {
     let html =
-      '<div style="text-align: center; font-size: 40px; font-family: Calibri; margin-bottom: 10px;">' +
-      "<b>Dinanga Enterprises</b>" +
-      "</div>" +
-      '<div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">' +
-      "<b>Address: 68 Paraththa Rd, Panadura 12500</b>" +
-      "</div>" +
-      '<div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">' +
-      "<b>Telephone: +94 71 126 1449</b>" +
-      "</div>" +
-      "<hr/>";
-  
+      `<div style="text-align: center; font-size: 40px; font-family: Calibri; margin-bottom: 10px; display: flex; align-items: center; justify-content: center;">
+        <img src="${SupLogo}" alt="Company logo" style="height: 120px; width: 120px;">
+        <b>Dinanga Enterprises</b>
+      </div>
+      <div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">
+        <b>Address: 68 Paraththa Rd, Panadura 12500</b>
+      </div>
+      <div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">
+        <b>Telephone: +94 71 126 1449</b>
+      </div>
+      <hr/>`;
+
+
     html +=
       `<h1 style="text-align: center; font-size: 24px;">Job History</h1>
         <table border="1" style="width: 80%; margin: 0 auto; text-align: center;">
@@ -103,34 +106,27 @@ const AssignJobs = () => {
         <td>${formatDate(job.date)},  ${job.time}</td>
         <td>${job.location}</td>
         <td>${hasPageLoaded.current && (job.employeeName ? job.employeeName.name : 'Not Assigned')}</td>
-
-        
       </tr>`
     )).join('');
     
     html += '</table>';
 
     html +=
-  '<div style="text-align: center; font-size: 16px; font-weight: bold; margin-top: 20px;">' +
-  '  Today Total Number of Consultancy Appointments: ' + data.length +
-  '</div>';
-      
+      '<div style="text-align: center; font-size: 16px; font-weight: bold; margin-top: 20px;">' +
+      '  Today Total Number of Job Appointments: ' + data.length +
+      '</div>';
+
     return html;
   };
 
 
+
   return (
-    <div  style={{ flexGrow: 1, overflowY: 'auto', width: 'calc(100% - 20px)' }}>
-      <Navbar bg="light" className="shadow-sm" style={{ paddingLeft: 20, paddingRight: 20 }} >
-        <Navbar.Collapse className="justify-content-end">
-          <Navbar.Text>
-            <Button variant="primary" onClick={handleDownloadPDF} style={{ marginRight: '10px',backgroundColor:'#00adb4'}}>Download PDF</Button>
-            <PersonCircle className="me-2" />
-            Kalindu Rashmina
-          </Navbar.Text>
-        </Navbar.Collapse>
-      </Navbar>
-      <Container id="print-content" className="mt-4" style={{ width: 'fullwidth' }}>
+    <div>
+      <AdminHeader pageName={"Job List"} />
+      <Button variant="primary" onClick={handleDownloadPDF} style={{ marginLeft: '10px', backgroundColor: '#00adb4' }}>Download PDF</Button>
+
+      <Container className="mt-4">
         <h5 className="mb-3 fw-bold">Job lists</h5>
         <Table bordered hover size="sm">
           <thead style={{ backgroundColor: '#d9d9d9'}}>
@@ -162,14 +158,13 @@ const AssignJobs = () => {
           </tbody>
         </Table>
 
-
         <div className="col-12">
-                        <div className="row">
-                          <div className="col-12 text-center mb-3">
-                              <span className="fw-bold">Today Total Number of Job Appointments: {data.length}</span>
-                          </div>
-                          </div>
-                          </div>
+          <div className="row">
+            <div className="col-12 text-center mb-3">
+              <span className="fw-bold">Today Total Number of Job Appointments: {data.length}</span>
+            </div>
+          </div>
+        </div>
       </Container>
     </div>
   );
