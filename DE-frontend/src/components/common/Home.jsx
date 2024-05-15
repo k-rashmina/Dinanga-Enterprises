@@ -9,7 +9,9 @@ import Hybridbatteryservice from '../../assets/battery service.jpg';
 import Breakservice from '../../assets/break service.jpg';
 import Bodywash from '../../assets/body wash.webp';
 import Engineoverallrepair from '../../assets/engine overall repair.jpg';
-
+import amasha from '../../assets/amasha.jpg';
+import wel from '../../assets/welcome.jpg';
+import home from '../../assets/homeone.jpg';
 function Home() {
   const style = {
     container: {
@@ -49,12 +51,13 @@ function Home() {
   return (
     <>
 
-      <div className="section-1">
-        <img src={backgroundImage} />
+      <div className="section-1" style={{position: 'relative'}}>
+        <img src={home} />
+        <h1 style={{zIndex: '99', position: 'absolute', top: '200px', left: '300px', fontSize: '100px', color: '#ffffff'}}>Dinanga Enterprises</h1>
       </div>
 
       <div className="section-2">
-        <div><img src={backgroundImage} className='section-2-img' /></div>
+        <div><img src={wel} className='section-2-img' /></div>
         <div className="section-2-details">
           <p className="Welcome-message">Welcome to Dinanga Enterprises</p>
           <p className="slogan">-The one place for all your spare part needs-</p>
@@ -64,12 +67,12 @@ function Home() {
       </div>
 
       <div className="section-3">
-        <div style={{marginTop: '26px'}}><img src={backgroundImage} /></div>
+        <div style={{marginTop: '26px'}}><img src={amasha} /></div>
         <div className="section-3-details" >
           <p className="section-3-header">Consultancy Service</p>
           <p className="section-3-info">We are thrilled to introduce our new appointment consultancy meeting feature, designed to streamline your experience and provide personalized assistance for all your spare parts needs. Our appointment consultancy meeting feature allows you to schedule dedicated time with our expert team to discuss your specific requirements, troubleshoot any issues you may be facing  with your spare part equipments. With just a few clicks, you can conveniently request an appointment. Simply select your preferred date and time, provide some basic information about your inquiry, and our team will confirm your appointment promptly.
           </p>
-          <Link to={''}><button className="book-now-button">BOOK CONSULTANCY</button></Link>
+          <Link to={'/consultancy'}><button className="book-now-button">BOOK CONSULTANCY</button></Link>
         </div>
 
       </div>
@@ -80,7 +83,7 @@ function Home() {
           <p className="section-4-header">Job Services</p>
           <p className="section-4-info">Discover the unparalleled automotive care experience at Dinanga Enterprises! With a comprehensive suite of services including battery maintenance, brake servicing, engine overhauls, and meticulous detailing, we are your one-stop destination for all vehicle maintenance needs. Our expert technicians, equipped with cutting-edge technology and industry-leading expertise, ensure that every visit leaves your vehicle performing at its peak. Whether it's a routine oil change or a complex engine repair, trust Dinanga Enterprises to deliver quality service, reliability, and peace of mind with every mile. Experience excellence in automotive care – choose Dinanga Enterprises today.
           </p>
-          <Link to={'/about'}><button className="appointment-button">MAKE APPOINTMENT</button></Link>
+          <Link to={'/jobappointment'}><button className="appointment-button">MAKE APPOINTMENT</button></Link>
         </div>
 
       </div>
