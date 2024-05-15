@@ -99,7 +99,7 @@ function OrderHistory() {
         <h3 style={{ marginBottom: "50px", marginLeft: "20px", fontWeight: "bold" }}>
           
         </h3>
-        <button onClick={handleDownloadPDF} style={{ fontSize: '16px', padding: '10px 20px', borderRadius: '4px', backgroundColor: '#00ADB5', color: '#fff', border: '2px',fontSize:"20px"}}>
+        <button onClick={handleDownloadPDF} style={{ fontSize: '16px', padding: '10px 20px', borderRadius: '4px', backgroundColor: '#00ADB5', color: '#fff', border: '2px'}}>
           Generate PDF
         </button>
       </div>

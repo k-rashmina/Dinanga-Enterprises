@@ -44,7 +44,7 @@ export default function Dashboard() {
 
         <div className="d-flex justify-content-between div-shadow rounded-5 ps-5 pe-5 pt-4 pb-4 mt-5" style={{width: '100%'}}>
           <h4 className="mb-4 mt-4" style={{ width: '500px'}}>Generate Monthly Transaction Report</h4>
-          <button className="align-self-center form-button fw-semibold" style={{width: '200px'}} onClick={handleGenerateReport}>Generate Report</button>
+          <button className="align-self-center form-button fw-semibold" style={{width: '200px'}} onClick={() =>  handleGenerateReport()}>Generate Report</button>
         </div>
 
       </div>

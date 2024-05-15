@@ -10,16 +10,17 @@ const transactionReport = async (req, res) => {
 
         //Heading of the PDF
         let html =
-            '<h1 style="text-align: center; font-family: Calibri; margin-bottom: 10px;">' +
-            "Dinanga Enterprises" +
-            "</h1>" +
-            '<div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">' +
-            "Address: 123 Main St, City, Country" +
-            "</div>" +
-            '<div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">' +
-            "Telephone: (123) 456-7890" +
-            "</div>" +
-            "<hr/>";
+        `<div style="text-align: center; font-size: 40px; font-family: Calibri; margin-bottom: 10px; display: flex; align-items: center; justify-content: center;">
+              <img src="http://localhost:5000/assets/logo1.png" alt="Company logo" style="height: 120px; width: 120px;">
+              <b>Dinanga Enterprises</b>
+            </div>
+            <div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">
+              <b>Address: 68 Paraththa Rd, Panadura 12500</b>
+            </div>
+            <div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">
+              <b>Telephone: +94 71 126 1449</b>
+            </div>
+            <hr/>`;
 
         //Monthly Transction Report
         html +=
@@ -45,10 +46,10 @@ const transactionReport = async (req, res) => {
                 <td>${item.transact_no}</td>
                 <td>${item.transact_type}</td>
                 <td>${item.pay_type}</td>
-                <td>${item.pay_date.toISOString().substring(0, 10)}</td>
-                <td style="text-align: right">${item.amount?.job_amt.toFixed(2)}</td>
-                <td style="text-align: right">${item.amount?.tax_amt.toFixed(2)}</td>
-                <td style="text-align: right">${item.amount?.tot_amount.toFixed(2)}</td>
+                <td>${item.pay_date?.toISOString().substring(0, 10)}</td>
+                <td style="text-align: right">${item.amount?.job_amt}</td>
+                <td style="text-align: right">${item.amount?.tax_amt}</td>
+                <td style="text-align: right">${item.amount?.tot_amount}</td>
                 </tr>`;
         });
 
@@ -59,7 +60,7 @@ const transactionReport = async (req, res) => {
           <td></td>
           <td></td>
           <td></td>
-          <td style="text-align: right"><b>${reportData.JTStat?.txAmount.toFixed(2)}</b></td>
+          <td style="text-align: right"><b>${reportData.JTStat?.txAmount}</b></td>
           </tr>`;
 
         html += "</table>";
@@ -82,13 +83,13 @@ const transactionReport = async (req, res) => {
             html += `<tr>
                 <td>${item.transact_no}</td>
                 <td>${item.create_date.toISOString().substring(0, 10)}</td>
-                <td style="text-align: right">${item.amount.toFixed(2)}</td>
+                <td style="text-align: right">${item.amount}</td>
                 </tr>`;
         });
         html += `<tr>
           <td></td>
           <td></td>
-          <td style="text-align: right"><b>${reportData.PTStat?.txAmount.toFixed(2)}</b></td>
+          <td style="text-align: right"><b>${reportData.PTStat?.txAmount}</b></td>
           </tr>`;
 
         html += "</table>";
@@ -103,31 +104,31 @@ const transactionReport = async (req, res) => {
             '<table style="border: none;">' +
             "<tr>" +
             '<th style="font-size: 16px">Total Job Transaction Amount</th>' +
-            '<th style="text-align: right; font-size: 16px"> LKR ' + reportData.JTStat?.txAmount.toFixed(2) + "</th>";
+            '<th style="text-align: right; font-size: 16px"> LKR ' + reportData.JTStat?.txAmount + "</th>";
         ("</tr>");
         html += `<tr>
     <th style="font-size: 16px">Total Purchase Transaction Amount</th>
-    <td style="text-align: right; font-size: 16px"><b>LKR ${reportData.PTStat?.txAmount.toFixed(2)}</b></td>
+    <td style="text-align: right; font-size: 16px"><b>LKR ${reportData.PTStat?.txAmount}</b></td>
     </tr>`;
         html += `<tr>
     <th style="font-size: 20px; font-weight: bold">Total Profit or Loss</th>
-    <td style="text-align: right; font-size: 20px; font-weight: bold"><b>LKR ${(reportData.JTStat?.txAmount.toFixed(2)) - (reportData.PTStat?.txAmount.toFixed(2))}</b></td>
+    <td style="text-align: right; font-size: 20px; font-weight: bold"><b>LKR ${(reportData.JTStat?.txAmount) - (reportData.PTStat?.txAmount)}</b></td>
     </tr>`;
 
         // html += `<center><h2 style="margin-top: '20px'; text-align: center; font-family:Calibri; color: #606060">Summary Report</h2><center> 
         // <div style='display: flex; justify-content: space-even'>
         //   <h3 style='width: 400px'>Total Job Transaction Amount</h3>
-        //   <h3 style='width: 400px'>LKR ${reportData.JTStat?.txAmount.toFixed(2)}</h3>
+        //   <h3 style='width: 400px'>LKR ${reportData.JTStat?.txAmount}</h3>
 
         // </div>
         // <div style='display: flex; justify-content: space-even'>
         //     <h3 style='width: 400px'>Total Purchase Transaction Amount</h3>
-        //     <h3 style='width: 400px'>LKR ${reportData.PTStat?.txAmount.toFixed(2)}</h3>
+        //     <h3 style='width: 400px'>LKR ${reportData.PTStat?.txAmount}</h3>
         // </div>
 
         // <div style='display: flex; justify-content: space-even'>
         //     <h2 style='width: 400px'>Total Profit or Loss</h2>
-        //     <h2 style='width: 400px'>LKR ${(reportData.JTStat?.txAmount.toFixed(2)) - (reportData.PTStat?.txAmount.toFixed(2))}</h2>
+        //     <h2 style='width: 400px'>LKR ${(reportData.JTStat?.txAmount) - (reportData.PTStat?.txAmount)}</h2>
         // </div>
 
         // `;

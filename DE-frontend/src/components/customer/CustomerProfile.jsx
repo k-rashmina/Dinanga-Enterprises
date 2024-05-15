@@ -9,18 +9,18 @@ const CustomerProfile = () => {
 
   return (
     <div style={{backgroundColor: 'white'}}>
-      <div className="d-flex justify-content-between">
+      <div className="d-flex justify-content-between ps-3">
         <div className="col-lg-4 mt-3" style={{ backgroundColor: '#393E46', height: '100vh', maxWidth: '300px' }}>
           <div className="profile-container">
             <ProfilePicture imageUrl={imageUrl}  />
           </div>
         </div>
-        <div className="col-lg-4 ps-3 pe-3 mt-3 mb-3" style={{ backgroundColor: '#EEEEEE', height: '100vh', width: '600px' }}>
+        <div className="col-lg-4 ps-3 pe-3 mt-3 mb-3" style={{ backgroundColor: '#EEEEEE', height: '100vh', width: '580px' }}>
           <div className="info-container">
             <CustomerInfo />
           </div>
         </div>
-        <div className="col-lg-4 ps-3 pe-3 mt-3 mb-3" style={{ backgroundColor: '#EEEEEE', height: '100vh', marginRight: '20px', width: '600px' }}>
+        <div className="col-lg-4 ps-3 pe-3 mt-3 mb-3" style={{ backgroundColor: '#EEEEEE', height: '100vh', marginRight: '20px', width: '580px' }}>
           <div className="feedback-container">
             <FeedbackForm />
           </div>

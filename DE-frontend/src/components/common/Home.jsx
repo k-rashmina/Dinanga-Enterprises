@@ -92,12 +92,12 @@ function Home() {
       <div className="section-5">
         <div className="section-5-header"><p>Gallery</p></div>
         <div className="gallery-imgs">
-          <div><img alt="" src={Engineoilchange} /></div>
-          <div><img alt="" src={homegallery1} /></div>
-          <div><img alt="" src={Hybridbatteryservice} /></div>
-          <div><img alt="" src={Breakservice} /></div>
-          <div><img alt="" src={Bodywash} /></div>
-          <div><img alt="" src={Engineoverallrepair} /></div>
+          <div><img alt="Engineoilchange" src={Engineoilchange} /></div>
+          <div><img alt="homegallery1" src={homegallery1} /></div>
+          <div><img alt="Hybridbatteryservice" src={Hybridbatteryservice} /></div>
+          <div><img alt="Breakservice" src={Breakservice} /></div>
+          <div><img alt="Bodywash" src={Bodywash} /></div>
+          <div><img alt="Engineoverallrepair" src={Engineoverallrepair} /></div>
         </div>
       </div>
 

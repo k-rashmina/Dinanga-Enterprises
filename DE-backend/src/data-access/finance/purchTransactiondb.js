@@ -7,6 +7,7 @@ const counter = require('../../models/counter');
 const getPurchTransactionList = async (filter) => {
 
   try{
+    console.log('filter', filter)
 
     if(filter.status && filter.order){
 
