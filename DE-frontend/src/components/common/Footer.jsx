@@ -15,7 +15,7 @@ const Footer = () => {
           <hr className="footer-line" />
             <div className="footer-section">
               <h3>Contact Us</h3>
-              <p>Address: 123 Panadura, Sri Lanka</p>
+              <p>Address: 68,Paraththa road,Panadura, Sri Lanka</p>
               <p>Phone: +94702641683</p>
               <p>Fax: +9434567890</p>
             </div>
