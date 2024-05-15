@@ -17,12 +17,12 @@ export default function TransactionTable(props) {
         <td style={{width: '205px'}}>{transactPerson || 'Maneesha@gmail.com'}</td>
         <td style={{width: '139px'}}>{date}</td>
         <td style={{width: '93px'}}>{transact.status}</td>
-        <td style={{width: '81px'}}>{transact.amount.tot_amount}</td>
+        <td style={{width: '81px'}}>{transact.amount.tot_amount?.toFixed(2) || transact.amount?.toFixed(2)}</td>
         <td style={{width: '40px'}}><Link to={`/admin/finance/jobtransactions/${props.name == 'Customer' ? 'job' : 'purch'}/${transact._id}`}><img width={25} src={eye} alt="eye" /></Link></td>
       </tr>
     )
   })
-  console.log(transactElems)
+
   return(
     
     transactElems.length == 0 

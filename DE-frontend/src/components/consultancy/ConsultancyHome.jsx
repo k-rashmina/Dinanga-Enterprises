@@ -48,9 +48,17 @@ export default function ConsultancyHome() {
                   </div>
                 </div>
                 <div className="col-12 d-flex justify-content-center mt-5 mb-5">
-                  <Link to="/consultancy">
+                  <Link to={localStorage.getItem('loggedUser') ? "/consultancy" : "/cuslogin"}>
                     <button className="fs-1 btn btn-dark">
                       Request Consultancy Service
+                    </button>
+                  </Link>
+                </div>
+
+                <div className="col-12 d-flex justify-content-center mt-1 mb-3">
+                  <Link to={localStorage.getItem('loggedUser') ? `/consultancyhistory` : `/cuslogin`}>
+                    <button className="fs-1 btn btn-dark">
+                      View Consultancy History
                     </button>
                   </Link>
                 </div>

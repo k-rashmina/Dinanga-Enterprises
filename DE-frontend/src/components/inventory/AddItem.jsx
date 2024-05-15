@@ -79,8 +79,7 @@ function AddItem() {
     // Check if there are any errors after validation
     const noErrors = Object.keys(errors).length === 0;
     if (noErrors) {
-      const newItem = {
-        itemNumber: "DE012", // Hardcoded for now, will be generated in the backend
+      const newItem = { 
         itemName,
         brand,
         quantity,
@@ -105,7 +104,7 @@ function AddItem() {
     <div class="con">
       <AdminHeader pageName={"Add Item"} />
       <SearchBar />
-      <div class="container-fluid px-1 py-5 mx-auto">
+      <div class="container-fluid px-1 py-5 mx-auto" style={{ marginTop: '-60px' }}>
         <div class="row d-flex justify-content-center">
           <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
             <div
@@ -113,6 +112,7 @@ function AddItem() {
               style={{
                 borderRadius: "10px",
                 boxShadow: "0px 0px 10px 2px rgba(0,0,0,0.4)",
+                width:"auto"
               }}
             >
               <h5 class="text-center mb-4">
@@ -123,7 +123,7 @@ function AddItem() {
                 />
               </h5>
               <form className="form-card" onSubmit={sendData}>
-                <div class="row justify-content-between text-left">
+                <div class="row justify-content-between text-left" >
                   <div class="row justify-content-between text-left">
                     <div class="form-group col-12 flex-column d-flex mb-3">
                       <label class="form-control-label px-3">

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Container, Form, Button, Modal } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa';
 
 import './SupplierProfile.css';
@@ -10,6 +10,8 @@ function SupplierProfile() {
 
 
   const loggedSupplier = localStorage.getItem('loggedSup');
+
+  const nav = useNavigate();
 
   const date = new Date().toJSON();
   const today = date.substring(0, 10);
@@ -37,12 +39,12 @@ function SupplierProfile() {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
 
-  const randomProfilePictureUrl = `https://picsum.photos/200/200?random=${getRandomNumber(1, 1000)}`;
+  //const randomProfilePictureUrl = `https://picsum.photos/200/200?random=${getRandomNumber(1, 1000)}`;
 
   const handleFeedbackHistory = () => {
-    // Handle feedback history logic here
+    
     console.log("Showing feedback history...");
-    // You can add further actions here, like displaying a modal or navigating to a different page
+
   };
 
   useEffect(() => {
@@ -55,33 +57,34 @@ function SupplierProfile() {
 
 
   const handleUpdateProfile = () => {
-    // Make PUT request to update supplier details
+    
     axios.put('http://localhost:5000/supplier/upsupplierdetails', supDetails)
       .then(response => {
         console.log("Profile updated successfully:", response.data);
-        setIsEditMode(false); // Disable edit mode after successful update
-        // You can add further actions here, like displaying a success message or updating state
+        setIsEditMode(false); 
       })
       .catch(error => {
         console.error("Error updating profile:", error);
-        // Handle error, display an error message, etc.
+        
       });
   };
   
 
 
   const handleDeleteProfile = () => {
-    // Make DELETE request to delete supplier profile
+   
     axios.delete(`http://localhost:5000/supplier/delsupplierdetails?supid=${supDetails._id}`)
       .then(response => {
         console.log("Profile deleted successfully:", response.data);
         alert("deleted")
-        // You can add further actions here, like displaying a success message or redirecting to another page
+        localStorage.removeItem('loggedSup');
+        
         history.push('/supreg');
+        nav('/')
       })
       .catch(error => {
         console.error("Error deleting profile:", error);
-        // Handle error, display an error message, etc.
+        
       });
   };
 
@@ -93,6 +96,11 @@ function SupplierProfile() {
     Supplier_Subject: '',
     Supplier_Message: '',
     fed_date: today
+  });
+
+  const [formErrors, setFormErrors] = useState({
+    Supplier_Subject: '',
+    Supplier_Message: ''
   });
 
   const handleFeedbackInputs = e => {
@@ -107,32 +115,63 @@ function SupplierProfile() {
         [name]: value
 
       }
-    })
+    });
+
+    // Clear previous error message when user starts typing
+    setFormErrors(prev => ({
+      ...prev,
+      [name]: ''
+    }));
   }
   
 
   const [fedSubVal, setFedSubVal] = useState(false);
   const handleFeedbackSubmit = () => {
-    // Prepare data object to send
-    setFedSubVal(prev => !prev);
-
+    const errors = validateForm(formData);
+    if (Object.values(errors).some(error => error !== '')) {
+      // If there are errors, set them in state
+      setFormErrors(errors);
+    } else {
+      // If there are no errors, proceed with form submission
+      setFedSubVal(prev => !prev);
+    }
   };
   
-  
+  const validateForm = (formData) => {
+    let errors = {
+      Supplier_Subject: '',
+      Supplier_Message: ''
+    };
+
+    if (formData.Supplier_Subject.trim() === '') {
+      errors.Supplier_Subject = 'Subject is required';
+    }
+    if (formData.Supplier_Message.trim() === '') {
+      errors.Supplier_Message = 'Message is required';
+    }
+
+    return errors;
+  };
+
   useEffect(() => {
 
-    // Send feedback data to the server
-    axios.post('http://localhost:5000/supFeedback/addsupplierfeedbacks', formData)
-    .then(response => {
-      console.log(response.data); // Log the response if needed
-      // Handle any success scenario here (e.g., show a success message)
-      // Close the modal after successful submission
-      handleCloseFeedbackModal();
-    })
-    .catch(error => {
-      console.error('Error submitting feedback:', error);
-      // Handle error scenario here (e.g., show an error message)
-    });
+    if (fedSubVal) {
+      axios.post('http://localhost:5000/supFeedback/addsupplierfeedbacks', formData)
+        .then(response => {
+          console.log(response.data); 
+          handleCloseFeedbackModal();
+          // Reset form data after successful submission
+          setFormData({
+            Supplier_Email: loggedSupplier,
+            Supplier_Subject: '',
+            Supplier_Message: '',
+            fed_date: today
+          });
+        })
+        .catch(error => {
+          console.error('Error submitting feedback:', error);
+        });
+    }
 
   }, [fedSubVal])
 
@@ -172,7 +211,7 @@ console.log(loggedSupplier)
               </Form.Group>
               <Form.Group controlId="formEmail">
                 <Form.Label className="form-label">Email</Form.Label>
-                <Form.Control type="email" readOnly={!isEditMode} onChange={handleInputEvents}  name='Supplier_email' className="form-control" value={hasPageLoaded.current ? supDetails.Supplier_email : ''} />
+                <Form.Control type="email" readOnly={!isEditMode} onChange={handleInputEvents}  name='Supplier_email' className="form-control" value={hasPageLoaded.current ? supDetails.Supplier_email : '' } disabled />
               </Form.Group>
               <Form.Group controlId="formServicesProvided">
                 <Form.Label className="form-label">Contact</Form.Label>
@@ -204,11 +243,13 @@ console.log(loggedSupplier)
             <Form.Group controlId="formSubject">
               <Form.Label className="form-label">Subject</Form.Label>
               <Form.Control type="text" placeholder="Enter subject" name="Supplier_Subject" className="form-control" value={formData.Supplier_Subject} onChange={handleFeedbackInputs} />
+              {formErrors.Supplier_Subject && <div className="text-danger">{formErrors.Supplier_Subject}</div>}
             </Form.Group>
             <br />
             <Form.Group controlId="formMessage">
               <Form.Label className="form-label">Message</Form.Label>
               <Form.Control as="textarea" rows={3} placeholder="Enter your message" name="Supplier_Message" className="form-control" value={formData.Supplier_Message} onChange={handleFeedbackInputs} />
+              {formErrors.Supplier_Message && <div className="text-danger">{formErrors.Supplier_Message}</div>}
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -217,9 +258,9 @@ console.log(loggedSupplier)
           <Button variant="success" onClick={handleFeedbackSubmit}>Submit</Button>
         </Modal.Footer>
       </Modal>
-      <div className="profile-picture-container">
+      {/* <div className="profile-picture-container">
         <img src={randomProfilePictureUrl} alt="Profile" className="profile-picture" />
-      </div>
+      </div> */}
     </Container>
   );
 }

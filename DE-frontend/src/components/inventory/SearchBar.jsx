@@ -34,12 +34,12 @@ function SearchBar() {
   return (
     < div className="d-flex justify-content-end" >
     <div className="d-flex align-items-center justify-content-end pe-4 align-items-center" style={{width: '400px'}}>
-    <div className="container" style={{backgroundColor: '#EEEEEE'}}>
+    <div className="container" style={{backgroundColor: 'transparent'}}>
       <div className="input-group mb-3">
       <div style={{ position: 'relative' }}>
       <FontAwesomeIcon icon={faSearch} size = "lg" style={{ position: 'absolute', top: '14px', left: '10px' }} />
         <input 
-          style={{border:'3px solid #00ADB5',backgroundColor:'#EEEEEE',paddingLeft: '40px'}}
+          style={{border:'3px solid #00ADB5',paddingLeft: '40px'}}
           type="text"
           className="form-control"
           placeholder="Search inventory..."

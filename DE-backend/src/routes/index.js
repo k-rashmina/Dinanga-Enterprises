@@ -1,5 +1,6 @@
 
 const express = require('express');
+const path = require('path');
 
 const employeeRoutes = require("./employeeRoutes");
 
@@ -14,6 +15,10 @@ const jobAppointmentRoute = require("./jobAppointmentRoute");
 const transaction = require('./transactions-route');
 
 router.use('/inventory', inventoryRoutes);         //inventory routes moddleware
+
+
+// Define a route to serve static files (like images)
+router.use('/assets', express.static(path.join(__dirname, '../../../DE-frontend','src', 'assets')));
 
 
 const getJobService = require('../controllers/job/get-job-service');

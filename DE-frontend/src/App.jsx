@@ -1,5 +1,5 @@
 import {BrowserRouter, Routes, Route, Link} from 'react-router-dom';
-import BackgroundImage from './components/common/BackgroundImage';
+import Home from './components/common/Home';
 
 // import { useState } from 'react'
 // Import employee pages
@@ -32,7 +32,7 @@ import FeedbackTable from './components/supplier/FeedbackTable';
 
 
 import Services from '../src/components/job/Services';
-import JobAppointment from '../src/components/job/jobAppointment';
+import JobAppointment from '../src/components/job/jobappointment';
 import JobCustomer from '../src/components/job/jobCustomer';
 
 import JobAdmin from '../src/components/job/jobAdmin';
@@ -69,7 +69,7 @@ import DashBoard from './components/inventory/DashBoard';
 import Report from './components/inventory/Report';
 import TransactionInfo from './components/finance/TransactionInfo';
 
-
+import Aboutus from './components/common/Aboutus';
 
 
 
@@ -81,7 +81,7 @@ function App() {
       <Routes>
         {/* main routes */}
         <Route element={<Layout/>}>
-          <Route path='/' element={<BackgroundImage/>}/>
+          <Route path='/' element={<Home/>}/>
 
 
 
@@ -112,9 +112,10 @@ function App() {
           <Route path="/payment/:type" element={<CreateJobTransaction/>} />
           
 
-          <Route path='/about' element/>
+          <Route path='/about' element = {<Aboutus />}/>
           <Route path='/contact' element/>
           <Route path='/cusprofile' element={<CustomerProfile />}/>
+          <Route path='/cusfeedback' element={<FeedbackUpDel />} />
           <Route path='/supprofile' element = {<SupplierProfile/>}/>
           <Route path='/job' element/>
 
@@ -129,7 +130,7 @@ function App() {
       
           <Route path='/consultancy' element={<AddConsultancy/>}/>
           <Route path='/consultancy/req' element={<ConsultancyHome/>}/>
-          <Route path='/consultancy/:consid' element={<ConsultancyTable/>}/>
+          <Route path='/consultancyhistory' element={<ConsultancyTable/>}/>
           <Route path='/consultancy/customer/:id' element={<ConsultantCustomer/>}/>
         </Route>
         
@@ -209,7 +210,7 @@ function App() {
         </Route>
 
         {/* admin employee routes */}
-        <Route element={<AdminLayout page={'Employee'} menu={["Dashboard", "Add Employee", "Reports"]}/>}>
+        <Route element={<AdminLayout page={'Employee'} menu={["Dashboard", "Add Employee"]}/>}>
 
           <Route path='/admin/employee/dashboard' element={<EmployeeDashboard/>}/>
           <Route path='/admin/employee/addemployee' element={<RegisterNewEmployee/>}/>

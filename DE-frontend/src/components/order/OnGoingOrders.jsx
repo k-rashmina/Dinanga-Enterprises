@@ -130,7 +130,7 @@ const OnGoingOrders = () => {
   return (
     <>
      <AdminHeader pageName={'Current Orders'} />
-    <div style={{ marginTop: "60px", maxWidth: '1500px', overflow: 'scroll'}}>
+    <div style={{ marginTop: "60px", maxWidth: '1200px', overflow: 'scroll'}}>
       <table className="styled-table" style={{ marginLeft: "10px", marginRight: "20px", height:'300px',fontSize:"20px"}}>
         <thead>
           <tr>
@@ -139,7 +139,6 @@ const OnGoingOrders = () => {
             <th>Quantity</th>
             <th>DateOfOrder</th>
             <th>CompanyAddress</th>
-            {/* <th>Supplier Email</th> */}
             <th>Comments</th>
             <th>Actions</th>
           </tr>

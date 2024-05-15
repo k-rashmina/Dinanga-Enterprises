@@ -14,14 +14,12 @@ const registerEmployee = async (req, res) => {
     const { name, contactNumber, email, address, username, password, department, role } = req.body;
   
     try {
-      // Check if the username is already taken
       let existingEmployee = await Employee.findOne({ username });
   
       if (existingEmployee) {
         return res.status(400).json({ msg: 'Username already exists' });
       }
   
-      //Hash the password
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
   
@@ -45,7 +43,7 @@ const registerEmployee = async (req, res) => {
     }
   };
 
-// Retrieve employee details 
+//Retrieve employee details 
 const getEmployeeDetails = async (req, res) => {
     try {
       const employee = await Employee.findById(req.params.id);
@@ -60,7 +58,7 @@ const getEmployeeDetails = async (req, res) => {
   };
 
 
-// Delete employee account
+//Delete employee
 const deleteEmployee = async (req, res) => {
     try {
       await Employee.findByIdAndDelete(req.params.id);
@@ -71,14 +69,14 @@ const deleteEmployee = async (req, res) => {
     }
   };
 
-// Update employee details
+//Update employee
 const updateEmployee = async (req, res) => {
   try {
-    const { name, contactNumber, email, address, username, password } = req.body;
+    const { name,fullName, contactNumber, email, address, username, password } = req.body;
     const employeeId = req.params.id;
-
+    console.log(req.body)
     let updatedFields = {
-      name,
+      name:name ? name:fullName,
       contactNumber,
       email,
       address,
@@ -86,23 +84,18 @@ const updateEmployee = async (req, res) => {
     };
 
     if (password) {
-      // Hash the new password
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
       
-      // Update with hashed password
       updatedFields.password = hashedPassword;
     }
 
-    // Find and update employee
     const employee = await Employee.findByIdAndUpdate(employeeId, updatedFields, { new: true });
-
-    // Check if employee exists
+    console.log(employee)
     if (!employee) {
       return res.status(404).json({ msg: 'Employee not found' });
     }
 
-    // Respond with success message and updated employee
     res.json({ msg: 'Employee updated successfully', employee });
   } catch (err) {
     console.error(err.message);
@@ -110,40 +103,7 @@ const updateEmployee = async (req, res) => {
   }
 };
 
-  // Get assigned tasks for mechanical employees
-const getAssignedTasks = async (req, res) => {
-    try {
-      const assignedTasks = await Task.find({ assignedTo: req.user.id });
-      res.json(assignedTasks);
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
-    }
-  };
-
-  // Get completed tasks for mechanical employees
-const getCompletedTasks = async (req, res) => {
-    try {
-      const completedTasks = await Task.find({ assignedTo: req.user.id, status: 'completed' });
-      res.json(completedTasks);
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
-    }
-  };
-
-  // Get assigned consultancy services for consultancy employees
-const getAssignedServices = async (req, res) => {
-    try {
-      const assignedServices = await Service.find({ assignedTo: req.user.id });
-      res.json(assignedServices);
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
-    }
-  };
-
-  // Employee login test
+  //Employee login test
   const login = async (req, res) => {
     const { username, password } = req.body;
 
@@ -157,19 +117,18 @@ const getAssignedServices = async (req, res) => {
         const passwordMatch = await bcrypt.compare(password, employee.password);
 
         if (passwordMatch) {
-            // Generate a JWT using the secret key
             const token = jwt.sign(
                 {
-                    employeeId: employee._id, // Include the employee's ID in the payload
-                    username: employee.username // Include the employee's username in the payload
+                    employeeId: employee._id, 
+                    username: employee.username,
+                    department: employee.department
                 },
-                secretKey, // Secret key for signing the token
+                secretKey, 
                 {
-                    expiresIn: '1h' // Token expiration time (e.g., 1 hour)
+                    expiresIn: '1h' 
                 }
             );
 
-            // Return the JWT to the client
             res.json({ message: "Login successful!", token });
         } else {
             res.status(401).json({ message: "Invalid username or password." });
@@ -183,14 +142,11 @@ const getAssignedServices = async (req, res) => {
   //Get available consultancy employees
   const getAvailableConsultancyEmployees = async (req, res) => {
     try {
-      // Query the database for consultancy employees who are available
       const consultancyEmployees = await Employee.find({
         department: 'Consultancy',
         availability: true
       });
       
-      // Extract and return only the names of available consultancy employees
-      // const employeeNames = consultancyEmployees.map(employee => {employee.name, employee._id});
       const employeeNames = consultancyEmployees.map(employee => {
         return {
           name:employee.name,
@@ -242,10 +198,6 @@ const getAssignedServices = async (req, res) => {
     }
   };
   
-  // const passwordsMatch = (password, confirmPassword) => {
-  //   return password === confirmPassword;
-  // };
-  
 
 module.exports = {
     getEmployeeTest,
@@ -253,15 +205,8 @@ module.exports = {
     getEmployeeDetails,
     deleteEmployee,
     updateEmployee,
-    getAssignedTasks,
-    getCompletedTasks,
-    getAssignedServices,
     login,
     getAvailableConsultancyEmployees,
     getAvailableMechanicalEmployees,
     getAllEmployeeDetails,
-    // passwordsMatch,
-    // updateServiceIssue,
-    // updateProfile,
-    // getProfile,
   };

@@ -5,6 +5,9 @@ import axios from "axios";
 import {useNavigate} from 'react-router-dom';
 
 function CustomerRegForm() {
+  const date = new Date().toJSON();
+  const today = date.substring(0, 10);
+
   const [formData, setFormData] = useState({
     cusFname: '',
     cusLname: '',
@@ -36,43 +39,67 @@ function CustomerRegForm() {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value,
-    }));
-
-    // Validate each field as it changes
-    const newErrors = { ...errors };
-    switch (name) {
-      case 'cusFname':
-      case 'cusLname':
+  
+    // Prevent typing special characters for cusFname and cusLname
+    if (name === 'cusFname' || name === 'cusLname') {
+      if (/^[a-zA-Z]*$/.test(value) || value === '') {
+        setFormData(prevState => ({
+          ...prevState,
+          [name]: value,
+        }));
+        // Validate if the field is empty
+        const newErrors = { ...errors };
         newErrors[name] = value.trim() === '' ? 'This field is required' : '';
-        break;
-      case 'bDate':
-        newErrors[name] = value === '' ? 'This field is required' : '';
-        break;
-      case 'cusMail':
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        newErrors[name] = !emailPattern.test(value) ? 'Invalid email address' : '';
-        break;
-      case 'cusPassword':
-        newErrors[name] = value.length < 8 ? 'Password must be at least 8 characters long' : '';
-        break;
-      case 'pw':
-        newErrors[name] = value !== formData.cusPassword ? 'Passwords do not match' : '';
-        break;
-      case 'pNum':
-        const phonePattern = /^\d{10}$/;
-        newErrors[name] = !phonePattern.test(value) ? 'Invalid phone number' : '';
-        break;
-      case 'cusAddr':
-        newErrors[name] = value.trim() === '' ? 'This field is required' : '';
-        break;
-      default:
-        break;
+        setErrors(newErrors);
+      }
+    } else {
+      // For other fields, perform validations and update state
+      let newValue = value;
+  
+      if (name === 'pNum') {
+        // Remove non-digit characters for phone number
+        newValue = value.replace(/\D/g, '');
+        // Limit input to 10 characters
+        newValue = newValue.slice(0, 10);
+      }
+  
+      setFormData(prevState => ({
+        ...prevState,
+        [name]: newValue,
+      }));
+  
+      // Validate each field as it changes
+      const newErrors = { ...errors };
+      switch (name) {
+        case 'bDate':
+          newErrors[name] = value === '' ? 'This field is required' : '';
+          break;
+        case 'cusMail':
+          const emailPattern = /^[^\s@A-Z]+@[^\s@A-Z]+\.[^\s@A-Z]+$/;
+          newErrors[name] = !emailPattern.test(value) ? 'Invalid email address' : '';
+          break;
+        case 'cusPassword':
+          newErrors[name] = value.length < 8 ? 'Password must be at least 8 characters long' : '';
+          break;
+        case 'pw':
+          newErrors[name] = value !== formData.cusPassword ? 'Passwords do not match' : '';
+          break;
+        case 'pNum':
+          newErrors[name] = newValue.length !== 10 ? 'Phone number must be 10 digits' : '';
+          break;
+        case 'cusAddr':
+          newErrors[name] = value.trim() === '' ? 'This field is required' : '';
+          break;
+        default:
+          break;
+      }
+      setErrors(newErrors);
     }
-    setErrors(newErrors);
   };
+  
+  
+  
+  
 
   const validateForm = () => {
     let valid = true;
@@ -104,7 +131,7 @@ function CustomerRegForm() {
         <div className='d-flex justify-content-between  flex-wrap'>
           <label style={{ width: '300px' }}>Date Of Birth</label>
           <label style={{ width: '300px' }}>Phone</label>
-          <input type="date" name='bDate' value={formData.bDate} onChange={handleChange} onBlur={handleChange} style={{ width: '300px', backgroundColor: 'white' }} className='border-color rounded-2' placeholder='' required />
+          <input type="date" max={today} name='bDate' value={formData.bDate} onChange={handleChange} onBlur={handleChange} style={{ width: '300px', backgroundColor: 'white' }} className='border-color rounded-2' placeholder='' required />
           <input type="text" name='pNum' value={formData.pNum} onChange={handleChange} style={{ width: '300px', backgroundColor: 'white' }} className='border-color rounded-2' placeholder=' 07XXXXXXXX' required />
           <div className="text-danger" style={{ width: '300px', height: '20px'}}>{errors.bDate}</div>
           <div className="text-danger" style={{ width: '300px', height: '20px'}}>{errors.pNum}</div>

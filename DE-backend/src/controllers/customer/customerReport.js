@@ -7,17 +7,22 @@ const customerReport = async (req, res) => {
     const customerDetails = await customer.find();
 
     // Heading of the PDF
-    let html = `
-      <div style="text-align: center; font-size: 24px; font-family: Calibri; margin-bottom: 10px;">
-        Dinanga Enterprises
-      </div>
-      <div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">
-        Address: 123 Main St, City, Country
-      </div>
-      <div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">
-        Telephone: (123) 456-7890
-      </div>
-      <hr/>
+    let html =
+    `<div style="text-align: center; font-size: 40px; font-family: Calibri; margin-bottom: 10px; display: flex; align-items: center; justify-content: center;">
+          <img src="http://localhost:5000/assets/logo1.png" alt="Company logo" style="height: 120px; width: 120px;">
+          <b>Dinanga Enterprises</b>
+        </div>
+        <div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">
+          <b>Address: 68 Paraththa Rd, Panadura 12500</b>
+        </div>
+        <div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">
+          <b>Telephone: +94 71 126 1449</b>
+        </div>
+        <hr/>`;
+  
+
+       html += `
+
       <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
         <tr>
           <th style="border: 1px solid black;">Name</th>
@@ -33,13 +38,13 @@ const customerReport = async (req, res) => {
         weekday: 'short', year: 'numeric', month: 'short', day: 'numeric'
       });
       html += `
-        <tr>
-          <td style="border: 1px solid black;">${customer.cusFname} ${customer.cusLname}</td>
-          <td style="border: 1px solid black;">${formattedDate}</td>
-          <td style="border: 1px solid black;">${customer.cusMail}</td>
-          <td style="border: 1px solid black;">${customer.pNum}</td>
-          <td style="border: 1px solid black;">${customer.cusAddr}</td>
-        </tr>`;
+      <tr>
+      <td style="border: 1px solid black; text-align: center;">${customer.cusFname} ${customer.cusLname}</td>
+      <td style="border: 1px solid black; text-align: center;">${formattedDate}</td>
+      <td style="border: 1px solid black; text-align: center;">${customer.cusMail}</td>
+      <td style="border: 1px solid black; text-align: center;">${customer.pNum}</td>
+      <td style="border: 1px solid black; text-align: center;">${customer.cusAddr}</td>
+    </tr>`;
     });
 
     html += `</table>`; // Close the table

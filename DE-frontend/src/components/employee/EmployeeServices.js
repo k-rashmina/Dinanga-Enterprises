@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:4000/employee/";
+const BASE_URL = "http://localhost:5000/employee/";
 
 const EmployeeApiService = {
   getEmployees: async () => {
@@ -37,7 +37,7 @@ const EmployeeApiService = {
     }
   },
 
-  // Example POST request
+ 
   registerEmployee: async (employeeData) => {
     try {
       const response = await axios.post(
@@ -76,44 +76,71 @@ const EmployeeApiService = {
     }
   },
 
+  updateProfile: async (employeeId,employee) => {
+    try {
+      const response = await axios.put(
+        `${BASE_URL}/updateEmployee/${employeeId}`,
+        employee
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error updating employee:", error);
+      throw error;
+    }
+  },
+  
+
   loginEmployee: async (username, password) => {
     try {
-      // Send a POST request to the login API endpoint
       const response = await axios.post(`${BASE_URL}login`, {
         username,
         password
       });
 
-      // Handle the response
       if (response.status === 200) {
-        // Login successful
-        const { token, message } = response.data;
-        console.log(message); // Optional: log the message from the server
 
-        // Store the JWT token in local storage or session storage for future use
+        const { token, message } = response.data;
+        console.log(message); 
+
         localStorage.setItem("authToken", token);
 
-        // Return the response data to be used elsewhere in your application
         return response.data;
       } else {
-        // Handle unexpected response status codes
+
         throw new Error(`Unexpected response status code: ${response.status}`);
       }
     } catch (error) {
-      // Handle errors (e.g., incorrect credentials or network issues)
+ 
       if (error.response) {
-        // Server responded with a status other than 200 range
+       
         console.error("Login failed:", error.response.data.message);
         throw new Error(error.response.data.message);
       } else {
-        // Network error or other issues
+        
         console.error("Login failed:", error);
         throw new Error(
           "An error occurred during login. Please try again later."
         );
       }
     }
-  }
+  },
+
+  getEmployeeDetails: async (employeeId) => {
+    try {
+      const response = await axios.get(`${BASE_URL}getEmployeeDetails/${employeeId}`);
+      
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        console.error('Employee not found:', error.response.data.msg);
+        throw new Error('Employee not found');
+      } else {
+        console.error('Server error:', error.message);
+        throw new Error('Server error');
+      }
+    }
+  },
+
 };
 
 export default EmployeeApiService;

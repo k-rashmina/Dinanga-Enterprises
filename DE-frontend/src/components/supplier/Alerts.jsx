@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './Alerts.css';
+import SupLogo from '../../assets/SupplierCompanyLogo.png';
 import axios from 'axios';
 
 const OrderAlerts = () => {
@@ -28,7 +29,7 @@ const OrderAlerts = () => {
     if (statusMessage !== '') {
       setTimeout(() => {
         setStatusMessage('');
-      }, 3000); // Hide status message after 3 seconds
+      }, 3000); 
     }
   }, [statusMessage]);
 
@@ -45,11 +46,9 @@ const OrderAlerts = () => {
   }, []);
 
   const handleDownloadPDF = () => {
-    // Call the function to print the interface as a PDF
     printPDF();
   };
 
-  // Function to print the interface as a PDF
   const printPDF = () => {
     const htmlContent = generateHTMLForPDF();
     const windowContent = '' + htmlContent + '</body></html>';
@@ -62,17 +61,17 @@ const OrderAlerts = () => {
 
   const generateHTMLForPDF = () => {
     let html =
-    '<div style="text-align: center; font-size: 40px; font-family: Calibri; margin-bottom: 10px;">' +
-    "<b>Dinanga Enterprises</b>" +
-    "</div>" +
-    '<div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">' +
-    "<b>Address: 68 Paraththa Rd, Panadura 12500</b>" +
-    "</div>" +
-    '<div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">' +
-    "<b>Telephone: +94 71 126 1449<b>" +
-    "</div>" +
-    "<hr/>";
-
+      `<div style="text-align: center; font-size: 40px; font-family: Calibri; margin-bottom: 10px; display: flex; align-items: center; justify-content: center;">
+        <img src=${SupLogo} alt="Supplier Logo" style="height: 120px; width: 120px;">
+        <b>Dinanga Enterprises</b>
+      </div>
+      <div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">
+        <b>Address: 68 Paraththa Rd, Panadura 12500</b>
+      </div>
+      <div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">
+        <b>Telephone: +94 71 126 1449<b>
+      </div>
+      <hr/>`;
   
     html +=
       `<h1 style="text-align: center; font-size: 24px;">Order Details & History</h1>
@@ -94,10 +93,10 @@ const OrderAlerts = () => {
     )).join('');
   
     html += `</table>`;
-    
+  
     return html;
   };
-  
+
   return (
     <div className="order-alerts-container">
       {statusMessage && <div className="success-message">{statusMessage}</div>}
@@ -124,7 +123,6 @@ const OrderAlerts = () => {
       <div>
         <button className="download-report-button" onClick={handleDownloadPDF}>Download Report</button>
       </div>
-      
     </div>
   );
 };

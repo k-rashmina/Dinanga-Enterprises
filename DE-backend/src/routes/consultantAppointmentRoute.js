@@ -10,6 +10,7 @@ const readAppointmentIssue=require('../controllers/consultancy/readAppointmentIs
 const readPendingAppointment=require('../controllers/consultancy/readPendingAppointment')
 const readEmailAppointment = require('../controllers/consultancy/readEmailAppointment')
 const employeeRead =require('../controllers/consultancy/employeeRead');
+const readCusAppointments = require('../controllers/consultancy/readCusAppointments');
 
 
 
@@ -21,6 +22,7 @@ route.put("/updateappointment/:id", updateAppointment.updateAppointment);
 route.put("/updaterespond/:id", updateRespond.updateRespond);
 route.delete("/deleteappointment/:id", deleteAppointment.deleteAppointment);
 route.get('/getemailappointments/:email', readEmailAppointment.getAppointmentsWithEmail);
-route.get('getemployeeread', employeeRead.getAppointmentsWithEmployee);
+route.get('/getemployeeread', employeeRead.getAppointmentsWithEmployee);
+route.get('/getcusappointments', readCusAppointments.readCusAppointments);
 
 module.exports = route;

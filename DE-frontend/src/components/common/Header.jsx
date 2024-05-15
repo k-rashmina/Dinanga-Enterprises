@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import DELogo from '../../assets/DELogo.png'
 
 
 export default function SideBar({menu}) {
@@ -18,7 +19,9 @@ export default function SideBar({menu}) {
     <nav>
        <div className="logo">
 
-           {/* <img src="images/hlogo1.png" alt="Company Logo"/>     */}
+        <Link href="/" className="d-flex justify-content-center align-items-center mb-3 mt-3 mb-md-0 me-md-5 text-white text-decoration-none">
+            <img width="200" height="50" style={{objectFit: 'cover'}} src={DELogo} />
+        </Link>
 
        </div>
        
@@ -33,7 +36,6 @@ export default function SideBar({menu}) {
                     <Link className="menu-item a" to={"/supprofile"}>Profile</Link>
                 }
                <Link className="menu-item a" to="/consultancy/req">Consultancy Service</Link>
-               <Link className="menu-item a" to="/contact">Contact</Link>
                <Link className="menu-item a" to="/about">About Us</Link>
 
            </div>

@@ -32,6 +32,12 @@ const purchTrasactionSchema = new Schema({
   transact_no: {
     type: String,
     required: true
+  },
+  pay_date: {
+    type: Date,
+  },
+  pay_rcpt: {
+    type: String
   }
 })
 

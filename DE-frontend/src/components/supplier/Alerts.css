@@ -3,14 +3,14 @@
   margin: 0 auto;
   padding: 20px;
   border-radius: 50px;
-  
-  
+  backdrop-filter: blur(100px);
 }
 
 .order-alerts-header {
   text-align: center;
   margin-bottom: 20px;
-  color: #1E5375; /* Change heading color */
+  color: #1E5375;
+  backdrop-filter: blur(100px);
 }
 
 .order-list {
@@ -25,6 +25,7 @@
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   width: calc(33.333% - 20px);
   background: linear-gradient(135deg, #00adb5, #ffffff);
+  backdrop-filter: blur(100px);
 }
 
 .order-info {
@@ -95,16 +96,16 @@
 }
 
 .download-report-button {
-  background-color: #00ADB5; /* Green */
+  display: block;
+  margin: 20px auto;
+  background-color: #00ADB5;
   border-color: black;
   border-radius: px;
   color: white;
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
   font-size: 16px;
-  margin: 4px 2px;
   cursor: pointer;
   border-radius: 8px;
   animation-name: pulse;
@@ -112,3 +113,151 @@
   animation-iteration-count: infinite;
 }
 
+.card {
+  width: 300px;
+  height: 220px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 30px;
+  gap: 13px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.062);
+}
+
+#cookieSvg {
+  width: 50px;
+}
+
+#cookieSvg g path {
+  fill: rgb(97, 81, 81);
+}
+
+.cookieHeading {
+  font-size: 1.2em;
+  font-weight: 800;
+  color: rgb(26, 26, 26);
+}
+
+.cookieDescription {
+  text-align: center;
+  font-size: 0.7em;
+  font-weight: 600;
+  color: rgb(99, 99, 99);
+}
+
+.cookieDescription a {
+  --tw-text-opacity: 1;
+  color: rgb(59 130 246);
+}
+
+.cookieDescription a:hover {
+  -webkit-text-decoration-line: underline;
+  text-decoration-line: underline;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 20px;
+  flex-direction: row;
+}
+
+.acceptButton {
+  width: 80px;
+  height: 30px;
+  background-color: #7b57ff;
+  transition-duration: .2s;
+  border: none;
+  color: rgb(241, 241, 241);
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px -1px #977ef3, 0 2px 4px -1px #977ef3;
+  transition: all .6s ease;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.accept-button,
+.reject-button {
+  background-color: #00ADB5;
+  border: none;
+  color: #fff;
+  padding: 12px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  margin: 0 10px;
+}
+
+.accept-button {
+  background-color: #00ADB5;
+}
+
+.accept-button:hover {
+  background-color: #00c2cb;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.accept-button:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.accept-button:hover:before {
+  transform: translateX(0);
+}
+
+.reject-button {
+  background-color: #ff4d4d;
+}
+
+.reject-button:hover {
+  background-color: #ff6666;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.reject-button:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.reject-button:hover:before {
+  transform: translateX(0);
+}
+
+.accept-button:focus,
+.reject-button:focus {
+  outline: none;
+}
