@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
 import AdminHeader from "../common/AdminHeader";
 import axios from 'axios';
 
@@ -38,24 +38,47 @@ export default function TransactionInfo() {
   // console.log(transactionInfo);
 
 
-/** Handling updating transactions **/
+/** Handling modal events **/
   const [modalStyle, setModalStyle] = useState({
     display: 'none'
   })
 
-  //function to show modal
-  const showModal = () => {
+  const [payModalStyle, setPayModalStyle] = useState({
+    display: 'none'
+  })
 
-    setModalStyle({
-      display: 'block'
-    })
+  //function to show modal
+  const showModal = (e) => {
+
+    if(e.target.name == 'update-btn'){
+
+      setModalStyle({
+        display: 'block'
+      })
+    }
+    else{
+
+      setPayModalStyle({
+        display: 'block'
+      })
+
+    }
   }
 
   //function to close modal
-  const closeModal = () => {
-    setModalStyle({
-      display: 'none'
-    })
+  const closeModal = (modal) => {
+    if(modal == 'updateModal'){
+
+      setModalStyle({
+        display: 'none'
+      })
+    }
+    else{
+
+      setPayModalStyle({
+        display: 'none'
+      })
+    }
   }
 
   //Handling update form inputs
@@ -72,14 +95,45 @@ export default function TransactionInfo() {
     })
   }
 
+
+  //handle receipt input
+  const handleRcptInput = (e) => {
+
+    let reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+
+    reader.onload = () => {
+      console.log('basecode64', reader.result)
+      setTransactionInfo(prev => {
+        return {
+          ...prev,
+          status: 'success',
+          pay_rcpt: reader.result
+        }
+      })
+    }
+    reader.onerror = error => {
+      console.log(error)
+    }
+  }
+
+  //handle receipt button
+  const [rcpt, setrcpt] = useState('');
+  const showRcpt = () => {
+    console.log(transactionInfo.pay_rcpt)
+    setrcpt(transactionInfo.pay_rcpt);
+  }
+
   const [upVal, setUpVal] = useState(false);
   const pageRender = useRef(false)
 
   const handleUpVal = (e) => {
     e.preventDefault()
     pageRender.current = true
+    transactionInfo.update_date = today
     setUpVal(prev => !prev);
   }
+
 
   //API call for transaction updating
   useEffect(() => {
@@ -87,7 +141,8 @@ export default function TransactionInfo() {
     if(pageRender.current){
       axios.put(`http://localhost:5000/transaction/${updLink}`, transactionInfo)
       .then(res => {
-        alert(res.data);
+        alert("Transaction Updated");
+        closeModal('updateModal');
         closeModal();
       })
     }
@@ -130,7 +185,15 @@ console.log(transactionInfo)
       <AdminHeader pageName={'Transaction Information'}/>
       <div className="d-flex justify-content-center mt-4" style={{height: '86%'}}>
         <div className="div-shadow rounded-5 pt-4 pb-4 ps-5 pe-5 " style={{width: '1000px', height: '580px', position: 'relative', overflowY: 'scroll'}} >
-          <h3 className="mb-4" style={{color: '#00ADB5'}}>{ttype == 'job' ? 'Job' : 'Purchase'} Transaction Details</h3>
+          
+          <div className="d-flex justify-content-between">
+            <h3 className="mb-4" style={{color: '#00ADB5'}}>{ttype == 'job' ? 'Job' : 'Purchase'} Transaction Details</h3>
+            <div>
+              {ttype == 'purch' && (transactionInfo.status == 'pending' && <button className="form-button rounded-5 me-3" style={{height: '50px'}} onClick={showModal}>Pay</button>)}  
+              {transactionInfo.pay_rcpt && <a href={'#receipt'}><button className="form-button rounded-5" style={{height: '50px'}} onClick={showRcpt}>See Receipt</button></a>}  
+            </div>
+          </div>
+
           <div>
 
             <div className="d-flex justify-content-between ms-5 me-5 pb-3 pt-3 border-bottom border-dark border-2 border-opacity-25">
@@ -221,7 +284,7 @@ console.log(transactionInfo)
           </div>
 
           <div className="d-flex justify-content-center ps-5 pe-5 mt-5">
-            <button className="form-button rounded-5 fw-semibold me-3" onClick={showModal}>Edit</button>
+            <button name="update-btn" className="form-button rounded-5 fw-semibold me-3" onClick={showModal}>Edit</button>
             <button className="form-delete-button rounded-5 fw-semibold ms-3" onClick={handleDelVal}>Delete</button>
           </div>
 
@@ -229,14 +292,14 @@ console.log(transactionInfo)
         
       </div>
       
-      {/* Updat form */}
+      {/* Update form */}
       <div className="modal" style={modalStyle}>
         <center>
           <form onSubmit={handleUpVal} className="rounded-4 pb-5" style={{width: '700px', backgroundColor: '#EEEEEE'}} >
             
             <div className="d-flex justify-content-between border-bottom border-dark border-2 border-opacity-25">
               <h4 className="ps-3 mt-4 pt-1 pb-4 " style={{textAlign: 'start'}}>Update Transaction</h4>
-              <button type="button" className="fs-2 fw-semibold mt-2" style={{width: '60px', height: '60px', border: 'none'}} onClick={closeModal}>X</button>
+              <button type="button" className="fs-2 fw-semibold pb-5 ps-4 pt-1" style={{width: '65px', height: '60px', border: 'none'}} onClick={() => closeModal('updateModal')}>X</button>
             </div>
 
             <div className="d-flex flex-column align-items-start mt-4">
@@ -253,14 +316,16 @@ console.log(transactionInfo)
               <textarea className="ms-4 mt-2 fs-5 add-form-input rounded-2" type="text" id="desc" rows={3} cols={69} name="desc" value={transactionInfo.desc} onChange={handleInputEvents} ></textarea>
             </div>
 
-            <div className="d-flex flex-column align-items-start mt-4">
-              <label className="fs-5 ms-3">Payment Type</label>
-              <select className="ms-4 mt-2 fs-5 filter-input rounded-2" style={{width: '90%', }} name="pay_type" value={transactionInfo.pay_type} onChange={handleInputEvents} required={transactionInfo.status == 'success' ? true : false} >
-                <option value={''}>--Select</option>
-                <option value={'cash'}>Cash</option>
-                <option value={'transfer'}>Bank Transafer</option>
-              </select>
-            </div>
+            {ttype == 'job' &&
+              <div className="d-flex flex-column align-items-start mt-4">
+                <label className="fs-5 ms-3">Payment Type</label>
+                <select className="ms-4 mt-2 fs-5 filter-input rounded-2" style={{width: '90%', }} name="pay_type" value={transactionInfo.pay_type} onChange={handleInputEvents} required={transactionInfo.status == 'success' ? true : false} >
+                  <option value={''}>--Select</option>
+                  <option value={'cash'}>Cash</option>
+                  <option value={'transfer'}>Bank Transafer</option>
+                </select>
+              </div>
+            }
 
             <div className="d-flex flex-column align-items-start mt-4">
               <label className="fs-5 ms-3">Payment Date</label>
@@ -269,12 +334,46 @@ console.log(transactionInfo)
 
             <div className="d-flex justify-content-center ps-5 pe-5 mt-5">
               <button className="form-button rounded-5 fw-semibold me-3" >Update</button>
-              <button type="button" className="form-delete-button rounded-5 fw-semibold ms-3" onClick={closeModal}>Cancel</button>
+              <button type="button" className="form-delete-button rounded-5 fw-semibold ms-3" onClick={() => closeModal('updateModal')}>Cancel</button>
             </div>
 
           </form>
         </center>
       </div>
+
+      {/* Payment form */}
+      {ttype == 'purch' && 
+        <div className="modal" style={payModalStyle}>
+          <center>
+            <form onSubmit={handleUpVal} className="rounded-4 pb-5" style={{width: '700px', backgroundColor: '#EEEEEE'}} >
+              
+              <div className="d-flex justify-content-between border-bottom border-dark border-2 border-opacity-25">
+                <h4 className="ps-3 mt-4 pt-1 pb-4 " style={{textAlign: 'start'}}>Update Transaction</h4>
+                <button type="button" className="fs-2 fw-semibold pb-5 ps-4 pt-1" style={{width: '65px', height: '60px', border: 'none'}} onClick={closeModal}>X</button>
+              </div>
+
+              <div className="d-flex flex-column align-items-start mt-4">
+                <label className="fs-5 ms-3">Payment Date</label>
+                <input className="ms-4 mt-2 filter-input rounded-2" style={{width: '90%'}} type="date"  max={today}  name="pay_date" value={hasPageLoaded.current && transactionInfo.pay_date?.substring(0, 10)} onChange={handleInputEvents} required={transactionInfo.status == 'success' ? true : false}/>
+              </div>
+
+              <div className="d-flex flex-column align-items-start mt-4">
+                <label className="fs-5 ms-3">Payment Receipt</label>
+                <input className="ms-4 mt-2 filter-input rounded-2" style={{width: '90%'}} type="file" name="pay_rcpt"  onChange={handleRcptInput} />
+              </div>
+
+              <div className="d-flex justify-content-center ps-5 pe-5 mt-5">
+                <button className="form-button rounded-5 fw-semibold me-3" >Update</button>
+                <button type="button" className="form-delete-button rounded-5 fw-semibold ms-3" onClick={closeModal}>Cancel</button>
+              </div>
+
+            </form>
+          </center>
+
+          
+        </div>
+      }
+      {rcpt && <div id="receipt" className="pt-5" style={{backgroundColor: '#EEEEEE'}}><center><img src={rcpt} alt="asa" width={"600"} height={"600"} style={{objectFit: 'contain'}}/></center></div>}
     </>
 
   )

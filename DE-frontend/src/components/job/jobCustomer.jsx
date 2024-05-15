@@ -105,7 +105,7 @@ const CreatedJobsTableBootstrap = () => {
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                       {row.paymentStatus === "pending" && (
                         <Button onClick={() => handlePay(row)} variant="outline-dark" size="sm" style={{ borderRadius: '4px', fontSize: '16px' }}>
-                          <i className="bi bi-credit-card-2-back"></i> Pay
+                          <i className="bi bi-credit-card-2-back"></i> Complete Payment
                         </Button>
                       )}
                     </div>

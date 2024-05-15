@@ -15,12 +15,12 @@ const CustomerProfile = () => {
             <ProfilePicture imageUrl={imageUrl}  />
           </div>
         </div>
-        <div className="col-lg-4 ps-3 pe-3 mt-3 mb-3" style={{ backgroundColor: '#EEEEEE', height: '100vh' }}>
+        <div className="col-lg-4 ps-3 pe-3 mt-3 mb-3" style={{ backgroundColor: '#EEEEEE', height: '100vh', width: '600px' }}>
           <div className="info-container">
             <CustomerInfo />
           </div>
         </div>
-        <div className="col-lg-4 ps-3 pe-3 mt-3 mb-3" style={{ backgroundColor: '#EEEEEE', height: '100vh', marginRight: '40px' }}>
+        <div className="col-lg-4 ps-3 pe-3 mt-3 mb-3" style={{ backgroundColor: '#EEEEEE', height: '100vh', marginRight: '20px', width: '600px' }}>
           <div className="feedback-container">
             <FeedbackForm />
           </div>

@@ -53,7 +53,7 @@ const getJobTransactionList = async (filter) => {
     }
     else{
 
-      console.log('elseee')
+      // console.log('elseee')
       if(filter.status && filter.job){
         return (await jobTransaction.find({
           'create_date': {
@@ -75,7 +75,7 @@ const getJobTransactionList = async (filter) => {
       }
       else if(filter.job){
   
-        console.log('filter eseee iff job', filter.job)
+        // console.log('filter eseee iff job', filter.job)
         return (await jobTransaction.find({
           'create_date': {
             $gte: new Date(new Date(filter.from).setHours(0o0, 0o0, 0o0)),
@@ -181,7 +181,7 @@ const putJobTransaction = async (upTransact) => {
 
 //Job Transaction deleting function
 const deleteJobTransaction = async (delTransactID) => {
-  console.log(delTransactID);
+  // console.log(delTransactID);
 
   try{ 
 

@@ -13,6 +13,7 @@ const updateAppointment= async (req, res) => {
         vehicleType,
         status,
         employeeName,
+        paymentStatus
       } = req.body;
 
       
@@ -25,6 +26,7 @@ const updateAppointment= async (req, res) => {
         vehicleType,
         status,
         employeeName,
+        paymentStatus
       };
   
       const updatedjobAppointment= await jobAppointment.findByIdAndUpdate(
