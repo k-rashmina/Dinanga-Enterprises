@@ -49,23 +49,17 @@ const inventoryReport = async (req, res) => {
   let oneWeekAgoStr = oneWeekAgo.toLocaleDateString("default", options);
 
   let html =
-  '<div style="display: flex; align-items: center; font-family: Calibri;">' +
-  '<div style="margin-right: 20px;">' +
-  '<img src="http://localhost:5000/assets/logo1.png" style="max-height: 200px;"/>' +
-  "</div>" +
-  '<div style="flex-grow: 1; text-align: center;">' +
-  '<div style="font-size: 24px; margin-bottom: 10px;">' +
-  "Dinanga Enterprises" +
-  "</div>" +
-  '<div style="font-size: 14px; margin-bottom: 10px;">' +
-  "Address: 123 Main St, Panadura, Sri Lanka" +
-  "</div>" +
-  '<div style="font-size: 14px; margin-bottom: 10px;">' +
-  "Telephone: 0112747789" +
-  "</div>" +
-  "</div>" +
-  "</div>" +
-  "<hr/>";
+  `<div style="text-align: center; font-size: 40px; font-family: Calibri; margin-bottom: 10px; display: flex; align-items: center; justify-content: center;">
+        <img src="http://localhost:5000/assets/logo1.png" alt="Company logo" style="height: 120px; width: 120px;">
+        <b>Dinanga Enterprises</b>
+      </div>
+      <div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">
+        <b>Address: 68 Paraththa Rd, Panadura 12500</b>
+      </div>
+      <div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">
+        <b>Telephone: +94 71 126 1449</b>
+      </div>
+      <hr/>`;
 
 
 
