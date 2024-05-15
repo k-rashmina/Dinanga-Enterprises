@@ -5,6 +5,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import axios from "axios"
 import EmployeeNavBar from './EmployeeNavBar';
 
+
 const EmployeeJobsDashboard = () => {
 
   const loggedEmp = localStorage.getItem("emp_id")
@@ -33,10 +34,10 @@ const EmployeeJobsDashboard = () => {
       const confirmation = confirm('Confirm Job Completion');
       if(confirmation){
           
-          axios.put(`http://localhost:4000/inventory/updateJobItem?jid=${doneJob.current._id}`)
+          axios.put(`http://localhost:5000/inventory/updateJobItem?jid=${doneJob.current._id}`)
           .then(() => {
 
-            axios.put("http://localhost:4000/jobAppointment/updateappointment/" + doneJob.current._id, doneJob.current)
+            axios.put("http://localhost:5000/jobAppointment/updateappointment/" + doneJob.current._id, doneJob.current)
             .then(res => {
               console.log("Job marked done");
               doneJob.current = {};
@@ -59,7 +60,7 @@ const EmployeeJobsDashboard = () => {
 
   useEffect(() => {
 
-    axios.get(`http://localhost:4000/jobAppointment/getpendingempjobs?empid=${loggedEmp}`)
+    axios.get(`http://localhost:5000/jobAppointment/getpendingempjobs?empid=${loggedEmp}`)
     .then(res => {
       console.log(res.data)
       setRows(res.data)
@@ -68,7 +69,7 @@ const EmployeeJobsDashboard = () => {
   }, [updateStatus])
 
   return (
-    <React.Fragment>
+    <React.Fragment >
 <EmployeeNavBar fullName={formData.fullName} />
 
 <Container fluid style={{ padding: '16px', backgroundColor: '#fff', minHeight: '100vh' }}>

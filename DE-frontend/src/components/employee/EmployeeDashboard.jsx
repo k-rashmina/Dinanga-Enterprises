@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Modal, Button, Form, Alert } from "react-bootstrap";
 import EmployeeApiService from "./EmployeeServices";
 import { Navbar, Nav, Container } from "react-bootstrap";
+import SupLogo from "../../assets/DELogo.png";
+
 
 const EmployeeDashboard = () => {
   const [employeeData, setEmployeeData] = useState([]);
@@ -164,16 +166,17 @@ const EmployeeDashboard = () => {
 
   const generateHTMLForPDF = () => {
     let html =
-      '<div style="text-align: center; font-size: 40px; font-family: Calibri; margin-bottom: 10px;">' +
-      "<b>Dinanga Enterprises</b>" +
-      "</div>" +
-      '<div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">' +
-      "<b>Address: 68 Paraththa Rd, Panadura 12500</b>" +
-      "</div>" +
-      '<div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">' +
-      "<b>Telephone: +94 71 126 1449</b>" +
-      "</div>" +
-      "<hr/>";
+    `<div style="text-align: center; font-size: 40px; font-family: Calibri; margin-bottom: 10px; display: flex; align-items: center; justify-content: center;">
+      <img src="${SupLogo}" alt="Company logo" style="height: 120px; width: 120px;">
+      <b>Dinanga Enterprises</b>
+    </div>
+    <div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">
+      <b>Address: 68 Paraththa Rd, Panadura 12500</b>
+    </div>
+    <div style="text-align: center; font-size: 14px; font-family: Calibri; margin-bottom: 10px;">
+      <b>Telephone: +94 71 126 1449</b>
+    </div>
+    <hr/>`;
     
     html +=
       '<h1 style="text-align: center; font-size: 24px;">Employee Report</h1>';
