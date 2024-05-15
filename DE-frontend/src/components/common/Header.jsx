@@ -36,7 +36,6 @@ export default function SideBar({menu}) {
                     <Link className="menu-item a" to={"/supprofile"}>Profile</Link>
                 }
                <Link className="menu-item a" to="/consultancy/req">Consultancy Service</Link>
-               <Link className="menu-item a" to="/contact">Contact</Link>
                <Link className="menu-item a" to="/about">About Us</Link>
 
            </div>
