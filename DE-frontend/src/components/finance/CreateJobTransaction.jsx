@@ -14,23 +14,28 @@ const CreateJobTransaction = () => {
   const createdJob = JSON.parse(localStorage.getItem('createdJob'));
   console.log(createdJob)
 
+  const [transactReceipt, setTransactReceipt] = useState();
+
   const [subVal, setSubVal] = useState(false);
   const [transactionDetails, setTransactionDetails] = useState({
-    status: createdJob.paymentStatus,
+    status: createdJob?.paymentStatus,
     amount: {
-      job_amt: createdJob.serviceType.charge,
-      tax_amt: createdJob.serviceType.charge * 18 / 100.0,
-      tot_amount: (createdJob.serviceType.charge * 18 / 100.0) + createdJob.serviceType.charge
+      job_amt: createdJob?.serviceType.charge,
+      tax_amt: createdJob?.serviceType.charge * 18 / 100.0,
+      tot_amount: (createdJob?.serviceType.charge * 18 / 100.0) + createdJob.serviceType.charge
     },
-    ref_id: createdJob._id,
+    ref_id: createdJob?._id,
     desc: 'Sales Transaction',
     transact_type: 'online',
     create_date: today,
     update_date: today,
-    pay_date: today,
-    pay_type: 'cash',
+    pay_date: '',
+    pay_type: 'transfer',
+    pay_rcpt: transactReceipt,
     model_type: 'jobAppointment'
   });
+
+
 
 
   const handlePaytype = (e) => {
@@ -45,17 +50,40 @@ const CreateJobTransaction = () => {
   }
 
 
+
+
+  //handle receipt input
+  const handleRcptInput = (e) => {
+
+    let reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+
+    reader.onload = () => {
+      console.log(reader.result)
+      setTransactReceipt(reader.result)
+    }
+    reader.onerror = error => {
+      console.log(error)
+    }
+  }
+
+
   const handleSubmit =  () => {
   
     // setSubVal(true);
       if(type == 'new'){
+        transactionDetails.pay_type == 'cash' && (transactionDetails.status = 'success');
+        transactionDetails.pay_rcpt && (transactionDetails.status = 'success');
         axios.post(`http://localhost:5000/transaction/addjobtransaction`, transactionDetails)
       .then(res => {
+          transactionDetails.pay_type == 'cash' && (createdJob.paymentStatus = 'success');
+          axios.put("http://localhost:5000/jobAppointment/updateappointment/" + createdJob._id, createdJob)
+          .catch(err => console.log(err));
+
         alert(res.data);
         nav('/jobCustomer')
       })
     }else{
-        alert('calling updateeee');
 
         axios({
           method: 'get',
@@ -64,10 +92,19 @@ const CreateJobTransaction = () => {
           
           let transactionInfo = res.data[0] ;
           transactionInfo = {...transactionInfo, pay_type: transactionDetails.pay_type};
+          transactionInfo.pay_rcpt = transactReceipt;
+          transactionInfo.pay_type == 'transfer' ? (transactionInfo.status = 'pending') : (transactionInfo.status = 'success')
+          transactionInfo.pay_rcpt && (transactionInfo.status = 'success');
+
           axios.put(`http://localhost:5000/transaction/upjobtransaction`, transactionInfo)
           .then(res => {
+            
+            transactionInfo.pay_rcpt && (createdJob.paymentStatus = 'success');
+            axios.put("http://localhost:5000/jobAppointment/updateappointment/" + createdJob._id, createdJob)
+            .catch(err => console.log(err));
+
             alert(res.data);
-            closeModal();
+            nav('/jobCustomer')
           })
           
         });
@@ -99,12 +136,12 @@ const CreateJobTransaction = () => {
   //   console.log('hi: ', createdJob.date)
   // }, [])
 
-  console.log(type)
+  console.log('after', createdJob)
 
   return (
     <div>
-        <div className='d-flex justify-content-center' style={{width: '100%', height: '10 0%', backgroundColor: '#191B1A' , overflow: 'auto'}}>
-            <div className='mt-5 mb-5 rounded-4 pt-4 ps-4 pe-4' style={{width: '760px', height: '1100px', backgroundColor: '#EEEEEE', position: 'relative'}}>
+        <div className='d-flex justify-content-center' style={{width: '100%', height: '100%', backgroundColor: '#191B1A' , overflow: 'auto'}}>
+            <div className='mt-5 mb-5 rounded-4 pt-4 ps-4 pe-4' style={{width: '760px', height: '1200px', backgroundColor: '#EEEEEE', position: 'relative'}}>
               <center><h2>Transaction Details</h2></center>
               <h3 className="mb-4 ms-3 mt-4" style={{color: '#00ADB5'}}>Job Summary</h3>
               
@@ -160,6 +197,13 @@ const CreateJobTransaction = () => {
                   <option value={'transfer'}>Bank Transafer</option>
                 </select>
               </div>
+
+              {transactionDetails.pay_type == 'transfer' &&
+                <div className="d-flex justify-content-between ms-5 me-5 pb-3 pt-3 border-bottom border-dark border-2 border-opacity-25">
+                  <label className="fs-5 fw-semibold">Payment Receipt</label>
+                  <input className=" filter-input rounded-2" type="file" name="pay_rcpt" style={{width: '50%'}} onChange={handleRcptInput}  required={true}/>
+                </div>
+              }
 
               <center><button className='form-button fs-5' style={{marginTop: '80px', width: '90%'}} onClick={handleSubmit}>Submit</button></center>
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Arrow from '../../assets/Arrow5.png'
+import DELogo from '../../assets/DELogo.png'
 
 
 export default function SideBar({page,menu}) {
@@ -33,22 +34,20 @@ export default function SideBar({page,menu}) {
 
 
     <div className="d-flex flex-column flex-shrink flex-shrink-0 p-3 text-white bg-dark" style={{width: "300px", minHeight: "100vh", position: 'fixed'}}>
-      <a href="/" className="d-flex justify-content-center align-items-center mb-3 mb-md-0 me-md-5 text-white text-decoration-none">
-        <svg className="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-        <span className="fs-4">Company Logo</span>
-      </a>
+      <Link href="/" className="d-flex justify-content-center align-items-center mb-3 mt-3 mb-md-0 me-md-5 text-white text-decoration-none">
+        <img width="200" height="50" style={{objectFit: 'cover'}} src={DELogo} />
+      </Link>
       <hr/>
       <br/>
-
-      <a href="/" className="d-flex justify-content-start align-items-center mb-3 mb-md-0 me-md-5 text-white text-decoration-none">
+        
+      <div>
         <Link to='/admin'>
           <img className="bi me-5 ms-3" width="20" height="20" src={Arrow} alt="back"></img>
         </Link>
 
         <span className="fs-2">{page}</span>
-
-      </a>
-
+      </div>
+      <br/>
       <br/>
       <ul className="nav nav-pills flex-column mb-auto">
         {menuItems} 

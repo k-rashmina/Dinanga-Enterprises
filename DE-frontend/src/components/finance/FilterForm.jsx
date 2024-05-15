@@ -21,7 +21,9 @@ export default function FilterForm(props) {
   //saving filter form values
   const handleFilterFields = event => {
     
-    const {name, value} = event.target;
+    let {name, value} = event.target;
+
+    name == 'ref' && (value = value.replace(/[^a-zA-Z0-9\s]/g, ""));   
 
     setFilterFields(prevFieldData => {
 
