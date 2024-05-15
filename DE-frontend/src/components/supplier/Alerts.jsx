@@ -5,7 +5,6 @@ import SupLogo from '../../assets/SupplierCompanyLogo.png';
 import axios from 'axios';
 
 const OrderAlerts = () => {
-
   const params = useParams();
   const supid = params.supid;
 
@@ -29,21 +28,23 @@ const OrderAlerts = () => {
     if (statusMessage !== '') {
       setTimeout(() => {
         setStatusMessage('');
-      }, 3000); 
+      }, 3000);
     }
   }, [statusMessage]);
 
   useEffect(() => {
-    axios.put(`http://localhost:5000/order/updateItem/${accOrder._id}`, accOrder)
-      .then(res => console.log('Order Accepted'))
-      .catch(err => console.error(err));
+    if (accOrder._id) {
+      axios.put(`http://localhost:5000/order/updateItem/${accOrder._id}`, accOrder)
+        .then(res => console.log('Order status updated'))
+        .catch(err => console.error(err));
+    }
   }, [accOrder]);
 
   useEffect(() => {
     axios.get(`http://localhost:5000/order/getsuporders?supid=${supid}`)
       .then(res => setOrders(res.data))
       .catch(err => console.error('Failed to load orders:', err));
-  }, []);
+  }, [supid]);
 
   const handleDownloadPDF = () => {
     printPDF();
@@ -107,19 +108,27 @@ const OrderAlerts = () => {
         {orders.map(order => (
           <div key={order._id} className="order-item">
             <div className="order-info">
-              <p><b>Order Number</b> {order.order_number}</p>
+              <p><b>Order Number:</b> {order.order_number}</p>
               <p><b>Item Name:</b> {order.itemName}</p>
               <p><b>Quantity:</b> {order.quantity}</p>
               <p><b>Date Of Order:</b> {order.dateofOrder.substring(0, 10)}</p>
             </div>
             <div className="button-group">
-              <button className="accept-button" onClick={() => handleAcceptOrder(order)}>Accept</button>
-              <button className="reject-button" onClick={() => handleRejectOrder(order)}>Reject</button>
+              {order.orderstatus === 'accepted' ? (
+                <button className="status-button accepted" disabled>Accepted</button>
+              ) : order.orderstatus === 'rejected' ? (
+                <button className="status-button rejected" disabled>Rejected</button>
+              ) : (
+                <>
+                  <button className="accept-button" onClick={() => handleAcceptOrder(order)}>Accept</button>
+                  <button className="reject-button" onClick={() => handleRejectOrder(order)}>Reject</button>
+                </>
+              )}
             </div>
           </div>
         ))}
       </div>
-      <br></br><br></br>
+      <br /><br />
       <div>
         <button className="download-report-button" onClick={handleDownloadPDF}>Download Report</button>
       </div>
