@@ -19,6 +19,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 //import { useParams } from 'react-router-dom';
 
 import Layout from './components/common/Layout';
+import EmpLayout from './components/common/EmpLayout';
 import AdminLayout from './components/common/AdminLayout';
 import AdminPanel from './components/common/AdminPanel';
 import RegLayout from './components/common/RegLayout';
@@ -55,7 +56,7 @@ import ConsultancyHome from'./components/consultancy/ConsultancyHome'
 import ConsultantAdmin from './components/consultancy/ConsultantAdmin';
 import ConsultancyTable from './components/consultancy/ConsultancyTable'
 
-import FinDashboard from './components/finance/DashBoard';
+import FinDashboard from './components/finance/Dashboard';
 import JobTransaction from './components/finance/JobTransaction';
 import PurchaseTransaction from './components/finance/PurchaseTransaction';
 import AddTransaction from './components/finance/AddTransaction';
@@ -80,6 +81,11 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* main routes */}
+        <Route element={<EmpLayout />} >
+          <Route path='/empprofile' element={<EmployeeProfile/>}/>
+          <Route path='/empjobs' element={<EmployeeJobsDashboard/>}/>
+          <Route path='/empconsultancy' element={<ConsultancyEmployeeDashboard/>}/>
+        </Route>
         <Route element={<Layout/>}>
           <Route path='/' element={<Home/>}/>
 
@@ -89,9 +95,7 @@ function App() {
         {/* <Route element={EmpLayout}> */}
 
           <Route path='/emplogin' element={<EmployeeLogin/>}/>
-          <Route path='/empprofile' element={<EmployeeProfile/>}/>
-          <Route path='/empjobs' element={<EmployeeJobsDashboard/>}/>
-          <Route path='/empconsultancy' element={<ConsultancyEmployeeDashboard/>}/>
+         
           
           {/* Employee login route */}
         {/* <Route path='/emplogin' element={<EmployeeLogin />} /> */}

@@ -72,7 +72,7 @@ const ConsultancyEmployeeDashboard = () => {
       if (confirm("Confirm Consultancy Completion")) {
         axios
           .put(
-            `http://localhost:4000/consultantAppointment/updaterespond/${doneConsultancy.current._id}`,
+            `http://localhost:5000/consultantAppointment/updaterespond/${doneConsultancy.current._id}`,
             {
               jobService: doneConsultancy.current.jobService,
               assignedEmployee: doneConsultancy.current.assignedEmployee,
@@ -98,7 +98,7 @@ const ConsultancyEmployeeDashboard = () => {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:4000/consultantAppointment/getemployeeread?empid=${loggedEmp}`
+        `http://localhost:5000/consultantAppointment/getemployeeread?empid=${loggedEmp}`
       )
       .then((res) => {
         setRows(res.data);
@@ -109,7 +109,7 @@ const ConsultancyEmployeeDashboard = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/getjobservices")
+      .get("http://localhost:5000/getjobservices")
       .then((res) => setServiceOptions(res.data));
     fetchEmployeeInfo();
   }, []);
