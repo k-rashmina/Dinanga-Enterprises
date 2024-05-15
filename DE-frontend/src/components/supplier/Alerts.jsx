@@ -12,7 +12,7 @@ const OrderAlerts = () => {
   const [accOrder, setAccOrder] = useState({});
   const [statusMessage, setStatusMessage] = useState('');
 
-  const handleAcceptOrder = (order) => {
+  const handleAcceptOrder = (order) => {          //accept/reject order status of the object
     order.orderstatus = 'accepted';
     setAccOrder(order);
     setStatusMessage('Order Accepted');
@@ -24,7 +24,7 @@ const OrderAlerts = () => {
     setStatusMessage('Order Rejected');
   };
 
-  useEffect(() => {
+  useEffect(() => {                     //changes in status message
     if (statusMessage !== '') {
       setTimeout(() => {
         setStatusMessage('');
@@ -32,7 +32,7 @@ const OrderAlerts = () => {
     }
   }, [statusMessage]);
 
-  useEffect(() => {
+  useEffect(() => {                 //changes in accorder
     if (accOrder._id) {
       axios.put(`http://localhost:5000/order/updateItem/${accOrder._id}`, accOrder)
         .then(res => console.log('Order status updated'))
@@ -40,7 +40,7 @@ const OrderAlerts = () => {
     }
   }, [accOrder]);
 
-  useEffect(() => {
+  useEffect(() => {                 //changes in supid from route parameters
     axios.get(`http://localhost:5000/order/getsuporders?supid=${supid}`)
       .then(res => setOrders(res.data))
       .catch(err => console.error('Failed to load orders:', err));
