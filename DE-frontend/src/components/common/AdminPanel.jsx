@@ -21,7 +21,7 @@ export default function AdminPanel() {
         </Link>
         <Link to={'job/joblist'} style={{ textDecoration: 'none', height: '250px' }}>
           <button className="align-self-center rounded-5 div-shadow  ps-3 pb-3 mb-4 ms-3 form-button" style={{ width: '400px', height: '250px', backgroundColor: '#00ADB5', color: '#ffffff' }}>
-            <h1 className="mt-5 ms-5 mb-5 pt-4 ps-5" style={{ fontSize: '56px' }}>{`Jobs`}</h1>
+            <h1 className="mb-5 pt-4 ps-5" style={{ fontSize: '56px' }}>{`Jobs`}</h1>
           </button>
         </Link>
         <Link to={'inventory/dashboard'} style={{ textDecoration: 'none', height: '250px' }}>

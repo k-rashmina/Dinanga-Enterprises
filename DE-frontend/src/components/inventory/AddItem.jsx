@@ -204,8 +204,11 @@ function AddItem() {
                         placeholder="Enter quantity"
                         value={quantity}
                         onChange={(e) => {
-                          setQuantity(e.target.value);
-                          validateQuantity(); // Validate in real-time
+                          const validQuantityRegex = /^[0-9]*$/;
+                          if (validQuantityRegex.test(e.target.value)) {
+                            setQuantity(e.target.value);
+                            validateQuantity(); // Validate in real-time
+                          }
                         }}
                         onBlur={validateQuantity}
                       />
@@ -230,8 +233,11 @@ function AddItem() {
                         placeholder=""
                         value={reorderLevel}
                         onChange={(e) => {
-                          setReorderLevel(e.target.value);
-                          validateReorderLevel(); // Validate in real-time
+                          const validReorderlevelRegex = /^[0-9]*$/;
+                          if (validReorderlevelRegex.test(e.target.value)) {
+                            setReorderLevel(e.target.value);
+                            validateReorderLevel(); // Validate in real-time
+                          }
                         }}
                         onBlur={validateReorderLevel}
                       />
@@ -256,8 +262,11 @@ function AddItem() {
                         placeholder=""
                         value={itemPrice}
                         onChange={(e) => {
-                          setItemPrice(e.target.value);
-                          validateItemPrice(); // Validate in real-time
+                          const validitemPriceRegex = /^[0-9]*$/;
+                          if (validitemPriceRegex.test(e.target.value)) {
+                            setItemPrice(e.target.value);
+                            validateItemPrice(); // Validate in real-time
+                          }
                         }}
                         onBlur={validateItemPrice}
                       />
